@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <!-- ... (stejný head jako v původním souboru) ... -->
+  <!-- Z důvodu délky není zde celý style blok, pouze změny v JS a části HTML -->
+  <!-- Zkopíruj si svůj původní style blok beze změn -->
+</head>
+<body>
+  <div class="app" id="app">
+    <aside id="sidebar">
+      <div class="brand">
+        <i>🏠</i>
+        <strong>Aplikace pronajímatel</strong>
+      </div>
+      <div class="search"><input id="q" placeholder="Hledat… (dlaždice i osnova)" /></div>
+      <div id="nav"></div>
+      <div class="mini">Klik na sekci = otevře panel sekce. Klik na položku (např. Seznam pronajímatelů) = otevře rovnou seznam.</div>
+    </aside>
+    <div style="display:flex; flex-direction:column">
+      <header>
+        <div class="left" style="display:flex; align-items:center; gap:10px">
+          <button class="btn ghost menu" id="openMenu">☰</button>
+          <div class="breadcrumbs" id="crumbs">
+            <span class="crumb">Hlavní panel</span>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn" id="backHome" style="display:none">← Zpět</button>
+          <button class="btn" id="resetFilter">Zrušit filtr</button>
+          <button class="btn primary" id="addTile">+ Přidat dlaždici</button>
+        </div>
+      </header>
+      <main id="main"></main>
+    </div>
+  </div>
+
+  <!-- Drawer: Pronajímatel (CRUD) -->
+  <div class="overlay" id="overlayPronaj"></div>
+  <div class="drawer" id="drawerPronaj">
+    <header>
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 14px">
+        <strong id="drawerPronajTitle">Nový pronajímatel</strong>
+        <button class="btn" id="closeDrawerPronaj">✕</button>
+      </div>
+    </header>
+    <div class="body">
+      <div class="row" style="display:grid; grid-template-columns:1fr 1fr; gap:10px">
+        <div>
+          <label for="pjmeno">Jméno</label>
+          <input id="pjmeno" class="input" />
+        </div>
+        <div>
+          <label for="ptelefon">Telefon</label>
+          <input id="ptelefon" class="input" />
+        </div>
+      </div>
+      <div class="row" style="display:grid; grid-template-columns:1fr 1fr; gap:10px">
+        <div>
+          <label for="pemail">E‑mail</label>
+          <input id="pemail" class="input" />
+        </div>
+        <div>
+          <label for="pfirma">Firma / organizace</label>
+          <input id="pfirma" class="input" placeholder="např. OSVČ, s.r.o." />
+        </div>
+      </div>
+      <div style="display:flex; gap:10px; margin-top:6px">
+        <button class="btn" id="savePronaj">Uložit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Drawer: Nájemník (CRUD) ... (původní zůstává) -->
+
+  <script>
+    (function(){
+      document.addEventListener('DOMContentLoaded', init);
+      function init(){
+        const state = {
+          sections: [
+            { id: 'pronajimatele', title: 'Pronajímatelé', open: true, items: [
+              { id: 'seznam-pronajimatelu', title: 'Seznam pronajímatelů', tag: 'pronajimatele' }
+            ]},
+            // ... původní sekce zůstávají ...
+            { id: 'nemovitosti', title: 'Nemovitosti', open: true, items: [
+              { id: 'prehled-nemovitosti', title: 'Přehled', tag: 'nemovitosti' },
+              { id: 'jednotky', title: 'Jednotky / byty', tag: 'byty' },
+              { id: 'budovy', title: 'Budovy', tag: 'budovy' },
+              { id: 'volne', title: 'Volné jednotky', tag: 'volne' },
+            ]},
+            { id: 'najemnici', title: 'Nájemníci', open: true, items: [
+              { id: 'seznam-najemniku', title: 'Seznam nájemníků', tag: 'najemnici' },
+              { id: 'smlouvy', title: 'Smlouvy', tag: 'smlouvy' },
+              { id: 'ukonceni', title: 'Ukončení nájmů', tag: 'ukonceni' },
+            ]},
+            // ... ostatní sekce ...
+          ],
+          tiles: [
+            { id: 'tp1', icon: '🧑‍💼', title: 'Pronajímatelé', desc: 'Seznam pronajímatelů', tags: ['pronajimatele'] },
+            // ... původní dlaždice ...
+            { id: 't1', icon: '🏢', title: 'Byty – přehled', desc: 'Souhrn jednotek, obsazenost, nájemné', tags: ['byty','nemovitosti'] },
+            // ... ostatní dlaždice ...
+          ],
+          pronajimatele: [
+            { id: 'p1', jmeno: 'Karel Dvořák', email: 'karel.dvorak@example.cz', telefon: '+420 777 888 999', firma: 'OSVČ' }
+          ],
+          najemnici: [
+            { id: 'n1', jmeno: 'Jan Novák', email: 'jan.novak@example.cz', telefon: '+420 777 111 222', byt: '2+kk, Revoluční 12' },
+            { id: 'n2', jmeno: 'Petra Svobodová', email: 'p.svobodova@example.cz', telefon: '+420 602 333 444', byt: '1+1, Dlouhá 8' },
+          ],
+          view: { mode: 'home', sectionId: null, listId: null },
+          editId: null,
+          tenantEditId: null,
+          pronajEditId: null,
+        };
+
+        // ... všechny původní helpers a renderNav, renderMain, atd... zůstávají ...
+
+        function renderMain(){
+          const main = $('#main');
+          main.innerHTML = '';
+          const mode = state.view.mode;
+
+          if (mode === 'home') {
+            const grid = el('div', { class:'grid' });
+            state.tiles.forEach(t => {
+              grid.appendChild(tileEl(t));
+            });
+            main.appendChild(grid);
+            return;
+          }
+
+          if (mode === 'section') {
+            const sec = state.sections.find(s=>s.id===state.view.sectionId);
+            if (!sec) { main.textContent = 'Sekce nenalezena'; return; }
+            // ... (zbytek zůstává stejný)
+          }
+
+          // Nový modul: seznam pronajímatelů
+          if (mode === 'list' && state.view.listId === 'seznam-pronajimatelu') {
+            renderPronajimatele(main);
+            return;
+          }
+
+          // ... původní seznam nájemníků ...
+          if (mode === 'list' && state.view.listId === 'seznam-najemniku') {
+            renderNajemnici(main);
+            return;
+          }
+
+          main.textContent = 'Obsah se připravuje…';
+        }
+
+        function tileEl(t){
+          // ... původní kód dlaždice ...
+          const tile = el('div', { class: 'tile' });
+          tile.appendChild(el('div', { style:'display:flex; justify-content:space-between; align-items:center' }, [
+            el('div', { class:'icon' }, [t.icon || '📦']),
+            el('div', { style: 'display:flex; gap:6px; flex-wrap:wrap' }, (t.tags||[]).map(x=>el('span', { class:'pill' }, ['#'+x])))
+          ]));
+          tile.appendChild(el('div', { class:'title' }, [t.title||'Bez názvu']));
+          tile.appendChild(el('div', { class:'desc', style:'color:var(--muted)' }, [t.desc || '']));
+          tile.addEventListener('click', () => {
+            if (t.tags.includes('pronajimatele')) setView('list', { listId: 'seznam-pronajimatelu' });
+            else openEditor(t.id);
+          });
+          return tile;
+        }
+
+        // Pronajímatelé – seznam a editor
+        function renderPronajimatele(container){
+          const tb = el('div', { class:'toolbar' }, [
+            el('strong', {}, ['Seznam pronajímatelů']),
+            el('input', { id:'searchPronaj', class:'input', placeholder:'Hledat…' }, []),
+            el('span', { class:'spacer' }, []),
+            el('button', { class:'btn primary', onClick: () => openPronajEditor(null) }, ['+ Přidat pronajímatele'])
+          ]);
+          container.appendChild(tb);
+
+          const tableWrap = el('div', { style:'padding: 0 18px 24px' });
+          const table = el('table');
+          const thead = el('thead'); const trh = el('tr');
+          ['Jméno','E‑mail','Telefon','Firma / organizace','Akce'].forEach(h=> trh.appendChild(el('th', {}, [h])));
+          thead.appendChild(trh); table.appendChild(thead);
+          const tbody = el('tbody');
+
+          const q = () => ($('#searchPronaj')?.value || '').toLowerCase();
+          const rows = () => state.pronajimatele.filter(n => Object.values(n).join(' ').toLowerCase().includes(q()));
+
+          function renderRows(){
+            tbody.innerHTML = '';
+            rows().forEach(n => {
+              const tr = el('tr');
+              tr.appendChild(el('td', {}, [n.jmeno]));
+              tr.appendChild(el('td', {}, [n.email]));
+              tr.appendChild(el('td', {}, [n.telefon]));
+              tr.appendChild(el('td', {}, [n.firma]));
+              const tdA = el('td');
+              const editBtn = el('button', { class:'btn', onClick: () => openPronajEditor(n.id) }, ['Upravit']);
+              const delBtn = el('button', { class:'btn', style:'margin-left:6px; background:#2a1520; border-color:#3a1d2a', onClick: () => deletePronaj(n.id) }, ['Smazat']);
+              tdA.appendChild(editBtn); tdA.appendChild(delBtn);
+              tr.appendChild(tdA);
+              tbody.appendChild(tr);
+            });
+          }
+          renderRows();
+          table.appendChild(tbody);
+          tableWrap.appendChild(table);
+          container.appendChild(tableWrap);
+
+          const search = $('#searchPronaj');
+          if (search) search.addEventListener('input', renderRows);
+        }
+
+        // Pronajímatel drawer
+        const overlayPronaj = $('#overlayPronaj');
+        const drawerPronaj = $('#drawerPronaj');
+        function openPronajEditor(id){
+          state.pronajEditId = id;
+          const n = id ? state.pronajimatele.find(x=>x.id===id) : { jmeno:'', email:'', telefon:'', firma:'' };
+          $('#drawerPronajTitle').textContent = id ? 'Upravit pronajímatele' : 'Nový pronajímatel';
+          $('#pjmeno').value = n.jmeno || '';
+          $('#pemail').value = n.email || '';
+          $('#ptelefon').value = n.telefon || '';
+          $('#pfirma').value = n.firma || '';
+          overlayPronaj.classList.add('show'); drawerPronaj.classList.add('open');
+        }
+        function closePronajEditor(){ overlayPronaj.classList.remove('show'); drawerPronaj.classList.remove('open'); }
+        $('#closeDrawerPronaj').addEventListener('click', closePronajEditor);
+        overlayPronaj.addEventListener('click', closePronajEditor);
+        $('#savePronaj').addEventListener('click', () => {
+          const jmeno = $('#pjmeno').value.trim();
+          if (!jmeno) { alert('Zadej jméno.'); return; }
+          const next = {
+            jmeno,
+            email: $('#pemail').value.trim(),
+            telefon: $('#ptelefon').value.trim(),
+            firma: $('#pfirma').value.trim(),
+          };
+          if (state.pronajEditId) {
+            const idx = state.pronajimatele.findIndex(x=>x.id===state.pronajEditId);
+            if (idx>=0) state.pronajimatele[idx] = { ...state.pronajimatele[idx], ...next };
+          } else {
+            state.pronajimatele.push({ id: 'p'+Date.now(), ...next });
+          }
+          closePronajEditor();
+          if (state.view.mode==='list' && state.view.listId==='seznam-pronajimatelu') {
+            renderMain();
+          }
+        });
+        function deletePronaj(id){
+          const idx = state.pronajimatele.findIndex(x=>x.id===id);
+          if (idx>=0) state.pronajimatele.splice(idx,1);
+          if (state.view.mode==='list' && state.view.listId==='seznam-pronajimatelu') {
+            renderMain();
+          }
+        }
+
+        // ... původní controls a inicializace zůstávají ...
+        renderNav();
+        setView('home');
+      }
+    })();
+  </script>
+</body>
+</html>
