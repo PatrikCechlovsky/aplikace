@@ -1,0 +1,101 @@
+<div class="drawer open" style="max-width:480px;">
+  <header style="padding:16px 24px; border-bottom:1px solid var(--border); background:linear-gradient(180deg,rgba(11,15,20,.95),rgba(11,15,20,.85));">
+    <strong style="font-size:1.1em;">🧑 Nový pronajímatel – Osoba</strong>
+  </header>
+  <div class="body" style="padding:24px 24px 18px; display:flex; flex-direction:column; gap:18px;">
+    <!-- Osobní údaje -->
+    <section style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <div>
+        <label for="titul">Titul</label>
+        <input id="titul" class="input" placeholder="Mgr., Ing., ..." />
+      </div>
+      <div>
+        <label for="typ-opravneni">Typ oprávnění <span style="color:var(--danger);">*</span></label>
+        <select id="typ-opravneni" class="input" required>
+          <option value="">Vyberte…</option>
+          <option>Čtení vybraných informací</option>
+          <option>Čtení všech informací</option>
+          <option>Úprava všech informací</option>
+        </select>
+      </div>
+      <div>
+        <label for="jmeno">Jméno <span style="color:var(--danger);">*</span></label>
+        <input id="jmeno" class="input" required />
+      </div>
+      <div>
+        <label for="prijmeni">Příjmení <span style="color:var(--danger);">*</span></label>
+        <input id="prijmeni" class="input" required />
+      </div>
+      <div>
+        <label for="datum-narozeni">Datum narození <span style="color:var(--danger);">*</span></label>
+        <input id="datum-narozeni" type="date" class="input" required />
+      </div>
+    </section>
+    <!-- Kontakty -->
+    <section style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <div>
+        <label for="telefon">Telefon <span style="color:var(--danger);">*</span></label>
+        <input id="telefon" class="input" required />
+      </div>
+      <div>
+        <label for="email">E‑mail <span style="color:var(--danger);">*</span></label>
+        <input id="email" type="email" class="input" required />
+      </div>
+      <div>
+        <label for="stat">Stát <span style="color:var(--danger);">*</span></label>
+        <select id="stat" class="input" required>
+          <option value="">Vyberte stát…</option>
+          <option value="CZ">Česká republika</option>
+          <option value="SK">Slovensko</option>
+          <!-- další státy -->
+        </select>
+      </div>
+      <div>
+        <label for="psc">PSČ <span style="color:var(--danger);">*</span></label>
+        <input id="psc" class="input" required />
+      </div>
+      <div>
+        <label for="mesto">Město <span style="color:var(--danger);">*</span></label>
+        <input id="mesto" class="input" required />
+      </div>
+      <div>
+        <label for="ulice">Ulice <span style="color:var(--danger);">*</span></label>
+        <input id="ulice" class="input" required />
+      </div>
+      <div>
+        <label for="cp">Číslo popisné <span style="color:var(--danger);">*</span></label>
+        <input id="cp" class="input" required />
+      </div>
+      <div>
+        <label for="ucet">Bankovní účet / číslo banky <span style="color:var(--danger);">*</span></label>
+        <input id="ucet" class="input" required />
+      </div>
+    </section>
+    <!-- Přístup -->
+    <section style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <div>
+        <label for="prihlasovaci-jmeno">Přihlašovací jméno <span style="color:var(--danger);">*</span></label>
+        <input id="prihlasovaci-jmeno" class="input" required />
+      </div>
+      <div>
+        <label for="prihlasovaci-heslo">Přihlašovací heslo <span style="color:var(--danger);">*</span></label>
+        <input id="prihlasovaci-heslo" type="password" class="input" required />
+      </div>
+    </section>
+    <!-- Zástupce -->
+    <section>
+      <label for="zastupce">Zástupce</label>
+      <select id="zastupce" class="input">
+        <option value="">Vyberte zástupce…</option>
+        <!-- možnost napojit na seznam osob -->
+      </select>
+    </section>
+    <!-- Ovládání -->
+    <section style="display:flex; gap:10px; margin-top:10px;">
+      <button class="btn primary" type="submit">Uložit</button>
+      <button class="btn ghost" type="button">Zrušit</button>
+      <button class="btn" style="background:#2a1520; border-color:#3a1d2a;" type="button">Archivovat</button>
+      <button class="btn" style="background:#15202a; border-color:#1a2d3a;" type="button">Smazat</button>
+    </section>
+  </div>
+</div>
