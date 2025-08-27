@@ -15,11 +15,18 @@ h2 { margin-top: 0; color: #4cc9f0 }
 label { display: block; margin-bottom: 4px; font-weight: 500 }
 input, select {
   width: 100%; padding: 11px 14px; border-radius: 8px;
-  border: 1px solid #1c2430; background: #101826; color: #e6edf3; margin-bottom: 16px;
+  border: 1px solid #1c2430;
+  background: #f6faff;         /* světlejší barva polí */
+  color: #121821;              /* tmavý text v poli */
+  margin-bottom: 16px;
   font-size: 15px;
-  transition: border .18s;
+  transition: border .18s, background .18s;
 }
-input:focus, select:focus { border-color: #4cc9f0; outline: none }
+input:focus, select:focus {
+  border-color: #4cc9f0;
+  background: #e0f3ff;         /* ještě světlejší při zaměření */
+  outline: none;
+}
 .row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px }
 .required { color: #ff647f; font-weight: bold }
 .form-actions { display: flex; gap: 12px; margin-top: 12px }
