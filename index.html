@@ -1,22 +1,158 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8">
-  <title>Moje stránka na GitHub Pages</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aplikace pronajímatel – Hlavní panel</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; margin-top: 80px; background-color: #f7f7f7; }
-    .container { background: #fff; border-radius: 10px; padding: 40px; box-shadow: 0 2px 6px rgba(0,0,0,0.12); display: inline-block; }
-    h1 { color: #263959; }
-    p { color: #555; }
+    :root {
+      --bg: #0b0f14;
+      --card: #121821;
+      --muted: #99a3b3;
+      --text: #e6edf3;
+      --brand: #4cc9f0;
+      --accent: #80ffdb;
+      --border: #1c2430;
+      --active: #21344a;
+      --danger: #ff647f;
+      --ok: #9bffb0;
+    }
+    * { box-sizing: border-box }
+    html, body { height: 100% }
+    body {
+      margin: 0; background: radial-gradient(1200px 800px at 70% -10%, rgba(128,255,219,0.09), transparent 50%),
+                               radial-gradient(900px 600px at -10% 30%, rgba(76,201,240,0.08), transparent 50%), var(--bg);
+      color: var(--text); font: 15px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial;
+    }
+    .app { display: grid; grid-template-columns: 280px 1fr; height: 100vh; }
+    aside {
+      background: linear-gradient(180deg, rgba(33,52,74,.4), rgba(18,24,33,.7) 30%), var(--card);
+      border-right: 1px solid var(--border);
+      padding: 16px 12px; overflow-y: auto;
+    }
+    .brand { display:flex; align-items:center; gap:10px; padding: 8px 10px; margin-bottom: 10px }
+    .brand i { font-style: normal; font-size: 20px }
+    .brand strong { letter-spacing:.3px }
+    .section { margin: 14px 6px; border-radius:12px; overflow:hidden; border:1px solid var(--border); background: #0e141c }
+    .section-header { display:flex; align-items:center; gap:8px; padding:10px 12px; cursor:pointer; user-select:none; }
+    .section-header:hover { background: #111924 }
+    .nav-item { display:flex; align-items:center; gap:8px; padding:8px 10px; margin:4px 6px; border-radius:10px; cursor:pointer; color:var(--muted) }
+    .nav-item:hover { background:#101826; color:var(--text) }
+    .nav-item.active { background: var(--active); color: var(--text); border: 1px solid #243449 }
+    .mini { font-size:12px; color:var(--muted); padding: 4px 14px 0 }
+    header {
+      display:flex; align-items:center; justify-content:space-between; padding: 14px 18px; position: sticky; top:0; background: linear-gradient(180deg, rgba(11,15,20,.96), rgba(11,15,20,.8)); backdrop-filter: blur(4px); border-bottom: 1px solid var(--border);
+      z-index: 5;
+    }
+    .breadcrumbs { display:flex; gap:8px; align-items:center; color: var(--muted) }
+    .breadcrumbs .crumb { padding:6px 10px; border-radius:999px; border:1px solid var(--border); background:#0e141c }
+    main { height: 100vh; overflow: auto; }
+    .grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; padding: 16px 18px 120px }
+    .tile { border:1px solid var(--border); border-radius:16px; padding:18px; background: linear-gradient(180deg, rgba(33,52,74,.28), rgba(16,24,38,.8)), var(--card); cursor:pointer; min-height:120px; display:flex; flex-direction:column; gap:10px; transition: outline .2s; }
+    .tile:hover { outline:2px solid #24445f }
+    .tile .icon { font-size:32px; margin-bottom:6px }
+    .tile .title { font-weight:600; font-size:18px }
+    .tile .desc { color:var(--muted); font-size:13px }
+    @media (max-width: 900px) {
+      .app { grid-template-columns: 1fr }
+      aside { position: fixed; z-index: 30; width: 88%; max-width: 320px; inset: 0 auto 0 0; transform: translateX(-102%); transition: transform .25s ease }
+      aside.open { transform: translateX(0) }
+      header .menu { display:inline-flex }
+    }
+    @media (min-width: 901px) { header .menu { display:none } }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Vítejte na mé stránce!</h1>
-    <p>Tato stránka je publikovaná pomocí <strong>GitHub Pages</strong>.</p>
-    <p>Můžete sem vložit jakýkoli vlastní obsah.</p>
-    <p><em>Pokud chcete poradit s dalšími úpravami, napiš mi!</em></p>
+  <div class="app" id="app">
+    <aside id="sidebar">
+      <div class="brand">
+        <i>🏠</i>
+        <strong>Pronajímatel aplikace</strong>
+      </div>
+      <div class="mini">Klik na dlaždici pro vstup do modulu.</div>
+      <nav id="nav">
+        <!-- Menu sekce z osnovy budou generovány zde -->
+      </nav>
+    </aside>
+    <div style="display:flex; flex-direction:column">
+      <header>
+        <div class="breadcrumbs" id="crumbs">
+          <span class="crumb">Hlavní panel</span>
+        </div>
+      </header>
+      <main id="main"></main>
+    </div>
   </div>
+  <script>
+    // Definice hlavních modulů podle osnova.csv (zjednodušeno pro úvodní rozcestník)
+    const modules = [
+      { id:"pronajimatel", icon:"🧑‍💼", title:"Pronajímatel", desc:"Správa pronajímatelů, osoby, firmy, OSVČ, spolky." },
+      { id:"najemnici", icon:"👥", title:"Nájemníci", desc:"Seznam nájemníků, osoby, firmy, OSVČ, spolky." },
+      { id:"nemovitosti", icon:"🏢", title:"Nemovitosti", desc:"Objekty, jednotky, byty, měřidla, volné jednotky." },
+      { id:"smlouvy", icon:"📄", title:"Smlouvy", desc:"Nájemní smlouvy, dodatky, předávací protokoly, předpisy." },
+      { id:"platby", icon:"💶", title:"Platby", desc:"Pohyby plateb, saldo, vyúčtování." },
+      { id:"sluzby", icon:"🛠️", title:"Služby", desc:"Dodavatelé, ceníky, odečty, rozúčtování." },
+      { id:"reporty", icon:"📊", title:"Reporty & Grafy", desc:"Přehled příjmů, obsazenost, dlužníci." },
+      { id:"nastaveni", icon:"⚙️", title:"Nastavení", desc:"Číselníky, parametry, integrace (ARES)." },
+      { id:"finance", icon:"🧮", title:"Finance", desc:"Nájemné, kauce, náklady, cashflow." },
+      { id:"energie", icon:"🔌", title:"Energie", desc:"Měřidla, odečty, spotřeby, grafy." },
+      { id:"udrzba", icon:"🧰", title:"Údržba", desc:"Úkoly, servis, revize, plán revizí, požadavky." },
+      { id:"uzivatele", icon:"🧑‍🤝‍🧑", title:"Uživatelé & Role", desc:"Uživatelé, role, audit." }
+    ];
+
+    function $(sel) { return document.querySelector(sel); }
+    function el(tag, attrs={}, children=[]) {
+      const n = document.createElement(tag);
+      Object.entries(attrs).forEach(([k,v]) => {
+        if (k === 'class') n.className = v;
+        else if (k.startsWith('on')) n.addEventListener(k.substring(2), v);
+        else if (k === 'html') n.innerHTML = v;
+        else n.setAttribute(k, v);
+      });
+      children.forEach(c => n.appendChild(typeof c === 'string' ? document.createTextNode(c) : c));
+      return n;
+    }
+    function renderNav() {
+      const nav = $('#nav');
+      nav.innerHTML = '';
+      modules.forEach(m => {
+        const item = el('div', { class:'nav-item', onClick: () => showModule(m.id) }, [
+          el('span', { class:'icon' }, [m.icon]),
+          el('span', {}, [m.title])
+        ]);
+        nav.appendChild(item);
+      });
+    }
+    function renderTiles() {
+      const main = $('#main');
+      main.innerHTML = '';
+      const grid = el('div', { class:'grid' });
+      modules.forEach(m => {
+        const tile = el('div', { class:'tile', onClick: () => showModule(m.id) }, [
+          el('div', { class:'icon' }, [m.icon]),
+          el('div', { class:'title' }, [m.title]),
+          el('div', { class:'desc' }, [m.desc])
+        ]);
+        grid.appendChild(tile);
+      });
+      main.appendChild(grid);
+    }
+    function showModule(id) {
+      const m = modules.find(x=>x.id===id);
+      if (!m) return;
+      $('#crumbs').innerHTML = `<span class="crumb">Hlavní panel</span> <span class="crumb">${m.title}</span>`;
+      const main = $('#main');
+      main.innerHTML = '';
+      main.appendChild(el('h1', {}, [m.icon + ' ' + m.title]));
+      main.appendChild(el('p', {}, [m.desc]));
+      main.appendChild(el('div', { class:'desc', style:'margin:18px 0 0 0; color:var(--muted)' }, [
+        'Obsah modulu zatím není připraven. Po kliknutí na konkrétní dlaždici zde bude seznam nebo formulář dle osnovy.'
+      ]));
+      // Můžeš zde později dynamicky vykreslovat podsekce, seznamy, formuláře podle osnovy.
+      // Každý modul zde budeš moci rozšiřovat!
+    }
+    renderNav();
+    renderTiles();
+  </script>
 </body>
 </html>
