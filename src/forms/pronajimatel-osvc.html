@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Formulář – Pronajímatel (OSVČ)</title>
+  <link rel="stylesheet" href="pronajimatel-form-style.css">
+</head>
+<body>
+  <form class="form-card" autocomplete="off">
+    <h2>🧑‍💼 Pronajímatel – OSVČ</h2>
+    <div class="row">
+      <div>
+        <label for="titul">Titul</label>
+        <input id="titul" name="titul" type="text" placeholder="Mgr., Ing., ..." />
+      </div>
+      <div>
+        <label for="typ-opravneni">Typ oprávnění <span class="required">*</span></label>
+        <select id="typ-opravneni" name="typ-opravneni" required>
+          <option value="">Vyberte…</option>
+          <option>Čtení vybraných informací</option>
+          <option>Čtení všech informací</option>
+          <option>Úprava všech informací</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="jmeno">Jméno <span class="required">*</span></label>
+        <input id="jmeno" name="jmeno" required />
+      </div>
+      <div>
+        <label for="prijmeni">Příjmení <span class="required">*</span></label>
+        <input id="prijmeni" name="prijmeni" required />
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="ic">IČ <span class="required">*</span></label>
+        <input id="ic" name="ic" required />
+      </div>
+      <div>
+        <label for="dic">DIČ</label>
+        <input id="dic" name="dic" />
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="datum-narozeni">Datum narození <span class="required">*</span></label>
+        <input id="datum-narozeni" name="datum-narozeni" type="date" required />
+      </div>
+      <div>
+        <label for="typ-dokladu">Typ dokladu totožnosti <span class="required">*</span></label>
+        <select id="typ-dokladu" name="typ-dokladu" required>
+          <option value="">Vyberte…</option>
+          <option>Občanský průkaz</option>
+          <option>Pas</option>
+          <option>Řidičský průkaz</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="cislo-dokladu">Číslo dokladu totožnosti <span class="required">*</span></label>
+        <input id="cislo-dokladu" name="cislo-dokladu" required />
+      </div>
+      <div>
+        <label for="stat">Stát <span class="required">*</span></label>
+        <select id="stat" name="stat" required>
+          <option value="">Vyberte stát…</option>
+          <option value="CZ">Česká republika</option>
+          <option value="SK">Slovensko</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="psc">PSČ <span class="required">*</span></label>
+        <input id="psc" name="psc" required />
+      </div>
+      <div>
+        <label for="mesto">Město <span class="required">*</span></label>
+        <input id="mesto" name="mesto" required />
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="ulice">Ulice <span class="required">*</span></label>
+        <input id="ulice" name="ulice" required />
+      </div>
+      <div>
+        <label for="cp">Číslo popisné <span class="required">*</span></label>
+        <input id="cp" name="cp" required />
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="telefon">Telefon <span class="required">*</span></label>
+        <input id="telefon" name="telefon" required />
+      </div>
+      <div>
+        <label for="email">E‑mail <span class="required">*</span></label>
+        <input id="email" name="email" type="email" required />
+      </div>
+    </div>
+    <div>
+      <label for="ucet">Bankovní účet / číslo banky <span class="required">*</span></label>
+      <input id="ucet" name="ucet" required />
+    </div>
+    <div class="row">
+      <div>
+        <label for="prihlasovaci-jmeno">Přihlašovací jméno <span class="required">*</span></label>
+        <input id="prihlasovaci-jmeno" name="prihlasovaci-jmeno" required />
+      </div>
+      <div>
+        <label for="prihlasovaci-heslo">Přihlašovací heslo <span class="required">*</span></label>
+        <input id="prihlasovaci-heslo" name="prihlasovaci-heslo" type="password" required />
+      </div>
+    </div>
+    <div>
+      <label for="zastupce">Zástupce</label>
+      <select id="zastupce" name="zastupce">
+        <option value="">Vyberte zástupce…</option>
+      </select>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn">Uložit</button>
+      <button type="button" class="btn ghost">Zrušit</button>
+      <button type="button" class="btn archive">Archivovat</button>
+      <button type="button" class="btn danger">Smazat</button>
+    </div>
+  </form>
+</body>
+</html>
