@@ -2,141 +2,139 @@
 <html lang="cs">
 <head>
   <meta charset="UTF-8">
-  <title>Aplikace pronajímatel – Hlavní panel</title>
-  <link rel="stylesheet" href="src/forms/pronajimatel-forms-style.css">
-  <link rel="stylesheet" href="src/style.css">
+  <title>Pronajímatel / Nájemník evidence</title>
   <link rel="stylesheet" href="src/forms/style-pronajimatel-najemnik.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    /* ...původní styly... */
-    .tile { position:relative; }
-    .favorite-star {
-      position:absolute; top:9px; right:12px; font-size:20px; color:var(--muted); cursor:pointer; transition:color .2s;
+    body {
+      background: #161923;
+      color: #e6edf3;
+      font-family: "Segoe UI", "Arial", sans-serif;
+      margin: 0;
+      min-height: 100vh;
     }
-    .favorite-star.active { color:var(--brand); }
-    .tile.dragging { opacity:0.55; }
-    .grid.favorites { min-height:80px; border-bottom:1px solid var(--border); margin-bottom:22px; }
-    .tile .icon { font-size:26px; }
-    .tile .title { display:flex; align-items:center; gap:7px; font-size:16px }
-    /* pro drag&drop */
-    .grid.favorites .tile { cursor:grab; }
-    .tile.drag-over { outline:2px dashed var(--brand); }
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: #161923;
+      border-radius: 18px;
+      box-shadow: 0 6px 32px 0 rgba(76,201,240,.08);
+      padding: 40px 30px 30px 30px;
+    }
+    h1 {
+      color: #4cc9f0;
+      font-size: 2em;
+      margin-bottom: 18px;
+    }
+    .tile-row {
+      display: flex;
+      gap: 18px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .tile {
+      background: #21273a;
+      border-radius: 10px;
+      padding: 18px 30px;
+      min-width: 140px;
+      cursor: pointer;
+      transition: background 0.18s;
+      box-shadow: 0 2px 10px 0 rgba(76,201,240,.09);
+      color: #e6edf3;
+      font-size: 1.07em;
+      font-weight: 500;
+      border: 2px solid #4cc9f0;
+    }
+    .tile:hover {
+      background: #101826;
+      border-color: #80ffdb;
+      color: #80ffdb;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0; top: 0; right: 0; bottom: 0;
+      background: rgba(30, 39, 50, 0.80);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal.active {
+      display: flex;
+    }
+    .modal-content {
+      background: #161923;
+      border-radius: 18px;
+      box-shadow: 0 6px 32px 0 rgba(76,201,240,.17);
+      padding: 38px 24px;
+      min-width: 320px;
+      max-width: 95vw;
+    }
+    .modal-close {
+      position: absolute;
+      top: 22px;
+      right: 32px;
+      font-size: 1.4em;
+      color: #4cc9f0;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <!-- ...sidebar/menu, header... -->
-  <main id="main"></main>
-  <div id="formModalArea"></div>
+  <div class="container">
+    <h1>Evidence pronajímatelů / nájemníků</h1>
+    <div class="tile-row">
+      <div class="tile" data-module="pronajimatel" data-type="firma">Pronajímatel – Firma</div>
+      <div class="tile" data-module="pronajimatel" data-type="statni-instituce">Pronajímatel – Státní instituce</div>
+      <div class="tile" data-module="najemnik" data-type="osoba">Nájemník – Osoba</div>
+      <div class="tile" data-module="najemnik" data-type="osvc">Nájemník – OSVČ</div>
+      <div class="tile" data-module="najemnik" data-type="spolek">Nájemník – Spolek/skupina</div>
+    </div>
+  </div>
+
+  <div class="modal" id="formModal">
+    <div class="modal-content" id="modalContent">
+      <span class="modal-close" id="modalClose">&times;</span>
+      <div id="modalArea">
+        <!-- Formulář se načítá sem -->
+      </div>
+    </div>
+  </div>
+
+  <script src="src/forms/form-pronajimatel-najemnik.js"></script>
   <script>
-    // ...definice modulů, dlaždic, typů...
-    let favorites = []; // id dlaždic v oblíbených
-
-    // RENDER HLAVNÍ PANEL S OBLÍBENÝMI DLAŽDICEMI
-    function renderMainPanel() {
-      const main = document.getElementById('main');
-      main.innerHTML = '';
-      // Oblíbené dlaždice (drag&drop grid)
-      const favGrid = document.createElement('div');
-      favGrid.className = 'grid favorites';
-      favGrid.id = 'favGrid';
-      let favTiles = getAllTiles().filter(t => favorites.includes(t.id));
-      favTiles.forEach(t => {
-        favGrid.appendChild(renderTile(t, true));
-      });
-      main.appendChild(favGrid);
-
-      // Ostatní dlaždice (modul panel)
-      const modGrid = document.createElement('div');
-      modGrid.className = 'grid';
-      getAllTiles().forEach(t => {
-        if (!favorites.includes(t.id)) {
-          modGrid.appendChild(renderTile(t, false));
-        }
-      });
-      main.appendChild(modGrid);
-
-      // Drag & drop logika
-      addDragDropLogic();
+    // Funkce pro otevření modalu s formulářem
+    function openFormModal(module, type) {
+      fetch('src/forms/form-pronajimatel-najemnik.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('modalArea').innerHTML = html;
+          document.getElementById('formModal').classList.add('active');
+          // Po načtení HTML zavolej setupForm
+          setupForm({ module, type });
+        });
     }
 
-    // GENERUJ VŠECHNY DLAŽDICE Z MODULŮ
-    function getAllTiles() {
-      return modules.flatMap(m =>
-        m.items.map(it => ({...it, modul: m.id}))
-      );
+    // Zavři modal
+    function closeFormModal() {
+      document.getElementById('formModal').classList.remove('active');
+      document.getElementById('modalArea').innerHTML = '';
     }
 
-    // DLAŽDICE VČETNĚ HVĚZDY
-    function renderTile(tile, isFavorite) {
-      const div = document.createElement('div');
-      div.className = 'tile';
-      div.setAttribute('draggable', isFavorite ? "true" : "false");
-      div.id = "tile-" + tile.id;
-      div.innerHTML = `
-        <span class="favorite-star ${isFavorite ? 'active' : ''}" title="Přidat/odebrat z oblíbených">${isFavorite ? "★" : "☆"}</span>
-        <div class="icon">${tile.icon}</div>
-        <div class="title"><span>${tile.icon}</span> ${tile.tileTitle}</div>
-        <div class="desc">#${tile.type}</div>
-      `;
-      // Klik na hvězdu
-      div.querySelector('.favorite-star').onclick = (e) => {
-        e.stopPropagation();
-        toggleFavorite(tile.id);
-      };
-      // Klik na dlaždici = stejná logika jako menu
-      div.onclick = (e) => {
-        if (!e.target.classList.contains('favorite-star')) {
-          handleMenuClick(tile.modul, tile.type);
-        }
-      };
-      return div;
-    }
+    document.getElementById('modalClose').onclick = closeFormModal;
 
-    // OBLÍBENÉ LOGIKA
-    function toggleFavorite(id) {
-      if (favorites.includes(id)) {
-        favorites = favorites.filter(f => f !== id);
-      } else {
-        favorites.push(id);
+    // Otevři správný formulář podle vybrané dlaždice
+    document.querySelectorAll('.tile').forEach(tile => {
+      tile.onclick = () => {
+        const module = tile.dataset.module;
+        const type = tile.dataset.type;
+        openFormModal(module, type);
       }
-      renderMainPanel();
-    }
+    });
 
-    // DRAG&DROP LOGIKA
-    function addDragDropLogic() {
-      const grid = document.getElementById('favGrid');
-      let dragTile = null;
-      grid.querySelectorAll('.tile').forEach(tile => {
-        tile.addEventListener('dragstart', () => {
-          dragTile = tile;
-          tile.classList.add('dragging');
-        });
-        tile.addEventListener('dragend', () => {
-          dragTile = null;
-          tile.classList.remove('dragging');
-        });
-        tile.addEventListener('dragover', e => {
-          e.preventDefault();
-          tile.classList.add('drag-over');
-        });
-        tile.addEventListener('dragleave', e => {
-          tile.classList.remove('drag-over');
-        });
-        tile.addEventListener('drop', e => {
-          e.preventDefault();
-          tile.classList.remove('drag-over');
-          if (dragTile && dragTile !== tile) {
-            const ids = Array.from(grid.querySelectorAll('.tile')).map(t=>t.id.replace('tile-',''));
-            const fromIdx = ids.indexOf(dragTile.id.replace('tile-',''));
-            const toIdx = ids.indexOf(tile.id.replace('tile-',''));
-            const newOrder = [...favorites];
-            const [moved] = newOrder.splice(fromIdx,1);
-            newOrder.splice(toIdx, 0, moved);
-            favorites = newOrder;
-            renderMainPanel();
-          }
-        });
-      });
-    }
-
-    // MENU RENDER – menu
+    // Zavři modal na kliknutí mimo obsah (volitelné)
+    document.getElementById('formModal').addEventListener('click', function(e) {
+      if (e.target === this) closeFormModal();
+    });
+  </script>
+</body>
+</html>
