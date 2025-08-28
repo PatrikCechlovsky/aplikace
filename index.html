@@ -2,144 +2,303 @@
 <html lang="cs">
 <head>
   <meta charset="UTF-8">
-  <title>Správa nemovitostí – Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aplikace pronajímatel – Hlavní panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body {margin:0; font-family:sans-serif; background:#f6f7fa;}
-    .container {display:flex; height:100vh;}
-    #sidebar {
-      width:260px; background:#223049; color:#fff; padding:0; display:flex; flex-direction:column;
-      border-right:1px solid #e0e4ed;
+    :root {
+      --bg: #0b0f14;
+      --card: #121821;
+      --muted: #99a3b3;
+      --text: #e6edf3;
+      --brand: #4cc9f0;
+      --accent: #80ffdb;
+      --border: #1c2430;
+      --active: #21344a;
+      --danger: #ff647f;
+      --ok: #9bffb0;
     }
-    #sidebar h2 {margin:24px 0 10px 24px; font-size:1.2em;}
-    #sidebar ul {list-style:none; padding:0; margin:0;}
-    #sidebar li {padding:14px 24px; cursor:pointer; transition:background 0.1s;}
-    #sidebar li:hover, #sidebar li.active {background:#2c3e5c;}
-    .submenu {padding-left:24px; background:#223049;}
-    .submenu li {font-size:0.95em;}
-    #main {
-      flex:1; display:flex; flex-direction:column; background:#fff;
-      box-shadow:0 0 12px 0 #e0e4ed;
+    * { box-sizing: border-box }
+    html, body { height: 100% }
+    body {
+      margin: 0; background: radial-gradient(1200px 800px at 70% -10%, rgba(128,255,219,0.09), transparent 50%),
+                               radial-gradient(900px 600px at -10% 30%, rgba(76,201,240,0.08), transparent 50%), var(--bg);
+      color: var(--text); font: 15px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial;
     }
-    #topbar {
-      display:flex; align-items:center; justify-content:space-between; padding:16px 32px 12px 32px; background:#f6f7fa;
-      border-bottom:1px solid #e0e4ed; min-height:60px;
+    .app { display: grid; grid-template-columns: 280px 1fr; height: 100vh; }
+
+    /* Sidebar */
+    aside {
+      background: linear-gradient(180deg, rgba(33,52,74,.4), rgba(18,24,33,.7) 30%), var(--card);
+      border-right: 1px solid var(--border);
+      padding: 16px 12px; overflow-y: auto;
     }
-    #breadcrumb {font-size:1em; color:#223049;}
-    #actions {display:flex; gap:12px;}
-    #actions button, #actions .user-icon {
-      background:#fff; border:1px solid #e0e4ed; border-radius:6px; padding:7px 16px; cursor:pointer;
-      font-size:0.95em; color:#223049; transition:background 0.2s;
+    .brand { display:flex; align-items:center; gap:10px; padding: 8px 10px; margin-bottom: 10px }
+    .brand i { font-style: normal; font-size: 20px }
+    .brand strong { letter-spacing:.3px }
+    .section { margin: 14px 6px; border-radius:12px; overflow:hidden; border:1px solid var(--border); background: #0e141c }
+    .section-header { display:flex; align-items:center; gap:8px; padding:10px 12px; cursor:pointer; user-select:none; }
+    .section-header:hover { background: #111924 }
+    .section-header .chev { transition: transform .2s ease }
+    .section.open .section-header .chev { transform: rotate(90deg) }
+    .section-items { display:none; padding:8px 4px 10px }
+    .section.open .section-items { display:block }
+    .nav-item { display:flex; align-items:center; gap:8px; padding:8px 10px; margin:4px 6px; border-radius:10px; cursor:pointer; color:var(--muted) }
+    .nav-item:hover { background:#101826; color:var(--text) }
+    .nav-item.active { background: var(--active); color: var(--text); border: 1px solid #243449 }
+    .mini { font-size:12px; color:var(--muted); padding: 4px 14px 0 }
+
+    /* Header */
+    header {
+      display:flex; align-items:center; justify-content:space-between; padding: 14px 18px; position: sticky; top:0; background: linear-gradient(180deg, rgba(11,15,20,.96), rgba(11,15,20,.8)); backdrop-filter: blur(4px); border-bottom: 1px solid var(--border);
+      z-index: 5;
     }
-    #actions button:hover, #actions .user-icon:hover {background:#eaeef5;}
-    #module-content {padding:24px 32px;}
-    .user-icon {
-      display:inline-flex; align-items:center; gap:7px;
+    .breadcrumbs { display:flex; gap:8px; align-items:center; color: var(--muted) }
+    .breadcrumbs .crumb { padding:6px 10px; border-radius:999px; border:1px solid var(--border); background:#0e141c }
+
+    .actions { display:flex; gap:8px; align-items:center }
+    .btn {
+      padding:9px 12px; border-radius:10px; border:1px solid var(--border); background: #101826; color:var(--text); cursor:pointer;
     }
-    .user-avatar {
-      width:26px; height:26px; border-radius:50%; background:#ccc; vertical-align:middle;
-      display:inline-block; margin-right:4px;
+    .btn.primary { background: linear-gradient(180deg, #183249, #112336); border-color:#27445f }
+    .btn.ghost { background: transparent }
+    .btn:disabled { opacity:.5; cursor:not-allowed }
+
+    /* Main area */
+    main { height: 100vh; overflow: auto; }
+    .grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; padding: 16px 18px 120px }
+    .tile { position:relative; border:1px solid var(--border); border-radius:16px; padding:14px; background: linear-gradient(180deg, rgba(33,52,74,.28), rgba(16,24,38,.8)), var(--card); cursor:pointer; min-height:120px; display:flex; flex-direction:column; gap:10px; transition:box-shadow 0.15s }
+    .tile:hover { outline:2px solid #24445f; box-shadow:0 4px 24px 0 rgba(76,201,240,.09) }
+    .tile .icon { font-size:32px }
+    .tile .title { font-weight:600 }
+    .pill { font-size:11px; padding:4px 8px; border-radius:999px; border:1px solid var(--border); color: var(--muted); background:#101826; margin-left:2px; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .app { grid-template-columns: 1fr }
+      aside { position: fixed; z-index: 30; width: 88%; max-width: 320px; inset: 0 auto 0 0; transform: translateX(-102%); transition: transform .25s ease }
+      aside.open { transform: translateX(0) }
+      header .menu { display:inline-flex }
     }
+    @media (min-width: 901px) { header .menu { display:none } }
   </style>
 </head>
 <body>
-<div class="container">
-  <!-- Sidebar -->
-  <nav id="sidebar">
-    <h2>Moduly</h2>
-    <ul id="modules-menu">
-      <li onclick="selectModule('pronajimatele')">Pronajímatelé</li>
-      <li onclick="selectModule('najemnici')">Nájemníci</li>
-      <li onclick="selectModule('finance')">Finance</li>
-      <li onclick="selectModule('energie')">Energie</li>
-      <li onclick="selectModule('udrzba')">Údržba</li>
-      <!-- Přidávejte další moduly zde -->
-    </ul>
-    <ul id="submenu" class="submenu" style="display:none;"></ul>
-  </nav>
-  <!-- Main window -->
-  <div id="main">
-    <!-- Top bar -->
-    <div id="topbar">
-      <span id="breadcrumb">Dashboard</span>
-      <div id="actions">
-        <button onclick="goBack()">Zpět</button>
-        <button onclick="addTile()">Přidat dlaždici</button>
-        <span class="user-icon" onclick="showUserMenu()">
-          <span class="user-avatar"></span>
-          <span id="user-name">Moje konto</span>
-        </span>
-      </div>
-    </div>
-    <!-- Content -->
-    <div id="module-content">
-      <!-- Default dashboard -->
-      <h2>Vítejte v aplikaci Správa nemovitostí!</h2>
-      <p>Zvolte modul v levém menu pro zobrazení jeho obsahu.</p>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside id="sidebar">
+      <div class="brand"><i>🏠</i><strong>Aplikace pronajímatel</strong></div>
+      <div id="nav"></div>
+      <div class="mini">Klik na sekci = otevře panel sekce. Klik na položku = otevře rovnou seznam.</div>
+    </aside>
+    <div style="display:flex; flex-direction:column">
+      <!-- Header -->
+      <header>
+        <div class="left" style="display:flex; align-items:center; gap:10px">
+          <button class="btn ghost menu" id="openMenu">☰</button>
+          <div class="breadcrumbs" id="crumbs">
+            <span class="crumb">Hlavní panel</span>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn" id="backHome" style="display:none">← Zpět</button>
+          <button class="btn" id="resetFilter">Zrušit filtr</button>
+          <button class="btn primary" id="addTile">+ Přidat dlaždici</button>
+        </div>
+      </header>
+      <!-- Main content -->
+      <main id="main"></main>
     </div>
   </div>
-</div>
-<script>
-  // Definice modulů a jejich podmenu
-  const modules = {
-    pronajimatele: {name:'Pronajímatelé', submenu:['Seznam','Detail','Nový záznam']},
-    najemnici: {name:'Nájemníci', submenu:['Seznam','Detail','Nový záznam']},
-    finance: {name:'Finance', submenu:['Přehled','Export']},
-    energie: {name:'Energie', submenu:['Grafy','Výpočty']},
-    udrzba: {name:'Údržba', submenu:['Seznam','Akce']}
-    // ... další moduly
-  };
-  let currentModule = null, currentSubmenu = null;
+  <script>
+    // Data pro sekce a dlaždice
+    const sections = [
+      { id: 'nemovitosti', title: 'Nemovitosti', open: true, items: [
+        { id: 'prehled-nemovitosti', title: 'Přehled', tag: 'nemovitosti' },
+        { id: 'jednotky', title: 'Jednotky / byty', tag: 'byty' },
+        { id: 'budovy', title: 'Budovy', tag: 'budovy' },
+        { id: 'volne', title: 'Volné jednotky', tag: 'volne' },
+      ]},
+      { id: 'najemnici', title: 'Nájemníci', open: true, items: [
+        { id: 'seznam-najemniku', title: 'Seznam nájemníků', tag: 'najemnici' },
+        { id: 'smlouvy', title: 'Smlouvy', tag: 'smlouvy' },
+        { id: 'ukonceni', title: 'Ukončení nájmů', tag: 'ukonceni' },
+      ]},
+      { id: 'finance', title: 'Finance', open: false, items: [
+        { id: 'prijmy', title: 'Nájemné a zálohy', tag: 'finance' },
+        { id: 'naklady', title: 'Náklady a služby', tag: 'naklady' },
+        { id: 'dluznici', title: 'Dlužníci', tag: 'dluhy' },
+        { id: 'vyuctovani', title: 'Vyúčtování služeb', tag: 'vyuctovani' },
+      ]},
+      { id: 'energie', title: 'Energie', open: false, items: [
+        { id: 'meridla', title: 'Měřidla a odečty', tag: 'energie' },
+        { id: 'spotreby', title: 'Spotřeby a grafy', tag: 'spotreby' },
+      ]},
+      { id: 'udrzba', title: 'Údržba', open: false, items: [
+        { id: 'ukoly', title: 'Úkoly a servis', tag: 'udrzba' },
+        { id: 'revize', title: 'Revize a prohlídky', tag: 'revize' },
+        { id: 'plan-revizi', title: 'Plán revizí', tag: 'plan-revizi' },
+      ]},
+      { id: 'dokumenty', title: 'Dokumenty', open: false, items: [
+        { id: 'slozky', title: 'Složky a šablony', tag: 'dokumenty' },
+      ]},
+      { id: 'reporty', title: 'Reporty', open: false, items: [
+        { id: 'exporty', title: 'Exporty a sestavy', tag: 'reporty' },
+      ]},
+      { id: 'komunikace', title: 'Komunikace', open: false, items: [
+        { id: 'zpravy', title: 'E‑maily a SMS', tag: 'komunikace' },
+        { id: 'pozadavky', title: 'Požadavky od nájemníků', tag: 'pozadavky' },
+      ]},
+      { id: 'nastaveni', title: 'Nastavení', open: false, items: [
+        { id: 'profil', title: 'Profil a uživatelé', tag: 'nastaveni' },
+        { id: 'integrace', title: 'Integrace (ARES apod.)', tag: 'integrace' },
+      ]}
+    ];
+    const tiles = [
+      { icon: '🏢', title: 'Byty – přehled', desc: 'Souhrn jednotek, obsazenost, nájemné', tags: ['byty','nemovitosti'] },
+      { icon: '👥', title: 'Nájemníci', desc: 'Seznam osob + kontakty', tags: ['najemnici'] },
+      { icon: '📄', title: 'Smlouvy', desc: 'Aktivní / končící smlouvy', tags: ['smlouvy'] },
+      { icon: '💶', title: 'Cashflow', desc: 'Nájemné, zálohy, nedoplatky', tags: ['finance'] },
+      { icon: '🧰', title: 'Údržba', desc: 'Opravy, požadavky, SLA', tags: ['udrzba'] },
+      { icon: '🧾', title: 'Revize', desc: 'Plynové, elektro, komíny…', tags: ['revize'] },
+      { icon: '⚙️', title: 'Integrace', desc: 'ARES, e‑maily, exporty', tags: ['integrace','nastaveni'] },
+      { icon: '🏠', title: 'Volné byty', desc: 'Marketing a inzerce', tags: ['volne','byty'] },
+      { icon: '📬', title: 'Požadavky nájemníků', desc: 'Příchozí hlášení závad', tags: ['pozadavky','udrzba'] },
+      { icon: '🧮', title: 'Vyúčtování služeb', desc: 'Voda, teplo, teplá voda…', tags: ['vyuctovani','finance'] },
+      { icon: '📉', title: 'Dlužníci', desc: 'Přehled nedoplatků', tags: ['dluhy','finance'] },
+      { icon: '🔌', title: 'Měřidla a odečty', desc: 'Evidence měřidel, odečty', tags: ['energie'] },
+      { icon: '📊', title: 'Spotřeby a grafy', desc: 'Vizualizace energií', tags: ['spotreby','energie'] },
+      { icon: '🗂️', title: 'Dokumenty', desc: 'Složky, šablony, archiv', tags: ['dokumenty'] },
+      { icon: '📤', title: 'Reporty a exporty', desc: 'CSV, PDF, účetnictví', tags: ['reporty'] },
+      { icon: '📨', title: 'E‑maily & SMS', desc: 'Hromadná i cílená komunikace', tags: ['komunikace'] },
+      { icon: '📝', title: 'Ukončení nájmů', desc: 'Výpovědi, převzetí, předávací protokoly', tags: ['ukonceni','smlouvy'] }
+    ];
 
-  function selectModule(moduleKey) {
-    currentModule = moduleKey;
-    currentSubmenu = null;
-    // Změna aktivní položky
-    document.querySelectorAll('#modules-menu li').forEach(li => li.classList.remove('active'));
-    const lis = document.querySelectorAll('#modules-menu li');
-    Object.keys(modules).forEach((key, idx) => {
-      if (key === moduleKey) lis[idx].classList.add('active');
-    });
-    // Zobraz submenu
-    const submenu = modules[moduleKey].submenu;
-    const submenuEl = document.getElementById('submenu');
-    submenuEl.innerHTML = submenu.map(item => `<li onclick="selectSubmenu('${item}')">${item}</li>`).join('');
-    submenuEl.style.display = 'block';
-    // Změna breadcrumb
-    document.getElementById('breadcrumb').textContent = modules[moduleKey].name;
-    // Změna obsahu
-    document.getElementById('module-content').innerHTML = `<h2>${modules[moduleKey].name}</h2>
-      <p>Zvolte akci v podmenu vlevo.</p>`;
-  }
+    // State
+    let view = { mode: 'home', sectionId: null, listId: null };
 
-  function selectSubmenu(submenuItem) {
-    currentSubmenu = submenuItem;
-    document.getElementById('breadcrumb').textContent =
-      modules[currentModule].name + ' > ' + submenuItem;
-    document.getElementById('module-content').innerHTML = `<h2>${modules[currentModule].name} – ${submenuItem}</h2>
-      <p>Zde bude obsah pro <b>${submenuItem}</b> modulu <b>${modules[currentModule].name}</b>.</p>`;
-  }
-
-  function goBack() {
-    if (currentSubmenu) {
-      selectModule(currentModule);
-      document.getElementById('breadcrumb').textContent = modules[currentModule].name;
-    } else if (currentModule) {
-      // Zpět na dashboard
-      currentModule = null;
-      document.getElementById('modules-menu').querySelectorAll('li').forEach(li => li.classList.remove('active'));
-      document.getElementById('submenu').style.display = 'none';
-      document.getElementById('breadcrumb').textContent = 'Dashboard';
-      document.getElementById('module-content').innerHTML = `<h2>Vítejte v aplikaci Správa nemovitostí!</h2>
-        <p>Zvolte modul v levém menu pro zobrazení jeho obsahu.</p>`;
+    // Sidebar render
+    function renderNav() {
+      const nav = document.getElementById('nav');
+      nav.innerHTML = '';
+      sections.forEach(sec => {
+        const s = document.createElement('div');
+        s.className = 'section' + (sec.open ? ' open' : '');
+        const head = document.createElement('div');
+        head.className = 'section-header';
+        head.innerHTML = `<span class="chev">▶</span> <strong>${sec.title}</strong>`;
+        head.onclick = () => {
+          sec.open = !sec.open;
+          renderNav();
+          setView('section', sec.id);
+        };
+        s.appendChild(head);
+        const box = document.createElement('div');
+        box.className = 'section-items';
+        sec.items.forEach(it => {
+          const item = document.createElement('div');
+          item.className = 'nav-item';
+          item.innerHTML = `<span>•</span> <span>${it.title}</span>`;
+          item.onclick = () => {
+            setView('list', it.id);
+          };
+          box.appendChild(item);
+        });
+        s.appendChild(box);
+        nav.appendChild(s);
+      });
     }
-  }
-  function addTile() {
-    alert('Funkce přidání dlaždice bude dostupná později.');
-  }
-  function showUserMenu() {
-    alert('Zde bude nastavení účtu, změna hesla atd.');
-  }
-</script>
+
+    // Main render
+    function renderMain() {
+      const main = document.getElementById('main');
+      main.innerHTML = '';
+      if (view.mode === 'home') {
+        const grid = document.createElement('div');
+        grid.className = 'grid';
+        tiles.forEach(t => {
+          const tile = document.createElement('div');
+          tile.className = 'tile';
+          tile.innerHTML = `
+            <div class="icon">${t.icon}</div>
+            <div class="title">${t.title}</div>
+            <div class="desc" style="color:var(--muted)">${t.desc}</div>
+            <div>${(t.tags || []).map(tag => `<span class="pill">#${tag}</span>`).join(' ')}</div>
+          `;
+          grid.appendChild(tile);
+        });
+        main.appendChild(grid);
+      } else if (view.mode === 'section') {
+        const sec = sections.find(s => s.id === view.sectionId);
+        if (!sec) return;
+        const grid = document.createElement('div');
+        grid.className = 'grid';
+        sec.items.forEach(it => {
+          const card = document.createElement('div');
+          card.className = 'tile';
+          card.innerHTML = `
+            <div class="icon">📁</div>
+            <div class="title">${it.title}</div>
+            <div style="color:var(--muted)">#${it.tag}</div>
+          `;
+          grid.appendChild(card);
+        });
+        main.appendChild(grid);
+      } else if (view.mode === 'list') {
+        main.innerHTML = `<h2 style="padding:24px">Zde bude seznam nebo detail položky <span style="color:var(--accent)">"${view.listId}"</span> (propojení na formulář).</h2>`;
+      }
+    }
+
+    // Breadcrumbs
+    function renderCrumbs() {
+      const crumbs = document.getElementById('crumbs');
+      crumbs.innerHTML = '';
+      crumbs.appendChild(makeCrumb('Hlavní panel'));
+      if (view.mode === 'section') {
+        const sec = sections.find(s => s.id === view.sectionId);
+        if (sec) crumbs.appendChild(makeCrumb(sec.title));
+      }
+      if (view.mode === 'list') {
+        const sec = sections.find(s => s.items.some(i => i.id === view.listId));
+        if (sec) crumbs.appendChild(makeCrumb(sec.title));
+        const it = sec?.items.find(i => i.id === view.listId);
+        if (it) crumbs.appendChild(makeCrumb(it.title));
+      }
+      document.getElementById('backHome').style.display = (view.mode === 'home') ? 'none' : 'inline-flex';
+    }
+    function makeCrumb(text) {
+      const sp = document.createElement('span');
+      sp.className = 'crumb';
+      sp.textContent = text;
+      return sp;
+    }
+
+    // View switching
+    function setView(mode, payload) {
+      view.mode = mode;
+      if (mode === 'section') view.sectionId = payload;
+      else if (mode === 'list') view.listId = payload;
+      else { view.sectionId = null; view.listId = null; }
+      renderMain();
+      renderCrumbs();
+    }
+
+    // Controls
+    document.getElementById('backHome').onclick = () => setView('home');
+    document.getElementById('resetFilter').onclick = () => setView('home');
+    document.getElementById('addTile').onclick = () => alert('Přidání dlaždice – funkce bude doplněna.');
+    document.getElementById('openMenu').onclick = () => document.getElementById('sidebar').classList.add('open');
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth <= 900) {
+        const aside = document.getElementById('sidebar');
+        if (aside && !aside.contains(e.target) && !e.target.closest('#openMenu')) {
+          aside.classList.remove('open');
+        }
+      }
+    });
+
+    // Init
+    renderNav();
+    setView('home');
+  </script>
 </body>
 </html>
