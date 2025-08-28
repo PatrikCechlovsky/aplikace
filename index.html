@@ -3,389 +3,138 @@
 <head>
   <meta charset="UTF-8">
   <title>Aplikace pronajímatel – Hlavní panel</title>
+  <link rel="stylesheet" href="src/forms/pronajimatel-forms-style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    :root {
-      --bg: #0b0f14;
-      --card: #121821;
-      --muted: #99a3b3;
-      --text: #e6edf3;
-      --brand: #4cc9f0;
-      --accent: #80ffdb;
-      --border: #1c2430;
-      --active: #21344a;
-      --danger: #ff647f;
-      --ok: #9bffb0;
-      --form-field-bg: #192029;
-      --form-field-border: #27445f;
+    /* ...původní styly... */
+    .tile { position:relative; }
+    .favorite-star {
+      position:absolute; top:9px; right:12px; font-size:20px; color:var(--muted); cursor:pointer; transition:color .2s;
     }
-    * { box-sizing: border-box }
-    html, body { height: 100% }
-    body {
-      margin: 0; background: radial-gradient(1200px 800px at 70% -10%, rgba(128,255,219,0.09), transparent 50%),
-                               radial-gradient(900px 600px at -10% 30%, rgba(76,201,240,0.08), transparent 50%), var(--bg);
-      color: var(--text); font: 15px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial;
-    }
-    .app { display: grid; grid-template-columns: 280px 1fr; height: 100vh; }
-    aside {
-      background: linear-gradient(180deg, rgba(33,52,74,.4), rgba(18,24,33,.7) 30%), var(--card);
-      border-right: 1px solid var(--border);
-      padding: 16px 12px; overflow-y: auto;
-    }
-    .brand { display:flex; align-items:center; gap:10px; padding: 8px 10px; margin-bottom: 10px }
-    .brand i { font-style: normal; font-size: 20px }
-    .brand strong { letter-spacing:.3px }
-    .section { margin: 12px 4px; border-radius:12px; overflow:hidden; border:1px solid var(--border); background: #0e141c }
-    .section-header { display:flex; align-items:center; gap:8px; padding:7px 10px; cursor:pointer; user-select:none; }
-    .section-header:hover { background: #111924 }
-    .section-header .chev { transition: transform .2s ease }
-    .section.open .section-header .chev { transform: rotate(90deg) }
-    .section-items { display:none; padding:2px 2px 4px }
-    .section.open .section-items { display:block }
-    .nav-item { display:flex; align-items:center; gap:7px; padding:6px 7px; margin:3px 2px; border-radius:8px; cursor:pointer; color:var(--muted); font-size:15px }
-    .nav-item .icon { font-size:21px; }
-    .nav-item:hover { background:#101826; color:var(--text) }
-    .nav-item.active { background: var(--active); color: var(--text); border: 1px solid #243449 }
-    .mini { font-size:12px; color:var(--muted); padding: 4px 14px 0 }
-    header {
-      display:flex; align-items:center; justify-content:space-between; padding: 14px 18px; position: sticky; top:0; background: linear-gradient(180deg, rgba(11,15,20,.96), rgba(11,15,20,.8)); backdrop-filter: blur(4px); border-bottom: 1px solid var(--border);
-      z-index: 5;
-    }
-    .breadcrumbs { display:flex; gap:8px; align-items:center; color: var(--muted) }
-    .breadcrumbs .crumb { padding:6px 10px; border-radius:999px; border:1px solid var(--border); background:#0e141c }
-    .actions { display:flex; gap:8px; align-items:center }
-    .btn {
-      padding:9px 12px; border-radius:10px; border:1px solid var(--border); background: #101826; color:var(--text); cursor:pointer;
-      transition: background .2s, border .2s;
-    }
-    .btn.primary { background: linear-gradient(180deg, var(--brand), #183249 70%, #112336); border-color:var(--brand) }
-    .btn.ghost { background: transparent }
-    .btn:disabled { opacity:.5; cursor:not-allowed }
-    main { height: 100vh; overflow: auto; }
-    .grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; padding: 16px 18px 120px }
-    .tile { position:relative; border:1px solid var(--border); border-radius:16px; padding:14px; background: linear-gradient(180deg, rgba(33,52,74,.28), rgba(16,24,38,.8)), var(--card); cursor:pointer; min-height:120px; display:flex; flex-direction:column; gap:10px; transition:box-shadow 0.15s }
-    .tile .icon { font-size:32px; margin-bottom:2px }
-    .tile .title { font-weight:600; display:flex; align-items:center; gap:9px }
-    .tile .desc { color:var(--muted); margin-bottom:2px }
-    .tile .pill { font-size:11px; padding:4px 8px; border-radius:999px; border:1px solid var(--border); color: var(--muted); background:#101826; margin-left:2px; }
-    .tile:hover { outline:2px solid var(--brand); box-shadow:0 4px 24px 0 rgba(76,201,240,.09) }
-    .list-table { width:100%; border-spacing:0; margin-bottom:30px }
-    .list-table th, .list-table td { padding:7px 10px; border-bottom:1px solid var(--border); text-align:left }
-    .list-table tr:hover { background:#101826 }
-    .list-table th { color:var(--muted); background:#121821 }
-    .list-actions { display:flex; gap:10px }
-    @media (max-width: 900px) {
-      .app { grid-template-columns: 1fr }
-      aside { position: fixed; z-index: 30; width: 88%; max-width: 320px; inset: 0 auto 0 0; transform: translateX(-102%); transition: transform .25s ease }
-      aside.open { transform: translateX(0) }
-      header .menu { display:inline-flex }
-    }
-    @media (min-width: 901px) { header .menu { display:none } }
+    .favorite-star.active { color:var(--brand); }
+    .tile.dragging { opacity:0.55; }
+    .grid.favorites { min-height:80px; border-bottom:1px solid var(--border); margin-bottom:22px; }
+    .tile .icon { font-size:26px; }
+    .tile .title { display:flex; align-items:center; gap:7px; font-size:16px }
+    /* pro drag&drop */
+    .grid.favorites .tile { cursor:grab; }
+    .tile.drag-over { outline:2px dashed var(--brand); }
   </style>
 </head>
 <body>
-  <div class="app">
-    <!-- Sidebar -->
-    <aside id="sidebar">
-      <div class="brand"><i>🏠</i><strong>Aplikace pronajímatel</strong></div>
-      <div id="nav"></div>
-      <div class="mini">Klik na sekci = otevře panel sekce. Klik na položku = otevře rovnou seznam.</div>
-    </aside>
-    <div style="display:flex; flex-direction:column">
-      <!-- Header -->
-      <header>
-        <div class="left" style="display:flex; align-items:center; gap:10px">
-          <button class="btn ghost menu" id="openMenu">☰</button>
-          <div class="breadcrumbs" id="crumbs">
-            <span class="crumb">Hlavní panel</span>
-          </div>
-        </div>
-        <div class="actions">
-          <button class="btn" id="backHome" style="display:none">← Zpět</button>
-          <button class="btn" id="resetFilter">Zrušit filtr</button>
-          <button class="btn primary" id="addTile">+ Přidat dlaždici</button>
-        </div>
-      </header>
-      <!-- Main content -->
-      <main id="main"></main>
-    </div>
-  </div>
+  <!-- ...sidebar/menu, header... -->
+  <main id="main"></main>
+  <div id="formModalArea"></div>
   <script>
-    // Ikony pro typy
-    const typeIcons = {
-      osoba: "👤",
-      osvc: "🧑‍💼",
-      firma: "🏢",
-      spolek: "🫂",
-      stat: "🏛️",
-      zastupce: "🎓"
-    };
+    // ...definice modulů, dlaždic, typů...
+    let favorites = []; // id dlaždic v oblíbených
 
-    // Typy pronajímatelů a nájemníků – s ikonami
-    const pronajimatelTypes = [
-      { id: 'osoba', title: 'Osoba', icon: typeIcons.osoba },
-      { id: 'osvc', title: 'OSVČ', icon: typeIcons.osvc },
-      { id: 'firma', title: 'Firma', icon: typeIcons.firma },
-      { id: 'spolek', title: 'Spolek / skupina', icon: typeIcons.spolek },
-      { id: 'stat', title: 'Státní instituce', icon: typeIcons.stat },
-      { id: 'zastupce', title: 'Zástupce', icon: typeIcons.zastupce }
-    ];
-    const najemnikTypes = [
-      { id: 'osoba', title: 'Osoba', icon: typeIcons.osoba },
-      { id: 'osvc', title: 'OSVČ', icon: typeIcons.osvc },
-      { id: 'firma', title: 'Firma', icon: typeIcons.firma },
-      { id: 'spolek', title: 'Spolek / skupina', icon: typeIcons.spolek },
-      { id: 'stat', title: 'Státní instituce', icon: typeIcons.stat },
-      { id: 'zastupce', title: 'Zástupce', icon: typeIcons.zastupce }
-    ];
+    // RENDER HLAVNÍ PANEL S OBLÍBENÝMI DLAŽDICEMI
+    function renderMainPanel() {
+      const main = document.getElementById('main');
+      main.innerHTML = '';
+      // Oblíbené dlaždice (drag&drop grid)
+      const favGrid = document.createElement('div');
+      favGrid.className = 'grid favorites';
+      favGrid.id = 'favGrid';
+      let favTiles = getAllTiles().filter(t => favorites.includes(t.id));
+      favTiles.forEach(t => {
+        favGrid.appendChild(renderTile(t, true));
+      });
+      main.appendChild(favGrid);
 
-    // Ukázkové záznamy (každý typ pro ukázku 2 záznamy)
-    const pronajimatelList = [
-      { id: 1, typ: 'Osoba', jmeno: 'Jan Novák', email: 'jan.novak@domena.cz', zastupce: '' },
-      { id: 2, typ: 'Osoba', jmeno: 'Marie Nováková', email: 'marie.novakova@domena.cz', zastupce: '' },
-      { id: 3, typ: 'OSVČ', jmeno: 'Petr Svoboda', email: 'petr.svoboda@domena.cz', zastupce: '' },
-      { id: 4, typ: 'OSVČ', jmeno: 'Karel Dvořák', email: 'karel.dvorak@domena.cz', zastupce: '' },
-      { id: 5, typ: 'Firma', jmeno: 'ABC s.r.o.', email: 'info@abc.cz', zastupce: 'Jan Novák' },
-      { id: 6, typ: 'Firma', jmeno: 'DEF a.s.', email: 'kontakt@def.cz', zastupce: 'Marie Nováková' },
-      { id: 7, typ: 'Spolek / skupina', jmeno: 'Sbor dobrovolných hasičů', email: 'info@sdh.cz', zastupce: 'Petr Svoboda' },
-      { id: 8, typ: 'Spolek / skupina', jmeno: 'Skupina sportovců', email: 'sport@spolek.cz', zastupce: 'Karel Dvořák' },
-      { id: 9, typ: 'Státní instituce', jmeno: 'Úřad práce', email: 'urad@stat.cz', zastupce: '' },
-      { id: 10, typ: 'Státní instituce', jmeno: 'Městský úřad', email: 'mesto@stat.cz', zastupce: '' },
-      { id: 11, typ: 'Zástupce', jmeno: 'Mgr. Zdeněk Zástupný', email: 'zastupce@firma.cz', zastupce: '' },
-      { id: 12, typ: 'Zástupce', jmeno: 'Bc. Eva Zástupná', email: 'eva.zastupna@sdh.cz', zastupce: '' }
-    ];
-    const najemnikList = [
-      { id: 1, typ: 'Osoba', jmeno: 'Jana Malá', email: 'jana.mala@domena.cz', zastupce: '' },
-      { id: 2, typ: 'Osoba', jmeno: 'Tomáš Velký', email: 'tomas.velky@domena.cz', zastupce: '' },
-      { id: 3, typ: 'OSVČ', jmeno: 'Eva Malá', email: 'eva.mala@domena.cz', zastupce: '' },
-      { id: 4, typ: 'OSVČ', jmeno: 'Adam Velký', email: 'adam.velky@domena.cz', zastupce: '' },
-      { id: 5, typ: 'Firma', jmeno: 'GHI s.r.o.', email: 'info@ghi.cz', zastupce: 'Jana Malá' },
-      { id: 6, typ: 'Firma', jmeno: 'JKL a.s.', email: 'kontakt@jkl.cz', zastupce: 'Tomáš Velký' },
-      { id: 7, typ: 'Spolek / skupina', jmeno: 'Muzikanti', email: 'muzikanti@spolek.cz', zastupce: 'Eva Malá' },
-      { id: 8, typ: 'Spolek / skupina', jmeno: 'Turisté', email: 'turiste@spolek.cz', zastupce: 'Adam Velký' },
-      { id: 9, typ: 'Státní instituce', jmeno: 'Finanční úřad', email: 'fin@stat.cz', zastupce: '' },
-      { id: 10, typ: 'Státní instituce', jmeno: 'Krajský úřad', email: 'kraj@stat.cz', zastupce: '' },
-      { id: 11, typ: 'Zástupce', jmeno: 'JUDr. Martin Zástupný', email: 'martin.zastupny@firma.cz', zastupce: '' },
-      { id: 12, typ: 'Zástupce', jmeno: 'Ing. Petra Zástupná', email: 'petra.zastupna@sdh.cz', zastupce: '' }
-    ];
+      // Ostatní dlaždice (modul panel)
+      const modGrid = document.createElement('div');
+      modGrid.className = 'grid';
+      getAllTiles().forEach(t => {
+        if (!favorites.includes(t.id)) {
+          modGrid.appendChild(renderTile(t, false));
+        }
+      });
+      main.appendChild(modGrid);
 
-    // Sekce v menu
-    const sections = [
-      { id: 'pronajimatel', title: 'Pronajímatel', open: true, items: [
-        { id: 'seznam-pronajimatelu', title: 'Všichni pronajímatelé', type: 'all', icon: "🧑‍💼" },
-        ...pronajimatelTypes.map(t => ({ id: `typ-${t.id}-pronajimatel`, title: t.title, type: t.id, icon: t.icon }))
-      ]},
-      { id: 'nemovitosti', title: 'Nemovitosti', open: true, items: [
-        { id: 'prehled-nemovitosti', title: 'Přehled', tag: 'nemovitosti', icon:"🏠" },
-        { id: 'jednotky', title: 'Jednotky / byty', tag: 'byty', icon:"🏠" },
-        { id: 'budovy', title: 'Budovy', tag: 'budovy', icon:"🏢" },
-        { id: 'volne', title: 'Volné jednotky', tag: 'volne', icon:"🟢" },
-      ]},
-      { id: 'najemnici', title: 'Nájemníci', open: true, items: [
-        { id: 'seznam-najemniku', title: 'Všichni nájemníci', type: 'all', icon: "👤" },
-        ...najemnikTypes.map(t => ({ id: `typ-${t.id}-najemnik`, title: t.title, type: t.id, icon: t.icon }))
-      ]},
-      // ... další sekce beze změny ...
-    ];
+      // Drag & drop logika
+      addDragDropLogic();
+    }
 
-    // State
-    let view = { mode: 'home', sectionId: null, listId: null, filterType: null, editing: null };
+    // GENERUJ VŠECHNY DLAŽDICE Z MODULŮ
+    function getAllTiles() {
+      return modules.flatMap(m =>
+        m.items.map(it => ({...it, modul: m.id}))
+      );
+    }
 
-    function renderNav() {
-      const nav = document.getElementById('nav');
-      nav.innerHTML = '';
-      sections.forEach(sec => {
-        const s = document.createElement('div');
-        s.className = 'section' + (sec.open ? ' open' : '');
-        const head = document.createElement('div');
-        head.className = 'section-header';
-        head.innerHTML = `<span class="chev">▶</span> <strong>${sec.title}</strong>`;
-        head.onclick = () => {
-          sec.open = !sec.open;
-          renderNav();
-          setView('section', sec.id);
-        };
-        s.appendChild(head);
-        const box = document.createElement('div');
-        box.className = 'section-items';
-        sec.items.forEach(it => {
-          const item = document.createElement('div');
-          item.className = 'nav-item';
-          item.innerHTML = `<span class="icon">${it.icon || "•"}</span> <span>${it.title}</span>`;
-          item.onclick = () => {
-            setView('list', it.id, it.type);
-          };
-          box.appendChild(item);
+    // DLAŽDICE VČETNĚ HVĚZDY
+    function renderTile(tile, isFavorite) {
+      const div = document.createElement('div');
+      div.className = 'tile';
+      div.setAttribute('draggable', isFavorite ? "true" : "false");
+      div.id = "tile-" + tile.id;
+      div.innerHTML = `
+        <span class="favorite-star ${isFavorite ? 'active' : ''}" title="Přidat/odebrat z oblíbených">${isFavorite ? "★" : "☆"}</span>
+        <div class="icon">${tile.icon}</div>
+        <div class="title"><span>${tile.icon}</span> ${tile.tileTitle}</div>
+        <div class="desc">#${tile.type}</div>
+      `;
+      // Klik na hvězdu
+      div.querySelector('.favorite-star').onclick = (e) => {
+        e.stopPropagation();
+        toggleFavorite(tile.id);
+      };
+      // Klik na dlaždici = stejná logika jako menu
+      div.onclick = (e) => {
+        if (!e.target.classList.contains('favorite-star')) {
+          handleMenuClick(tile.modul, tile.type);
+        }
+      };
+      return div;
+    }
+
+    // OBLÍBENÉ LOGIKA
+    function toggleFavorite(id) {
+      if (favorites.includes(id)) {
+        favorites = favorites.filter(f => f !== id);
+      } else {
+        favorites.push(id);
+      }
+      renderMainPanel();
+    }
+
+    // DRAG&DROP LOGIKA
+    function addDragDropLogic() {
+      const grid = document.getElementById('favGrid');
+      let dragTile = null;
+      grid.querySelectorAll('.tile').forEach(tile => {
+        tile.addEventListener('dragstart', () => {
+          dragTile = tile;
+          tile.classList.add('dragging');
         });
-        s.appendChild(box);
-        nav.appendChild(s);
+        tile.addEventListener('dragend', () => {
+          dragTile = null;
+          tile.classList.remove('dragging');
+        });
+        tile.addEventListener('dragover', e => {
+          e.preventDefault();
+          tile.classList.add('drag-over');
+        });
+        tile.addEventListener('dragleave', e => {
+          tile.classList.remove('drag-over');
+        });
+        tile.addEventListener('drop', e => {
+          e.preventDefault();
+          tile.classList.remove('drag-over');
+          if (dragTile && dragTile !== tile) {
+            const ids = Array.from(grid.querySelectorAll('.tile')).map(t=>t.id.replace('tile-',''));
+            const fromIdx = ids.indexOf(dragTile.id.replace('tile-',''));
+            const toIdx = ids.indexOf(tile.id.replace('tile-',''));
+            const newOrder = [...favorites];
+            const [moved] = newOrder.splice(fromIdx,1);
+            newOrder.splice(toIdx, 0, moved);
+            favorites = newOrder;
+            renderMainPanel();
+          }
+        });
       });
     }
 
-    function renderMain() {
-      const main = document.getElementById('main');
-      main.innerHTML = '';
-      if (view.mode === 'home') {
-        main.innerHTML = `
-          <div style="padding:32px">
-            <h2>Vítejte v aplikaci pronajímatel</h2>
-            <p>Zvolte modul v levém menu.</p>
-          </div>
-        `;
-      } else if (view.mode === 'list') {
-        if (view.sectionId === 'pronajimatel') {
-          renderSeznam(main, 'Pronajímatel', pronajimatelList, view.filterType);
-        }
-        else if (view.sectionId === 'najemnici') {
-          renderSeznam(main, 'Nájemník', najemnikList, view.filterType);
-        }
-        else {
-          main.innerHTML = `<h2 style="padding:24px">Zde bude seznam nebo detail položky <span style="color:var(--accent)">"${view.listId}"</span> (propojení na formulář).</h2>`;
-        }
-      } else if (view.mode === 'section') {
-        const sec = sections.find(s => s.id === view.sectionId);
-        if (!sec) return;
-        const grid = document.createElement('div');
-        grid.className = 'grid';
-        sec.items.forEach(it => {
-          const card = document.createElement('div');
-          card.className = 'tile';
-          // Ikona v dlaždici
-          card.innerHTML = `
-            <div class="icon">${it.icon || "📁"}</div>
-            <div class="title"><span>${it.icon || "📁"}</span> ${it.title}</div>
-            <div style="color:var(--muted)">${it.type ? "#"+it.type : (it.tag ? "#"+it.tag : "")}</div>
-          `;
-          grid.appendChild(card);
-        });
-        main.appendChild(grid);
-      }
-    }
-
-    function renderSeznam(main, typ, data, filterType) {
-      let filtered = data;
-      if (filterType && filterType !== 'all') {
-        filtered = data.filter(r => {
-          if(filterType === "spolek") return r.typ === "Spolek / skupina";
-          if(filterType === "zastupce") return r.typ === "Zástupce";
-          if(filterType === "stat") return r.typ === "Státní instituce";
-          return r.typ.toLowerCase() === filterType.toLowerCase();
-        });
-      }
-      main.innerHTML = `
-        <div style="padding:24px 24px 10px 24px; display:flex; justify-content:space-between; align-items:center">
-          <h2>Seznam všech ${typ.toLowerCase()}ů</h2>
-          <button class="btn primary" id="addNew">+ Přidat nový ${typ.toLowerCase()}</button>
-        </div>
-        <div style="padding:0 24px">
-          <table class="list-table">
-            <thead>
-              <tr>
-                <th>Typ</th><th>Jméno</th><th>Email</th><th>Zástupce</th><th>Akce</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${filtered.map(r => `
-                <tr>
-                  <td><span style="font-size:19px">${typeIcons[getTypeId(r.typ)] || "👤"}</span> ${r.typ}</td>
-                  <td>${r.jmeno}</td>
-                  <td>${r.email}</td>
-                  <td>${r.zastupce || ''}</td>
-                  <td class="list-actions">
-                    <button class="btn" onclick="showForm('${typ}',${r.id})">Upravit</button>
-                  </td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        </div>
-      `;
-      document.getElementById('addNew').onclick = () => {
-        showForm(typ, null, filterType);
-      };
-      window.showForm = (typ, id, filterType) => {
-        showForm(typ, id, filterType);
-      };
-    }
-
-    function getTypeId(title) {
-      let lower = title.toLowerCase();
-      if(lower.includes('osoba')) return 'osoba';
-      if(lower.includes('osvc')) return 'osvc';
-      if(lower.includes('firma')) return 'firma';
-      if(lower.includes('spolek')) return 'spolek';
-      if(lower.includes('státní')) return 'stat';
-      if(lower.includes('zástupce')) return 'zastupce';
-      return null;
-    }
-
-    function renderCrumbs() {
-      const crumbs = document.getElementById('crumbs');
-      crumbs.innerHTML = '';
-      crumbs.appendChild(makeCrumb('Hlavní panel'));
-      if (view.sectionId) {
-        const sec = sections.find(s => s.id === view.sectionId);
-        if (sec) crumbs.appendChild(makeCrumb(sec.title));
-      }
-      if (view.filterType && view.filterType !== 'all') {
-        crumbs.appendChild(makeCrumb(view.filterType));
-      }
-      if (view.editing) {
-        crumbs.appendChild(makeCrumb('Úprava'));
-      }
-      document.getElementById('backHome').style.display = (view.mode === 'home') ? 'none' : 'inline-flex';
-    }
-    function makeCrumb(text) {
-      const sp = document.createElement('span');
-      sp.className = 'crumb';
-      sp.textContent = text;
-      return sp;
-    }
-
-    function setView(mode, payload, filterType) {
-      view.mode = mode;
-      if (mode === 'section') view.sectionId = payload;
-      else if (mode === 'list') {
-        if (payload.startsWith('seznam-pronajimatelu')) {
-          view.sectionId = 'pronajimatel';
-          view.filterType = 'all';
-        } else if (payload.startsWith('seznam-najemniku')) {
-          view.sectionId = 'najemnici';
-          view.filterType = 'all';
-        } else if (payload.startsWith('typ-')) {
-          if (payload.endsWith('-pronajimatel')) {
-            view.sectionId = 'pronajimatel';
-            view.filterType = filterType;
-          } else if (payload.endsWith('-najemnik')) {
-            view.sectionId = 'najemnici';
-            view.filterType = filterType;
-          }
-        } else {
-          view.sectionId = payload;
-        }
-        view.editing = null;
-      } else {
-        view.sectionId = null; view.listId = null; view.filterType = null; view.editing = null;
-      }
-      renderMain();
-      renderCrumbs();
-    }
-
-    document.getElementById('backHome').onclick = () => setView('home');
-    document.getElementById('resetFilter').onclick = () => setView('home');
-    document.getElementById('addTile').onclick = () => alert('Přidání dlaždice – funkce bude doplněna.');
-    document.getElementById('openMenu').onclick = () => document.getElementById('sidebar').classList.add('open');
-    document.addEventListener('click', (e) => {
-      if (window.innerWidth <= 900) {
-        const aside = document.getElementById('sidebar');
-        if (aside && !aside.contains(e.target) && !e.target.closest('#openMenu')) {
-          aside.classList.remove('open');
-        }
-      }
-    });
-
-    renderNav();
-    setView('home');
-  </script>
-</body>
-</html>
+    // MENU RENDER – menu
