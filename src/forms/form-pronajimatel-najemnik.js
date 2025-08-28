@@ -1,90 +1,53 @@
-.pronajimatel-form {
-  background: var(--card, #121821);
-  border-radius: 14px;
-  box-shadow: 0 4px 24px 0 rgba(76,201,240,.09);
-  padding: 24px 18px;
-  color: var(--text, #e6edf3);
-  display: flex;
-  flex-direction: column;
-  gap: 0.8em;
-  max-width: 440px;
-  margin: 0 auto;
-}
-.pronajimatel-form h2 {
-  margin-bottom: 16px;
-  font-size: 1.4em;
-  color: var(--brand, #4cc9f0);
-  font-weight: 600;
-  letter-spacing: 0.03em;
-}
-.form-row {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  margin-bottom: 14px;
-}
-.form-row label {
-  font-size: 1em;
-  color: var(--text, #e6edf3);
-  font-weight: 500;
-  margin-bottom: 2px;
-  padding-left: 2px;
-}
-.form-row .star {
-  color: #ECA10A;
-  margin-left: 2px;
-  font-size: 1em;
-  font-weight: 700;
-}
-.form-row input[type="text"],
-.form-row input[type="email"],
-.form-row input[type="number"] {
-  font-size: 1em;
-  padding: 9px 12px;
-  border-radius: 8px;
-  border: 1.5px solid var(--brand, #4cc9f0);
-  background: var(--card, #121821);
-  color: var(--text, #e6edf3);
-  transition: border 0.2s, box-shadow .2s;
-  outline: none;
-  margin: 0;
-  box-sizing: border-box;
-}
-.form-row input:focus {
-  border-color: var(--accent, #80ffdb);
-  background: #0e141c;
-  box-shadow: 0 1px 6px 0 rgba(128,255,219,0.08);
-}
-.form-row input[readonly] {
-  background: #181f2c;
-  color: #a3b3c9;
-}
-.form-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 18px;
-}
-.form-actions .btn {
-  padding: 10px 16px;
-  border-radius: 9px;
-  border: 1px solid var(--brand, #4cc9f0);
-  background: linear-gradient(180deg, var(--brand, #4cc9f0), #183249 70%, #112336);
-  color: var(--text, #e6edf3);
-  cursor: pointer;
-  font-size: 1em;
-  font-weight: 500;
-  transition: background .2s, border .2s;
-}
-.form-actions .btn.secondary {
-  background: #101826;
-  border: 1px solid var(--accent, #80ffdb);
-  color: var(--accent, #80ffdb);
-}
-@media (max-width: 600px) {
-  .pronajimatel-form {
-    padding: 12px 4vw;
-    max-width: 98vw;
+/**
+ * Dynamické zobrazení polí ve formuláři podle typu a modulu.
+ * Použití: setupForm({module: 'pronajimatel', type: 'firma'})
+ */
+
+function setupForm({ module = 'pronajimatel', type = 'firma' }) {
+  // Nastav nadpis
+  const titleMap = {
+    pronajimatel: 'Nový pronajímatel',
+    najemnik: 'Nový nájemník',
+  };
+  const typeLabels = {
+    firma: 'Firma',
+    'statni-instituce': 'Státní instituce',
+    osoba: 'Osoba',
+    osvc: 'OSVČ',
+    spolek: 'Spolek/skupina',
+  };
+  document.getElementById('formTitle').textContent = `${titleMap[module] || 'Nový záznam'} – ${typeLabels[type] || type}`;
+
+  // Zobraz jen relevantní pole
+  document.querySelectorAll('.form-row').forEach(row => {
+    const allowed = (row.dataset.types || '').split(' ');
+    if (allowed.includes(type)) {
+      row.style.display = '';
+      // Povinná pole mají hvězdičku
+      row.querySelectorAll('input').forEach(input => {
+        if (input.hasAttribute('required')) {
+          row.querySelector('.star')?.classList.add('visible');
+        }
+      });
+    } else {
+      row.style.display = 'none';
+    }
+  });
+
+  // Zrušítko
+  const cancel = document.getElementById('formCancel');
+  if (cancel) {
+    cancel.onclick = () => {
+      document.getElementById('mainForm').reset();
+      if (typeof closeFormModal === 'function') closeFormModal();
+    };
   }
-  .pronajimatel-form h2 { font-size:1.1em; }
-  .form-row input { font-size:0.95em; }
+
+  // Submit
+  document.getElementById('mainForm').onsubmit = function(e) {
+    e.preventDefault();
+    // Tady dej logiku pro uložení dat
+    alert('Formulář odeslán!');
+    if (typeof closeFormModal === 'function') closeFormModal();
+  };
 }
