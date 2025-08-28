@@ -5,18 +5,19 @@
   <title>Aplikace pronajímatel – Hlavní panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    /* VZHLED ZŮSTÁVÁ STEJNÝ JAKO V TVÉ VERZI */
     :root {
       --bg: #0b0f14;
       --card: #121821;
       --muted: #99a3b3;
       --text: #e6edf3;
-      --brand: #4cc9f0;
+      --brand: #4cc9f0; /* Hlavní barva, lze měnit v nastavení */
       --accent: #80ffdb;
       --border: #1c2430;
       --active: #21344a;
       --danger: #ff647f;
       --ok: #9bffb0;
+      --form-field-bg: #192029;
+      --form-field-border: #27445f;
     }
     * { box-sizing: border-box }
     html, body { height: 100% }
@@ -54,17 +55,42 @@
     .actions { display:flex; gap:8px; align-items:center }
     .btn {
       padding:9px 12px; border-radius:10px; border:1px solid var(--border); background: #101826; color:var(--text); cursor:pointer;
+      transition: background .2s, border .2s;
     }
-    .btn.primary { background: linear-gradient(180deg, #183249, #112336); border-color:#27445f }
+    .btn.primary { background: linear-gradient(180deg, var(--brand), #183249 70%, #112336); border-color:var(--brand) }
     .btn.ghost { background: transparent }
     .btn:disabled { opacity:.5; cursor:not-allowed }
     main { height: 100vh; overflow: auto; }
     .grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; padding: 16px 18px 120px }
     .tile { position:relative; border:1px solid var(--border); border-radius:16px; padding:14px; background: linear-gradient(180deg, rgba(33,52,74,.28), rgba(16,24,38,.8)), var(--card); cursor:pointer; min-height:120px; display:flex; flex-direction:column; gap:10px; transition:box-shadow 0.15s }
-    .tile:hover { outline:2px solid #24445f; box-shadow:0 4px 24px 0 rgba(76,201,240,.09) }
+    .tile:hover { outline:2px solid var(--brand); box-shadow:0 4px 24px 0 rgba(76,201,240,.09) }
     .tile .icon { font-size:32px }
     .tile .title { font-weight:600 }
     .pill { font-size:11px; padding:4px 8px; border-radius:999px; border:1px solid var(--border); color: var(--muted); background:#101826; margin-left:2px; }
+    .list-table { width:100%; border-spacing:0; margin-bottom:30px }
+    .list-table th, .list-table td { padding:7px 10px; border-bottom:1px solid var(--border); text-align:left }
+    .list-table tr:hover { background:#101826 }
+    .list-table th { color:var(--muted); background:#121821 }
+    .list-actions { display:flex; gap:10px }
+    .form-modal {
+      position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,.55); z-index: 1000; display: flex; align-items: center; justify-content: center;
+    }
+    .form-modal-content {
+      background: var(--card); border-radius: 14px; box-shadow: 0 4px 32px 0 rgba(76,201,240,.19); padding: 40px 32px 24px 32px; min-width:320px; max-width: 440px;
+      border:2px solid var(--brand);
+      position: relative;
+    }
+    .form-modal-close {
+      position: absolute; top: 18px; right: 18px; font-size:22px; color:var(--muted); background: none; border: none; cursor: pointer;
+    }
+    .form-label { display: block; margin: 0 0 9px 0; color: var(--text); font-weight:500 }
+    .form-field {
+      width: 100%; padding: 10px; border-radius: 8px; background: var(--form-field-bg); border: 1.5px solid var(--form-field-border); color: var(--text); font-size:16px; margin-bottom:14px;
+      transition: border .2s;
+    }
+    .form-field:focus { border-color: var(--brand); outline: none; }
+    .form-modal-content h3 { margin-bottom: 18px; color: var(--brand); }
+    .color-picker-label { display: flex; align-items: center; gap:10px; margin: 14px 0 4px 0; font-size:15px }
     @media (max-width: 900px) {
       .app { grid-template-columns: 1fr }
       aside { position: fixed; z-index: 30; width: 88%; max-width: 320px; inset: 0 auto 0 0; transform: translateX(-102%); transition: transform .25s ease }
@@ -101,16 +127,62 @@
       <main id="main"></main>
     </div>
   </div>
+  <div id="formModalArea"></div>
   <script>
-    // Úprava: MODULY-LICENCE – přidán modul Nemovitosti mezi Pronajímatel a Nájemník
-    const modulyLicence = [
-      { id: 'pronajimatel', title: 'Pronajímatel', desc: 'Správa pronajímatelů', icon: '🧑‍💼' },
-      { id: 'nemovitosti', title: 'Nemovitosti', desc: 'Správa nemovitostí, jednotek, budov', icon: '🏢' }, // <-- nový modul zde
-      { id: 'najemnik', title: 'Nájemník', desc: 'Správa nájemníků', icon: '👤' }
+    // Typy pronajímatelů a nájemníků – doplněno Spolek/skupina a Zástupce
+    const pronajimatelTypes = [
+      { id: 'osoba', title: 'Osoba', form: 'form-osoba.html' },
+      { id: 'osvc', title: 'OSVČ', form: 'form-osvc.html' },
+      { id: 'firma', title: 'Firma', form: 'form-firma.html' },
+      { id: 'spolek', title: 'Spolek / skupina', form: 'form-spolek.html' },
+      { id: 'stat', title: 'Státní instituce', form: null }, // zatím neexistuje
+      { id: 'zastupce', title: 'Zástupce', form: 'form-zastupce.html' }
+    ];
+    const najemnikTypes = [
+      { id: 'osoba', title: 'Osoba', form: 'form-osoba.html' },
+      { id: 'osvc', title: 'OSVČ', form: 'form-osvc.html' },
+      { id: 'firma', title: 'Firma', form: 'form-firma.html' },
+      { id: 'spolek', title: 'Spolek / skupina', form: 'form-spolek.html' },
+      { id: 'stat', title: 'Státní instituce', form: null }, // zatím neexistuje
+      { id: 'zastupce', title: 'Zástupce', form: 'form-zastupce.html' }
     ];
 
-    // Data pro sekce a dlaždice – zůstává dle původní verze
+    // Ukázkové záznamy (každý typ pro ukázku 2 záznamy)
+    const pronajimatelList = [
+      { id: 1, typ: 'Osoba', jmeno: 'Jan Novák', email: 'jan.novak@domena.cz', zastupce: '' },
+      { id: 2, typ: 'Osoba', jmeno: 'Marie Nováková', email: 'marie.novakova@domena.cz', zastupce: '' },
+      { id: 3, typ: 'OSVČ', jmeno: 'Petr Svoboda', email: 'petr.svoboda@domena.cz', zastupce: '' },
+      { id: 4, typ: 'OSVČ', jmeno: 'Karel Dvořák', email: 'karel.dvorak@domena.cz', zastupce: '' },
+      { id: 5, typ: 'Firma', jmeno: 'ABC s.r.o.', email: 'info@abc.cz', zastupce: 'Jan Novák' },
+      { id: 6, typ: 'Firma', jmeno: 'DEF a.s.', email: 'kontakt@def.cz', zastupce: 'Marie Nováková' },
+      { id: 7, typ: 'Spolek / skupina', jmeno: 'Sbor dobrovolných hasičů', email: 'info@sdh.cz', zastupce: 'Petr Svoboda' },
+      { id: 8, typ: 'Spolek / skupina', jmeno: 'Skupina sportovců', email: 'sport@spolek.cz', zastupce: 'Karel Dvořák' },
+      { id: 9, typ: 'Státní instituce', jmeno: 'Úřad práce', email: 'urad@stat.cz', zastupce: '' },
+      { id: 10, typ: 'Státní instituce', jmeno: 'Městský úřad', email: 'mesto@stat.cz', zastupce: '' },
+      { id: 11, typ: 'Zástupce', jmeno: 'Mgr. Zdeněk Zástupný', email: 'zastupce@firma.cz', zastupce: '' },
+      { id: 12, typ: 'Zástupce', jmeno: 'Bc. Eva Zástupná', email: 'eva.zastupna@sdh.cz', zastupce: '' }
+    ];
+    const najemnikList = [
+      { id: 1, typ: 'Osoba', jmeno: 'Jana Malá', email: 'jana.mala@domena.cz', zastupce: '' },
+      { id: 2, typ: 'Osoba', jmeno: 'Tomáš Velký', email: 'tomas.velky@domena.cz', zastupce: '' },
+      { id: 3, typ: 'OSVČ', jmeno: 'Eva Malá', email: 'eva.mala@domena.cz', zastupce: '' },
+      { id: 4, typ: 'OSVČ', jmeno: 'Adam Velký', email: 'adam.velky@domena.cz', zastupce: '' },
+      { id: 5, typ: 'Firma', jmeno: 'GHI s.r.o.', email: 'info@ghi.cz', zastupce: 'Jana Malá' },
+      { id: 6, typ: 'Firma', jmeno: 'JKL a.s.', email: 'kontakt@jkl.cz', zastupce: 'Tomáš Velký' },
+      { id: 7, typ: 'Spolek / skupina', jmeno: 'Muzikanti', email: 'muzikanti@spolek.cz', zastupce: 'Eva Malá' },
+      { id: 8, typ: 'Spolek / skupina', jmeno: 'Turisté', email: 'turiste@spolek.cz', zastupce: 'Adam Velký' },
+      { id: 9, typ: 'Státní instituce', jmeno: 'Finanční úřad', email: 'fin@stat.cz', zastupce: '' },
+      { id: 10, typ: 'Státní instituce', jmeno: 'Krajský úřad', email: 'kraj@stat.cz', zastupce: '' },
+      { id: 11, typ: 'Zástupce', jmeno: 'JUDr. Martin Zástupný', email: 'martin.zastupny@firma.cz', zastupce: '' },
+      { id: 12, typ: 'Zástupce', jmeno: 'Ing. Petra Zástupná', email: 'petra.zastupna@sdh.cz', zastupce: '' }
+    ];
+
+    // Sekce v menu
     const sections = [
+      { id: 'pronajimatel', title: 'Pronajímatel', open: true, items: [
+        { id: 'seznam-pronajimatelu', title: 'Seznam všech pronajímatelů', type: 'all', icon: '🧑‍💼' },
+        ...pronajimatelTypes.map(t => ({ id: `typ-${t.id}-pronajimatel`, title: t.title, type: t.id, icon: '🔸' }))
+      ]},
       { id: 'nemovitosti', title: 'Nemovitosti', open: true, items: [
         { id: 'prehled-nemovitosti', title: 'Přehled', tag: 'nemovitosti' },
         { id: 'jednotky', title: 'Jednotky / byty', tag: 'byty' },
@@ -118,9 +190,8 @@
         { id: 'volne', title: 'Volné jednotky', tag: 'volne' },
       ]},
       { id: 'najemnici', title: 'Nájemníci', open: true, items: [
-        { id: 'seznam-najemniku', title: 'Seznam nájemníků', tag: 'najemnici' },
-        { id: 'smlouvy', title: 'Smlouvy', tag: 'smlouvy' },
-        { id: 'ukonceni', title: 'Ukončení nájmů', tag: 'ukonceni' },
+        { id: 'seznam-najemniku', title: 'Seznam všech nájemníků', type: 'all', icon: '👤' },
+        ...najemnikTypes.map(t => ({ id: `typ-${t.id}-najemnik`, title: t.title, type: t.id, icon: '🔸' }))
       ]},
       { id: 'finance', title: 'Finance', open: false, items: [
         { id: 'prijmy', title: 'Nájemné a zálohy', tag: 'finance' },
@@ -150,57 +221,16 @@
       { id: 'nastaveni', title: 'Nastavení', open: false, items: [
         { id: 'profil', title: 'Profil a uživatelé', tag: 'nastaveni' },
         { id: 'integrace', title: 'Integrace (ARES apod.)', tag: 'integrace' },
+        { id: 'barva', title: 'Barvy aplikace', tag: 'barva' }
       ]}
-    ];
-    const tiles = [
-      { icon: '🏢', title: 'Byty – přehled', desc: 'Souhrn jednotek, obsazenost, nájemné', tags: ['byty','nemovitosti'] },
-      { icon: '👥', title: 'Nájemníci', desc: 'Seznam osob + kontakty', tags: ['najemnici'] },
-      { icon: '📄', title: 'Smlouvy', desc: 'Aktivní / končící smlouvy', tags: ['smlouvy'] },
-      { icon: '💶', title: 'Cashflow', desc: 'Nájemné, zálohy, nedoplatky', tags: ['finance'] },
-      { icon: '🧰', title: 'Údržba', desc: 'Opravy, požadavky, SLA', tags: ['udrzba'] },
-      { icon: '🧾', title: 'Revize', desc: 'Plynové, elektro, komíny…', tags: ['revize'] },
-      { icon: '⚙️', title: 'Integrace', desc: 'ARES, e‑maily, exporty', tags: ['integrace','nastaveni'] },
-      { icon: '🏠', title: 'Volné byty', desc: 'Marketing a inzerce', tags: ['volne','byty'] },
-      { icon: '📬', title: 'Požadavky nájemníků', desc: 'Příchozí hlášení závad', tags: ['pozadavky','udrzba'] },
-      { icon: '🧮', title: 'Vyúčtování služeb', desc: 'Voda, teplo, teplá voda…', tags: ['vyuctovani','finance'] },
-      { icon: '📉', title: 'Dlužníci', desc: 'Přehled nedoplatků', tags: ['dluhy','finance'] },
-      { icon: '🔌', title: 'Měřidla a odečty', desc: 'Evidence měřidel, odečty', tags: ['energie'] },
-      { icon: '📊', title: 'Spotřeby a grafy', desc: 'Vizualizace energií', tags: ['spotreby','energie'] },
-      { icon: '🗂️', title: 'Dokumenty', desc: 'Složky, šablony, archiv', tags: ['dokumenty'] },
-      { icon: '📤', title: 'Reporty a exporty', desc: 'CSV, PDF, účetnictví', tags: ['reporty'] },
-      { icon: '📨', title: 'E‑maily & SMS', desc: 'Hromadná i cílená komunikace', tags: ['komunikace'] },
-      { icon: '📝', title: 'Ukončení nájmů', desc: 'Výpovědi, převzetí, předávací protokoly', tags: ['ukonceni','smlouvy'] }
     ];
 
     // State
-    let view = { mode: 'home', sectionId: null, listId: null };
+    let view = { mode: 'home', sectionId: null, listId: null, filterType: null, editing: null };
 
-    // Sidebar render
     function renderNav() {
       const nav = document.getElementById('nav');
       nav.innerHTML = '';
-      // MODULY-LICENCE sekce
-      const licenceSection = document.createElement('div');
-      licenceSection.className = 'section open';
-      const head = document.createElement('div');
-      head.className = 'section-header';
-      head.innerHTML = `<span class="chev">▶</span> <strong>Moduly – licence</strong>`;
-      licenceSection.appendChild(head);
-      const box = document.createElement('div');
-      box.className = 'section-items';
-      modulyLicence.forEach(modul => {
-        const item = document.createElement('div');
-        item.className = 'nav-item';
-        item.innerHTML = `<span>${modul.icon}</span> <span>${modul.title}</span>`;
-        item.onclick = () => {
-          setView('modul', modul.id);
-        };
-        box.appendChild(item);
-      });
-      licenceSection.appendChild(box);
-      nav.appendChild(licenceSection);
-
-      // Ostatní sekce (zbytek menu)
       sections.forEach(sec => {
         const s = document.createElement('div');
         s.className = 'section' + (sec.open ? ' open' : '');
@@ -218,9 +248,9 @@
         sec.items.forEach(it => {
           const item = document.createElement('div');
           item.className = 'nav-item';
-          item.innerHTML = `<span>•</span> <span>${it.title}</span>`;
+          item.innerHTML = `<span>${it.icon || "•"}</span> <span>${it.title}</span>`;
           item.onclick = () => {
-            setView('list', it.id);
+            setView('list', it.id, it.type);
           };
           box.appendChild(item);
         });
@@ -229,38 +259,28 @@
       });
     }
 
-    // Main render
     function renderMain() {
       const main = document.getElementById('main');
       main.innerHTML = '';
       if (view.mode === 'home') {
-        const grid = document.createElement('div');
-        grid.className = 'grid';
-        tiles.forEach(t => {
-          const tile = document.createElement('div');
-          tile.className = 'tile';
-          tile.innerHTML = `
-            <div class="icon">${t.icon}</div>
-            <div class="title">${t.title}</div>
-            <div class="desc" style="color:var(--muted)">${t.desc}</div>
-            <div>${(t.tags || []).map(tag => `<span class="pill">#${tag}</span>`).join(' ')}</div>
-          `;
-          grid.appendChild(tile);
-        });
-        main.appendChild(grid);
-      } else if (view.mode === 'modul') {
-        // MODULY-LICENCE detail
-        const modul = modulyLicence.find(m => m.id === view.sectionId || m.id === view.listId || m.id === view.modulId || m.id === view.modul);
-        const modId = view.sectionId || view.listId || view.modulId || view.modul || view.listId;
-        const m = modulyLicence.find(m => m.id === modId);
-        if (!m) return;
         main.innerHTML = `
           <div style="padding:32px">
-            <h2 style="margin-bottom:12px">${m.icon} ${m.title}</h2>
-            <div style="color:var(--muted); margin-bottom:12px">${m.desc}</div>
-            <div>Zde bude detail modulu <strong>${m.title}</strong> (propojení na další obsah, formuláře apod.)</div>
+            <h2>Vítejte v aplikaci pronajímatel</h2>
+            <p>Zvolte modul v levém menu.</p>
           </div>
         `;
+      } else if (view.mode === 'list') {
+        if (view.sectionId === 'pronajimatel') {
+          renderSeznam(main, 'Pronajímatel', pronajimatelList, view.filterType);
+        }
+        else if (view.sectionId === 'najemnici') {
+          renderSeznam(main, 'Nájemník', najemnikList, view.filterType);
+        } else if (view.sectionId === 'nastaveni' && view.filterType === 'barva') {
+          renderColorSettings(main);
+        }
+        else {
+          main.innerHTML = `<h2 style="padding:24px">Zde bude seznam nebo detail položky <span style="color:var(--accent)">"${view.listId}"</span> (propojení na formulář).</h2>`;
+        }
       } else if (view.mode === 'section') {
         const sec = sections.find(s => s.id === view.sectionId);
         if (!sec) return;
@@ -272,34 +292,178 @@
           card.innerHTML = `
             <div class="icon">📁</div>
             <div class="title">${it.title}</div>
-            <div style="color:var(--muted)">#${it.tag}</div>
+            <div style="color:var(--muted)">${it.type ? "#"+it.type : (it.tag ? "#"+it.tag : "")}</div>
           `;
           grid.appendChild(card);
         });
         main.appendChild(grid);
-      } else if (view.mode === 'list') {
-        main.innerHTML = `<h2 style="padding:24px">Zde bude seznam nebo detail položky <span style="color:var(--accent)">"${view.listId}"</span> (propojení na formulář).</h2>`;
       }
     }
 
-    // Breadcrumbs
+    function renderSeznam(main, typ, data, filterType) {
+      let filtered = data;
+      if (filterType && filterType !== 'all') {
+        filtered = data.filter(r => {
+          if(filterType === "spolek") return r.typ === "Spolek / skupina";
+          if(filterType === "zastupce") return r.typ === "Zástupce";
+          if(filterType === "stat") return r.typ === "Státní instituce";
+          return r.typ.toLowerCase() === filterType.toLowerCase();
+        });
+      }
+      main.innerHTML = `
+        <div style="padding:24px 24px 10px 24px; display:flex; justify-content:space-between; align-items:center">
+          <h2>Seznam všech ${typ.toLowerCase()}ů</h2>
+          <button class="btn primary" id="addNew">+ Přidat nový ${typ.toLowerCase()}</button>
+        </div>
+        <div style="padding:0 24px">
+          <table class="list-table">
+            <thead>
+              <tr><th>Typ</th><th>Jméno</th><th>Email</th><th>Zástupce</th><th>Akce</th></tr>
+            </thead>
+            <tbody>
+              ${filtered.map(r => `
+                <tr>
+                  <td>${r.typ}</td>
+                  <td>${r.jmeno}</td>
+                  <td>${r.email}</td>
+                  <td>${r.zastupce || ''}</td>
+                  <td class="list-actions">
+                    <button class="btn" onclick="showForm('${typ}',${r.id})">Upravit</button>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+      document.getElementById('addNew').onclick = () => {
+        showForm(typ, null, filterType);
+      };
+      window.showForm = (typ, id, filterType) => {
+        showForm(typ, id, filterType);
+      };
+    }
+
+    // MODÁLNÍ FORMULÁŘ
+    function showForm(typ, id, filterType) {
+      // Zjisti záznam
+      let record = null, types = null, data = null;
+      if(typ === 'Pronajímatel') { types = pronajimatelTypes; data = pronajimatelList; }
+      else if(typ === 'Nájemník') { types = najemnikTypes; data = najemnikList; }
+      if(id) record = data.find(x => x.id === id);
+      let typeId = filterType || (record ? getTypeId(record.typ) : null);
+      let typeObj = typeId ? types.find(t => t.title === record?.typ || t.id === typeId) : null;
+      let formFile = typeObj?.form || null;
+      // Státní instituce – nemá form
+      if(typeId === "stat" || (record && record.typ === "Státní instituce")) {
+        return showModal(`<h3>Formulář není připraven</h3><div style="margin-bottom:18px">Pro „Státní instituci“ zatím není formulář dostupný.</div><button class="btn" onclick="closeModal()">Zavřít</button>`);
+      }
+      // Načti HTML formulář z /src/forms/
+      if(formFile) {
+        fetch(`src/forms/${formFile}`)
+          .then(res => res.text())
+          .then(html => {
+            // Vlož do modal s grafickou úpravou
+            showModal(`
+              <h3>${id ? 'Upravit' : 'Přidat'} ${typ.toLowerCase()}</h3>
+              <form id="mainForm">${html}</form>
+              <button class="btn primary" type="submit" form="mainForm">${id ? 'Uložit změny' : 'Přidat záznam'}</button>
+              <button class="btn" type="button" onclick="closeModal()">Zrušit</button>
+            `);
+            stylizeFormFields();
+            document.getElementById('mainForm').onsubmit = (e) => {
+              e.preventDefault();
+              alert('Záznam uložen (ukázka)');
+              closeModal();
+            };
+          });
+      } else {
+        // fallback jednoduchý form
+        showModal(`
+          <h3>${id ? 'Upravit' : 'Přidat'} ${typ.toLowercase()}</h3>
+          <form id="mainForm">
+            <label class="form-label">Typ: <input class="form-field" name="typ" value="${record?.typ || ''}" required></label>
+            <label class="form-label">Jméno: <input class="form-field" name="jmeno" value="${record?.jmeno || ''}" required></label>
+            <label class="form-label">Email: <input class="form-field" name="email" value="${record?.email || ''}" required></label>
+            <label class="form-label">Zástupce: <input class="form-field" name="zastupce" value="${record?.zastupce || ''}"></label>
+            <button class="btn primary" type="submit">${id ? 'Uložit změny' : 'Přidat záznam'}</button>
+            <button class="btn" type="button" onclick="closeModal()">Zrušit</button>
+          </form>
+        `);
+        stylizeFormFields();
+        document.getElementById('mainForm').onsubmit = (e) => {
+          e.preventDefault();
+          alert('Záznam uložen (ukázka)');
+          closeModal();
+        };
+      }
+    }
+
+    function getTypeId(title) {
+      let lower = title.toLowerCase();
+      if(lower.includes('osoba')) return 'osoba';
+      if(lower.includes('osvc')) return 'osvc';
+      if(lower.includes('firma')) return 'firma';
+      if(lower.includes('spolek')) return 'spolek';
+      if(lower.includes('státní')) return 'stat';
+      if(lower.includes('zástupce')) return 'zastupce';
+      return null;
+    }
+
+    function stylizeFormFields() {
+      // všechny input/select/textarea pole ve form dostanou třídu .form-field
+      setTimeout(() => {
+        document.querySelectorAll('#mainForm input, #mainForm select, #mainForm textarea').forEach(el => {
+          el.classList.add('form-field');
+        });
+        document.querySelectorAll('#mainForm label').forEach(el => {
+          el.classList.add('form-label');
+        });
+      }, 0);
+    }
+
+    function showModal(html) {
+      const area = document.getElementById('formModalArea');
+      area.innerHTML = `
+        <div class="form-modal">
+          <div class="form-modal-content">
+            <button class="form-modal-close" onclick="closeModal()">×</button>
+            ${html}
+          </div>
+        </div>
+      `;
+      window.closeModal = () => { area.innerHTML = ''; };
+    }
+
+    function renderColorSettings(main) {
+      main.innerHTML = `
+        <div style="padding:32px">
+          <h2>Nastavení barev aplikace</h2>
+          <label class="color-picker-label">Hlavní barva: <input type="color" id="brandColorPicker" value="${getComputedStyle(document.documentElement).getPropertyValue('--brand').trim()}"></label>
+          <div style="margin:16px 0 6px 0; color:var(--muted)">Změna barvy se projeví ihned v celé aplikaci.</div>
+        </div>
+      `;
+      setTimeout(() => {
+        document.getElementById('brandColorPicker').oninput = (e) => {
+          document.documentElement.style.setProperty('--brand', e.target.value);
+          renderMain();
+        };
+      }, 0);
+    }
+
     function renderCrumbs() {
       const crumbs = document.getElementById('crumbs');
       crumbs.innerHTML = '';
       crumbs.appendChild(makeCrumb('Hlavní panel'));
-      if (view.mode === 'modul') {
-        const m = modulyLicence.find(m => m.id === view.sectionId || m.id === view.listId || m.id === view.modulId || m.id === view.modul);
-        if (m) crumbs.appendChild(makeCrumb(m.title));
-      }
-      if (view.mode === 'section') {
+      if (view.sectionId) {
         const sec = sections.find(s => s.id === view.sectionId);
         if (sec) crumbs.appendChild(makeCrumb(sec.title));
       }
-      if (view.mode === 'list') {
-        const sec = sections.find(s => s.items.some(i => i.id === view.listId));
-        if (sec) crumbs.appendChild(makeCrumb(sec.title));
-        const it = sec?.items.find(i => i.id === view.listId);
-        if (it) crumbs.appendChild(makeCrumb(it.title));
+      if (view.filterType && view.filterType !== 'all') {
+        crumbs.appendChild(makeCrumb(view.filterType));
+      }
+      if (view.editing) {
+        crumbs.appendChild(makeCrumb('Úprava'));
       }
       document.getElementById('backHome').style.display = (view.mode === 'home') ? 'none' : 'inline-flex';
     }
@@ -310,18 +474,38 @@
       return sp;
     }
 
-    // View switching
-    function setView(mode, payload) {
+    function setView(mode, payload, filterType) {
       view.mode = mode;
-      if (mode === 'modul') view.modul = payload;
-      else if (mode === 'section') view.sectionId = payload;
-      else if (mode === 'list') view.listId = payload;
-      else { view.sectionId = null; view.listId = null; view.modul = null; }
+      if (mode === 'section') view.sectionId = payload;
+      else if (mode === 'list') {
+        if (payload.startsWith('seznam-pronajimatelu')) {
+          view.sectionId = 'pronajimatel';
+          view.filterType = 'all';
+        } else if (payload.startsWith('seznam-najemniku')) {
+          view.sectionId = 'najemnici';
+          view.filterType = 'all';
+        } else if (payload.startsWith('typ-')) {
+          if (payload.endsWith('-pronajimatel')) {
+            view.sectionId = 'pronajimatel';
+            view.filterType = filterType;
+          } else if (payload.endsWith('-najemnik')) {
+            view.sectionId = 'najemnici';
+            view.filterType = filterType;
+          }
+        } else if (payload === 'barva') {
+          view.sectionId = 'nastaveni';
+          view.filterType = 'barva';
+        } else {
+          view.sectionId = payload;
+        }
+        view.editing = null;
+      } else {
+        view.sectionId = null; view.listId = null; view.filterType = null; view.editing = null;
+      }
       renderMain();
       renderCrumbs();
     }
 
-    // Controls
     document.getElementById('backHome').onclick = () => setView('home');
     document.getElementById('resetFilter').onclick = () => setView('home');
     document.getElementById('addTile').onclick = () => alert('Přidání dlaždice – funkce bude doplněna.');
@@ -335,7 +519,6 @@
       }
     });
 
-    // Init
     renderNav();
     setView('home');
   </script>
