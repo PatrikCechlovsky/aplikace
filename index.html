@@ -2,20 +2,31 @@
 <html lang="cs">
 <head>
   <meta charset="UTF-8">
-  <title>Pronajímatel / Nájemník evidence</title>
+  <title>Aplikace pronajímatel – Hlavní panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="src/forms/style-pronajimatel-najemnik.css">
   <style>
+    :root {
+      --bg: #0b0f14;
+      --card: #121821;
+      --muted: #99a3b3;
+      --text: #e6edf3;
+      --brand: #4cc9f0;
+      --accent: #80ffdb;
+      --border: #1c2430;
+      --active: #21344a;
+    }
     body {
-      background: #161923;
-      color: #e6edf3;
-      font-family: "Segoe UI", "Arial", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font: 15px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial;
       margin: 0;
       min-height: 100vh;
     }
     .container {
       max-width: 700px;
       margin: 40px auto;
-      background: #161923;
+      background: #121821;
       border-radius: 18px;
       box-shadow: 0 6px 32px 0 rgba(76,201,240,.08);
       padding: 40px 30px 30px 30px;
@@ -49,6 +60,7 @@
       border-color: #80ffdb;
       color: #80ffdb;
     }
+    /* Modal styles */
     .modal {
       display: none;
       position: fixed;
@@ -68,6 +80,7 @@
       padding: 38px 24px;
       min-width: 320px;
       max-width: 95vw;
+      position: relative;
     }
     .modal-close {
       position: absolute;
@@ -91,38 +104,32 @@
     </div>
   </div>
 
+  <!-- Modal okno pro formulář -->
   <div class="modal" id="formModal">
     <div class="modal-content" id="modalContent">
       <span class="modal-close" id="modalClose">&times;</span>
-      <div id="modalArea">
-        <!-- Formulář se načítá sem -->
-      </div>
+      <div id="modalArea"></div>
     </div>
   </div>
 
-  <script src="src/forms/form-pronajimatel-najemnik.js"></script>
   <script>
-    // Funkce pro otevření modalu s formulářem
+    // MODAL FUNKCE
     function openFormModal(module, type) {
       fetch('src/forms/form-pronajimatel-najemnik.html')
         .then(res => res.text())
         .then(html => {
           document.getElementById('modalArea').innerHTML = html;
           document.getElementById('formModal').classList.add('active');
-          // Po načtení HTML zavolej setupForm
           setupForm({ module, type });
         });
     }
-
-    // Zavři modal
     function closeFormModal() {
       document.getElementById('formModal').classList.remove('active');
       document.getElementById('modalArea').innerHTML = '';
     }
-
     document.getElementById('modalClose').onclick = closeFormModal;
 
-    // Otevři správný formulář podle vybrané dlaždice
+    // Dlaždice kliknutí
     document.querySelectorAll('.tile').forEach(tile => {
       tile.onclick = () => {
         const module = tile.dataset.module;
@@ -131,10 +138,46 @@
       }
     });
 
-    // Zavři modal na kliknutí mimo obsah (volitelné)
+    // Zavření klikem mimo modal
     document.getElementById('formModal').addEventListener('click', function(e) {
       if (e.target === this) closeFormModal();
     });
+
+    // Funkce pro nastavení formuláře po načtení
+    function setupForm({ module = 'pronajimatel', type = 'firma' }) {
+      const titleMap = {
+        pronajimatel: 'Nový pronajímatel',
+        najemnik: 'Nový nájemník',
+      };
+      const typeLabels = {
+        firma: 'Firma',
+        'statni-instituce': 'Státní instituce',
+        osoba: 'Osoba',
+        osvc: 'OSVČ',
+        spolek: 'Spolek/skupina',
+      };
+      document.getElementById('formTitle').textContent =
+        `${titleMap[module] || 'Nový záznam'} – ${typeLabels[type] || type}`;
+      // Zobraz relevantní pole
+      document.querySelectorAll('.form-row').forEach(row => {
+        const allowed = (row.dataset.types || '').split(' ');
+        row.style.display = allowed.includes(type) ? '' : 'none';
+      });
+      // Zrušitko
+      const cancel = document.getElementById('formCancel');
+      if (cancel) {
+        cancel.onclick = () => {
+          document.getElementById('mainForm').reset();
+          closeFormModal();
+        };
+      }
+      // Submit
+      document.getElementById('mainForm').onsubmit = function(e) {
+        e.preventDefault();
+        alert('Formulář byl úspěšně odeslán!');
+        closeFormModal();
+      };
+    }
   </script>
 </body>
 </html>
