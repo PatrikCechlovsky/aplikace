@@ -5,6 +5,7 @@
   <title>Aplikace pronajímatel – Hlavní panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    /* VZHLED ZŮSTÁVÁ STEJNÝ JAKO V TVÉ VERZI */
     :root {
       --bg: #0b0f14;
       --card: #121821;
@@ -25,8 +26,6 @@
       color: var(--text); font: 15px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial;
     }
     .app { display: grid; grid-template-columns: 280px 1fr; height: 100vh; }
-
-    /* Sidebar */
     aside {
       background: linear-gradient(180deg, rgba(33,52,74,.4), rgba(18,24,33,.7) 30%), var(--card);
       border-right: 1px solid var(--border);
@@ -46,15 +45,12 @@
     .nav-item:hover { background:#101826; color:var(--text) }
     .nav-item.active { background: var(--active); color: var(--text); border: 1px solid #243449 }
     .mini { font-size:12px; color:var(--muted); padding: 4px 14px 0 }
-
-    /* Header */
     header {
       display:flex; align-items:center; justify-content:space-between; padding: 14px 18px; position: sticky; top:0; background: linear-gradient(180deg, rgba(11,15,20,.96), rgba(11,15,20,.8)); backdrop-filter: blur(4px); border-bottom: 1px solid var(--border);
       z-index: 5;
     }
     .breadcrumbs { display:flex; gap:8px; align-items:center; color: var(--muted) }
     .breadcrumbs .crumb { padding:6px 10px; border-radius:999px; border:1px solid var(--border); background:#0e141c }
-
     .actions { display:flex; gap:8px; align-items:center }
     .btn {
       padding:9px 12px; border-radius:10px; border:1px solid var(--border); background: #101826; color:var(--text); cursor:pointer;
@@ -62,8 +58,6 @@
     .btn.primary { background: linear-gradient(180deg, #183249, #112336); border-color:#27445f }
     .btn.ghost { background: transparent }
     .btn:disabled { opacity:.5; cursor:not-allowed }
-
-    /* Main area */
     main { height: 100vh; overflow: auto; }
     .grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; padding: 16px 18px 120px }
     .tile { position:relative; border:1px solid var(--border); border-radius:16px; padding:14px; background: linear-gradient(180deg, rgba(33,52,74,.28), rgba(16,24,38,.8)), var(--card); cursor:pointer; min-height:120px; display:flex; flex-direction:column; gap:10px; transition:box-shadow 0.15s }
@@ -71,8 +65,6 @@
     .tile .icon { font-size:32px }
     .tile .title { font-weight:600 }
     .pill { font-size:11px; padding:4px 8px; border-radius:999px; border:1px solid var(--border); color: var(--muted); background:#101826; margin-left:2px; }
-
-    /* Responsive */
     @media (max-width: 900px) {
       .app { grid-template-columns: 1fr }
       aside { position: fixed; z-index: 30; width: 88%; max-width: 320px; inset: 0 auto 0 0; transform: translateX(-102%); transition: transform .25s ease }
@@ -110,7 +102,14 @@
     </div>
   </div>
   <script>
-    // Data pro sekce a dlaždice
+    // Úprava: MODULY-LICENCE – přidán modul Nemovitosti mezi Pronajímatel a Nájemník
+    const modulyLicence = [
+      { id: 'pronajimatel', title: 'Pronajímatel', desc: 'Správa pronajímatelů', icon: '🧑‍💼' },
+      { id: 'nemovitosti', title: 'Nemovitosti', desc: 'Správa nemovitostí, jednotek, budov', icon: '🏢' }, // <-- nový modul zde
+      { id: 'najemnik', title: 'Nájemník', desc: 'Správa nájemníků', icon: '👤' }
+    ];
+
+    // Data pro sekce a dlaždice – zůstává dle původní verze
     const sections = [
       { id: 'nemovitosti', title: 'Nemovitosti', open: true, items: [
         { id: 'prehled-nemovitosti', title: 'Přehled', tag: 'nemovitosti' },
@@ -180,6 +179,28 @@
     function renderNav() {
       const nav = document.getElementById('nav');
       nav.innerHTML = '';
+      // MODULY-LICENCE sekce
+      const licenceSection = document.createElement('div');
+      licenceSection.className = 'section open';
+      const head = document.createElement('div');
+      head.className = 'section-header';
+      head.innerHTML = `<span class="chev">▶</span> <strong>Moduly – licence</strong>`;
+      licenceSection.appendChild(head);
+      const box = document.createElement('div');
+      box.className = 'section-items';
+      modulyLicence.forEach(modul => {
+        const item = document.createElement('div');
+        item.className = 'nav-item';
+        item.innerHTML = `<span>${modul.icon}</span> <span>${modul.title}</span>`;
+        item.onclick = () => {
+          setView('modul', modul.id);
+        };
+        box.appendChild(item);
+      });
+      licenceSection.appendChild(box);
+      nav.appendChild(licenceSection);
+
+      // Ostatní sekce (zbytek menu)
       sections.forEach(sec => {
         const s = document.createElement('div');
         s.className = 'section' + (sec.open ? ' open' : '');
@@ -227,6 +248,19 @@
           grid.appendChild(tile);
         });
         main.appendChild(grid);
+      } else if (view.mode === 'modul') {
+        // MODULY-LICENCE detail
+        const modul = modulyLicence.find(m => m.id === view.sectionId || m.id === view.listId || m.id === view.modulId || m.id === view.modul);
+        const modId = view.sectionId || view.listId || view.modulId || view.modul || view.listId;
+        const m = modulyLicence.find(m => m.id === modId);
+        if (!m) return;
+        main.innerHTML = `
+          <div style="padding:32px">
+            <h2 style="margin-bottom:12px">${m.icon} ${m.title}</h2>
+            <div style="color:var(--muted); margin-bottom:12px">${m.desc}</div>
+            <div>Zde bude detail modulu <strong>${m.title}</strong> (propojení na další obsah, formuláře apod.)</div>
+          </div>
+        `;
       } else if (view.mode === 'section') {
         const sec = sections.find(s => s.id === view.sectionId);
         if (!sec) return;
@@ -253,6 +287,10 @@
       const crumbs = document.getElementById('crumbs');
       crumbs.innerHTML = '';
       crumbs.appendChild(makeCrumb('Hlavní panel'));
+      if (view.mode === 'modul') {
+        const m = modulyLicence.find(m => m.id === view.sectionId || m.id === view.listId || m.id === view.modulId || m.id === view.modul);
+        if (m) crumbs.appendChild(makeCrumb(m.title));
+      }
       if (view.mode === 'section') {
         const sec = sections.find(s => s.id === view.sectionId);
         if (sec) crumbs.appendChild(makeCrumb(sec.title));
@@ -275,9 +313,10 @@
     // View switching
     function setView(mode, payload) {
       view.mode = mode;
-      if (mode === 'section') view.sectionId = payload;
+      if (mode === 'modul') view.modul = payload;
+      else if (mode === 'section') view.sectionId = payload;
       else if (mode === 'list') view.listId = payload;
-      else { view.sectionId = null; view.listId = null; }
+      else { view.sectionId = null; view.listId = null; view.modul = null; }
       renderMain();
       renderCrumbs();
     }
