@@ -1,228 +1,145 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Pronajímatel – aplikace</title>
+  <meta charset="UTF-8">
+  <title>Správa nemovitostí – Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    /* ... použij tvůj styl z hlavni.html ... */
-    /* zkráceno z důvodu délky */
+    body {margin:0; font-family:sans-serif; background:#f6f7fa;}
+    .container {display:flex; height:100vh;}
+    #sidebar {
+      width:260px; background:#223049; color:#fff; padding:0; display:flex; flex-direction:column;
+      border-right:1px solid #e0e4ed;
+    }
+    #sidebar h2 {margin:24px 0 10px 24px; font-size:1.2em;}
+    #sidebar ul {list-style:none; padding:0; margin:0;}
+    #sidebar li {padding:14px 24px; cursor:pointer; transition:background 0.1s;}
+    #sidebar li:hover, #sidebar li.active {background:#2c3e5c;}
+    .submenu {padding-left:24px; background:#223049;}
+    .submenu li {font-size:0.95em;}
+    #main {
+      flex:1; display:flex; flex-direction:column; background:#fff;
+      box-shadow:0 0 12px 0 #e0e4ed;
+    }
+    #topbar {
+      display:flex; align-items:center; justify-content:space-between; padding:16px 32px 12px 32px; background:#f6f7fa;
+      border-bottom:1px solid #e0e4ed; min-height:60px;
+    }
+    #breadcrumb {font-size:1em; color:#223049;}
+    #actions {display:flex; gap:12px;}
+    #actions button, #actions .user-icon {
+      background:#fff; border:1px solid #e0e4ed; border-radius:6px; padding:7px 16px; cursor:pointer;
+      font-size:0.95em; color:#223049; transition:background 0.2s;
+    }
+    #actions button:hover, #actions .user-icon:hover {background:#eaeef5;}
+    #module-content {padding:24px 32px;}
+    .user-icon {
+      display:inline-flex; align-items:center; gap:7px;
+    }
+    .user-avatar {
+      width:26px; height:26px; border-radius:50%; background:#ccc; vertical-align:middle;
+      display:inline-block; margin-right:4px;
+    }
   </style>
 </head>
 <body>
-  <div class="app" id="app">
-    <aside id="sidebar">
-      <div class="brand"><i>🏠</i><strong>Pronajímatel aplikace</strong></div>
-      <nav id="nav"></nav>
-      <div class="mini">Klik na typ pronajímatele pro zobrazení seznamu a přidání nového.</div>
-    </aside>
-    <div style="display:flex; flex-direction:column">
-      <header>
-        <div class="breadcrumbs" id="crumbs">
-          <span class="crumb">Hlavní panel</span>
-          <span class="crumb" id="crumbModule"></span>
-          <span class="crumb" id="crumbType"></span>
-        </div>
-      </header>
-      <main id="main"></main>
+<div class="container">
+  <!-- Sidebar -->
+  <nav id="sidebar">
+    <h2>Moduly</h2>
+    <ul id="modules-menu">
+      <li onclick="selectModule('pronajimatele')">Pronajímatelé</li>
+      <li onclick="selectModule('najemnici')">Nájemníci</li>
+      <li onclick="selectModule('finance')">Finance</li>
+      <li onclick="selectModule('energie')">Energie</li>
+      <li onclick="selectModule('udrzba')">Údržba</li>
+      <!-- Přidávejte další moduly zde -->
+    </ul>
+    <ul id="submenu" class="submenu" style="display:none;"></ul>
+  </nav>
+  <!-- Main window -->
+  <div id="main">
+    <!-- Top bar -->
+    <div id="topbar">
+      <span id="breadcrumb">Dashboard</span>
+      <div id="actions">
+        <button onclick="goBack()">Zpět</button>
+        <button onclick="addTile()">Přidat dlaždici</button>
+        <span class="user-icon" onclick="showUserMenu()">
+          <span class="user-avatar"></span>
+          <span id="user-name">Moje konto</span>
+        </span>
+      </div>
+    </div>
+    <!-- Content -->
+    <div id="module-content">
+      <!-- Default dashboard -->
+      <h2>Vítejte v aplikaci Správa nemovitostí!</h2>
+      <p>Zvolte modul v levém menu pro zobrazení jeho obsahu.</p>
     </div>
   </div>
-  <!-- Modální okno pro formulář -->
-  <div class="overlay" id="overlay"></div>
-  <div class="drawer" id="drawer">
-    <header>
-      <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 14px">
-        <strong id="drawerTitle">Nový pronajímatel</strong>
-        <button class="btn" id="closeDrawer">✕</button>
-      </div>
-    </header>
-    <div class="body" id="drawerBody"></div>
-  </div>
-  <script>
-    // Typy pronajímatelů
-    const types = [
-      { id: "osoba", icon: "🧑", title: "Osoba" },
-      { id: "osvc", icon: "🧑‍💼", title: "OSVČ" },
-      { id: "firma", icon: "🏢", title: "Firma" },
-      { id: "spolek", icon: "👥", title: "Spolek / Skupina" }
-    ];
-    // Společný seznam pronajímatelů
-    let pronajimatele = [
-      // Vzory pro ukázku (každý má typ)
-      { id: "p1", typ: "osoba", jmeno: "Jan Novák", prijmeni: "Novák", datum_narozeni: "12.12.1980", email: "novak@example.cz", archivovano: false },
-      { id: "p2", typ: "firma", jmeno_firmy: "Firma s.r.o.", ic: "12345678", email: "firma@example.cz", archivovano: false }
-    ];
+</div>
+<script>
+  // Definice modulů a jejich podmenu
+  const modules = {
+    pronajimatele: {name:'Pronajímatelé', submenu:['Seznam','Detail','Nový záznam']},
+    najemnici: {name:'Nájemníci', submenu:['Seznam','Detail','Nový záznam']},
+    finance: {name:'Finance', submenu:['Přehled','Export']},
+    energie: {name:'Energie', submenu:['Grafy','Výpočty']},
+    udrzba: {name:'Údržba', submenu:['Seznam','Akce']}
+    // ... další moduly
+  };
+  let currentModule = null, currentSubmenu = null;
 
-    // Helpery
-    function $(sel) { return document.querySelector(sel); }
-    function el(tag, attrs={}, children=[]) {
-      const n = document.createElement(tag);
-      Object.entries(attrs).forEach(([k,v]) => {
-        if (k === 'class') n.className = v;
-        else if (k.startsWith('on')) n.addEventListener(k.substring(2), v);
-        else if (k === 'html') n.innerHTML = v;
-        else n.setAttribute(k, v);
-      });
-      children.forEach(c => n.appendChild(typeof c === 'string' ? document.createTextNode(c) : c));
-      return n;
-    }
+  function selectModule(moduleKey) {
+    currentModule = moduleKey;
+    currentSubmenu = null;
+    // Změna aktivní položky
+    document.querySelectorAll('#modules-menu li').forEach(li => li.classList.remove('active'));
+    const lis = document.querySelectorAll('#modules-menu li');
+    Object.keys(modules).forEach((key, idx) => {
+      if (key === moduleKey) lis[idx].classList.add('active');
+    });
+    // Zobraz submenu
+    const submenu = modules[moduleKey].submenu;
+    const submenuEl = document.getElementById('submenu');
+    submenuEl.innerHTML = submenu.map(item => `<li onclick="selectSubmenu('${item}')">${item}</li>`).join('');
+    submenuEl.style.display = 'block';
+    // Změna breadcrumb
+    document.getElementById('breadcrumb').textContent = modules[moduleKey].name;
+    // Změna obsahu
+    document.getElementById('module-content').innerHTML = `<h2>${modules[moduleKey].name}</h2>
+      <p>Zvolte akci v podmenu vlevo.</p>`;
+  }
 
-    function renderNav() {
-      const nav = $('#nav');
-      nav.innerHTML = '';
-      types.forEach(t => {
-        nav.appendChild(el('div', { class:'nav-item', onClick:() => showType(t.id) }, [
-          el('span', { class:'icon' }, [t.icon]), t.title
-        ]));
-      });
-    }
+  function selectSubmenu(submenuItem) {
+    currentSubmenu = submenuItem;
+    document.getElementById('breadcrumb').textContent =
+      modules[currentModule].name + ' > ' + submenuItem;
+    document.getElementById('module-content').innerHTML = `<h2>${modules[currentModule].name} – ${submenuItem}</h2>
+      <p>Zde bude obsah pro <b>${submenuItem}</b> modulu <b>${modules[currentModule].name}</b>.</p>`;
+  }
 
-    function showType(typeId) {
-      const t = types.find(x=>x.id===typeId);
-      $('#crumbModule').textContent = "Pronajímatel";
-      $('#crumbType').textContent = t.title;
-      renderList(typeId);
+  function goBack() {
+    if (currentSubmenu) {
+      selectModule(currentModule);
+      document.getElementById('breadcrumb').textContent = modules[currentModule].name;
+    } else if (currentModule) {
+      // Zpět na dashboard
+      currentModule = null;
+      document.getElementById('modules-menu').querySelectorAll('li').forEach(li => li.classList.remove('active'));
+      document.getElementById('submenu').style.display = 'none';
+      document.getElementById('breadcrumb').textContent = 'Dashboard';
+      document.getElementById('module-content').innerHTML = `<h2>Vítejte v aplikaci Správa nemovitostí!</h2>
+        <p>Zvolte modul v levém menu pro zobrazení jeho obsahu.</p>`;
     }
-
-    function renderList(typeId) {
-      const main = $('#main');
-      main.innerHTML = '';
-      const t = types.find(x=>x.id===typeId);
-      const filter = pronajimatele.filter(x=>x.typ===typeId && !x.archivovano);
-      // Toolbar
-      main.appendChild(el('div', { class:'toolbar' }, [
-        el('strong', {}, [t.icon + ' ' + t.title]),
-        el('span', { class:'spacer' }),
-        el('button', { class:'btn primary', onClick:() => openForm(typeId) }, ['+ Přidat ' + t.title])
-      ]));
-      // Tabulka
-      const table = el('table');
-      const thead = el('thead');
-      const trh = el('tr');
-      if (typeId === "osoba") {
-        ["Jméno","Příjmení","Datum narození","Email","Akce"].forEach(h=>trh.appendChild(el('th', {}, [h])));
-      } else if (typeId === "firma") {
-        ["Název firmy","IČ","Email","Akce"].forEach(h=>trh.appendChild(el('th', {}, [h])));
-      } else if (typeId === "osvc") {
-        ["Jméno","Příjmení","IČ","Email","Akce"].forEach(h=>trh.appendChild(el('th', {}, [h])));
-      } else if (typeId === "spolek") {
-        ["Název spolku","IČ","Email","Akce"].forEach(h=>trh.appendChild(el('th', {}, [h])));
-      }
-      thead.appendChild(trh); table.appendChild(thead);
-      const tbody = el('tbody');
-      filter.forEach(p => {
-        const tr = el('tr');
-        if (typeId === "osoba") {
-          tr.appendChild(el('td', {}, [p.jmeno||'']));
-          tr.appendChild(el('td', {}, [p.prijmeni||'']));
-          tr.appendChild(el('td', {}, [p.datum_narozeni||'']));
-          tr.appendChild(el('td', {}, [p.email||'']));
-        } else if (typeId === "firma") {
-          tr.appendChild(el('td', {}, [p.jmeno_firmy||'']));
-          tr.appendChild(el('td', {}, [p.ic||'']));
-          tr.appendChild(el('td', {}, [p.email||'']));
-        } else if (typeId === "osvc") {
-          tr.appendChild(el('td', {}, [p.jmeno||'']));
-          tr.appendChild(el('td', {}, [p.prijmeni||'']));
-          tr.appendChild(el('td', {}, [p.ic||'']));
-          tr.appendChild(el('td', {}, [p.email||'']));
-        } else if (typeId === "spolek") {
-          tr.appendChild(el('td', {}, [p.jmeno_spolku||'']));
-          tr.appendChild(el('td', {}, [p.ic||'']));
-          tr.appendChild(el('td', {}, [p.email||'']));
-        }
-        // Akce
-        const tdA = el('td');
-        tdA.appendChild(el('button', { class:'btn', onClick:() => openForm(typeId, p.id) }, ['Upravit']));
-        tdA.appendChild(el('button', { class:'btn', style:'margin-left:6px;background:#2a1520;border-color:#3a1d2a', onClick:() => archiveRecord(p.id) }, ['Archivovat']));
-        tdA.appendChild(el('button', { class:'btn', style:'margin-left:6px;background:#15202a;border-color:#1a2d3a', onClick:() => deleteRecord(p.id) }, ['Smazat']));
-        tr.appendChild(tdA);
-        tbody.appendChild(tr);
-      });
-      table.appendChild(tbody);
-      main.appendChild(table);
-    }
-
-    // Formulář pro přidání/upravení
-    function openForm(typeId, editId=null) {
-      $('#drawerTitle').textContent = (editId ? 'Upravit' : 'Nový') + ' ' + types.find(x=>x.id===typeId).title;
-      $('#overlay').classList.add('show'); $('#drawer').classList.add('open');
-      const body = $('#drawerBody');
-      body.innerHTML = '';
-      let record = editId ? pronajimatele.find(x=>x.id===editId) : {};
-      if (typeId === "osoba" || typeId === "osvc") {
-        body.appendChild(el('label', {}, ['Jméno']));
-        body.appendChild(el('input', { id:'f_jmeno', class:'input', value:record.jmeno||"" }));
-        body.appendChild(el('label', {}, ['Příjmení']));
-        body.appendChild(el('input', { id:'f_prijmeni', class:'input', value:record.prijmeni||"" }));
-        body.appendChild(el('label', {}, ['Datum narození']));
-        body.appendChild(el('input', { id:'f_datum', class:'input', value:record.datum_narozeni||"" }));
-      }
-      if (typeId === "firma") {
-        body.appendChild(el('label', {}, ['Název firmy']));
-        body.appendChild(el('input', { id:'f_jmeno_firmy', class:'input', value:record.jmeno_firmy||"" }));
-      }
-      if (typeId === "spolek") {
-        body.appendChild(el('label', {}, ['Název spolku']));
-        body.appendChild(el('input', { id:'f_jmeno_spolku', class:'input', value:record.jmeno_spolku||"" }));
-      }
-      // Další pole univerzálně
-      body.appendChild(el('label', {}, ['IČ']));
-      body.appendChild(el('input', { id:'f_ic', class:'input', value:record.ic||"" }));
-      body.appendChild(el('label', {}, ['Email']));
-      body.appendChild(el('input', { id:'f_email', class:'input', value:record.email||"" }));
-      body.appendChild(el('label', {}, ['Archivováno']));
-      body.appendChild(el('input', { id:'f_archivovano', type:'checkbox', checked:!!record.archivovano }));
-      // Tlačítka uložení
-      body.appendChild(el('button', { class:'btn primary', style:'margin-top:12px', onClick:() => saveForm(typeId, editId) }, ['Uložit']));
-      body.appendChild(el('button', { class:'btn ghost', style:'margin-left:8px', onClick:closeForm }, ['Zrušit']));
-    }
-    function closeForm() {
-      $('#overlay').classList.remove('show'); $('#drawer').classList.remove('open');
-    }
-    $('#closeDrawer').addEventListener('click', closeForm);
-    $('#overlay').addEventListener('click', closeForm);
-
-    // Uložení formuláře
-    function saveForm(typeId, editId) {
-      let record = editId ? pronajimatele.find(x=>x.id===editId) : { id:'p'+Date.now(), typ:typeId };
-      if (typeId === "osoba" || typeId === "osvc") {
-        record.jmeno = $('#f_jmeno').value;
-        record.prijmeni = $('#f_prijmeni').value;
-        record.datum_narozeni = $('#f_datum').value;
-      }
-      if (typeId === "firma") {
-        record.jmeno_firmy = $('#f_jmeno_firmy').value;
-      }
-      if (typeId === "spolek") {
-        record.jmeno_spolku = $('#f_jmeno_spolku').value;
-      }
-      record.ic = $('#f_ic').value;
-      record.email = $('#f_email').value;
-      record.archivovano = $('#f_archivovano').checked;
-      if (!editId) pronajimatele.push(record);
-      closeForm();
-      renderList(typeId);
-    }
-
-    // Archivace záznamu
-    function archiveRecord(id) {
-      let r = pronajimatele.find(x=>x.id===id);
-      if (r) r.archivovano = true;
-      renderList(r.typ);
-    }
-
-    // Mazání (pouze pokud není propojení)
-    function deleteRecord(id) {
-      // Zatím vždy povoleno, později přidáme podmínku
-      pronajimatele = pronajimatele.filter(x=>x.id!==id);
-      renderNav();
-      $('#main').innerHTML = '';
-    }
-
-    renderNav();
-    // Výchozí pohled: Typ pronajímatele Osoba
-    showType("osoba");
-  </script>
+  }
+  function addTile() {
+    alert('Funkce přidání dlaždice bude dostupná později.');
+  }
+  function showUserMenu() {
+    alert('Zde bude nastavení účtu, změna hesla atd.');
+  }
+</script>
 </body>
 </html>
