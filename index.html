@@ -178,7 +178,7 @@
       prehledy: "📊"
     };
 
-    // MODULY – podle domluveného seznamu!
+    // MODULY
     const modules = [
       {
         id: "pronajimatel",
@@ -249,6 +249,20 @@
       { id: 10, typ: "stat", jmeno: "Městský úřad", email: "mesto@stat.cz", zastupce: "" }
     ];
 
+    // VZOROVÝ SEZNAM NÁJEMNÍKŮ
+    const najemniciList = [
+      { id: 1, typ: "osoba", jmeno: "Jakub Doležal", email: "jakub.dolezal@email.cz", zastupce: "" },
+      { id: 2, typ: "osoba", jmeno: "Eliška Horáková", email: "eliska.horakova@email.cz", zastupce: "" },
+      { id: 3, typ: "osvc", jmeno: "Ondřej Veselý", email: "ondrej.vesely@email.cz", zastupce: "" },
+      { id: 4, typ: "osvc", jmeno: "Tereza Černá", email: "tereza.cerna@email.cz", zastupce: "" },
+      { id: 5, typ: "firma", jmeno: "Gama s.r.o.", email: "info@gama.cz", zastupce: "Jakub Doležal" },
+      { id: 6, typ: "firma", jmeno: "Beta a.s.", email: "kontakt@beta.cz", zastupce: "Eliška Horáková" },
+      { id: 7, typ: "spolek", jmeno: "Tenisový klub", email: "info@tenis.cz", zastupce: "Ondřej Veselý" },
+      { id: 8, typ: "spolek", jmeno: "Hudební sdružení", email: "hudba@sdruzeni.cz", zastupce: "Tereza Černá" },
+      { id: 9, typ: "stat", jmeno: "Krajský úřad", email: "kraj@stat.cz", zastupce: "" },
+      { id: 10, typ: "stat", jmeno: "Obecní úřad", email: "obec@stat.cz", zastupce: "" }
+    ];
+
     // VZOROVÝ SEZNAM VOLNÝCH JEDNOTEK
     const volneJednotkyList = [
       { id: 1, typ: "Byt", adresa: "Praha 1, Dlouhá 10", stav: "Volný" },
@@ -266,9 +280,7 @@
         head.className = 'section-header';
         head.innerHTML = `<span class="chev">▶</span> <strong>${mod.title}</strong>`;
         head.onclick = () => {
-          // Zavři všechny sekce
           document.querySelectorAll('.section').forEach(sec => sec.classList.remove('open'));
-          // Otevři jen kliknutou
           s.classList.add('open');
           renderMainTiles(mod.id);
           renderCrumbs(mod.title);
@@ -318,13 +330,14 @@
     function handleMenuClick(modId, type) {
       renderCrumbs(modules.find(m => m.id === modId).title, type);
 
-      // Pronajímatel – seznam podle typu
       if (modId === "pronajimatel") {
         renderPronajimatelSeznam(type);
         return;
       }
-
-      // Nemovitosti
+      if (modId === "najemnici") {
+        renderNajemniciSeznam(type);
+        return;
+      }
       if (modId === "nemovitosti") {
         if (type === "volne") {
           renderVolneJednotky();
@@ -333,26 +346,14 @@
         }
         return;
       }
-
-      // Nájemníci – ukázkový seznam
-      if (modId === "najemnici") {
-        renderNajemniciSeznam(type);
-        return;
-      }
-
-      // Licence – ukázka
       if (modId === "licence") {
         renderLicenceSeznam(type);
         return;
       }
-
-      // Přehledy – ukázka
       if (modId === "prehledy") {
         renderPrehledySeznam(type);
         return;
       }
-
-      // Vzory – ukázka
       document.getElementById('main').innerHTML = `<div style="padding:24px">Zde bude seznam pro <strong>${modId}</strong> [typ: <strong>${type}</strong>]</div>`;
     }
 
@@ -412,10 +413,71 @@
       document.getElementById('formModal').classList.add('active');
     }
 
-    // Seznam nájemníků – vzor
+    // Seznam nájemníků podle typu (all/osoba/osvc/firma/spolek/stat)
     function renderNajemniciSeznam(type) {
+      let filtered = najemniciList;
+      if (type && type !== 'all') {
+        filtered = najemniciList.filter(r => r.typ === type);
+      }
       const main = document.getElementById('main');
-      main.innerHTML = `<div style="padding:24px"><h2>Seznam nájemníků ${type !== 'all' ? '- ' + type.charAt(0).toUpperCase() + type.slice(1) : ''}</h2><p>Zde bude seznam nájemníků.</p></div>`;
+      main.innerHTML = `
+        <div style="padding:24px 24px 10px 24px; display:flex; justify-content:space-between; align-items:center">
+          <h2>Seznam nájemníků ${type !== 'all' ? '- ' + type.charAt(0).toUpperCase() + type.slice(1) : ''}</h2>
+          <button class="btn primary" id="addNewNajemnik">+ Přidat nájemníka</button>
+        </div>
+        <div style="padding:0 24px">
+          <table class="list-table">
+            <thead>
+              <tr>
+                <th>Typ</th><th>Jméno</th><th>Email</th><th>Zástupce</th><th>Akce</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${filtered.map(r => `
+                <tr>
+                  <td><span style="font-size:17px">${typeIcons[r.typ] || ""}</span> ${r.typ.charAt(0).toUpperCase() + r.typ.slice(1)}</td>
+                  <td>${r.jmeno}</td>
+                  <td>${r.email}</td>
+                  <td>${r.zastupce || ''}</td>
+                  <td class="list-actions">
+                    <button class="btn" onclick='openFormModalNajemnik("${r.typ}")'>Upravit</button>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+      document.getElementById('addNewNajemnik').onclick = () => {
+        openTypeSelectModalNajemnik("najemnici");
+      };
+    }
+
+    // Modal pro výběr typu nájemníka před přidáním
+    function openTypeSelectModalNajemnik(module) {
+      const typy = modules.find(m => m.id === module).items.filter(it =>
+        ["osoba", "osvc", "firma", "spolek", "stat"].includes(it.type)
+      );
+      document.getElementById('modalArea').innerHTML = `
+        <h2 style="margin-bottom:18px;color:#4cc9f0;">Zvolte typ nájemníka</h2>
+        <div class="modal-type-select">
+          ${typy.map(t =>
+            `<button class="type-choice-btn" onclick='openFormModalNajemnik("${t.type}")'>${typeIcons[t.type]} ${t.menuTitle}</button>`
+          ).join('')}
+        </div>
+      `;
+      document.getElementById('formModal').classList.add('active');
+    }
+
+    // Funkce pro otevření formuláře pro nájemníka
+    function openFormModalNajemnik(type) {
+      fetch('src/forms/form-pronajimatel-najemnik.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('modalArea').innerHTML = html;
+          document.getElementById('formModal').classList.add('active');
+          setupForm({ module: 'najemnik', type });
+        });
     }
 
     // Nemovitosti – volné jednotky
@@ -446,112 +508,4 @@
     }
     function renderNemovitostiSeznam(type) {
       const main = document.getElementById('main');
-      main.innerHTML = `<div style="padding:24px"><h2>${type === 'all' ? 'Přehled nemovitostí' : type.charAt(0).toUpperCase() + type.slice(1)}</h2><p>Zde bude seznam nemovitostí podle výběru.</p></div>`;
-    }
-
-    // Licence – vzor
-    function renderLicenceSeznam(type) {
-      const main = document.getElementById('main');
-      main.innerHTML = `<div style="padding:24px"><h2>Přehled licencí</h2><p>Zde bude seznam licencí.</p></div>`;
-    }
-    // Přehledy – vzor
-    function renderPrehledySeznam(type) {
-      const main = document.getElementById('main');
-      main.innerHTML = `<div style="padding:24px"><h2>Přehled uživatelů/volných jednotek</h2><p>Zde bude přehled podle výběru.</p></div>`;
-    }
-
-    // CRUMBS
-    function renderCrumbs(modulTitle, type) {
-      const crumbs = document.getElementById('crumbs');
-      crumbs.innerHTML = '';
-      crumbs.appendChild(makeCrumb('Hlavní panel'));
-      if (modulTitle) crumbs.appendChild(makeCrumb(modulTitle));
-      if (type && type !== 'all') crumbs.appendChild(makeCrumb(type));
-    }
-    function makeCrumb(text) {
-      const sp = document.createElement('span');
-      sp.className = 'crumb';
-      sp.textContent = text;
-      return sp;
-    }
-
-    document.getElementById('backHome').onclick = () => { renderMainTiles(modules[0].id); renderCrumbs(); };
-    document.getElementById('resetFilter').onclick = () => { renderMainTiles(modules[0].id); renderCrumbs(); };
-    // Přidání záznamu: pokud v modulu pronajímatel, vyvolá výběr typu, jinak univerzální
-    document.getElementById('addTile').onclick = () => openTypeSelectModal("pronajimatel");
-    document.getElementById('openMenu').onclick = () => document.getElementById('sidebar').classList.add('open');
-    document.addEventListener('click', (e) => {
-      if (window.innerWidth <= 900) {
-        const aside = document.getElementById('sidebar');
-        if (aside && !aside.contains(e.target) && !e.target.closest('#openMenu')) {
-          aside.classList.remove('open');
-        }
-      }
-    });
-
-    // MODAL OKNO PRO FORMULÁŘ
-    function openFormModal(type) {
-      fetch('src/forms/form-pronajimatel-najemnik.html')
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById('modalArea').innerHTML = html;
-          document.getElementById('formModal').classList.add('active');
-          setupForm({ module: 'pronajimatel', type });
-        });
-    }
-    function closeFormModal() {
-      document.getElementById('formModal').classList.remove('active');
-      document.getElementById('modalArea').innerHTML = '';
-    }
-    document.getElementById('modalClose').onclick = closeFormModal;
-    document.getElementById('formModal').addEventListener('click', function(e) {
-      if (e.target === this) closeFormModal();
-    });
-
-    // Funkce pro nastavení formuláře po načtení
-    function setupForm({ module = 'pronajimatel', type = 'firma' }) {
-      const titleMap = {
-        pronajimatel: 'Nový pronajímatel',
-        najemnik: 'Nový nájemník',
-        nemovitosti: 'Nemovitost'
-      };
-      const typeLabels = {
-        firma: 'Firma',
-        'statni-instituce': 'Státní instituce',
-        osoba: 'Osoba',
-        osvc: 'OSVČ',
-        spolek: 'Spolek/skupina',
-        stat: 'Státní instituce',
-        vzory: 'Vzory',
-        licence: 'Licence'
-      };
-      document.getElementById('formTitle').textContent =
-        `${titleMap[module] || 'Nový záznam'} – ${typeLabels[type] || type}`;
-      // Zobraz relevantní pole
-      document.querySelectorAll('.form-row').forEach(row => {
-        const allowed = (row.dataset.types || '').split(' ');
-        row.style.display = allowed.includes(type) ? '' : 'none';
-      });
-      // Zrušitko
-      const cancel = document.getElementById('formCancel');
-      if (cancel) {
-        cancel.onclick = () => {
-          document.getElementById('mainForm').reset();
-          closeFormModal();
-        };
-      }
-      // Submit
-      document.getElementById('mainForm').onsubmit = function(e) {
-        e.preventDefault();
-        alert('Formulář byl úspěšně odeslán!');
-        closeFormModal();
-      };
-    }
-
-    // INIT
-    renderNav();
-    renderMainTiles(modules[0].id);
-    renderCrumbs(modules[0].title);
-  </script>
-</body>
-</html>
+      main.innerHTML = `<div style="padding:24px"><h2>${type === 'all' ? 'Přehled nemovitostí' : type.charAt(0).toUpperCase
