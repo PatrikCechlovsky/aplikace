@@ -1,0 +1,39 @@
+<form class="pronajimatel-form" id="mainForm">
+  <h2 id="formTitle">Nový záznam</h2>
+  <div class="form-row" data-types="firma statni-instituce">
+    <label for="ico">IČO <span class="star">*</span></label>
+    <input type="text" id="ico" name="ico" required>
+  </div>
+  <div class="form-row" data-types="firma">
+    <label for="nazev">Název firmy <span class="star">*</span></label>
+    <input type="text" id="nazev" name="nazev" required>
+  </div>
+  <div class="form-row" data-types="statni-instituce">
+    <label for="nazev">Název instituce <span class="star">*</span></label>
+    <input type="text" id="nazev" name="nazev" required>
+  </div>
+  <div class="form-row" data-types="firma statni-instituce osoba osvc spolek">
+    <label for="adresa">Adresa <span class="star">*</span></label>
+    <input type="text" id="adresa" name="adresa" required>
+  </div>
+  <div class="form-row" data-types="firma statni-instituce osoba osvc spolek">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email">
+  </div>
+  <div class="form-row" data-types="firma statni-instituce osoba osvc spolek">
+    <label for="zastupce">Zástupce</label>
+    <input type="text" id="zastupce" name="zastupce">
+  </div>
+  <div class="form-row" data-types="osoba osvc">
+    <label for="jmeno">Jméno <span class="star">*</span></label>
+    <input type="text" id="jmeno" name="jmeno" required>
+  </div>
+  <div class="form-row" data-types="spolek">
+    <label for="nazevSpolku">Název spolku/skupiny <span class="star">*</span></label>
+    <input type="text" id="nazevSpolku" name="nazevSpolku" required>
+  </div>
+  <div class="form-actions">
+    <button type="submit" class="btn">Uložit</button>
+    <button type="button" class="btn secondary" id="formCancel">Zrušit</button>
+  </div>
+</form>
