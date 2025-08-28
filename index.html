@@ -45,467 +45,305 @@
     .nav-item.active { background: var(--active); color: var(--text); border: 1px solid #243449 }
     .mini { font-size:12px; color:var(--muted); padding: 3px 12px 0 }
     header {
-      display:flex; align-items:center; justify-content:space-between; padding: 13px 18px; position: sticky; top:0; background: linear-gradient(180deg, rgba(11,15,20,.96), rgba(11,15,20,.8)); backdrop-filter: blur(4px); border-bottom: 1px solid var(--border);
-      z-index: 5;
+      background: linear-gradient(90deg, var(--card) 80%, rgba(128,255,219,0.05) 100%);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 30px 12px 30px; border-bottom: 1px solid var(--border);
     }
-    .breadcrumbs { display:flex; gap:8px; align-items:center; color: var(--muted) }
-    .breadcrumbs .crumb { padding:6px 10px; border-radius:999px; border:1px solid var(--border); background:#0e141c }
-    .actions { display:flex; gap:8px; align-items:center }
-    .btn {
-      padding:8px 11px; border-radius:9px; border:1px solid var(--border); background: #101826; color:var(--text); cursor:pointer;
+    .crumbs { font-size:15px; color:var(--muted); }
+    .crumbs strong { color:var(--brand); }
+    main { padding:0; min-height: 100vh; background:transparent; }
+    .tiles { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:28px; padding:44px 36px 0 }
+    .tile {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius:16px; padding:34px 18px 22px;
+      display:flex; flex-direction:column; align-items:center; gap:14px;
+      cursor:pointer; transition:.19s; box-shadow:0 2px 13px rgba(12,32,44,.07);
+      position:relative;
     }
-    .btn.primary { background: linear-gradient(180deg, var(--brand), #183249 70%, #112336); border-color:var(--brand) }
-    .btn.ghost { background: transparent }
-    .btn:disabled { opacity:.5; cursor:not-allowed }
-    main { height: 100vh; overflow: auto; }
-    .grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(195px, 1fr)); gap: 13px; padding: 15px 16px 70px }
-    .tile { position:relative; border:1px solid var(--border); border-radius:14px; padding:13px; background: linear-gradient(180deg, rgba(33,52,74,.28), rgba(16,24,38,.8)), var(--card); cursor:pointer; min-height:94px; display:flex; flex-direction:column; gap:9px; transition:box-shadow 0.15s }
-    .tile .icon { font-size:26px; margin-bottom:1px }
-    .tile .title { font-weight:600; display:flex; align-items:center; gap:7px; font-size:16px }
-    .tile .desc { color:var(--muted); margin-bottom:2px; font-size:13px }
-    .tile .pill { font-size:11px; padding:3px 6px; border-radius:999px; border:1px solid var(--border); color: var(--muted); background:#101826; margin-left:1px; }
-    .tile:hover { outline:2px solid var(--brand); box-shadow:0 4px 24px 0 rgba(76,201,240,.09) }
-    .list-table { width:100%; border-spacing:0; margin-bottom:30px }
-    .list-table th, .list-table td { padding:6px 8px; border-bottom:1px solid var(--border); text-align:left }
-    .list-table tr:hover { background:#101826 }
-    .list-table th { color:var(--muted); background:#121821 }
-    .list-actions { display:flex; gap:10px }
-    /* Modal styles */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 100;
-      left: 0; top: 0; right: 0; bottom: 0;
-      background: rgba(30, 39, 50, 0.80);
-      justify-content: center;
-      align-items: center;
-    }
+    .tile:hover { border-color: var(--brand); box-shadow:0 3px 19px rgba(76,201,240,.13); }
+    .tile .icon { font-size:36px }
+    .tile .tile-title { font-size:18px; color:var(--text); font-weight:600; margin-top:10px; }
+    .tile-count { color:var(--muted); font-size:14px }
+    .list-table { width:100%; border-collapse:collapse; margin-top:20px }
+    .list-table th, .list-table td { padding:8px 12px; border-bottom:1px solid var(--border); font-size:15px }
+    .list-table th { color:var(--brand); background:rgba(76,201,240,0.08) }
+    .list-table td { color:var(--text); background:var(--card) }
+    .list-actions button { margin-right:4px }
+    .btn { background: var(--brand); color:#111; border:none; border-radius:8px; padding:7px 13px; font-size:15px; cursor:pointer; transition:.19s; }
+    .btn.primary { background: var(--brand); color: #111; }
+    .btn:hover { background: var(--accent); }
+    .modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(18,24,33, 0.97); display: none; align-items: center; justify-content: center; z-index: 9999; }
     .modal.active { display: flex; }
-    .modal-content {
-      background: #161923;
-      border-radius: 18px;
-      box-shadow: 0 6px 32px 0 rgba(76,201,240,.17);
-      padding: 38px 24px;
-      min-width: 320px;
-      max-width: 95vw;
-      position: relative;
-    }
-    .modal-close {
-      position: absolute;
-      top: 22px;
-      right: 32px;
-      font-size: 1.4em;
-      color: #4cc9f0;
-      cursor: pointer;
-    }
-    .modal-type-select { display: flex; flex-direction: column; gap: 18px; padding: 18px 0;}
-    .type-choice-btn {
-      background: #21273a;
-      border: 2px solid #4cc9f0;
-      color: #e6edf3;
-      border-radius: 10px;
-      padding: 15px 0;
-      font-size: 1.07em;
-      font-weight: 500;
-      text-align: center;
-      cursor: pointer;
-      transition: background .18s, color .18s, border .18s;
-      box-shadow: 0 2px 10px 0 rgba(76,201,240,.09);
-      margin: 0 20px;
-    }
-    .type-choice-btn:hover, .type-choice-btn:focus {
-      background: #101826;
-      color: #80ffdb;
-      border-color: #80ffdb;
-    }
-    @media (max-width: 900px) {
-      .app { grid-template-columns: 1fr }
-      aside { position: fixed; z-index: 30; width: 88%; max-width: 320px; inset: 0 auto 0 0; transform: translateX(-102%); transition: transform .25s ease }
-      aside.open { transform: translateX(0) }
-      header .menu { display:inline-flex }
-    }
-    @media (min-width: 901px) { header .menu { display:none } }
+    .modal-content { background: var(--card); border-radius: 18px; box-shadow:0 2px 24px rgba(76,201,240,.14); padding: 38px 36px; min-width:350px; max-width:450px }
+    .modal-type-select { display: flex; flex-wrap: wrap; gap:18px; justify-content:center; }
+    .type-choice-btn { background:var(--brand); color:#111; border:none; border-radius:10px; padding:17px 28px; font-size:17px; cursor:pointer; margin:4px; box-shadow:0 2px 10px rgba(76,201,240,.10);}
+    .type-choice-btn:hover { background:var(--accent); }
+    .form-row { margin-bottom:18px; }
+    .form-row label { display:block; margin-bottom:7px; color:var(--brand); font-size:15px }
+    .form-row input, .form-row select { width:100%; padding:8px 11px; border-radius:6px; border:1px solid var(--border); background:#181e26; color:var(--text); font-size:15px }
   </style>
 </head>
 <body>
-  <div class="app">
-    <!-- Sidebar -->
-    <aside id="sidebar">
-      <div class="brand"><i>🏠</i><strong>Aplikace pronajímatel</strong></div>
-      <div id="nav"></div>
-      <div class="mini">Klik na sekci = rozbalí modul. Klik na položku = zobrazí dlaždice nebo seznam.</div>
-    </aside>
-    <div style="display:flex; flex-direction:column">
-      <!-- Header -->
-      <header>
-        <div class="left" style="display:flex; align-items:center; gap:10px">
-          <button class="btn ghost menu" id="openMenu">☰</button>
-          <div class="breadcrumbs" id="crumbs">
-            <span class="crumb">Hlavní panel</span>
-          </div>
-        </div>
-        <div class="actions">
-          <button class="btn" id="backHome" style="display:none">← Zpět</button>
-          <button class="btn" id="resetFilter">Zrušit filtr</button>
-          <button class="btn primary" id="addTile">+ Přidat záznam</button>
-        </div>
-      </header>
-      <!-- Main content -->
-      <main id="main"></main>
+<div class="app">
+  <aside>
+    <div class="brand">
+      <i>🏠</i>
+      <strong>Aplikace pronajímatel</strong>
     </div>
-  </div>
-  <!-- Modal okno pro formulář nebo volbu typu -->
-  <div class="modal" id="formModal">
-    <div class="modal-content" id="modalContent">
-      <span class="modal-close" id="modalClose">&times;</span>
-      <div id="modalArea"></div>
+    <div class="section open">
+      <div class="section-header"><span class="chev">▶</span> Moduly</div>
+      <div class="section-items">
+        <div class="nav-item active" id="navPronajimatel"><span class="icon">👤</span>Pronajímatel</div>
+        <div class="nav-item" id="navNajemnici"><span class="icon">🧑‍💼</span>Nájemníci</div>
+      </div>
     </div>
+  </aside>
+  <div style="display:flex; flex-direction:column; width:100%">
+    <header>
+      <span class="crumbs" id="crumbs"><strong>Pronajímatel</strong></span>
+    </header>
+    <main id="main">
+      <!-- Seznam pronajímatelů se zobrazí jako default -->
+    </main>
   </div>
-  <script>
-    // Ikony pro typy
-    const typeIcons = {
-      osoba: "👤",
-      osvc: "🧑‍💼",
-      firma: "🏢",
-      spolek: "🫂",
-      stat: "🏛️",
-      vzory: "📄",
-      licence: "🎫",
-      budovy: "🏢",
-      jednotky: "🏘️",
-      volne: "🟢",
-      uzivatele: "👥",
-      prehledy: "📊"
+</div>
+
+<div class="modal" id="formModal">
+  <div class="modal-content" id="modalArea">
+    <!-- Dynamicky generované formuláře a výběry typů -->
+  </div>
+</div>
+
+<script>
+const typeIcons = {
+  osoba: '👤',
+  osvc: '🧑‍💼',
+  firma: '🏢',
+  spolek: '🪁',
+  stat: '🏛️'
+};
+
+// Vzorový seznam pronajímatelů
+const pronajimatelList = [
+  { id: 1, typ: "osoba", jmeno: "Jan Novák", email: "jan.novak@email.cz", zastupce: "" },
+  { id: 2, typ: "osvc", jmeno: "Petra Veselá", email: "petra.vesela@email.cz", zastupce: "" },
+  { id: 3, typ: "firma", jmeno: "Alfa s.r.o.", email: "info@alfa.cz", zastupce: "Jan Novák" },
+  { id: 4, typ: "spolek", jmeno: "Sportovní klub", email: "sport@klub.cz", zastupce: "Petra Veselá" },
+  { id: 5, typ: "stat", jmeno: "Městský úřad", email: "urad@stat.cz", zastupce: "" }
+];
+
+// Vzorový seznam nájemníků (stejné typy, návrh jmen)
+const najemniciList = [
+  { id: 1, typ: "osoba", jmeno: "Jakub Doležal", email: "jakub.dolezal@email.cz", zastupce: "" },
+  { id: 2, typ: "osvc", jmeno: "Eliška Horáková", email: "eliska.horakova@email.cz", zastupce: "" },
+  { id: 3, typ: "firma", jmeno: "Gama s.r.o.", email: "info@gama.cz", zastupce: "Jakub Doležal" },
+  { id: 4, typ: "spolek", jmeno: "Hudební sdružení", email: "hudba@sdruzeni.cz", zastupce: "Eliška Horáková" },
+  { id: 5, typ: "stat", jmeno: "Obecní úřad", email: "obec@stat.cz", zastupce: "" }
+];
+
+// Renderování breadcrumbů
+function renderCrumbs(modTitle, type) {
+  document.getElementById('crumbs').innerHTML =
+    `<strong>${modTitle}</strong>${type && type !== 'all' ? ' / ' + type.charAt(0).toUpperCase()+type.slice(1) : ''}`;
+}
+
+// Renderování seznamu pronajímatelů
+function renderPronajimatelSeznam(type = 'all') {
+  let filtered = pronajimatelList;
+  if (type && type !== 'all') {
+    filtered = pronajimatelList.filter(r => r.typ === type);
+  }
+  const main = document.getElementById('main');
+  main.innerHTML = `
+    <div style="padding:24px 24px 10px 24px; display:flex; justify-content:space-between; align-items:center">
+      <h2>Seznam pronajímatelů ${type !== 'all' ? '- ' + type.charAt(0).toUpperCase() + type.slice(1) : ''}</h2>
+      <button class="btn primary" id="addNewPronajimatel">+ Přidat pronajímatele</button>
+    </div>
+    <div style="padding:0 24px">
+      <table class="list-table">
+        <thead>
+          <tr>
+            <th>Typ</th><th>Jméno</th><th>Email</th><th>Zástupce</th><th>Akce</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${filtered.map(r => `
+            <tr>
+              <td><span style="font-size:17px">${typeIcons[r.typ] || ""}</span> ${r.typ.charAt(0).toUpperCase() + r.typ.slice(1)}</td>
+              <td>${r.jmeno}</td>
+              <td>${r.email}</td>
+              <td>${r.zastupce || ''}</td>
+              <td class="list-actions">
+                <button class="btn" onclick='openFormModalPronajimatel("${r.typ}")'>Upravit</button>
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+  document.getElementById('addNewPronajimatel').onclick = () => {
+    openTypeSelectModalPronajimatel("pronajimatel");
+  };
+}
+
+// Renderování seznamu nájemníků
+function renderNajemniciSeznam(type = 'all') {
+  let filtered = najemniciList;
+  if (type && type !== 'all') {
+    filtered = najemniciList.filter(r => r.typ === type);
+  }
+  const main = document.getElementById('main');
+  main.innerHTML = `
+    <div style="padding:24px 24px 10px 24px; display:flex; justify-content:space-between; align-items:center">
+      <h2>Seznam nájemníků ${type !== 'all' ? '- ' + type.charAt(0).toUpperCase() + type.slice(1) : ''}</h2>
+      <button class="btn primary" id="addNewNajemnik">+ Přidat nájemníka</button>
+    </div>
+    <div style="padding:0 24px">
+      <table class="list-table">
+        <thead>
+          <tr>
+            <th>Typ</th><th>Jméno</th><th>Email</th><th>Zástupce</th><th>Akce</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${filtered.map(r => `
+            <tr>
+              <td><span style="font-size:17px">${typeIcons[r.typ] || ""}</span> ${r.typ.charAt(0).toUpperCase() + r.typ.slice(1)}</td>
+              <td>${r.jmeno}</td>
+              <td>${r.email}</td>
+              <td>${r.zastupce || ''}</td>
+              <td class="list-actions">
+                <button class="btn" onclick='openFormModalNajemnik("${r.typ}")'>Upravit</button>
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+  document.getElementById('addNewNajemnik').onclick = () => {
+    openTypeSelectModalNajemnik("najemnici");
+  };
+}
+
+// Výběr typu před formulářem (pronajímatel)
+function openTypeSelectModalPronajimatel(module) {
+  const typy = ["osoba", "osvc", "firma", "spolek", "stat"];
+  document.getElementById('modalArea').innerHTML = `
+    <h2 style="margin-bottom:18px;color:#4cc9f0;">Zvolte typ pronajímatele</h2>
+    <div class="modal-type-select">
+      ${typy.map(t =>
+        `<button class="type-choice-btn" onclick='openFormModalPronajimatel("${t}")'>${typeIcons[t]} ${t.charAt(0).toUpperCase() + t.slice(1)}</button>`
+      ).join('')}
+    </div>
+  `;
+  document.getElementById('formModal').classList.add('active');
+}
+
+// Výběr typu před formulářem (nájemník)
+function openTypeSelectModalNajemnik(module) {
+  const typy = ["osoba", "osvc", "firma", "spolek", "stat"];
+  document.getElementById('modalArea').innerHTML = `
+    <h2 style="margin-bottom:18px;color:#4cc9f0;">Zvolte typ nájemníka</h2>
+    <div class="modal-type-select">
+      ${typy.map(t =>
+        `<button class="type-choice-btn" onclick='openFormModalNajemnik("${t}")'>${typeIcons[t]} ${t.charAt(0).toUpperCase() + t.slice(1)}</button>`
+      ).join('')}
+    </div>
+  `;
+  document.getElementById('formModal').classList.add('active');
+}
+
+// Formulář pro přidání/úpravu pronajímatele
+function openFormModalPronajimatel(type) {
+  document.getElementById('modalArea').innerHTML = getFormHtml('pronajimatel', type);
+  document.getElementById('formModal').classList.add('active');
+  setupForm({ module: 'pronajimatel', type });
+}
+
+// Formulář pro přidání/úpravu nájemníka
+function openFormModalNajemnik(type) {
+  document.getElementById('modalArea').innerHTML = getFormHtml('najemnik', type);
+  document.getElementById('formModal').classList.add('active');
+  setupForm({ module: 'najemnik', type });
+}
+
+// Vygeneruje jednoduchý HTML formulář (můžeš upravit dle potřeby)
+function getFormHtml(module, type) {
+  const labels = {
+    osoba: "Jméno osoby",
+    osvc: "Jméno OSVČ",
+    firma: "Název firmy",
+    spolek: "Název spolku",
+    stat: "Název instituce"
+  };
+  return `
+    <h2 id="formTitle" style="margin-bottom:18px;color:#4cc9f0;">${module === 'pronajimatel' ? 'Nový pronajímatel' : 'Nový nájemník'} – ${type.charAt(0).toUpperCase() + type.slice(1)}</h2>
+    <form id="mainForm">
+      <div class="form-row" data-types="${type}">
+        <label>${labels[type] || "Jméno"}</label>
+        <input type="text" required placeholder="${labels[type] || "Jméno"}">
+      </div>
+      <div class="form-row" data-types="${type}">
+        <label>Email</label>
+        <input type="email" required placeholder="Email">
+      </div>
+      <div class="form-row" data-types="${type}">
+        <label>Zástupce</label>
+        <input type="text" placeholder="Zástupce">
+      </div>
+      <div style="display:flex; gap:17px; margin-top:28px">
+        <button type="submit" class="btn primary">Uložit</button>
+        <button type="button" class="btn" id="formCancel">Zrušit</button>
+      </div>
+    </form>
+  `;
+}
+
+// Nastavení funkcí formuláře
+function setupForm({ module = 'pronajimatel', type = 'firma' }) {
+  // Zrušitko
+  const cancel = document.getElementById('formCancel');
+  if (cancel) {
+    cancel.onclick = () => {
+      document.getElementById('mainForm').reset();
+      closeFormModal();
     };
+  }
+  // Submit
+  document.getElementById('mainForm').onsubmit = function(e) {
+    e.preventDefault();
+    alert('Formulář byl úspěšně odeslán!');
+    closeFormModal();
+  };
+}
 
-    // MODULY
-    const modules = [
-      {
-        id: "pronajimatel",
-        title: "Pronajímatel",
-        items: [
-          { id: "prehled-pronajimatelu", menuTitle: "Přehled", tileTitle: "Všichni pronajímatelé", icon: typeIcons.osvc, type: "all" },
-          { id: "osoba-pronajimatel", menuTitle: "Osoba", tileTitle: "Osoba", icon: typeIcons.osoba, type: "osoba" },
-          { id: "osvc-pronajimatel", menuTitle: "OSVČ", tileTitle: "OSVČ", icon: typeIcons.osvc, type: "osvc" },
-          { id: "firma-pronajimatel", menuTitle: "Firma", tileTitle: "Firma", icon: typeIcons.firma, type: "firma" },
-          { id: "spolek-pronajimatel", menuTitle: "Spolek/skupina", tileTitle: "Spolek/skupina", icon: typeIcons.spolek, type: "spolek" },
-          { id: "stat-pronajimatel", menuTitle: "Státní instituce", tileTitle: "Státní instituce", icon: typeIcons.stat, type: "stat" },
-          { id: "vzory-pronajimatel", menuTitle: "Vzory", tileTitle: "Vzory", icon: typeIcons.vzory, type: "vzory" }
-        ]
-      },
-      {
-        id: "najemnici",
-        title: "Nájemníci",
-        items: [
-          { id: "prehled-najemniku", menuTitle: "Přehled", tileTitle: "Všichni nájemníci", icon: typeIcons.osoba, type: "all" },
-          { id: "osoba-najemnik", menuTitle: "Osoba", tileTitle: "Osoba", icon: typeIcons.osoba, type: "osoba" },
-          { id: "osvc-najemnik", menuTitle: "OSVČ", tileTitle: "OSVČ", icon: typeIcons.osvc, type: "osvc" },
-          { id: "firma-najemnik", menuTitle: "Firma", tileTitle: "Firma", icon: typeIcons.firma, type: "firma" },
-          { id: "spolek-najemnik", menuTitle: "Spolek/skupina", tileTitle: "Spolek/skupina", icon: typeIcons.spolek, type: "spolek" },
-          { id: "stat-najemnik", menuTitle: "Státní instituce", tileTitle: "Státní instituce", icon: typeIcons.stat, type: "stat" },
-          { id: "vzory-najemnik", menuTitle: "Vzory", tileTitle: "Vzory", icon: typeIcons.vzory, type: "vzory" }
-        ]
-      },
-      {
-        id: "nemovitosti",
-        title: "Nemovitosti",
-        items: [
-          { id: "prehled-nemovitosti", menuTitle: "Přehled", tileTitle: "Přehled nemovitostí", icon: "🏠", type: "all" },
-          { id: "budovy", menuTitle: "Budovy", tileTitle: "Budovy", icon: typeIcons.budovy, type: "budovy" },
-          { id: "jednotky", menuTitle: "Jednotky/byty", tileTitle: "Jednotky/byty", icon: typeIcons.jednotky, type: "jednotky" },
-          { id: "volne", menuTitle: "Volné jednotky", tileTitle: "Volné jednotky", icon: typeIcons.volne, type: "volne" },
-          { id: "vzory-nemovitosti", menuTitle: "Vzory", tileTitle: "Vzory", icon: typeIcons.vzory, type: "vzory" }
-        ]
-      },
-      {
-        id: "licence",
-        title: "Licence",
-        items: [
-          { id: "prehled-licenci", menuTitle: "Přehled", tileTitle: "Přehled licencí", icon: typeIcons.licence, type: "all" },
-          { id: "vzory-licenci", menuTitle: "Vzory", tileTitle: "Vzory licencí", icon: typeIcons.vzory, type: "vzory" }
-        ]
-      },
-      {
-        id: "prehledy",
-        title: "Přehledy",
-        items: [
-          { id: "prehled-uzivatelu", menuTitle: "Uživatelé", tileTitle: "Uživatelé", icon: typeIcons.uzivatele, type: "uzivatele" },
-          { id: "prehled-volnych", menuTitle: "Volné jednotky", tileTitle: "Volné jednotky", icon: typeIcons.volne, type: "volne" }
-        ]
-      }
-    ];
+// Zavření modalu
+function closeFormModal() {
+  document.getElementById('formModal').classList.remove('active');
+}
 
-    // VZOROVÝ SEZNAM PRONAJÍMATELŮ
-    const pronajimatelList = [
-      { id: 1, typ: "osoba", jmeno: "Jan Novák", email: "jan.novak@domena.cz", zastupce: "" },
-      { id: 2, typ: "osoba", jmeno: "Marie Nováková", email: "marie.novakova@domena.cz", zastupce: "" },
-      { id: 3, typ: "osvc", jmeno: "Petr Svoboda", email: "petr.svoboda@domena.cz", zastupce: "" },
-      { id: 4, typ: "osvc", jmeno: "Karel Dvořák", email: "karel.dvorak@domena.cz", zastupce: "" },
-      { id: 5, typ: "firma", jmeno: "ABC s.r.o.", email: "info@abc.cz", zastupce: "Jan Novák" },
-      { id: 6, typ: "firma", jmeno: "DEF a.s.", email: "kontakt@def.cz", zastupce: "Marie Nováková" },
-      { id: 7, typ: "spolek", jmeno: "Sbor dobrovolných hasičů", email: "info@sdh.cz", zastupce: "Petr Svoboda" },
-      { id: 8, typ: "spolek", jmeno: "Skupina sportovců", email: "sport@spolek.cz", zastupce: "Karel Dvořák" },
-      { id: 9, typ: "stat", jmeno: "Úřad práce", email: "urad@stat.cz", zastupce: "" },
-      { id: 10, typ: "stat", jmeno: "Městský úřad", email: "mesto@stat.cz", zastupce: "" }
-    ];
+// Menu kliky
+document.getElementById('navPronajimatel').onclick = function() {
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  this.classList.add('active');
+  renderCrumbs('Pronajímatel');
+  renderPronajimatelSeznam();
+};
+document.getElementById('navNajemnici').onclick = function() {
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  this.classList.add('active');
+  renderCrumbs('Nájemníci');
+  renderNajemniciSeznam();
+};
 
-    // VZOROVÝ SEZNAM NÁJEMNÍKŮ
-    const najemniciList = [
-      { id: 1, typ: "osoba", jmeno: "Jakub Doležal", email: "jakub.dolezal@email.cz", zastupce: "" },
-      { id: 2, typ: "osoba", jmeno: "Eliška Horáková", email: "eliska.horakova@email.cz", zastupce: "" },
-      { id: 3, typ: "osvc", jmeno: "Ondřej Veselý", email: "ondrej.vesely@email.cz", zastupce: "" },
-      { id: 4, typ: "osvc", jmeno: "Tereza Černá", email: "tereza.cerna@email.cz", zastupce: "" },
-      { id: 5, typ: "firma", jmeno: "Gama s.r.o.", email: "info@gama.cz", zastupce: "Jakub Doležal" },
-      { id: 6, typ: "firma", jmeno: "Beta a.s.", email: "kontakt@beta.cz", zastupce: "Eliška Horáková" },
-      { id: 7, typ: "spolek", jmeno: "Tenisový klub", email: "info@tenis.cz", zastupce: "Ondřej Veselý" },
-      { id: 8, typ: "spolek", jmeno: "Hudební sdružení", email: "hudba@sdruzeni.cz", zastupce: "Tereza Černá" },
-      { id: 9, typ: "stat", jmeno: "Krajský úřad", email: "kraj@stat.cz", zastupce: "" },
-      { id: 10, typ: "stat", jmeno: "Obecní úřad", email: "obec@stat.cz", zastupce: "" }
-    ];
+// Defaultní zobrazení
+window.onload = function() {
+  renderPronajimatelSeznam();
+};
 
-    // VZOROVÝ SEZNAM VOLNÝCH JEDNOTEK
-    const volneJednotkyList = [
-      { id: 1, typ: "Byt", adresa: "Praha 1, Dlouhá 10", stav: "Volný" },
-      { id: 2, typ: "Byt", adresa: "Praha 2, Krátká 2", stav: "Volný" }
-    ];
-
-    // SIDEBAR – Vše zabalené
-    function renderNav() {
-      const nav = document.getElementById('nav');
-      nav.innerHTML = '';
-      modules.forEach(mod => {
-        const s = document.createElement('div');
-        s.className = 'section'; // default all collapsed
-        const head = document.createElement('div');
-        head.className = 'section-header';
-        head.innerHTML = `<span class="chev">▶</span> <strong>${mod.title}</strong>`;
-        head.onclick = () => {
-          document.querySelectorAll('.section').forEach(sec => sec.classList.remove('open'));
-          s.classList.add('open');
-          renderMainTiles(mod.id);
-          renderCrumbs(mod.title);
-        };
-        s.appendChild(head);
-        const box = document.createElement('div');
-        box.className = 'section-items';
-        mod.items.forEach(it => {
-          const item = document.createElement('div');
-          item.className = 'nav-item';
-          item.innerHTML = `<span class="icon">${it.icon}</span> <span>${it.menuTitle}</span>`;
-          item.onclick = () => {
-            handleMenuClick(mod.id, it.type);
-          };
-          box.appendChild(item);
-        });
-        s.appendChild(box);
-        nav.appendChild(s);
-      });
-    }
-
-    // DLAŽDICE – hlavní dlaždice pro vybraný modul
-    function renderMainTiles(modId) {
-      const main = document.getElementById('main');
-      main.innerHTML = '';
-      const mod = modules.find(m => m.id === modId);
-      if (!mod) return;
-      const grid = document.createElement('div');
-      grid.className = 'grid';
-      mod.items.forEach(it => {
-        const card = document.createElement('div');
-        card.className = 'tile';
-        card.innerHTML = `
-          <div class="icon">${it.icon}</div>
-          <div class="title"><span>${it.icon}</span> ${it.tileTitle}</div>
-          <div class="desc">#${it.type}</div>
-        `;
-        card.onclick = () => {
-          handleMenuClick(mod.id, it.type);
-        };
-        grid.appendChild(card);
-      });
-      main.appendChild(grid);
-    }
-
-    // Handler pro všechny moduly
-    function handleMenuClick(modId, type) {
-      renderCrumbs(modules.find(m => m.id === modId).title, type);
-
-      if (modId === "pronajimatel") {
-        renderPronajimatelSeznam(type);
-        return;
-      }
-      if (modId === "najemnici") {
-        renderNajemniciSeznam(type);
-        return;
-      }
-      if (modId === "nemovitosti") {
-        if (type === "volne") {
-          renderVolneJednotky();
-        } else {
-          renderNemovitostiSeznam(type);
-        }
-        return;
-      }
-      if (modId === "licence") {
-        renderLicenceSeznam(type);
-        return;
-      }
-      if (modId === "prehledy") {
-        renderPrehledySeznam(type);
-        return;
-      }
-      document.getElementById('main').innerHTML = `<div style="padding:24px">Zde bude seznam pro <strong>${modId}</strong> [typ: <strong>${type}</strong>]</div>`;
-    }
-
-    // Seznam pronajímatelů podle typu (all/osoba/osvc/firma/spolek/stat)
-    function renderPronajimatelSeznam(type) {
-      let filtered = pronajimatelList;
-      if (type && type !== 'all') {
-        filtered = pronajimatelList.filter(r => r.typ === type);
-      }
-      const main = document.getElementById('main');
-      main.innerHTML = `
-        <div style="padding:24px 24px 10px 24px; display:flex; justify-content:space-between; align-items:center">
-          <h2>Seznam pronajímatelů ${type !== 'all' ? '- ' + type.charAt(0).toUpperCase() + type.slice(1) : ''}</h2>
-          <button class="btn primary" id="addNewPronajimatel">+ Přidat pronajímatele</button>
-        </div>
-        <div style="padding:0 24px">
-          <table class="list-table">
-            <thead>
-              <tr>
-                <th>Typ</th><th>Jméno</th><th>Email</th><th>Zástupce</th><th>Akce</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${filtered.map(r => `
-                <tr>
-                  <td><span style="font-size:17px">${typeIcons[r.typ] || ""}</span> ${r.typ.charAt(0).toUpperCase() + r.typ.slice(1)}</td>
-                  <td>${r.jmeno}</td>
-                  <td>${r.email}</td>
-                  <td>${r.zastupce || ''}</td>
-                  <td class="list-actions">
-                    <button class="btn" onclick='openFormModal("${r.typ}")'>Upravit</button>
-                  </td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        </div>
-      `;
-      document.getElementById('addNewPronajimatel').onclick = () => {
-        openTypeSelectModal("pronajimatel");
-      };
-    }
-
-    // Modal pro výběr typu pronajímatele před přidáním
-    function openTypeSelectModal(module) {
-      const typy = modules.find(m => m.id === module).items.filter(it =>
-        ["osoba", "osvc", "firma", "spolek", "stat"].includes(it.type)
-      );
-      document.getElementById('modalArea').innerHTML = `
-        <h2 style="margin-bottom:18px;color:#4cc9f0;">Zvolte typ pronajímatele</h2>
-        <div class="modal-type-select">
-          ${typy.map(t =>
-            `<button class="type-choice-btn" onclick='openFormModal("${t.type}")'>${typeIcons[t.type]} ${t.menuTitle}</button>`
-          ).join('')}
-        </div>
-      `;
-      document.getElementById('formModal').classList.add('active');
-    }
-
-    // Seznam nájemníků podle typu (all/osoba/osvc/firma/spolek/stat)
-    function renderNajemniciSeznam(type) {
-      let filtered = najemniciList;
-      if (type && type !== 'all') {
-        filtered = najemniciList.filter(r => r.typ === type);
-      }
-      const main = document.getElementById('main');
-      main.innerHTML = `
-        <div style="padding:24px 24px 10px 24px; display:flex; justify-content:space-between; align-items:center">
-          <h2>Seznam nájemníků ${type !== 'all' ? '- ' + type.charAt(0).toUpperCase() + type.slice(1) : ''}</h2>
-          <button class="btn primary" id="addNewNajemnik">+ Přidat nájemníka</button>
-        </div>
-        <div style="padding:0 24px">
-          <table class="list-table">
-            <thead>
-              <tr>
-                <th>Typ</th><th>Jméno</th><th>Email</th><th>Zástupce</th><th>Akce</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${filtered.map(r => `
-                <tr>
-                  <td><span style="font-size:17px">${typeIcons[r.typ] || ""}</span> ${r.typ.charAt(0).toUpperCase() + r.typ.slice(1)}</td>
-                  <td>${r.jmeno}</td>
-                  <td>${r.email}</td>
-                  <td>${r.zastupce || ''}</td>
-                  <td class="list-actions">
-                    <button class="btn" onclick='openFormModalNajemnik("${r.typ}")'>Upravit</button>
-                  </td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        </div>
-      `;
-      document.getElementById('addNewNajemnik').onclick = () => {
-        openTypeSelectModalNajemnik("najemnici");
-      };
-    }
-
-    // Modal pro výběr typu nájemníka před přidáním
-    function openTypeSelectModalNajemnik(module) {
-      const typy = modules.find(m => m.id === module).items.filter(it =>
-        ["osoba", "osvc", "firma", "spolek", "stat"].includes(it.type)
-      );
-      document.getElementById('modalArea').innerHTML = `
-        <h2 style="margin-bottom:18px;color:#4cc9f0;">Zvolte typ nájemníka</h2>
-        <div class="modal-type-select">
-          ${typy.map(t =>
-            `<button class="type-choice-btn" onclick='openFormModalNajemnik("${t.type}")'>${typeIcons[t.type]} ${t.menuTitle}</button>`
-          ).join('')}
-        </div>
-      `;
-      document.getElementById('formModal').classList.add('active');
-    }
-
-    // Funkce pro otevření formuláře pro nájemníka
-    function openFormModalNajemnik(type) {
-      fetch('src/forms/form-pronajimatel-najemnik.html')
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById('modalArea').innerHTML = html;
-          document.getElementById('formModal').classList.add('active');
-          setupForm({ module: 'najemnik', type });
-        });
-    }
-
-    // Nemovitosti – volné jednotky
-    function renderVolneJednotky() {
-      const main = document.getElementById('main');
-      main.innerHTML = `
-        <div style="padding:24px">
-          <h2>Přehled volných jednotek</h2>
-          <table class="list-table">
-            <thead>
-              <tr>
-                <th>#</th><th>Typ</th><th>Adresa</th><th>Stav</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${volneJednotkyList.map(jed =>
-                `<tr>
-                  <td>${jed.id}</td>
-                  <td>${jed.typ}</td>
-                  <td>${jed.adresa}</td>
-                  <td>${jed.stav}</td>
-                </tr>`).join('')
-              }
-            </tbody>
-          </table>
-        </div>
-      `;
-    }
-    function renderNemovitostiSeznam(type) {
-      const main = document.getElementById('main');
-      main.innerHTML = `<div style="padding:24px"><h2>${type === 'all' ? 'Přehled nemovitostí' : type.charAt(0).toUpperCase
+</script>
+</body>
+</html>
