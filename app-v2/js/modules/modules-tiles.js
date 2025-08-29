@@ -1,248 +1,164 @@
-// Pomocná funkce pro vytvoření dlaždice s hvězdičkou v každém modulu
 window.ModuleTiles = (function() {
     'use strict';
     
-    // Vytvoření dlaždice s možností připnutí
-    function createTileWithPin(config) {
-        const { id, icon, title, description, onClick, type = 'custom' } = config;
-        const isPinned = isPinnedItem(id, type);
-        
-        const tileHTML = `
-            <div class="module-tile" data-tile-id="${id}" data-tile-type="${type}">
-                <button class="pin-button ${isPinned ? 'active' : ''}" 
-                        title="${isPinned ? 'Odepnout z hlavního panelu' : 'Připnout na hlavní panel'}" 
-                        onclick="event.stopPropagation(); ModuleTiles.togglePin('${id}', '${type}')">
-                    <span class="pin-icon">⭐</span>
-                </button>
-                <div class="tile-content">
-                    <div class="tile-icon">${icon}</div>
-                    <div class="tile-title">${title}</div>
-                    ${description ? `<div class="tile-description">${description}</div>` : ''}
-                </div>
-            </div>
-        `;
-        
-        // Pokud máme onClick, přidáme ho po vykreslení
-        if (onClick) {
-            setTimeout(() => {
-                const tile = document.querySelector(`[data-tile-id="${id}"] .tile-content`);
-                if (tile) {
-                    tile.onclick = onClick;
-                    tile.style.cursor = 'pointer';
-                }
-            }, 10);
-        }
-        
-        return tileHTML;
+    // Získat oblíbené z localStorage
+    function getFavorites() {
+        const saved = localStorage.getItem('favoriteTiles');
+        return saved ? JSON.parse(saved) : ['pronajimatel']; // Default s pronajímatelem
     }
     
-    // Vytvoření gridu dlaždiček
-    function createTilesGrid(tiles) {
-        return `
-            <div class="tiles-grid">
-                ${tiles.map(tile => createTileWithPin(tile)).join('')}
-            </div>
-        `;
+    // Uložit oblíbené
+    function saveFavorites(favorites) {
+        localStorage.setItem('favoriteTiles', JSON.stringify(favorites));
     }
     
-    // Kontrola zda je položka připnutá
-    function isPinnedItem(id, type = 'custom') {
-        const pinnedItems = AppState.get('pinnedItems') || [];
-        return pinnedItems.some(item => item.id === id && (item.type === type || (!item.type && type === 'module')));
-    }
-    
-    // Připnutí/odepnutí položky
-    function togglePin(itemId, itemType = 'custom') {
-        const pinnedItems = AppState.get('pinnedItems') || [];
-        const itemIndex = pinnedItems.findIndex(item => 
-            item.id === itemId && (item.type === itemType || (!item.type && itemType === 'module'))
-        );
+    // Toggle oblíbené
+    function toggleFavorite(tileId) {
+        let favorites = getFavorites();
+        const index = favorites.indexOf(tileId);
         
-        if (itemIndex > -1) {
-            // Odepnout
-            pinnedItems.splice(itemIndex, 1);
-            App.showToast('Odepnuto z hlavního panelu', 'info');
-            
-            // Aktualizuj hvězdičku
-            updatePinButton(itemId, false);
+        if (index === -1) {
+            favorites.push(tileId);
         } else {
-            // Připnout - najdi informace o položce
-            const tileElement = document.querySelector(`[data-tile-id="${itemId}"]`);
-            if (tileElement) {
-                const title = tileElement.querySelector('.tile-title')?.textContent || '';
-                const icon = tileElement.querySelector('.tile-icon')?.textContent || '📌';
-                const description = tileElement.querySelector('.tile-description')?.textContent || '';
-                
-                const pinnedItem = { 
-                    id: itemId,
-                    type: itemType,
-                    title,
-                    icon,
-                    description,
-                    pinnedAt: new Date().toISOString()
-                };
-                
-                // Pro moduly přidáme dodatečné info
-                if (itemType === 'module') {
-                    const module = APP_CONFIG.modules.find(m => m.id === itemId);
-                    if (module) {
-                        pinnedItem.moduleId = itemId;
-                        pinnedItem.firstTypeId = module.types[0]?.id || 'all';
-                    }
-                }
-                
-                pinnedItems.push(pinnedItem);
-                
-                App.showToast('Připnuto na hlavní panel', 'success');
-                updatePinButton(itemId, true);
-            }
+            favorites.splice(index, 1);
         }
         
-        AppState.set('pinnedItems', pinnedItems);
+        saveFavorites(favorites);
         
-        // Pokud jsme na hlavním panelu, aktualizuj ho
-        if (!AppState.get('currentModule')) {
-            Sidebar.showDashboard();
+        // Aktualizovat hvězdičku
+        const star = document.querySelector(`[data-tile-id="${tileId}"] .tile-favorite`);
+        if (star) {
+            star.classList.toggle('active');
+        }
+        
+        // Pokud jsme na hlavním panelu, překreslit
+        if (window.location.hash === '#dashboard' || window.location.hash === '') {
+            window.Dashboard.render();
         }
     }
     
-    // Aktualizace stavu tlačítka
-    function updatePinButton(itemId, isPinned) {
-        const button = document.querySelector(`[data-tile-id="${itemId}"] .pin-button`);
-        if (button) {
-            button.classList.toggle('active', isPinned);
-            button.title = isPinned ? 'Odepnout z hlavního panelu' : 'Připnout na hlavní panel';
-        }
-    }
-    
-    // Příklady použití v modulech
-    function createModuleOverview(moduleId, sections) {
-        const module = APP_CONFIG.modules.find(m => m.id === moduleId);
-        if (!module) return '';
+    function renderTiles(config, targetId = 'mainContent') {
+        const container = document.getElementById(targetId);
+        if (!container) return;
         
+        const favorites = getFavorites();
+        
+        // Header s názvem modulu
         let html = `
-            <div class="module-overview">
-                <h2>${module.icon} ${module.name}</h2>
-                <p class="module-description">${module.description}</p>
+            <div class="module-header">
+                <h2>${config.icon} ${config.title}</h2>
+            </div>
+            <div class="tiles-grid">
         `;
         
-        // Přidej sekce s dlaždicemi
-        sections.forEach(section => {
+        // Vykreslit jednotlivé dlaždice
+        config.tiles.forEach(tile => {
+            const isFavorite = favorites.includes(tile.id);
+            
             html += `
-                <div class="module-section">
-                    <h3>${section.title}</h3>
-                    ${createTilesGrid(section.tiles)}
+                <div class="module-tile ${tile.color || 'tile-primary'}" 
+                     data-tile-id="${tile.id}"
+                     onclick="ModuleTiles.handleTileClick('${tile.module}', '${tile.action || ''}')">
+                    <span class="tile-favorite ${isFavorite ? 'active' : ''}" 
+                          onclick="event.stopPropagation(); ModuleTiles.toggleFavorite('${tile.id}')">
+                        ⭐
+                    </span>
+                    <div class="tile-icon">${tile.icon}</div>
+                    <h3>${tile.title}</h3>
+                    <p>${tile.description}</p>
+                    ${tile.stats ? `
+                        <div class="tile-stats">
+                            ${Object.entries(tile.stats).map(([key, value]) => 
+                                `<span class="stat-item">${key}: <strong>${value}</strong></span>`
+                            ).join(' • ')}
+                        </div>
+                    ` : ''}
+                    ${tile.tags ? `
+                        <div class="tile-tags">
+                            ${tile.tags.map(tag => 
+                                `<span class="tile-tag">#${tag}</span>`
+                            ).join(' ')}
+                        </div>
+                    ` : ''}
                 </div>
             `;
         });
         
         html += '</div>';
-        return html;
+        container.innerHTML = html;
     }
     
-    // Pomocná funkce pro vytvoření rychlých akcí
-    function createQuickActions(actions) {
-        const tiles = actions.map(action => ({
-            id: `action-${action.id}`,
-            icon: action.icon,
-            title: action.title,
-            description: action.description,
-            onClick: action.onClick,
-            type: 'action'
-        }));
-        
-        return createTilesGrid(tiles);
-    }
-    
-    // Pomocná funkce pro vytvoření statistik jako dlaždiček
-    function createStatTiles(stats) {
-        const tiles = stats.map(stat => ({
-            id: `stat-${stat.id}`,
-            icon: stat.icon || '📊',
-            title: stat.value,
-            description: stat.label,
-            onClick: stat.onClick,
-            type: 'stat'
-        }));
-        
-        return createTilesGrid(tiles);
-    }
-    
-    // Příklad použití pro modul Pronajímatel
-    function examplePronajimatelOverview() {
-        return createModuleOverview('pronajimatel', [
-            {
-                title: 'Rychlé akce',
-                tiles: [
-                    {
-                        id: 'pronajimatel-pridat-osobu',
-                        icon: '👤',
-                        title: 'Přidat osobu',
-                        description: 'Nový pronajímatel - fyzická osoba',
-                        onClick: () => FormsExtended.openPronajimatelForm('osoba'),
-                        type: 'action'
-                    },
-                    {
-                        id: 'pronajimatel-pridat-firmu',
-                        icon: '🏢',
-                        title: 'Přidat firmu',
-                        description: 'Nový pronajímatel - právnická osoba',
-                        onClick: () => FormsExtended.openPronajimatelForm('firma'),
-                        type: 'action'
-                    },
-                    {
-                        id: 'pronajimatel-import',
-                        icon: '📥',
-                        title: 'Import',
-                        description: 'Importovat ze souboru',
-                        onClick: () => console.log('Import pronajímatelů'),
-                        type: 'action'
-                    }
-                ]
-            },
-            {
-                title: 'Statistiky',
-                tiles: [
-                    {
-                        id: 'pronajimatel-stat-celkem',
-                        icon: '📊',
-                        title: '15',
-                        description: 'Celkem pronajímatelů',
-                        type: 'stat'
-                    },
-                    {
-                        id: 'pronajimatel-stat-osoby',
-                        icon: '👤',
-                        title: '12',
-                        description: 'Fyzické osoby',
-                        type: 'stat'
-                    },
-                    {
-                        id: 'pronajimatel-stat-firmy',
-                        icon: '🏢',
-                        title: '3',
-                        description: 'Právnické osoby',
-                        type: 'stat'
-                    }
-                ]
-            }
-        ]);
-    }
-    
-    // Veřejné API
-    return {
-        createTileWithPin,
-        createTilesGrid,
-        createQuickActions,
-        createStatTiles,
-        createModuleOverview,
-        togglePin,
-        isPinnedItem,
-        updatePinButton,
-        
-        // Příklady použití
-        examples: {
-            pronajimatelOverview: examplePronajimatelOverview
+    function handleTileClick(module, action) {
+        if (module && window[module]) {
+            window[module].render(action);
         }
+    }
+    
+    // Získat všechny oblíbené dlaždice
+    function getFavoriteTiles() {
+        const favorites = getFavorites();
+        const allTiles = [];
+        
+        // Projít všechny moduly a najít oblíbené dlaždice
+        Object.values(tilesConfig).forEach(config => {
+            config.tiles.forEach(tile => {
+                if (favorites.includes(tile.id)) {
+                    allTiles.push({
+                        ...tile,
+                        parentModule: config.module,
+                        parentTitle: config.title
+                    });
+                }
+            });
+        });
+        
+        return allTiles;
+    }
+    
+    // Konfigurace pro jednotlivé moduly
+    const tilesConfig = {
+        najemnici: {
+            module: 'Najemnici',
+            title: 'Nájemníci',
+            icon: '👥',
+            tiles: [
+                {
+                    id: 'vsichni-najemnici',
+                    title: 'Všichni nájemníci',
+                    description: 'Seznam všech osob a kontaktů',
+                    icon: '👥',
+                    color: 'tile-primary',
+                    module: 'Najemnici',
+                    action: 'all'
+                },
+                {
+                    id: 'fyzicke-osoby',
+                    title: 'Fyzické osoby',
+                    description: 'Soukromí jednotlivci, občané',
+                    icon: '👤',
+                    color: 'tile-blue',
+                    module: 'Najemnici',
+                    action: 'fyzicke'
+                },
+                {
+                    id: 'pravnicke-osoby',
+                    title: 'Právnické osoby',
+                    description: 'Firmy, společnosti, organizace',
+                    icon: '🏢',
+                    color: 'tile-purple',
+                    module: 'Najemnici',
+                    action: 'pravnicke'
+                }
+            ]
+        },
+        // Zde přidej další moduly podle potřeby...
+    };
+    
+    return {
+        renderTiles: renderTiles,
+        handleTileClick: handleTileClick,
+        toggleFavorite: toggleFavorite,
+        getFavoriteTiles: getFavoriteTiles,
+        tilesConfig: tilesConfig
     };
 })();
