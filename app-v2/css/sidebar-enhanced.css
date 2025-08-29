@@ -205,3 +205,17 @@
 .toast-icon {
     font-size: 18px;
 }
+/* Přidej na konec souboru */
+.nav-section {
+    transition: all var(--transition-normal);
+}
+
+.nav-children {
+    transition: max-height var(--transition-normal), opacity var(--transition-normal);
+}
+
+/* Zvýraznění aktivní sekce */
+.nav-section.expanded .nav-parent {
+    background-color: rgba(82, 146, 247, 0.1);
+    color: var(--brand-primary);
+}
