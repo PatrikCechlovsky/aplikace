@@ -1,110 +1,94 @@
-window.App = (function() {
+// Správa stavu aplikace
+window.AppState = (function() {
     'use strict';
     
-    console.log('Inicializace aplikace...');
+    // Privátní stav aplikace
+    const _state = {
+        currentUser: null,
+        currentView: 'dashboard',
+        data: {
+            najemnici: [],
+            platby: [],
+            jednotky: []
+        }
+    };
     
-    // Inicializace aplikace
-    function initApp() {
-        try {
-            // 1. Inicializace AppState
-            AppState.init();
-            
-            // 2. Vykreslení navigace
-            Sidebar.render();
-            
-            // 3. Zobrazit hlavní panel
-            Dashboard.render();
-            
-            // 4. Nastavení aktivní položky v menu
-            setActiveMenuItem();
-            
-        } catch (error) {
-            console.error('❌ Chyba při inicializaci komponent:', error);
+    // Posluchači změn
+    const _listeners = [];
+    
+    // Získat hodnotu ze stavu
+    function get(path) {
+        const keys = path.split('.');
+        let result = _state;
+        
+        for (const key of keys) {
+            result = result[key];
+            if (result === undefined) return undefined;
+        }
+        
+        return result;
+    }
+    
+    // Nastavit hodnotu ve stavu
+    function set(path, value) {
+        const keys = path.split('.');
+        let target = _state;
+        
+        for (let i = 0; i < keys.length - 1; i++) {
+            if (!target[keys[i]]) {
+                target[keys[i]] = {};
+            }
+            target = target[keys[i]];
+        }
+        
+        target[keys[keys.length - 1]] = value;
+        
+        // Notifikovat posluchače
+        _listeners.forEach(listener => listener(path, value));
+        
+        // Uložit do localStorage
+        localStorage.setItem('appState', JSON.stringify(_state));
+    }
+    
+    // Přidat posluchače změn
+    function subscribe(callback) {
+        _listeners.push(callback);
+        
+        // Vrátit funkci pro odhlášení
+        return () => {
+            const index = _listeners.indexOf(callback);
+            if (index > -1) {
+                _listeners.splice(index, 1);
+            }
+        };
+    }
+    
+    // Získat celý stav
+    function getAll() {
+        return JSON.parse(JSON.stringify(_state));
+    }
+    
+    // Inicializace
+    function init() {
+        console.log('AppState inicializován');
+        // Načíst data z localStorage pokud existují
+        const saved = localStorage.getItem('appState');
+        if (saved) {
+            try {
+                const data = JSON.parse(saved);
+                Object.assign(_state, data);
+            } catch (e) {
+                console.error('Chyba při načítání stavu:', e);
+            }
         }
     }
-    
-    // Kontrola dostupnosti všech komponent
-    function checkComponents() {
-        console.log('🔍 Kontrola komponent:');
-        const components = ['AppState', 'Sidebar', 'Router', 'Dashboard', 'Modal', 'Forms'];
-        components.forEach(comp => {
-            if (window[comp]) {
-                console.log(`✓ ${comp} dostupný`);
-            } else {
-                console.error(`✗ ${comp} chybí!`);
-            }
-        });
-    }
-    
-    // Nastavení aktivní položky menu podle URL
-    function setActiveMenuItem() {
-        const hash = window.location.hash.slice(1) || 'dashboard';
-        const menuItems = document.querySelectorAll('.menu-item');
-        
-        menuItems.forEach(item => {
-            if (item.getAttribute('href') === `#${hash}`) {
-                item.classList.add('active');
-            } else {
-                item.classList.remove('active');
-            }
-        });
-    }
-    
-    // Zobrazení toast notifikace
-    function showToast(message, type = 'info') {
-        const toast = document.createElement('div');
-        toast.className = `toast toast-${type}`;
-        toast.textContent = message;
-        
-        document.body.appendChild(toast);
-        
-        // Zobrazit toast
-        setTimeout(() => toast.classList.add('show'), 100);
-        
-        // Skrýt a odstranit po 3s
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => toast.remove(), 300);
-        }, 3000);
-    }
-    
-    // Responzivní chování
-    function handleResponsive() {
-        const sidebar = document.querySelector('.sidebar');
-        const mainContent = document.querySelector('.main-content');
-        
-        if (window.innerWidth <= 768) {
-            sidebar?.classList.add('mobile');
-            mainContent?.classList.add('mobile');
-        } else {
-            sidebar?.classList.remove('mobile');
-            mainContent?.classList.remove('mobile');
-        }
-    }
-    
-    // Event listenery
-    window.addEventListener('resize', () => {
-        console.log('Změna velikosti okna');
-        handleResponsive();
-    });
-    
-    window.addEventListener('hashchange', () => {
-        setActiveMenuItem();
-        Router.handleRoute();
-    });
     
     // Veřejné API
     return {
-        init: initApp,
-        checkComponents,
-        showToast,
-        handleResponsive
+        init: init,
+        get: get,
+        set: set,
+        subscribe: subscribe,
+        getAll: getAll
     };
 })();
-
-// Spustit po načtení DOM
-document.addEventListener('DOMContentLoaded', () => {
-    App.init();
-    App.checkComponents();
-    console.log('✅ Aplikace připravena! 🚀');
-});
