@@ -17,15 +17,17 @@
     <link rel="stylesheet" href="css/layout-fixes.css">
 </head>
 <body>
-    <div class="app" id="app">
+    <div class="app-container">
         <!-- Sidebar -->
-        <aside id="sidebar" class="sidebar">
-            <div class="brand">
-                <i class="brand-icon">🏠</i>
-                <strong>Aplikace pronajímatel</strong>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="brand">
+                    <span class="brand-icon">🏠</span>
+                    <span>Aplikace pronajímatel</span>
+                </div>
             </div>
-            <nav id="navigation" class="navigation">
-                <!-- Dynamicky generované menu -->
+            <nav class="navigation" id="navigation">
+                <!-- Menu se generuje zde -->
             </nav>
             <div class="sidebar-footer">
                 <small>v2.0 - Patrik Cechlovský</small>
@@ -33,38 +35,30 @@
         </aside>
         
         <!-- Hlavní oblast -->
-        <div class="main-wrapper">
-            <!-- Header -->
-            <header id="header" class="header">
-                <div class="header-left">
-                    <button class="btn-menu" id="menuToggle" aria-label="Menu">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                    <nav class="breadcrumb" id="breadcrumb">
-                        <span class="breadcrumb-item">Hlavní panel</span>
-                    </nav>
+        <main class="main">
+            <header class="header">
+                <button class="menu-toggle" id="menuToggle">☰</button>
+                <div class="breadcrumb" id="breadcrumb">
+                    <span class="breadcrumb-item">Hlavní panel</span>
                 </div>
-                <div class="header-right">
-                    <button class="btn btn-ghost" id="btnBack" style="display:none">
-                        ← Zpět
-                    </button>
-                    <button class="btn btn-secondary" id="btnReset">
-                        Zrušit filtr
-                    </button>
-                    <button class="btn btn-primary" id="btnAdd">
-                        + Přidat záznam
-                    </button>
+                <div class="header-actions">
+                    <button class="btn btn-ghost" id="btnBack" style="display:none">← Zpět</button>
+                    <button class="btn btn-secondary" id="btnReset">Zrušit filtr</button>
+                    <button class="btn btn-primary" id="btnAdd">+ Přidat záznam</button>
+                    <button class="btn btn-ghost">🔍</button>
+                    <button class="btn btn-ghost">🔔</button>
+                    <button class="btn btn-ghost">👤</button>
                 </div>
             </header>
             
-            <!-- Hlavní obsah -->
-            <main id="mainContent" class="main-content">
-                <!-- Dynamicky generovaný obsah -->
-            </main>
-        </div>
+            <!-- HLAVNÍ OBSAH -->
+            <div class="content" id="mainContent">
+                <!-- Sem se má vykreslovat obsah modulů -->
+            </div>
+        </main>
     </div>
+    
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
     
     <!-- Modální okno -->
     <div id="modal" class="modal" role="dialog" aria-hidden="true">
@@ -87,7 +81,7 @@
     <script src="js/components/sidebar.js"></script>
     <script src="js/components/modal.js"></script>
     <script src="js/components/forms.js"></script>
-    <script src="js/components/forms-extended.js"></script
+    <script src="js/components/forms-extended.js"></script>
     
     <!-- 3. Všechny moduly v pořadí -->
     <script src="js/modules/pronajimatel.js"></script>
@@ -106,6 +100,7 @@
     <script src="js/modules/nastaveni.js"></script>
     <script src="js/modules/muj-ucet.js"></script>
     <script src="js/modules/modules-tiles.js"></script>
+    <script src="js/modules/dashboard-tiles.js"></script>
     
     <!-- 4. Hlavní aplikační soubor -->
     <script src="js/app.js"></script>
