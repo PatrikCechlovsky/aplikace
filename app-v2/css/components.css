@@ -1,306 +1,116 @@
-/* Komponenty - tlačítka, karty, formuláře atd. */
+/* Doplnění stylů pro nové komponenty */
 
-/* Tlačítka */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 10px 16px;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 1;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border-primary);
-    background: var(--surface-primary);
-    color: var(--text-primary);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    white-space: nowrap;
-    user-select: none;
+/* Formulářové styly */
+.form-group {
+    margin-bottom: 16px;
 }
 
-.btn:hover {
-    background: var(--surface-secondary);
-    border-color: var(--border-secondary);
-}
-
-.btn:active {
-    transform: scale(0.98);
-}
-
-.btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-/* Varianty tlačítek */
-.btn-primary {
-    background: var(--brand-primary);
-    color: var(--bg-primary);
-    border-color: var(--brand-primary);
-}
-
-.btn-primary:hover {
-    background: var(--brand-secondary);
-    border-color: var(--brand-secondary);
-}
-
-.btn-secondary {
-    background: var(--surface-secondary);
-    border-color: var(--border-secondary);
-}
-
-.btn-ghost {
-    background: transparent;
-    border-color: transparent;
-}
-
-.btn-ghost:hover {
-    background: var(--surface-hover);
-    border-color: var(--border-primary);
-}
-
-/* Navigační položky */
-.nav-section {
-    margin-bottom: 8px;
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border-primary);
-    background: var(--surface-primary);
-    overflow: hidden;
-}
-
-.nav-section-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 16px;
-    cursor: pointer;
-    user-select: none;
-    transition: background var(--transition-fast);
-}
-
-.nav-section-header:hover {
-    background: var(--surface-hover);
-}
-
-.nav-section-header .chevron {
-    font-size: 12px;
-    transition: transform var(--transition-fast);
-}
-
-.nav-section.open .nav-section-header .chevron {
-    transform: rotate(90deg);
-}
-
-.nav-section-items {
-    display: none;
-    padding: 4px 8px 8px;
-}
-
-.nav-section.open .nav-section-items {
+.form-group label {
     display: block;
+    margin-bottom: 4px;
+    font-weight: 500;
+    color: var(--text-secondary);
 }
 
-.nav-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.form-control {
+    width: 100%;
     padding: 8px 12px;
-    margin: 2px 0;
+    background: var(--surface-primary);
+    border: 1px solid var(--border-primary);
     border-radius: var(--radius-md);
-    color: var(--text-secondary);
-    cursor: pointer;
+    color: var(--text-primary);
+    font-size: 14px;
     transition: all var(--transition-fast);
 }
 
-.nav-item:hover {
-    background: var(--surface-hover);
-    color: var(--text-primary);
-}
-
-.nav-item.active {
-    background: var(--surface-active);
-    color: var(--text-primary);
-    border: 1px solid var(--border-secondary);
-}
-
-/* Dlaždice/Karty */
-.tile {
-    position: relative;
-    padding: 20px;
-    background: linear-gradient(180deg, rgba(33, 52, 74, 0.28), rgba(16, 24, 38, 0.8)), var(--bg-secondary);
-    border: 1px solid var(--border-primary);
-    border-radius: var(--radius-lg);
-    cursor: pointer;
-    transition: all var(--transition-base);
-    min-height: 120px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.tile:hover {
-    transform: translateY(-2px);
+.form-control:focus {
+    outline: none;
     border-color: var(--brand-primary);
-    box-shadow: var(--shadow-glow);
+    box-shadow: 0 0 0 2px rgba(82, 146, 247, 0.2);
 }
 
-.tile-icon {
-    font-size: 32px;
-    font-style: normal;
-}
-
-.tile-title {
-    font-size: 16px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.tile-description {
-    font-size: 14px;
-    color: var(--text-secondary);
-}
-
-.tile-badge {
-    display: inline-flex;
-    padding: 4px 8px;
-    font-size: 12px;
-    border-radius: var(--radius-xl);
-    background: var(--surface-primary);
-    border: 1px solid var(--border-primary);
+/* Stavové třídy */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
     color: var(--text-muted);
 }
 
-/* Tabulky */
-.data-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 16px;
+/* Statistiky */
+.module-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
 }
 
-.data-table th,
-.data-table td {
-    text-align: left;
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border-primary);
-}
-
-.data-table th {
+.stat-box {
     background: var(--surface-primary);
-    color: var(--text-secondary);
-    font-weight: 600;
-    font-size: 14px;
-}
-
-.data-table tr:hover {
-    background: var(--surface-hover);
-}
-
-/* Modální okno */
-.modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-}
-
-.modal.active {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.6);
-}
-
-.modal-container {
-    position: relative;
-    z-index: 101;
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-lg);
     padding: 20px;
-    max-width: 100%;
-    max-height: 100%;
+    text-align: center;
 }
 
-.modal-content {
+.stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.stat-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+/* Gridy */
+.data-grid, .property-grid, .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.data-card, .property-card {
     background: var(--surface-primary);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-lg), var(--shadow-glow);
-    min-width: 400px;
-    max-width: 90vw;
-    max-height: 90vh;
-    overflow: auto;
-    padding: 32px;
-    position: relative;
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-lg);
+    padding: 20px;
 }
 
-.modal-close {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    width: 32px;
-    height: 32px;
+.card-actions {
+    margin-top: 16px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
+    gap: 8px;
+}
+
+/* Badge */
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: var(--radius-xl);
     background: var(--surface-secondary);
     border: 1px solid var(--border-primary);
-    color: var(--text-primary);
-    font-size: 20px;
-    cursor: pointer;
-    transition: all var(--transition-fast);
 }
 
-.modal-close:hover {
-    background: var(--surface-hover);
-    color: var(--brand-primary);
-}
-
-/* Loading spinner */
-.spinner {
+/* Status */
+.status {
     display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--border-primary);
-    border-top-color: var(--brand-primary);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
+    padding: 4px 12px;
+    font-size: 12px;
+    border-radius: var(--radius-xl);
 }
 
-@keyframes spin {
-    to { transform: rotate(360deg); }
+.status.active {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
 }
 
-/* Toast notifikace */
-.toast {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    padding: 16px 24px;
-    background: var(--surface-primary);
-    border: 1px solid var(--border-primary);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-lg);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    z-index: 200;
-    animation: slideIn 0.3s ease-out;
-}
-
-@keyframes slideIn {
-    from {
-        transform: translateX(120%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
+.status.inactive {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
 }
