@@ -32,14 +32,17 @@ window.APP_CONFIG = {
         back: '←'
     },
     
-    // Definice modulů
+    // =====================================================
+    // SEZNAM MODULŮ - TADY PŘIDÁVEJ NOVÉ MODULY
+    // =====================================================
     modules: [
+        // Modul: Pronajímatel
         {
-            id: 'pronajimatel',
-            name: 'Pronajímatel',
-            icon: '🏠',
+            id: 'pronajimatel',        // unikátní ID (používá se v kódu)
+            name: 'Pronajímatel',      // název zobrazený v menu
+            icon: '🏠',                // ikona
             description: 'Správa pronajímatelů',
-            types: [
+            types: [                   // typy/podstránky modulu
                 { id: 'all', name: 'Přehled', icon: '📊' },
                 { id: 'osoba', name: 'Osoba', icon: '👤' },
                 { id: 'osvc', name: 'OSVČ', icon: '🧑‍💼' },
@@ -49,6 +52,8 @@ window.APP_CONFIG = {
                 { id: 'vzory', name: 'Vzory', icon: '📄' }
             ]
         },
+        
+        // Modul: Nájemníci
         {
             id: 'najemnici',
             name: 'Nájemníci',
@@ -64,6 +69,8 @@ window.APP_CONFIG = {
                 { id: 'vzory', name: 'Vzory', icon: '📄' }
             ]
         },
+        
+        // Modul: Nemovitosti
         {
             id: 'nemovitosti',
             name: 'Nemovitosti',
@@ -78,6 +85,8 @@ window.APP_CONFIG = {
                 { id: 'vzory', name: 'Vzory', icon: '📄' }
             ]
         },
+        
+        // Modul: Licence
         {
             id: 'licence',
             name: 'Licence',
@@ -91,6 +100,8 @@ window.APP_CONFIG = {
                 { id: 'vzory', name: 'Vzory', icon: '📄' }
             ]
         },
+        
+        // Modul: Přehledy
         {
             id: 'prehledy',
             name: 'Přehledy',
@@ -103,6 +114,22 @@ window.APP_CONFIG = {
                 { id: 'statistiky', name: 'Statistiky', icon: '📈' }
             ]
         }
+        
+        // =====================================================
+        // TADY PŘIDEJ DALŠÍ MODULY
+        // Příklad:
+        // ,{
+        //     id: 'smlouvy',
+        //     name: 'Smlouvy',
+        //     icon: '📄',
+        //     description: 'Správa smluv',
+        //     types: [
+        //         { id: 'all', name: 'Přehled', icon: '📊' },
+        //         { id: 'aktivni', name: 'Aktivní', icon: '✅' },
+        //         { id: 'ukoncene', name: 'Ukončené', icon: '❌' }
+        //     ]
+        // }
+        // =====================================================
     ],
     
     // API endpoints (pro budoucnost)
