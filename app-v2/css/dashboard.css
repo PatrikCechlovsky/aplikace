@@ -1,0 +1,176 @@
+/* Dashboard a dlaždice - moderní vzhled */
+
+/* Grid pro dlaždice */
+.tiles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+/* Hlavní styl dlaždice */
+.tile {
+    position: relative;
+    background: rgba(255, 255, 255, 0.02); /* Malinko světlejší než pozadí */
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px; /* Zakulacené rohy */
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+/* Hover efekt */
+.tile:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Tlačítko připnutí - jemnější */
+.tile .pin-button {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    padding: 6px;
+    border-radius: 6px;
+}
+
+.tile:hover .pin-button {
+    opacity: 0.5;
+}
+
+.pin-button:hover {
+    opacity: 1 !important;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Menší, jemnější hvězdička */
+.pin-icon {
+    font-size: 14px;
+    color: #94a3b8;
+    transition: color 0.2s ease;
+}
+
+.pin-button:hover .pin-icon {
+    color: #fbbf24;
+}
+
+.tile.pinned .pin-icon {
+    color: #fbbf24;
+    opacity: 1;
+}
+
+/* Obsah dlaždice */
+.tile-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.tile-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.tile-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin-bottom: 8px;
+}
+
+.tile-description {
+    font-size: 14px;
+    color: #94a3b8;
+    line-height: 1.5;
+}
+
+/* Tagy/hashtagy v dlaždici */
+.tile-tags {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.tile-tag {
+    font-size: 12px;
+    color: #64748b;
+    background: rgba(148, 163, 184, 0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+/* Drag & Drop styly */
+.tile.dragging {
+    opacity: 0.5;
+    cursor: grabbing;
+}
+
+.tile.drag-over {
+    border-color: #5292f7;
+    background: rgba(82, 146, 247, 0.05);
+}
+
+/* Různá barevná témata */
+/* Výchozí tmavé téma */
+.theme-dark {
+    --tile-bg: rgba(255, 255, 255, 0.02);
+    --tile-bg-hover: rgba(255, 255, 255, 0.04);
+    --tile-border: rgba(255, 255, 255, 0.06);
+    --tile-border-hover: rgba(255, 255, 255, 0.1);
+}
+
+/* Světlé téma */
+.theme-light .tile {
+    background: rgba(0, 0, 0, 0.02);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+.theme-light .tile:hover {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.12);
+}
+
+/* Modrý akcent */
+.theme-blue .tile {
+    background: rgba(82, 146, 247, 0.05);
+    border-color: rgba(82, 146, 247, 0.15);
+}
+
+.theme-blue .tile:hover {
+    background: rgba(82, 146, 247, 0.08);
+    border-color: rgba(82, 146, 247, 0.25);
+}
+
+/* Sekce připnutých položek */
+.pinned-section {
+    margin-bottom: 32px;
+}
+
+.pinned-section h2 {
+    font-size: 18px;
+    color: #cbd5e1;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pinned-section .empty-state {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+    color: #64748b;
+    font-size: 14px;
+}
