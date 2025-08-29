@@ -9,21 +9,102 @@ window.App = (function() {
             // 1. Inicializace AppState
             AppState.init();
             
-            // 2. Inicializace komponent
-            // Sidebar.init(); // <- Toto je zakomentované
-            
-            // 3. Vykreslení navigace
+            // 2. Vykreslení navigace
             Sidebar.render();
             
-            // 4. Zobrazit hlavní panel
+            // 3. Zobrazit hlavní panel
             Dashboard.render();
             
-            // 5. Nastavení aktivní položky v menu
+            // 4. Nastavení aktivní položky v menu
             setActiveMenuItem();
             
         } catch (error) {
             console.error('❌ Chyba při inicializaci komponent:', error);
         }
-    } // <- Zkontroluj, že je zde uzavírací závorka
+    }
     
-    // ... zbytek kódu
+    // Kontrola dostupnosti všech komponent
+    function checkComponents() {
+        console.log('🔍 Kontrola komponent:');
+        const components = ['AppState', 'Sidebar', 'Router', 'Dashboard', 'Modal', 'Forms'];
+        components.forEach(comp => {
+            if (window[comp]) {
+                console.log(`✓ ${comp} dostupný`);
+            } else {
+                console.error(`✗ ${comp} chybí!`);
+            }
+        });
+    }
+    
+    // Nastavení aktivní položky menu podle URL
+    function setActiveMenuItem() {
+        const hash = window.location.hash.slice(1) || 'dashboard';
+        const menuItems = document.querySelectorAll('.menu-item');
+        
+        menuItems.forEach(item => {
+            if (item.getAttribute('href') === `#${hash}`) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    }
+    
+    // Zobrazení toast notifikace
+    function showToast(message, type = 'info') {
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.textContent = message;
+        
+        document.body.appendChild(toast);
+        
+        // Zobrazit toast
+        setTimeout(() => toast.classList.add('show'), 100);
+        
+        // Skrýt a odstranit po 3s
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+    
+    // Responzivní chování
+    function handleResponsive() {
+        const sidebar = document.querySelector('.sidebar');
+        const mainContent = document.querySelector('.main-content');
+        
+        if (window.innerWidth <= 768) {
+            sidebar?.classList.add('mobile');
+            mainContent?.classList.add('mobile');
+        } else {
+            sidebar?.classList.remove('mobile');
+            mainContent?.classList.remove('mobile');
+        }
+    }
+    
+    // Event listenery
+    window.addEventListener('resize', () => {
+        console.log('Změna velikosti okna');
+        handleResponsive();
+    });
+    
+    window.addEventListener('hashchange', () => {
+        setActiveMenuItem();
+        Router.handleRoute();
+    });
+    
+    // Veřejné API
+    return {
+        init: initApp,
+        checkComponents,
+        showToast,
+        handleResponsive
+    };
+})();
+
+// Spustit po načtení DOM
+document.addEventListener('DOMContentLoaded', () => {
+    App.init();
+    App.checkComponents();
+    console.log('✅ Aplikace připravena! 🚀');
+});
