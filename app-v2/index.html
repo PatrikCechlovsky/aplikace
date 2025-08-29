@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Aplikace pronajímatel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- CSS soubory -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+    <div class="app" id="app">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar">
+            <div class="brand">
+                <i class="brand-icon">🏠</i>
+                <strong>Aplikace pronajímatel</strong>
+            </div>
+            <nav id="navigation" class="navigation">
+                <!-- Dynamicky generované menu -->
+            </nav>
+            <div class="sidebar-footer">
+                <small>v2.0 - Patrik Cechlovský</small>
+            </div>
+        </aside>
+        
+        <!-- Hlavní oblast -->
+        <div class="main-wrapper">
+            <!-- Header -->
+            <header id="header" class="header">
+                <div class="header-left">
+                    <button class="btn-menu" id="menuToggle" aria-label="Menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <nav class="breadcrumb" id="breadcrumb">
+                        <span class="breadcrumb-item">Hlavní panel</span>
+                    </nav>
+                </div>
+                <div class="header-right">
+                    <button class="btn btn-ghost" id="btnBack" style="display:none">
+                        ← Zpět
+                    </button>
+                    <button class="btn btn-secondary" id="btnReset">
+                        Zrušit filtr
+                    </button>
+                    <button class="btn btn-primary" id="btnAdd">
+                        + Přidat záznam
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Hlavní obsah -->
+            <main id="mainContent" class="main-content">
+                <!-- Dynamicky generovaný obsah -->
+            </main>
+        </div>
+    </div>
+    
+    <!-- Modální okno -->
+    <div id="modal" class="modal" role="dialog" aria-hidden="true">
+        <div class="modal-backdrop"></div>
+        <div class="modal-container">
+            <div class="modal-content" id="modalContent">
+                <button class="modal-close" id="modalClose" aria-label="Zavřít">×</button>
+                <div id="modalBody"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript soubory - správné pořadí -->
+    <script src="js/config.js"></script>
+    <script src="js/state.js"></script>
+    <script src="js/components/sidebar.js"></script>
+    <script src="js/components/modal.js"></script>
+    <script src="js/components/forms.js"></script>
+    <script src="js/modules/pronajimatel.js"></script>
+    <script src="js/modules/najemnici.js"></script>
+    <script src="js/modules/nemovitosti.js"></script>
+    <script src="js/modules/licence.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
