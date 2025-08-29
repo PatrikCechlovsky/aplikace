@@ -72,16 +72,36 @@
         </div>
     </div>
     
-    <!-- JavaScript soubory - správné pořadí -->
+    <!-- ========================================== -->
+    <!-- JavaScript soubory - správné pořadí        -->
+    <!-- ========================================== -->
+    
+    <!-- 1. Konfigurace a základní moduly -->
     <script src="js/config.js"></script>
     <script src="js/state.js"></script>
+    
+    <!-- 2. Komponenty UI -->
     <script src="js/components/sidebar.js"></script>
     <script src="js/components/modal.js"></script>
     <script src="js/components/forms.js"></script>
+    
+    <!-- ========================================== -->
+    <!-- 3. MODULY - TADY PŘIDÁVEJ NOVÉ            -->
+    <!-- ========================================== -->
     <script src="js/modules/pronajimatel.js"></script>
     <script src="js/modules/najemnici.js"></script>
     <script src="js/modules/nemovitosti.js"></script>
     <script src="js/modules/licence.js"></script>
+    <script src="js/modules/prehledy.js"></script>
+    
+    <!-- Příklad přidání nového modulu: -->
+    <!-- <script src="js/modules/smlouvy.js"></script> -->
+    <!-- <script src="js/modules/platby.js"></script> -->
+    <!-- <script src="js/modules/dokumenty.js"></script> -->
+    
+    <!-- ========================================== -->
+    <!-- 4. Hlavní aplikační soubor (musí být poslední) -->
+    <!-- ========================================== -->
     <script src="js/app.js"></script>
 </body>
 </html>
