@@ -157,28 +157,37 @@ window.Sidebar = (function() {
     
     // Navigace na modul
     function navigateToModule(moduleId, typeId) {
-        const mainContent = document.getElementById('mainContent');
-        if (!mainContent) return;
-        
-        // Získej název modulu s velkým prvním písmenem
-        const moduleName = moduleId.charAt(0).toUpperCase() + moduleId.slice(1);
-        
-        // Najdi modul
-        const module = window[moduleName];
-        if (module && typeof module.render === 'function') {
-            mainContent.innerHTML = '';
-            module.render(typeId);
-        } else {
-            // Dočasný obsah pokud modul ještě není implementován
-            mainContent.innerHTML = `
-                <div class="placeholder">
-                    <h2>Modul: ${moduleId}</h2>
-                    <p>Typ: ${typeId}</p>
-                    <p>Tento modul ještě není plně implementován.</p>
-                </div>
-            `;
-        }
+    const mainContent = document.getElementById('mainContent');
+    if (!mainContent) {
+        console.error('Element mainContent nebyl nalezen!');
+        return;
     }
+    
+    // Debug log
+    console.log('Navigace na modul:', moduleId, typeId);
+    console.log('mainContent element:', mainContent);
+    
+    // Získej název modulu s velkým prvním písmenem
+    const moduleName = moduleId.charAt(0).toUpperCase() + moduleId.slice(1);
+    
+    // Najdi modul
+    const module = window[moduleName];
+    if (module && typeof module.render === 'function') {
+        // Vyčisti obsah
+        mainContent.innerHTML = '';
+        // Vykresli nový obsah
+        module.render(typeId);
+    } else {
+        // Dočasný obsah pokud modul ještě není implementován
+        mainContent.innerHTML = `
+            <div class="placeholder">
+                <h2>Modul: ${moduleId}</h2>
+                <p>Typ: ${typeId}</p>
+                <p>Tento modul ještě není plně implementován.</p>
+            </div>
+        `;
+    }
+}
     
     // Zobrazení hlavního panelu
     function showDashboard() {
