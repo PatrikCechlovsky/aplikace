@@ -174,3 +174,32 @@
     color: #64748b;
     font-size: 14px;
 }
+/* Přidej toto na konec souboru dashboard.css */
+
+/* Hvězdička pro oblíbené */
+.tile-favorite {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    opacity: 0.5;
+    z-index: 2;
+}
+
+.tile-favorite:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.tile-favorite.active {
+    opacity: 1;
+    color: #FFD700;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+/* Upravit pozici tile pro hvězdičku */
+.module-tile {
+    position: relative;
+}
