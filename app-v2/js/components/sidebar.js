@@ -180,69 +180,80 @@ window.Sidebar = (function() {
         }
     }
     
-    // Zobrazení hlavního panelu s dlaždicemi
+    // Zobrazení hlavního panelu
     function showDashboard() {
         const mainContent = document.getElementById('mainContent');
         if (!mainContent) return;
         
+        // Získej připnuté položky
+        const pinnedItems = AppState.get('pinnedItems') || [];
+        
         mainContent.innerHTML = `
-            <div class="dashboard-header">
-                <h1>Hlavní panel</h1>
-                <p>Rychlý přístup k důležitým funkcím</p>
-            </div>
-            
-            <div class="pinned-section">
-                <h2>⭐ Připnuté</h2>
-                <div class="tiles-grid" id="pinnedTiles"></div>
-            </div>
-            
-            <div class="modules-section">
-                <h2>📦 Moduly</h2>
-                <div class="tiles-grid" id="moduleTiles"></div>
+            <div class="dashboard-content">
+                ${pinnedItems.length === 0 ? `
+                    <div class="empty-dashboard">
+                        <div class="empty-icon">⭐</div>
+                        <h2>Váš hlavní panel je prázdný</h2>
+                        <p>Přidejte si sem své oblíbené moduly a funkce pomocí hvězdičky ⭐</p>
+                        <p class="empty-hint">Tip: Najděte hvězdičku v pravém horním rohu každé dlaždice</p>
+                    </div>
+                ` : `
+                    <div class="tiles-grid" id="pinnedTiles">
+                        ${pinnedItems.map(item => {
+                            // Pokud je to modul
+                            if (item.type === 'module' || !item.type) {
+                                const module = APP_CONFIG.modules.find(m => m.id === item.id);
+                                if (!module) return '';
+                                
+                                return `
+                                    <div class="tile pinned" data-module-id="${module.id}">
+                                        <button class="pin-button active" title="Odepnout z hlavního panelu" onclick="event.stopPropagation(); Sidebar.togglePin('${module.id}', 'module')">
+                                            <span class="pin-icon">⭐</span>
+                                        </button>
+                                        <div class="tile-icon">${module.icon}</div>
+                                        <div class="tile-title">${module.name}</div>
+                                        <div class="tile-description">${module.description}</div>
+                                    </div>
+                                `;
+                            } else {
+                                // Vlastní připnuté položky
+                                return `
+                                    <div class="tile pinned" data-tile-id="${item.id}">
+                                        <button class="pin-button active" title="Odepnout z hlavního panelu" onclick="event.stopPropagation(); Sidebar.togglePin('${item.id}', 'custom')">
+                                            <span class="pin-icon">⭐</span>
+                                        </button>
+                                        <div class="tile-icon">${item.icon || '📌'}</div>
+                                        <div class="tile-title">${item.title}</div>
+                                        <div class="tile-description">${item.description || ''}</div>
+                                    </div>
+                                `;
+                            }
+                        }).join('')}
+                    </div>
+                `}
+                
+                <div class="dashboard-footer">
+                    <p class="dashboard-tip">💡 Přidejte další moduly z menu vlevo nebo z nastavení</p>
+                </div>
             </div>
         `;
         
-        // Načti připnuté položky
-        const pinnedItems = AppState.get('pinnedItems') || [];
-        const pinnedContainer = document.getElementById('pinnedTiles');
-        
-        if (pinnedItems.length === 0) {
-            pinnedContainer.innerHTML = '<p class="empty-state">Zatím nemáte žádné připnuté položky</p>';
-        } else {
-            // TODO: Zobrazit připnuté položky
-        }
-        
-        // Zobraz moduly
-        const tilesContainer = document.getElementById('moduleTiles');
-        const modules = window.APP_CONFIG.modules;
-        
-        modules.forEach(module => {
-            const tile = document.createElement('div');
-            tile.className = 'tile';
-            tile.dataset.moduleId = module.id;
-            tile.innerHTML = `
-                <button class="pin-button" title="Připnout na hlavní panel" onclick="event.stopPropagation(); Sidebar.togglePin('${module.id}', 'module')">
-                    <span class="pin-icon">⭐</span>
-                </button>
-                <div class="tile-icon">${module.icon}</div>
-                <div class="tile-title">${module.name}</div>
-                <div class="tile-description">${module.description}</div>
-            `;
-            
-            tile.addEventListener('click', () => {
-                // Otevři první položku modulu
-                const firstType = module.types[0];
-                handleItemClick(module.id, firstType.id, null);
-                
-                // Najdi a označ odpovídající položku v menu
-                const menuItem = document.querySelector(`[data-module-id="${module.id}"][data-type-id="${firstType.id}"]`);
-                if (menuItem) {
-                    setActiveItem(menuItem);
-                }
+        // Přidej event listenery na dlaždice
+        setTimeout(() => {
+            document.querySelectorAll('.tile').forEach(tile => {
+                tile.addEventListener('click', (e) => {
+                    if (e.target.closest('.pin-button')) return;
+                    
+                    const moduleId = tile.dataset.moduleId;
+                    if (moduleId) {
+                        const module = APP_CONFIG.modules.find(m => m.id === moduleId);
+                        if (module) {
+                            handleItemClick(moduleId, module.types[0].id, null);
+                        }
+                    }
+                });
             });
-            
-            tilesContainer.appendChild(tile);
-        });
+        }, 100);
     }
     
     // Aktualizace breadcrumb navigace
@@ -275,7 +286,7 @@ window.Sidebar = (function() {
     // Připnutí/odepnutí položky
     function togglePin(itemId, itemType) {
         const pinnedItems = AppState.get('pinnedItems') || [];
-        const itemIndex = pinnedItems.findIndex(item => item.id === itemId && item.type === itemType);
+        const itemIndex = pinnedItems.findIndex(item => item.id === itemId && (item.type === itemType || (!item.type && itemType === 'module')));
         
         if (itemIndex > -1) {
             // Odepnout
@@ -283,7 +294,26 @@ window.Sidebar = (function() {
             App.showToast('Odepnuto z hlavního panelu', 'info');
         } else {
             // Připnout
-            pinnedItems.push({ id: itemId, type: itemType });
+            if (itemType === 'module') {
+                pinnedItems.push({ 
+                    id: itemId, 
+                    type: 'module',
+                    pinnedAt: new Date().toISOString()
+                });
+            } else {
+                // Pro custom položky musíme najít dodatečné info
+                const tileElement = document.querySelector(`[data-tile-id="${itemId}"]`);
+                if (tileElement) {
+                    pinnedItems.push({
+                        id: itemId,
+                        type: itemType,
+                        title: tileElement.querySelector('.tile-title')?.textContent || itemId,
+                        icon: tileElement.querySelector('.tile-icon')?.textContent || '📌',
+                        description: tileElement.querySelector('.tile-description')?.textContent || '',
+                        pinnedAt: new Date().toISOString()
+                    });
+                }
+            }
             App.showToast('Připnuto na hlavní panel', 'success');
         }
         
