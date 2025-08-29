@@ -1,0 +1,240 @@
+/* Jednotný vzhled formulářů */
+
+/* Základní struktura formuláře */
+.form {
+    width: 100%;
+}
+
+.form-title {
+    font-size: 20px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-primary);
+}
+
+.form-body {
+    margin-bottom: 24px;
+}
+
+/* Formulářová pole */
+.form-field {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.form-label.required::after {
+    content: ' *';
+    color: #ef4444;
+}
+
+/* Wrapper pro input s ikonou */
+.form-control-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--surface-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 14px;
+    line-height: 1.5;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--brand-primary);
+    background: var(--surface-secondary);
+    box-shadow: 0 0 0 3px rgba(82, 146, 247, 0.1);
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Ikona v inputu */
+.form-control-wrapper .form-icon {
+    position: absolute;
+    right: 14px;
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+.form-control-wrapper select.form-control {
+    padding-right: 40px;
+    appearance: none;
+}
+
+/* Textarea */
+textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Help text */
+.form-help {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* Error state */
+.form-error {
+    font-size: 13px;
+    color: #ef4444;
+    margin-top: 4px;
+    display: none;
+}
+
+.form-field.has-error .form-control {
+    border-color: #ef4444;
+}
+
+.form-field.has-error .form-error {
+    display: block;
+}
+
+/* Checkbox a Radio */
+.checkbox-wrapper,
+.radio-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 8px 0;
+}
+
+.checkbox-wrapper input[type="checkbox"],
+.radio-wrapper input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.checkbox-label,
+.radio-label {
+    font-size: 14px;
+    user-select: none;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Form rows a columns pro grid layout */
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.form-col-1 { grid-column: span 1; }
+.form-col-2 { grid-column: span 2; }
+.form-col-3 { grid-column: span 3; }
+.form-col-4 { grid-column: span 4; }
+.form-col-5 { grid-column: span 5; }
+.form-col-6 { grid-column: span 6; }
+.form-col-7 { grid-column: span 7; }
+.form-col-8 { grid-column: span 8; }
+.form-col-9 { grid-column: span 9; }
+.form-col-10 { grid-column: span 10; }
+.form-col-11 { grid-column: span 11; }
+.form-col-12 { grid-column: span 12; }
+
+/* Group header */
+.form-group-header {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-primary);
+}
+
+/* Form actions */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-row {
+        display: block;
+    }
+    
+    .form-row > div {
+        margin-bottom: 16px;
+    }
+    
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+    
+    .form-actions .btn {
+        width: 100%;
+    }
+}
+
+/* Různé layouty formulářů */
+.form-layout-wizard .form-body {
+    /* TODO: Implementovat wizard kroky */
+}
+
+.form-layout-tabs .form-body {
+    /* TODO: Implementovat záložky */
+}
+
+/* Validace */
+.form-control:valid {
+    border-color: #22c55e;
+}
+
+.form-control:invalid:not(:placeholder-shown) {
+    border-color: #ef4444;
+}
+
+/* Loading state */
+.form.is-loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.form.is-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    border: 2px solid var(--brand-primary);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
