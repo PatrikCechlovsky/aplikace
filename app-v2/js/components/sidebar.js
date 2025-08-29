@@ -24,7 +24,7 @@ window.Sidebar = (function() {
             section.className = 'nav-section';
             section.dataset.moduleId = module.id;
             
-            // Header sekce
+            // Header sekce - hlavní řádek modulu
             const header = document.createElement('div');
             header.className = 'nav-section-header';
             header.innerHTML = `
@@ -33,7 +33,7 @@ window.Sidebar = (function() {
                 <span class="title">${module.name}</span>
             `;
             
-            // Seznam položek
+            // Seznam položek - odsazené submenu
             const items = document.createElement('div');
             items.className = 'nav-section-items';
             
@@ -66,35 +66,20 @@ window.Sidebar = (function() {
             section.appendChild(items);
             nav.appendChild(section);
         });
-        
-        // Přidej položku pro hlavní panel
-        const homeItem = document.createElement('div');
-        homeItem.className = 'nav-item nav-item-home';
-        homeItem.innerHTML = `
-            <span class="icon">🏠</span>
-            <span class="name">Hlavní panel</span>
-        `;
-        homeItem.addEventListener('click', () => {
-            handleHomeClick();
-        });
-        
-        // Vlož hlavní panel na začátek
-        nav.insertBefore(homeItem, nav.firstChild);
     }
     
     // Rozbalení/sbalení sekce
     function toggleSection(section) {
         const isOpen = section.classList.contains('open');
+        const chevron = section.querySelector('.chevron');
         
-        // Zavři všechny ostatní sekce
-        document.querySelectorAll('.nav-section.open').forEach(s => {
-            if (s !== section) {
-                s.classList.remove('open');
-            }
-        });
-        
-        // Přepni aktuální sekci
-        section.classList.toggle('open', !isOpen);
+        if (isOpen) {
+            section.classList.remove('open');
+            chevron.textContent = '▶';
+        } else {
+            section.classList.add('open');
+            chevron.textContent = '▼';
+        }
     }
     
     // Kliknutí na položku menu
@@ -105,6 +90,9 @@ window.Sidebar = (function() {
         // Aktualizuj stav
         window.AppState.setModule(moduleId, typeId);
         
+        // Aktualizuj breadcrumb
+        updateBreadcrumb(moduleId, typeId);
+        
         // Naviguj na stránku
         navigateToModule(moduleId, typeId);
         
@@ -114,11 +102,27 @@ window.Sidebar = (function() {
         }
     }
     
-    // Kliknutí na hlavní panel
-    function handleHomeClick() {
-        // Označ jako aktivní
-        const homeItem = document.querySelector('.nav-item-home');
-        setActiveItem(homeItem);
+    // Kliknutí na logo/brand - návrat na hlavní panel
+    function setupBrandClick() {
+        const brand = document.querySelector('.brand');
+        if (brand) {
+            brand.style.cursor = 'pointer';
+            brand.addEventListener('click', goHome);
+        }
+    }
+    
+    // Přejít na hlavní panel
+    function goHome() {
+        // Odznač aktivní položky
+        document.querySelectorAll('.nav-item.active').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        // Sbal všechny sekce
+        document.querySelectorAll('.nav-section.open').forEach(section => {
+            section.classList.remove('open');
+            section.querySelector('.chevron').textContent = '▶';
+        });
         
         // Aktualizuj stav
         window.AppState.setModule(null, null);
@@ -126,10 +130,8 @@ window.Sidebar = (function() {
         // Zobraz hlavní panel
         showDashboard();
         
-        // Na mobilu zavři sidebar
-        if (window.innerWidth <= 768) {
-            window.AppState.set('ui.sidebarOpen', false);
-        }
+        // Aktualizuj breadcrumb
+        updateBreadcrumb(null, null);
     }
     
     // Nastavení aktivní položky
@@ -148,21 +150,21 @@ window.Sidebar = (function() {
             const section = element.closest('.nav-section');
             if (section && !section.classList.contains('open')) {
                 section.classList.add('open');
+                section.querySelector('.chevron').textContent = '▼';
             }
         }
     }
     
     // Navigace na modul
     function navigateToModule(moduleId, typeId) {
-        // Aktualizuj breadcrumb
-        updateBreadcrumb(moduleId, typeId);
-        
-        // Zobraz obsah modulu
         const mainContent = document.getElementById('mainContent');
         if (!mainContent) return;
         
-        // Načti modul
-        const module = window[moduleId.charAt(0).toUpperCase() + moduleId.slice(1)];
+        // Získej název modulu s velkým prvním písmenem
+        const moduleName = moduleId.charAt(0).toUpperCase() + moduleId.slice(1);
+        
+        // Najdi modul
+        const module = window[moduleName];
         if (module && typeof module.render === 'function') {
             mainContent.innerHTML = '';
             module.render(typeId);
@@ -172,30 +174,56 @@ window.Sidebar = (function() {
                 <div class="placeholder">
                     <h2>Modul: ${moduleId}</h2>
                     <p>Typ: ${typeId}</p>
-                    <p>Tento modul ještě není implementován.</p>
+                    <p>Tento modul ještě není plně implementován.</p>
                 </div>
             `;
         }
     }
     
-    // Zobrazení hlavního panelu
+    // Zobrazení hlavního panelu s dlaždicemi
     function showDashboard() {
         const mainContent = document.getElementById('mainContent');
         if (!mainContent) return;
         
-        // Aktualizuj breadcrumb
-        document.getElementById('breadcrumb').innerHTML = '<span class="breadcrumb-item">Hlavní panel</span>';
+        mainContent.innerHTML = `
+            <div class="dashboard-header">
+                <h1>Hlavní panel</h1>
+                <p>Rychlý přístup k důležitým funkcím</p>
+            </div>
+            
+            <div class="pinned-section">
+                <h2>⭐ Připnuté</h2>
+                <div class="tiles-grid" id="pinnedTiles"></div>
+            </div>
+            
+            <div class="modules-section">
+                <h2>📦 Moduly</h2>
+                <div class="tiles-grid" id="moduleTiles"></div>
+            </div>
+        `;
         
-        // Zobraz dlaždice modulů
-        mainContent.innerHTML = '<div class="tiles-grid" id="dashboardTiles"></div>';
+        // Načti připnuté položky
+        const pinnedItems = AppState.get('pinnedItems') || [];
+        const pinnedContainer = document.getElementById('pinnedTiles');
         
-        const tilesContainer = document.getElementById('dashboardTiles');
+        if (pinnedItems.length === 0) {
+            pinnedContainer.innerHTML = '<p class="empty-state">Zatím nemáte žádné připnuté položky</p>';
+        } else {
+            // TODO: Zobrazit připnuté položky
+        }
+        
+        // Zobraz moduly
+        const tilesContainer = document.getElementById('moduleTiles');
         const modules = window.APP_CONFIG.modules;
         
         modules.forEach(module => {
             const tile = document.createElement('div');
             tile.className = 'tile';
+            tile.dataset.moduleId = module.id;
             tile.innerHTML = `
+                <button class="pin-button" title="Připnout na hlavní panel" onclick="event.stopPropagation(); Sidebar.togglePin('${module.id}', 'module')">
+                    <span class="pin-icon">⭐</span>
+                </button>
                 <div class="tile-icon">${module.icon}</div>
                 <div class="tile-title">${module.name}</div>
                 <div class="tile-description">${module.description}</div>
@@ -222,17 +250,49 @@ window.Sidebar = (function() {
         const breadcrumb = document.getElementById('breadcrumb');
         if (!breadcrumb) return;
         
+        if (!moduleId) {
+            // Hlavní panel
+            breadcrumb.innerHTML = '<span class="breadcrumb-item">Hlavní panel</span>';
+            return;
+        }
+        
         const module = window.APP_CONFIG.modules.find(m => m.id === moduleId);
         if (!module) return;
         
         const type = module.types.find(t => t.id === typeId);
         if (!type) return;
         
+        // Vytvoř klikatelný breadcrumb
         breadcrumb.innerHTML = `
             <span class="breadcrumb-item clickable" onclick="Sidebar.goHome()">Hlavní panel</span>
-            <span class="breadcrumb-item">${module.name}</span>
+            <span class="breadcrumb-separator">›</span>
+            <span class="breadcrumb-item clickable" onclick="Sidebar.openModule('${module.id}', '${module.types[0].id}')">${module.name}</span>
+            <span class="breadcrumb-separator">›</span>
             <span class="breadcrumb-item">${type.name}</span>
         `;
+    }
+    
+    // Připnutí/odepnutí položky
+    function togglePin(itemId, itemType) {
+        const pinnedItems = AppState.get('pinnedItems') || [];
+        const itemIndex = pinnedItems.findIndex(item => item.id === itemId && item.type === itemType);
+        
+        if (itemIndex > -1) {
+            // Odepnout
+            pinnedItems.splice(itemIndex, 1);
+            App.showToast('Odepnuto z hlavního panelu', 'info');
+        } else {
+            // Připnout
+            pinnedItems.push({ id: itemId, type: itemType });
+            App.showToast('Připnuto na hlavní panel', 'success');
+        }
+        
+        AppState.set('pinnedItems', pinnedItems);
+        
+        // Pokud jsme na hlavním panelu, aktualizuj ho
+        if (!AppState.get('currentModule')) {
+            showDashboard();
+        }
     }
     
     // Mobilní menu
@@ -281,6 +341,9 @@ window.Sidebar = (function() {
             // Vytvoř navigaci
             createNavigation();
             
+            // Nastav kliknutí na brand/logo
+            setupBrandClick();
+            
             // Nastav mobilní menu
             setupMobileMenu();
             
@@ -304,9 +367,10 @@ window.Sidebar = (function() {
         },
         
         // Přejít na hlavní panel
-        goHome() {
-            handleHomeClick();
-        },
+        goHome,
+        
+        // Připnout/odepnout položku
+        togglePin,
         
         // Získat aktivní položku
         getActiveItem() {
