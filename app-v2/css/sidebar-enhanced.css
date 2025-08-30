@@ -1,6 +1,5 @@
 /* Moderní tmavý sidebar s rozbalováním a šipkami */
 
-/* Sidebar pozadí */
 #navigation, .sidebar {
     background: #181c24;
     color: #fff;
@@ -8,6 +7,23 @@
     padding-top: 6px;
     padding-bottom: 6px;
     font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* Brand */
+.brand {
+    font-size: 21px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    color: #53a0fd;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.brand .nav-icon {
+    font-size: 22px;
 }
 
 /* Rozbalovací sekce */
@@ -111,21 +127,101 @@
     color: #53a0fd;
 }
 
-/* Brand */
-.brand {
-    font-size: 21px;
-    font-weight: bold;
-    margin-bottom: 16px;
-    color: #53a0fd;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    cursor: pointer;
+/* Hlavní panel/dlaždice */
+#main-content {
+    padding: 32px 24px 24px 24px;
+    min-height: 100vh;
+    background: #14161c;
 }
 
-.brand .nav-icon {
+.dashboard-tiles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.tile {
+    background: #232736;
+    color: #fff;
+    border-radius: 16px;
+    padding: 22px 28px 18px 28px;
+    min-width: 240px;
+    min-height: 110px;
+    box-shadow: 0 1px 8px 0 #0004;
+    font-size: 16px;
+    position: relative;
+    transition: box-shadow 0.15s, background 0.15s;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tile:hover {
+    box-shadow: 0 4px 24px 0 #0007;
+    background: #2e3446;
+}
+
+.tile-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.tile-icon {
     font-size: 22px;
+}
+
+.tile-tags {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.tile-tag {
+    background: #14161c;
+    color: #53a0fd;
+    border-radius: 6px;
+    padding: 3px 9px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    opacity: 0.8;
+}
+
+.tile-desc {
+    font-size: 14px;
+    color: #bebebe;
+}
+
+.pin-button {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s, filter 0.2s;
+    padding: 4px;
+    z-index: 2;
+}
+
+.pin-button:active,
+.pin-button.active {
+    opacity: 1;
+    filter: brightness(1.2);
+}
+
+.pin-icon {
+    font-size: 21px;
+    color: #ffce4c;
+    filter: grayscale(100%);
+}
+
+.pin-button.active .pin-icon {
+    filter: grayscale(0%);
 }
 
 ::-webkit-scrollbar {
