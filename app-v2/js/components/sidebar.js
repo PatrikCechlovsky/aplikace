@@ -1,55 +1,73 @@
-// Moderní rozbalovací sidebar s šipkou & tmavým stylem
 window.Sidebar = (function() {
     'use strict';
 
     let activeModule = null;
 
-    // Seznam modulů (úprava dle potřeby)
+    // Seznam modulů
     const menuItems = [
         {
             id: 'pronajimatel',
             label: 'Pronajímatel',
             icon: '👤',
-            action: () => window.Pronajimatel && window.Pronajimatel.render('tiles'),
             children: [
-                { label: 'Přehled', icon: '', action: () => window.Pronajimatel.render() },
-                { label: 'Osoba', icon: '', action: () => window.Pronajimatel.edit('osoba') },
-                { label: 'OSVČ', icon: '🧑‍💼', action: () => window.Pronajimatel.edit('osvc') },
-                { label: 'Firma', icon: '🏢', action: () => window.Pronajimatel.edit('firma') },
-                { label: 'Spolek/skupina', icon: '👥', action: () => window.Pronajimatel.edit('spolek') },
-                { label: 'Státní instituce', icon: '🏛️', action: () => window.Pronajimatel.edit('statni') }
+                { label: 'Přehled', icon: '', },
+                { label: 'Osoba', icon: '', },
+                { label: 'OSVČ', icon: '🧑‍💼', },
+                { label: 'Firma', icon: '🏢', },
+                { label: 'Spolek/skupina', icon: '👥', },
+                { label: 'Státní instituce', icon: '🏛️', }
             ]
         },
         {
             id: 'najemnici',
             label: 'Nájemníci',
             icon: '👥',
-            action: () => window.Najemnici && window.Najemnici.render('tiles'),
             children: [
-                { label: 'Přehled', icon: '', action: () => window.Najemnici.render('all') },
-                { label: 'Osoba', icon: '', action: () => window.Najemnici.render('fyzicke') },
-                { label: 'OSVČ', icon: '🧑‍💼', action: () => window.Najemnici.render('osvc') },
-                { label: 'Firma', icon: '🏢', action: () => window.Najemnici.render('pravnicke') },
-                { label: 'Spolek/skupina', icon: '👥', action: () => window.Najemnici.render('spolek') },
-                { label: 'Státní instituce', icon: '🏛️', action: () => window.Najemnici.render('statni') }
+                { label: 'Přehled', icon: '', },
+                { label: 'Osoba', icon: '', },
+                { label: 'OSVČ', icon: '🧑‍💼', },
+                { label: 'Firma', icon: '🏢', },
+                { label: 'Spolek/skupina', icon: '👥', },
+                { label: 'Státní instituce', icon: '🏛️', }
             ]
         },
-        { id: 'nemovitosti', label: 'Nemovitosti', icon: '🏘️', action: () => window.Nemovitosti && window.Nemovitosti.render() },
-        { id: 'smlouvy', label: 'Smlouvy', icon: '📄', action: () => window.Smlouvy && window.Smlouvy.render() },
-        { id: 'platby', label: 'Platby', icon: '💸', action: () => window.Platby && window.Platby.render() },
-        { id: 'sluzby', label: 'Služby', icon: '⚡', action: () => window.Sluzby && window.Sluzby.render() },
-        { id: 'reporty', label: 'Reporty & Grafy', icon: '📊', action: () => window.Reporty && window.Reporty.render() },
-        { id: 'finance', label: 'Finance', icon: '💰', action: () => window.Finance && window.Finance.render() },
-        { id: 'energie', label: 'Energie', icon: '🔋', action: () => window.Energie && window.Energie.render() },
-        { id: 'udrzba', label: 'Údržba', icon: '🔧', action: () => window.Udrzba && window.Udrzba.render() },
-        { id: 'dokumenty', label: 'Dokumenty', icon: '📁', action: () => window.Dokumenty && window.Dokumenty.render() },
-        { id: 'komunikace', label: 'Komunikace', icon: '✉️', action: () => window.Komunikace && window.Komunikace.render() },
-        { id: 'uzivatele', label: 'Uživatelé & Role', icon: '🧑‍🤝‍🧑', action: () => window.Uzivatele && window.Uzivatele.render() },
-        { id: 'nastaveni', label: 'Nastavení', icon: '⚙️', action: () => window.Nastaveni && window.Nastaveni.render() },
-        { id: 'muj-ucet', label: 'Můj účet', icon: '👤', action: () => window.MujUcet && window.MujUcet.render() }
+        { id: 'nemovitosti', label: 'Nemovitosti', icon: '🏘️' },
+        { id: 'smlouvy', label: 'Smlouvy', icon: '📄' },
+        { id: 'platby', label: 'Platby', icon: '💸' },
+        { id: 'sluzby', label: 'Služby', icon: '⚡' },
+        { id: 'reporty', label: 'Reporty & Grafy', icon: '📊' },
+        { id: 'finance', label: 'Finance', icon: '💰' },
+        { id: 'energie', label: 'Energie', icon: '🔋' },
+        { id: 'udrzba', label: 'Údržba', icon: '🔧' },
+        { id: 'dokumenty', label: 'Dokumenty', icon: '📁' },
+        { id: 'komunikace', label: 'Komunikace', icon: '✉️' },
+        { id: 'uzivatele', label: 'Uživatelé & Role', icon: '🧑‍🤝‍🧑' },
+        { id: 'nastaveni', label: 'Nastavení', icon: '⚙️' },
+        { id: 'muj-ucet', label: 'Můj účet', icon: '👤' }
     ];
 
-    function render() {
+    // Přehled dlaždic pro hlavní panel
+    const dashboardTiles = [
+        { icon: '🏘️', title: 'Byty – přehled', tags: ['#byty', '#nemovitosti'], desc: 'Souhrn jednotek, obsazenost, nájemné' },
+        { icon: '👥', title: 'Nájemníci', tags: ['#najemnici'], desc: 'Seznam osob + kontakty' },
+        { icon: '📄', title: 'Smlouvy', tags: ['#smlouvy'], desc: 'Aktivní / končící smlouvy' },
+        { icon: '💰', title: 'Cashflow', tags: ['#finance'], desc: 'Nájemné, zálohy, nedoplatky' },
+        { icon: '🔧', title: 'Údržba', tags: ['#udrzba'], desc: 'Opravy, požadavky, SLA' },
+        { icon: '🛠️', title: 'Revize', tags: ['#revize'], desc: 'Plynové, elektro, komíny…' },
+        { icon: '🔗', title: 'Integrace', tags: ['#integrace', '#nastaveni'], desc: 'ARES, e-maily, exporty' },
+        { icon: '🏢', title: 'Volné byty', tags: ['#volne', '#byty'], desc: 'Marketing a inzerce' },
+        { icon: '📝', title: 'Požadavky nájemníků', tags: ['#pozadavky', '#udrzba'], desc: 'Příchozí hlášení závad' },
+        { icon: '🧾', title: 'Vyúčtování služeb', tags: ['#vyuctovani', '#finance'], desc: 'Voda, teplo, teplá voda…' },
+        { icon: '💸', title: 'Dlužníci', tags: ['#dluhy', '#finance'], desc: 'Přehled nedoplatků' },
+        { icon: '🔋', title: 'Měřidla a odečty', tags: ['#energie'], desc: 'Evidence měřidel, odečty' },
+        { icon: '📊', title: 'Spotřeby a grafy', tags: ['#spotreby', '#energie'], desc: 'Vizualizace energií' },
+        { icon: '📁', title: 'Dokumenty', tags: ['#dokumenty'], desc: 'Složky, šablony, archiv' },
+        { icon: '📑', title: 'Reporty a exporty', tags: ['#reporty'], desc: 'CSV, PDF, účetnictví' },
+        { icon: '✉️', title: 'E-maily & SMS', tags: ['#komunikace'], desc: 'Hromadná i cílená komunikace' },
+        { icon: '🔚', title: 'Ukončení nájmů', tags: ['#ukonceni', '#smlouvy'], desc: 'Výpovědi, převzetí, předávací protokoly' }
+    ];
+
+    function renderSidebar() {
         const nav = document.getElementById('navigation');
         if (!nav) return;
 
@@ -88,34 +106,100 @@ window.Sidebar = (function() {
 
         nav.innerHTML = html;
 
-        // Eventy pro klikání
+        // Kliknutí na nav-parent (modul)
         nav.querySelectorAll('.nav-parent').forEach(btn => {
             btn.onclick = function(e) {
                 const section = btn.closest('.nav-section');
-                document.querySelectorAll('.nav-section').forEach(sec => sec.classList.remove('expanded'));
-                section.classList.add('expanded');
-                activeModule = section.getAttribute('data-module');
-                render(); // re-render pro aktualizaci view
-                // Zobraz dlaždice v hlavní části aplikace
-                const menuItem = menuItems.find(mi => mi.id === activeModule);
-                if (menuItem && menuItem.action) menuItem.action();
+                const moduleId = section.getAttribute('data-module');
+                // Pokud klikneš podruhé na stejný modul, sbal ho a zobraz hlavní panel
+                if (activeModule === moduleId) {
+                    activeModule = null;
+                    renderSidebar();
+                    renderDashboard();
+                } else {
+                    activeModule = moduleId;
+                    renderSidebar();
+                    renderModuleTiles(moduleId);
+                }
             };
         });
 
+        // Kliknutí na nav-child (podmodul)
         nav.querySelectorAll('.nav-child').forEach(btn => {
             btn.onclick = function(e) {
-                // Zde můžeš doplnit specifické akce pro podmoduly
+                // Můžeš zde doplnit logiku pro podmoduly
             };
-        });
-
-        nav.querySelectorAll('.nav-item').forEach(btn => {
-            btn.onkeydown = function(e) {
-                if (e.key === 'Enter' || e.key === ' ') btn.click();
-            }
         });
     }
 
+    // Hlavní panel – dashboard dlaždice
+    function renderDashboard() {
+        const main = document.getElementById('main-content');
+        if (!main) return;
+        let html = `<div class="dashboard-header"><h1>Hlavní panel</h1></div>`;
+        html += `<div class="dashboard-tiles">`;
+        dashboardTiles.forEach(tile => {
+            html += `
+                <div class="tile">
+                    <div class="tile-title">
+                        <span class="tile-icon">${tile.icon}</span>
+                        ${tile.title}
+                    </div>
+                    <div class="tile-tags">
+                        ${tile.tags.map(tag => `<span class="tile-tag">${tag}</span>`).join('')}
+                    </div>
+                    <div class="tile-desc">${tile.desc}</div>
+                    <button class="pin-button" title="Přidat do hlavního panelu">
+                        <span class="pin-icon">★</span>
+                    </button>
+                </div>
+            `;
+        });
+        html += `</div>`;
+        main.innerHTML = html;
+
+        // Funkce připínání (zatím pouze vizuální)
+        main.querySelectorAll('.pin-button').forEach(btn => {
+            btn.onclick = function() {
+                btn.classList.toggle('active');
+                // Sem můžeš doplnit logiku pro připínání dlaždic
+            };
+        });
+    }
+
+    // Dlaždice pro konkrétní modul (zatím jen placeholder)
+    function renderModuleTiles(moduleId) {
+        const main = document.getElementById('main-content');
+        if (!main) return;
+        const item = menuItems.find(mi => mi.id === moduleId);
+        let html = `<div class="dashboard-header"><h1>${item.label}</h1></div>`;
+        html += `<div class="dashboard-tiles">`;
+        // Zde můžeš generovat dlaždice pro daný modul, zatím placeholder
+        html += `<div class="tile">
+            <div class="tile-title"><span class="tile-icon">${item.icon}</span> ${item.label}</div>
+            <div class="tile-desc">Dlaždice modulu <b>${item.label}</b></div>
+            <button class="pin-button">
+                <span class="pin-icon">★</span>
+            </button>
+        </div>`;
+        html += `</div>`;
+        main.innerHTML = html;
+    }
+
+    // Inicializace při načtení stránky
+    function init() {
+        renderSidebar();
+        renderDashboard();
+    }
+
     return {
-        render
+        render: init,
+        renderSidebar,
+        renderDashboard
     };
 })();
+
+// Při načtení stránky
+window.addEventListener('DOMContentLoaded', () => {
+    Sidebar.render();
+});
