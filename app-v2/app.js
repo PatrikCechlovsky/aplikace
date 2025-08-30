@@ -1,28 +1,35 @@
 window.App = (function() {
     'use strict';
-    
+
     console.log('Inicializace aplikace...');
-    
+
     // Inicializace aplikace
     function initApp() {
         try {
             // 1. Inicializace AppState
-            AppState.init();
-            
+            if (window.AppState && AppState.init) AppState.init();
+
             // 2. Vykreslení navigace
-            Sidebar.render();
-            
+            if (window.Sidebar && Sidebar.render) Sidebar.render();
+
             // 3. Zobrazit hlavní panel
-            Dashboard.render();
-            
+            if (window.Dashboard && Dashboard.render) Dashboard.render();
+
             // 4. Nastavení aktivní položky v menu
             setActiveMenuItem();
-            
+
+            // 5. Inicializace routeru
+            if (window.Router && Router.handleRoute) {
+                Router.handleRoute();
+            } else {
+                console.error('✗ Router chybí!');
+            }
+
         } catch (error) {
             console.error('❌ Chyba při inicializaci komponent:', error);
         }
     }
-    
+
     // Kontrola dostupnosti všech komponent
     function checkComponents() {
         console.log('🔍 Kontrola komponent:');
@@ -35,12 +42,12 @@ window.App = (function() {
             }
         });
     }
-    
+
     // Nastavení aktivní položky menu podle URL
     function setActiveMenuItem() {
         const hash = window.location.hash.slice(1) || 'dashboard';
         const menuItems = document.querySelectorAll('.menu-item');
-        
+
         menuItems.forEach(item => {
             if (item.getAttribute('href') === `#${hash}`) {
                 item.classList.add('active');
@@ -49,30 +56,30 @@ window.App = (function() {
             }
         });
     }
-    
+
     // Zobrazení toast notifikace
     function showToast(message, type = 'info') {
         const toast = document.createElement('div');
         toast.className = `toast toast-${type}`;
         toast.textContent = message;
-        
+
         document.body.appendChild(toast);
-        
+
         // Zobrazit toast
         setTimeout(() => toast.classList.add('show'), 100);
-        
+
         // Skrýt a odstranit po 3s
         setTimeout(() => {
             toast.classList.remove('show');
             setTimeout(() => toast.remove(), 300);
         }, 3000);
     }
-    
+
     // Responzivní chování
     function handleResponsive() {
         const sidebar = document.querySelector('.sidebar');
         const mainContent = document.querySelector('.main-content');
-        
+
         if (window.innerWidth <= 768) {
             sidebar?.classList.add('mobile');
             mainContent?.classList.add('mobile');
@@ -81,18 +88,18 @@ window.App = (function() {
             mainContent?.classList.remove('mobile');
         }
     }
-    
+
     // Event listenery
     window.addEventListener('resize', () => {
         console.log('Změna velikosti okna');
         handleResponsive();
     });
-    
+
     window.addEventListener('hashchange', () => {
         setActiveMenuItem();
-        Router.handleRoute();
+        if (window.Router && Router.handleRoute) Router.handleRoute();
     });
-    
+
     // Veřejné API
     return {
         init: initApp,
@@ -102,7 +109,6 @@ window.App = (function() {
     };
 })();
 
-// Spustit po načtení DOM
 document.addEventListener('DOMContentLoaded', () => {
     App.init();
     App.checkComponents();
