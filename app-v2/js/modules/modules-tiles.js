@@ -1,25 +1,46 @@
 // Modul pro zobrazení dlaždic
 window.ModuleTiles = (function() {
     'use strict';
-    
-    // Funkce handleTileClick přidáme:
-    function handleTileClick(module, action) {
-        if (module && window[module]) {
-            window[module].render(action);
-            
-            // Otevřít správnou sekci v sidebaru
-            if (window.Sidebar && window.Sidebar.openOnlySection) {
-                window.Sidebar.openOnlySection(module.toLowerCase());
+
+    // Vrátí oblíbené dlaždice (mock nebo načtení z localStorage, API atd.)
+    function getFavoriteTiles() {
+        // Ukázková statická data; uprav podle své logiky
+        return [
+            {
+                module: 'najemnici',
+                action: 'detail',
+                icon: '👥',
+                title: 'Nájemníci',
+                description: 'Správa nájemníků',
+                color: 'tile-primary',
+                parentTitle: 'Nájemníci'
+            },
+            {
+                module: 'platby',
+                action: '',
+                icon: '💸',
+                title: 'Platby',
+                description: 'Přehled plateb',
+                color: 'tile-success',
+                parentTitle: 'Platby'
             }
+            // ...další oblíbené moduly
+        ];
+    }
+
+    // Funkce handleTileClick
+    function handleTileClick(module, action) {
+        if (window.Router && window.Router.navigate) {
+            window.Router.navigate(module + (action ? '/' + action : ''));
         }
     }
-    
+
     // Vykreslení dlaždic
     function render(tiles, moduleId) {
         if (!tiles || tiles.length === 0) {
             return '<p class="no-data">Žádné položky k zobrazení</p>';
         }
-        
+
         return `
             <div class="tiles-grid">
                 ${tiles.map(tile => `
@@ -35,10 +56,11 @@ window.ModuleTiles = (function() {
             </div>
         `;
     }
-    
+
     // Veřejné API
     return {
         render: render,
-        handleTileClick: handleTileClick
+        handleTileClick: handleTileClick,
+        getFavoriteTiles: getFavoriteTiles // ← přidáno!
     };
 })();
