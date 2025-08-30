@@ -219,3 +219,35 @@
     background-color: rgba(82, 146, 247, 0.1);
     color: var(--brand-primary);
 }
+/* Sidebar - základní styly pro tlačítka */
+.sidebar .nav-item {
+    background: transparent;
+    color: #fff;
+    border: none;
+    margin-bottom: 4px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: background 0.2s;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sidebar .nav-item:hover,
+.sidebar .nav-item:focus {
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+}
+
+.sidebar .nav-parent {
+    font-weight: bold;
+    background: rgba(255,255,255,0.04);
+}
+
+.sidebar .nav-child {
+    margin-left: 18px;
+    font-size: 15px;
+    background: rgba(255,255,255,0.02);
+}
