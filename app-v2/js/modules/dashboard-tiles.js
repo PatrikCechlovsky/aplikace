@@ -1,8 +1,39 @@
+// Mock ModuleTiles objekt – uprav dle skutečné logiky!
+window.ModuleTiles = window.ModuleTiles || {
+    getFavoriteTiles: function() {
+        // Vrací ukázková data – nahraď vlastní logikou!
+        return [
+            {
+                module: 'najemnici',
+                action: 'detail',
+                icon: '👥',
+                title: 'Nájemníci',
+                description: 'Správa nájemníků',
+                color: 'tile-primary',
+                parentTitle: 'Nájemníci'
+            },
+            {
+                module: 'platby',
+                action: '',
+                icon: '💸',
+                title: 'Platby',
+                description: 'Přehled plateb',
+                color: 'tile-success',
+                parentTitle: 'Platby'
+            }
+            // ...další oblíbené moduly
+        ];
+    },
+    handleTileClick: function(module, action) {
+        window.Router.navigate(module + (action ? '/' + action : ''));
+    }
+};
+
 window.Dashboard = (function() {
     'use strict';
     
     function render() {
-        const container = document.getElementById('mainContent');
+        const container = document.getElementById('main-content'); // sjednoceno ID!
         if (!container) return;
         
         // Získat oblíbené dlaždice
