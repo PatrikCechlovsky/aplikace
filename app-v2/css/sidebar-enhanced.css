@@ -1,234 +1,121 @@
-/* Moderní tmavý sidebar s rozbalováním a šipkami */
+// Moderní rozbalovací sidebar s šipkou & tmavým stylem
+window.Sidebar = (function() {
+    'use strict';
 
-#navigation, .sidebar {
-    background: #181c24;
-    color: #fff;
-    min-height: 100vh;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    font-family: 'Segoe UI', Arial, sans-serif;
-}
+    let activeModule = null;
 
-/* Brand */
-.brand {
-    font-size: 21px;
-    font-weight: bold;
-    margin-bottom: 16px;
-    color: #53a0fd;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    cursor: pointer;
-}
+    // Seznam modulů (úprava dle potřeby)
+    const menuItems = [
+        {
+            id: 'pronajimatel',
+            label: 'Pronajímatel',
+            icon: '👤',
+            action: () => window.Pronajimatel && window.Pronajimatel.render('tiles'),
+            children: [
+                { label: 'Přehled', icon: '', action: () => window.Pronajimatel.render() },
+                { label: 'Osoba', icon: '', action: () => window.Pronajimatel.edit('osoba') },
+                { label: 'OSVČ', icon: '🧑‍💼', action: () => window.Pronajimatel.edit('osvc') },
+                { label: 'Firma', icon: '🏢', action: () => window.Pronajimatel.edit('firma') },
+                { label: 'Spolek/skupina', icon: '👥', action: () => window.Pronajimatel.edit('spolek') },
+                { label: 'Státní instituce', icon: '🏛️', action: () => window.Pronajimatel.edit('statni') }
+            ]
+        },
+        {
+            id: 'najemnici',
+            label: 'Nájemníci',
+            icon: '👥',
+            action: () => window.Najemnici && window.Najemnici.render('tiles'),
+            children: [
+                { label: 'Přehled', icon: '', action: () => window.Najemnici.render('all') },
+                { label: 'Osoba', icon: '', action: () => window.Najemnici.render('fyzicke') },
+                { label: 'OSVČ', icon: '🧑‍💼', action: () => window.Najemnici.render('osvc') },
+                { label: 'Firma', icon: '🏢', action: () => window.Najemnici.render('pravnicke') },
+                { label: 'Spolek/skupina', icon: '👥', action: () => window.Najemnici.render('spolek') },
+                { label: 'Státní instituce', icon: '🏛️', action: () => window.Najemnici.render('statni') }
+            ]
+        },
+        { id: 'nemovitosti', label: 'Nemovitosti', icon: '🏘️', action: () => window.Nemovitosti && window.Nemovitosti.render() },
+        { id: 'smlouvy', label: 'Smlouvy', icon: '📄', action: () => window.Smlouvy && window.Smlouvy.render() },
+        { id: 'platby', label: 'Platby', icon: '💸', action: () => window.Platby && window.Platby.render() },
+        { id: 'sluzby', label: 'Služby', icon: '⚡', action: () => window.Sluzby && window.Sluzby.render() },
+        { id: 'reporty', label: 'Reporty & Grafy', icon: '📊', action: () => window.Reporty && window.Reporty.render() },
+        { id: 'finance', label: 'Finance', icon: '💰', action: () => window.Finance && window.Finance.render() },
+        { id: 'energie', label: 'Energie', icon: '🔋', action: () => window.Energie && window.Energie.render() },
+        { id: 'udrzba', label: 'Údržba', icon: '🔧', action: () => window.Udrzba && window.Udrzba.render() },
+        { id: 'dokumenty', label: 'Dokumenty', icon: '📁', action: () => window.Dokumenty && window.Dokumenty.render() },
+        { id: 'komunikace', label: 'Komunikace', icon: '✉️', action: () => window.Komunikace && window.Komunikace.render() },
+        { id: 'uzivatele', label: 'Uživatelé & Role', icon: '🧑‍🤝‍🧑', action: () => window.Uzivatele && window.Uzivatele.render() },
+        { id: 'nastaveni', label: 'Nastavení', icon: '⚙️', action: () => window.Nastaveni && window.Nastaveni.render() },
+        { id: 'muj-ucet', label: 'Můj účet', icon: '👤', action: () => window.MujUcet && window.MujUcet.render() }
+    ];
 
-.brand .nav-icon {
-    font-size: 22px;
-}
+    function render() {
+        const nav = document.getElementById('navigation');
+        if (!nav) return;
 
-/* Rozbalovací sekce */
-.nav-section {
-    margin-bottom: 4px;
-    transition: all 0.2s;
-}
+        let html = `<div class="brand"><span class="nav-icon">🏠</span> Aplikace pronajímatel</div>`;
+        menuItems.forEach(item => {
+            const isExpanded = activeModule === item.id;
+            if (item.children) {
+                html += `
+                    <div class="nav-section${isExpanded ? ' expanded' : ''}" data-module="${item.id}">
+                        <button class="nav-parent" data-action="${item.id}">
+                            <span class="chevron">▶</span>
+                            <span class="nav-icon">${item.icon}</span>
+                            <span class="nav-label">${item.label}</span>
+                        </button>
+                        <div class="nav-children" style="display:${isExpanded ? 'block' : 'none'};">
+                            ${item.children.map(child => `
+                                <button class="nav-item nav-child" data-action="${item.id}-${child.label}">
+                                    ${child.icon ? `<span class="nav-icon">${child.icon}</span>` : ''}
+                                    <span class="nav-label">${child.label}</span>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            } else {
+                html += `
+                    <div class="nav-section" data-module="${item.id}">
+                        <button class="nav-item" data-action="${item.id}">
+                            <span class="nav-icon">${item.icon}</span>
+                            <span class="nav-label">${item.label}</span>
+                        </button>
+                    </div>
+                `;
+            }
+        });
 
-/* Tlačítko modulu */
-.nav-parent {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    background: transparent;
-    color: #fff;
-    border: none;
-    padding: 10px 18px 10px 12px;
-    border-radius: 8px;
-    font-size: 17px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.15s, color 0.15s;
-    box-shadow: none;
-    position: relative;
-}
+        nav.innerHTML = html;
 
-.nav-parent:hover, .nav-parent:focus {
-    background: #232736;
-    color: #53a0fd;
-}
+        // Eventy pro klikání
+        nav.querySelectorAll('.nav-parent').forEach(btn => {
+            btn.onclick = function(e) {
+                const section = btn.closest('.nav-section');
+                document.querySelectorAll('.nav-section').forEach(sec => sec.classList.remove('expanded'));
+                section.classList.add('expanded');
+                activeModule = section.getAttribute('data-module');
+                render(); // re-render pro aktualizaci view
+                // Zobraz dlaždice v hlavní části aplikace
+                const menuItem = menuItems.find(mi => mi.id === activeModule);
+                if (menuItem && menuItem.action) menuItem.action();
+            };
+        });
 
-/* Šipka před názvem modulu */
-.nav-parent .chevron {
-    display: inline-block;
-    transition: transform 0.2s;
-    font-size: 13px;
-    margin-right: 7px;
-    color: #fff;
-    width: 18px;
-    text-align: center;
-}
+        nav.querySelectorAll('.nav-child').forEach(btn => {
+            btn.onclick = function(e) {
+                // Zde můžeš doplnit specifické akce pro podmoduly
+            };
+        });
 
-.nav-section.expanded .chevron {
-    transform: rotate(90deg);
-    color: #53a0fd;
-}
+        nav.querySelectorAll('.nav-item').forEach(btn => {
+            btn.onkeydown = function(e) {
+                if (e.key === 'Enter' || e.key === ' ') btn.click();
+            }
+        });
+    }
 
-/* Ikona modulu */
-.nav-icon {
-    margin-right: 8px;
-    font-size: 19px;
-}
-
-/* Název modulu */
-.nav-label {
-    flex: 1;
-}
-
-/* Děti modulu (submenu) */
-.nav-children {
-    display: none;
-    transition: max-height 0.3s, opacity 0.2s;
-    padding-left: 10px;
-}
-.nav-section.expanded .nav-children {
-    display: block;
-}
-
-/* Podmoduly */
-.nav-child {
-    display: flex;
-    align-items: center;
-    background: transparent;
-    color: #fff;
-    border: none;
-    margin: 2px 0;
-    padding: 8px 18px 8px 34px;
-    border-radius: 7px;
-    font-size: 15px;
-    cursor: pointer;
-    transition: background 0.15s, color 0.15s;
-}
-.nav-child:hover, .nav-child:focus {
-    background: #232736;
-    color: #53a0fd;
-}
-.nav-child .nav-icon {
-    font-size: 16px;
-    margin-right: 7px;
-}
-
-/* Aktivní stav sekce */
-.nav-section.expanded .nav-parent {
-    background: #232736;
-    color: #53a0fd;
-}
-
-/* Aktivní podmodul */
-.nav-child.active {
-    background: #232736;
-    color: #53a0fd;
-}
-
-/* Hlavní panel/dlaždice */
-#main-content {
-    padding: 32px 24px 24px 24px;
-    min-height: 100vh;
-    background: #14161c;
-}
-
-.dashboard-tiles {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
-}
-
-.tile {
-    background: #232736;
-    color: #fff;
-    border-radius: 16px;
-    padding: 22px 28px 18px 28px;
-    min-width: 240px;
-    min-height: 110px;
-    box-shadow: 0 1px 8px 0 #0004;
-    font-size: 16px;
-    position: relative;
-    transition: box-shadow 0.15s, background 0.15s;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.tile:hover {
-    box-shadow: 0 4px 24px 0 #0007;
-    background: #2e3446;
-}
-
-.tile-title {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-weight: bold;
-    font-size: 17px;
-}
-
-.tile-icon {
-    font-size: 22px;
-}
-
-.tile-tags {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 4px;
-}
-
-.tile-tag {
-    background: #14161c;
-    color: #53a0fd;
-    border-radius: 6px;
-    padding: 3px 9px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    opacity: 0.8;
-}
-
-.tile-desc {
-    font-size: 14px;
-    color: #bebebe;
-}
-
-.pin-button {
-    position: absolute;
-    top: 10px;
-    right: 16px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.2s, filter 0.2s;
-    padding: 4px;
-    z-index: 2;
-}
-
-.pin-button:active,
-.pin-button.active {
-    opacity: 1;
-    filter: brightness(1.2);
-}
-
-.pin-icon {
-    font-size: 21px;
-    color: #ffce4c;
-    filter: grayscale(100%);
-}
-
-.pin-button.active .pin-icon {
-    filter: grayscale(0%);
-}
-
-::-webkit-scrollbar {
-    width: 10px;
-    background: #232736;
-}
-::-webkit-scrollbar-thumb {
-    background: #373e52;
-    border-radius: 8px;
-}
+    return {
+        render
+    };
+})();
