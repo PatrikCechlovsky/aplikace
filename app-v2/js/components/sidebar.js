@@ -1,14 +1,14 @@
 window.Sidebar = (function() {
     'use strict';
-    
+
     let activeModule = null;
-    
+
     function openOnlySection(moduleId) {
         const allSections = document.querySelectorAll('.nav-section');
         allSections.forEach(section => {
             section.classList.remove('expanded');
         });
-        
+
         const targetSection = document.querySelector(`[data-module="${moduleId}"]`);
         if (targetSection) {
             const parentSection = targetSection.closest('.nav-section');
@@ -18,52 +18,121 @@ window.Sidebar = (function() {
             }
         }
     }
-    
+
     function render() {
         const nav = document.getElementById('navigation');
         if (!nav) return;
-        
+
+        // Kompletní menu - rozbalovací sekce + moduly
         const menuItems = [
-            {
-                id: 'dashboard',
-                label: 'Hlavní panel',
-                icon: '🏠',
-                action: () => {
-                    window.Dashboard.render();
-                    activeModule = 'dashboard';
-                }
-            },
             {
                 id: 'pronajimatel',
                 label: 'Pronajímatel',
                 icon: '👤',
-                action: () => window.Pronajimatel && window.Pronajimatel.render('tiles'), // Přidáno 'tiles'
+                action: () => window.Pronajimatel && window.Pronajimatel.render('tiles'),
                 children: [
-                    { label: 'Přehled', action: () => window.Pronajimatel.render() },
-                    { label: 'Osoba', action: () => window.Pronajimatel.edit('osoba') },
-                    { label: 'OSVČ', action: () => window.Pronajimatel.edit('osvc') },
-                    { label: 'Firma', action: () => window.Pronajimatel.edit('firma') },
-                    { label: 'Spolek/skupina', action: () => window.Pronajimatel.edit('spolek') },
-                    { label: 'Státní instituce', action: () => window.Pronajimatel.edit('statni') }
+                    { label: 'Přehled', icon: '', action: () => window.Pronajimatel.render() },
+                    { label: 'Osoba', icon: '', action: () => window.Pronajimatel.edit('osoba') },
+                    { label: 'OSVČ', icon: '🧑‍💼', action: () => window.Pronajimatel.edit('osvc') },
+                    { label: 'Firma', icon: '🏢', action: () => window.Pronajimatel.edit('firma') },
+                    { label: 'Spolek/skupina', icon: '👥', action: () => window.Pronajimatel.edit('spolek') },
+                    { label: 'Státní instituce', icon: '🏛️', action: () => window.Pronajimatel.edit('statni') }
                 ]
             },
             {
                 id: 'najemnici',
                 label: 'Nájemníci',
                 icon: '👥',
-                action: () => window.Najemnici && window.Najemnici.render('tiles'), // Přidáno 'tiles'
+                action: () => window.Najemnici && window.Najemnici.render('tiles'),
                 children: [
-                    { label: 'Přehled', action: () => window.Najemnici.render('all') },
-                    { label: 'Osoba', action: () => window.Najemnici.render('fyzicke') },
-                    { label: 'OSVČ', action: () => window.Najemnici.render('osvc') },
-                    { label: 'Firma', action: () => window.Najemnici.render('pravnicke') },
-                    { label: 'Spolek/skupina', action: () => window.Najemnici.render('spolek') },
-                    { label: 'Státní instituce', action: () => window.Najemnici.render('statni') }
+                    { label: 'Přehled', icon: '', action: () => window.Najemnici.render('all') },
+                    { label: 'Osoba', icon: '', action: () => window.Najemnici.render('fyzicke') },
+                    { label: 'OSVČ', icon: '🧑‍💼', action: () => window.Najemnici.render('osvc') },
+                    { label: 'Firma', icon: '🏢', action: () => window.Najemnici.render('pravnicke') },
+                    { label: 'Spolek/skupina', icon: '👥', action: () => window.Najemnici.render('spolek') },
+                    { label: 'Státní instituce', icon: '🏛️', action: () => window.Najemnici.render('statni') }
                 ]
+            },
+            {
+                id: 'nemovitosti',
+                label: 'Nemovitosti',
+                icon: '🏘️',
+                action: () => window.Nemovitosti && window.Nemovitosti.render()
+            },
+            {
+                id: 'smlouvy',
+                label: 'Smlouvy',
+                icon: '📄',
+                action: () => window.Smlouvy && window.Smlouvy.render()
+            },
+            {
+                id: 'platby',
+                label: 'Platby',
+                icon: '💸',
+                action: () => window.Platby && window.Platby.render()
+            },
+            {
+                id: 'sluzby',
+                label: 'Služby',
+                icon: '⚡',
+                action: () => window.Sluzby && window.Sluzby.render()
+            },
+            {
+                id: 'reporty',
+                label: 'Reporty & Grafy',
+                icon: '📊',
+                action: () => window.Reporty && window.Reporty.render()
+            },
+            {
+                id: 'finance',
+                label: 'Finance',
+                icon: '💰',
+                action: () => window.Finance && window.Finance.render()
+            },
+            {
+                id: 'energie',
+                label: 'Energie',
+                icon: '🔋',
+                action: () => window.Energie && window.Energie.render()
+            },
+            {
+                id: 'udrzba',
+                label: 'Údržba',
+                icon: '🔧',
+                action: () => window.Udrzba && window.Udrzba.render()
+            },
+            {
+                id: 'dokumenty',
+                label: 'Dokumenty',
+                icon: '📁',
+                action: () => window.Dokumenty && window.Dokumenty.render()
+            },
+            {
+                id: 'komunikace',
+                label: 'Komunikace',
+                icon: '✉️',
+                action: () => window.Komunikace && window.Komunikace.render()
+            },
+            {
+                id: 'uzivatele',
+                label: 'Uživatelé & Role',
+                icon: '🧑‍🤝‍🧑',
+                action: () => window.Uzivatele && window.Uzivatele.render()
+            },
+            {
+                id: 'nastaveni',
+                label: 'Nastavení',
+                icon: '⚙️',
+                action: () => window.Nastaveni && window.Nastaveni.render()
+            },
+            {
+                id: 'muj-ucet',
+                label: 'Můj účet',
+                icon: '👤',
+                action: () => window.MujUcet && window.MujUcet.render()
             }
-            // ... další položky menu
         ];
-        
+
         let html = '';
         menuItems.forEach(item => {
             if (item.children) {
@@ -72,11 +141,11 @@ window.Sidebar = (function() {
                         <button class="nav-item nav-parent" data-action="${item.id}">
                             <span class="nav-icon">${item.icon}</span>
                             <span class="nav-label">${item.label}</span>
-                            <span class="nav-arrow">›</span>
                         </button>
                         <div class="nav-children">
                             ${item.children.map(child => `
-                                <button class="nav-item nav-child" data-child-action="${child.label}">
+                                <button class="nav-item nav-child" data-action="${item.id}-${child.label}">
+                                    ${child.icon ? `<span class="nav-icon">${child.icon}</span>` : ''}
                                     <span class="nav-label">${child.label}</span>
                                 </button>
                             `).join('')}
@@ -85,79 +154,41 @@ window.Sidebar = (function() {
                 `;
             } else {
                 html += `
-                    <button class="nav-item" data-action="${item.id}">
-                        <span class="nav-icon">${item.icon}</span>
-                        <span class="nav-label">${item.label}</span>
-                    </button>
+                    <div class="nav-section" data-module="${item.id}">
+                        <button class="nav-item" data-action="${item.id}">
+                            <span class="nav-icon">${item.icon}</span>
+                            <span class="nav-label">${item.label}</span>
+                        </button>
+                    </div>
                 `;
             }
         });
-        
+
         nav.innerHTML = html;
-        attachEventListeners(menuItems);
-    }
-    
-    function attachEventListeners(menuItems) {
-        // Kliknutí na hlavní položky (parent)
-        document.querySelectorAll('.nav-parent').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const section = btn.closest('.nav-section');
-                const wasExpanded = section.classList.contains('expanded');
-                
-                // Zavřít všechny
-                document.querySelectorAll('.nav-section').forEach(s => {
-                    s.classList.remove('expanded');
-                });
-                
-                // Toggle aktuální
-                if (!wasExpanded) {
-                    section.classList.add('expanded');
-                }
-                
-                // Spustit akci
-                const actionId = btn.dataset.action;
-                const menuItem = menuItems.find(item => item.id === actionId);
-                if (menuItem && menuItem.action) {
+
+        // Eventy pro klikání
+        nav.querySelectorAll('button[data-action]').forEach(btn => {
+            btn.onclick = function(e) {
+                const actionId = btn.getAttribute('data-action');
+                const mainId = btn.closest('.nav-section').getAttribute('data-module');
+                const menuItem = menuItems.find(mi => mi.id === mainId);
+
+                if (btn.classList.contains('nav-parent')) {
+                    openOnlySection(mainId);
+                    if (menuItem && menuItem.action) menuItem.action();
+                } else if (btn.classList.contains('nav-child')) {
+                    const child = menuItem && menuItem.children &&
+                        menuItem.children.find(c => `${mainId}-${c.label}` === actionId);
+                    if (child && child.action) child.action();
+                } else if (menuItem && menuItem.action) {
                     menuItem.action();
                 }
-            });
-        });
-        
-        // Kliknutí na jednotlivé položky
-        document.querySelectorAll('.nav-item:not(.nav-parent)').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const actionId = btn.dataset.action;
-                const menuItem = menuItems.find(item => item.id === actionId);
-                if (menuItem && menuItem.action) {
-                    menuItem.action();
-                }
-            });
-        });
-        
-        // Kliknutí na child položky
-        document.querySelectorAll('.nav-child').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                const parentSection = btn.closest('.nav-section');
-                const parentId = parentSection.dataset.module;
-                const childLabel = btn.dataset.childAction;
-                
-                const parentItem = menuItems.find(item => item.id === parentId);
-                if (parentItem && parentItem.children) {
-                    const childItem = parentItem.children.find(child => child.label === childLabel);
-                    if (childItem && childItem.action) {
-                        childItem.action();
-                    }
-                }
-            });
+            };
         });
     }
-    
+
     return {
-        render: render,
-        openOnlySection: openOnlySection
+        render,
+        openOnlySection
     };
 })();
