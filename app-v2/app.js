@@ -8,7 +8,7 @@ window.App = (function() {
         try {
             // Načti uložené téma
             const savedTheme = localStorage.getItem('appTheme') || 'dark';
-            document.body.className = `theme-${savedTheme}`;
+            document.body.className = `theme-${savedTheme}`; //
             
             // 1. Inicializace AppState
             if (window.AppState && AppState.init) AppState.init();
