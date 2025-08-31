@@ -1,54 +1,128 @@
-/* Upravíme page header styling */
-.page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--border-primary);
-    min-height: 48px; /* Zajistí jednotnou výšku */
+/* Type cards - vylepšený design */
+.type-selector {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-.page-title-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.type-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
 }
 
-.page-title {
-    font-size: 24px;
+.type-card {
+    background: var(--surface-primary);
+    border: 2px solid var(--border-primary);
+    border-radius: 16px;
+    padding: 32px 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.type-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary));
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.type-card:hover {
+    border-color: var(--brand-primary);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    background: var(--surface-secondary);
+}
+
+.type-card:hover::before {
+    transform: translateX(0);
+}
+
+.type-card-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+    display: block;
+    filter: grayscale(20%);
+    transition: all 0.3s ease;
+}
+
+.type-card:hover .type-card-icon {
+    transform: scale(1.1);
+    filter: grayscale(0%);
+}
+
+.type-card-title {
+    font-size: 20px;
     font-weight: 600;
     color: var(--text-primary);
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    margin-bottom: 8px;
 }
 
-.module-icon,
-.type-icon {
-    font-size: 28px;
+.type-card-description {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
 }
 
-.page-actions {
-    display: flex;
-    gap: 12px;
-    align-items: center; /* Zarovnat vertikálně */
+/* Specifické barvy pro různé typy */
+.type-card:nth-child(1):hover {
+    border-color: #2196F3;
 }
 
-/* Responsivní design pro menší obrazovky */
+.type-card:nth-child(2):hover {
+    border-color: #9C27B0;
+}
+
+.type-card:nth-child(3):hover {
+    border-color: #4CAF50;
+}
+
+.type-card:nth-child(4):hover {
+    border-color: #FF9800;
+}
+
+.type-card:nth-child(5):hover {
+    border-color: #E91E63;
+}
+
+.type-card:nth-child(6):hover {
+    border-color: #00BCD4;
+}
+
+/* Dark mode vylepšení */
+@media (prefers-color-scheme: dark) {
+    .type-card {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .type-card:hover {
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+}
+
+/* Responsivní design */
 @media (max-width: 768px) {
-    .page-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
+    .type-cards {
+        grid-template-columns: 1fr;
+        gap: 16px;
     }
     
-    .page-actions {
-        width: 100%;
+    .type-card {
+        padding: 24px 20px;
     }
     
-    .page-actions .btn {
-        width: 100%;
+    .type-card-icon {
+        font-size: 48px;
     }
 }
