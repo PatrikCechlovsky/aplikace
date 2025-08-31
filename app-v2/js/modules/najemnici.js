@@ -37,24 +37,21 @@ window.Najemnici = (function() {
         const typeName = typeConfig ? typeConfig.name : 'Přehled';
         const typeIcon = typeConfig ? typeConfig.icon : '📊';
 
+        // V metodě render() najdi část s mainContent.innerHTML a uprav ji takto:
         mainContent.innerHTML = `
             <div class="page-header">
-                <div class="page-title-wrapper">
-                    <h1 class="page-title">
-                        <span class="module-icon">${moduleConfig.icon}</span>
-                        Nájemníci - 
-                        <span class="type-icon">${typeIcon}</span>
-                        ${typeName}
-                    </h1>
-                </div>
-                <div class="page-actions">
-                    <button class="btn btn-primary" onclick="Najemnici.showAddDialog('${type}')">
-                        <span class="btn-icon">+</span>
-                        <span class="btn-text">Přidat ${type === 'zastupce' ? 'zástupce' : 'nájemníka'}</span>
-                    </button>
-                </div>
+                <h1 class="page-title">
+                    <span class="module-icon">${moduleConfig.icon}</span>
+                    Nájemníci - 
+                    <span class="type-icon">${typeIcon}</span>
+                    ${typeName}
+                </h1>
+                <button class="btn btn-primary" onclick="Najemnici.showAddDialog('${type}')">
+                    <span class="btn-icon">+</span>
+                    <span class="btn-text">Přidat ${type === 'zastupce' ? 'zástupce' : 'nájemníka'}</span>
+                </button>
             </div>
-
+        
             <div class="card">
                 ${filteredData.length === 0 ? 
                     `<div class="empty-state">
@@ -109,7 +106,6 @@ window.Najemnici = (function() {
                 }
             </div>
         `;
-    }
 
     function getTypeName(type) {
         const types = {
