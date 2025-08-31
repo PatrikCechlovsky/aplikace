@@ -1,63 +1,88 @@
 /* Barevné schéma a proměnné */
 :root {
     /* Barvy - tmavý režim */
-    --bg-primary: #0b0f14;
-    --bg-secondary: #121821;
-    --bg-tertiary: #1a1f2a;
+    --bg-primary: #0d1117;        /* Hlavní tmavé pozadí */
+    --bg-secondary: #161b22;      /* Sekundární pozadí (sidebar, karty) */
+    --bg-tertiary: #21262d;       /* Třetí úroveň pozadí */
     
-    --surface-primary: #161923;
-    --surface-secondary: #1c2430;
-    --surface-hover: #21344a;
-    --surface-active: #243449;
+    --surface-primary: #161b22;    /* Pozadí karet */
+    --surface-secondary: #1c2128;  /* Hover stav karet */
+    --surface-hover: #262c36;      /* Aktivní hover */
     
-    --text-primary: #e6edf3;
-    --text-secondary: #99a3b3;
-    --text-muted: #6b7280;
+    --text-primary: #c9d1d9;       /* Hlavní text */
+    --text-secondary: #8b949e;     /* Sekundární text */
+    --text-muted: #6e7681;         /* Tlumený text */
     
-    --brand-primary: #4cc9f0;
-    --brand-secondary: #183249;
-    --accent: #80ffdb;
+    --brand-primary: #58a6ff;      /* Modrá jako na obrázcích */
+    --brand-secondary: #1f6feb;    /* Tmavší modrá */
+    --accent: #79c0ff;             /* Světlejší akcent */
     
-    --border-primary: #1c2430;
-    --border-secondary: #243449;
+    --border-primary: #21262d;     /* Hlavní border */
+    --border-secondary: #30363d;   /* Sekundární border */
     
-    --success: #10b981;
-    --warning: #f59e0b;
-    --error: #ef4444;
+    --success: #3fb950;
+    --warning: #d29922;
+    --error: #f85149;
+    --info: #58a6ff;
     
     /* Rozměry */
     --sidebar-width: 280px;
-    --header-height: 64px;
+    --header-height: 60px;
     
     /* Zaoblení */
     --radius-sm: 6px;
-    --radius-md: 10px;
-    --radius-lg: 14px;
-    --radius-xl: 18px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
     
     /* Stíny */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    --shadow-glow: 0 4px 24px 0 rgba(76, 201, 240, 0.12);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.12);
     
     /* Přechody */
-    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: 150ms ease;
+    --transition-base: 200ms ease;
+    --transition-slow: 300ms ease;
 }
 
-/* Světlý režim (připraveno pro budoucnost) */
-@media (prefers-color-scheme: light) {
-    :root {
-        /* Zde můžeme později přidat světlé barvy */
-    }
-}
-
-/* Gradientní pozadí */
+/* Aplikace barev na body a hlavní elementy */
 body {
-    background: 
-        radial-gradient(ellipse 1200px 800px at 70% -10%, rgba(128, 255, 219, 0.09), transparent 50%),
-        radial-gradient(ellipse 900px 600px at -10% 30%, rgba(76, 201, 240, 0.08), transparent 50%),
-        var(--bg-primary);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* Světlé téma */
+body.theme-light {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --bg-tertiary: #f1f5f9;
+    --surface-primary: #ffffff;
+    --surface-secondary: #f8fafc;
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --border-primary: #e2e8f0;
+    --border-secondary: #cbd5e1;
+}
+
+/* Modrý akcent */
+body.theme-blue {
+    --brand-primary: #3b82f6;
+    --brand-secondary: #2563eb;
+    --accent: #60a5fa;
+}
+
+/* Zelený akcent */
+body.theme-green {
+    --brand-primary: #22c55e;
+    --brand-secondary: #16a34a;
+    --accent: #4ade80;
+}
+
+/* Fialový akcent */
+body.theme-purple {
+    --brand-primary: #a855f7;
+    --brand-secondary: #9333ea;
+    --accent: #c084fc;
 }
