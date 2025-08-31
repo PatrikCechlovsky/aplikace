@@ -389,7 +389,21 @@ window.Pronajimatel = (function() {
         // Zobrazit výběr typu
         mainContent.innerHTML = `
             <div class="page-header">
-                <h1 class="page-title">Vyberte typ pronajímatele</h1>
+                <div class="page-title-wrapper">
+                    <h1 class="page-title">
+                        <span class="module-icon">${moduleConfig.icon}</span>
+                        Pronajímatel
+                        <span style="color: var(--text-muted); margin: 0 8px;">-</span>
+                        <span class="type-icon">${typeIcon}</span>
+                        ${typeName}
+                    </h1>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-primary" onclick="Pronajimatel.showAddDialog('${type}')">
+                        <span class="btn-icon">+</span>
+                        <span class="btn-text">Přidat ${type === 'zastupce' ? 'zástupce' : 'pronajímatele'}</span>
+                    </button>
+                </div>
             </div>
             
             <div class="type-selector">
