@@ -187,36 +187,75 @@ window.Pronajimatel = (function() {
         }
         
         return `
+        // V metodě render() najdi část s mainContent.innerHTML a uprav ji takto:
+        mainContent.innerHTML = `
             <div class="page-header">
-                <h1 class="page-title">${title} - ${getTypeName(type)}</h1>
+                <h1 class="page-title">
+                    <span class="module-icon">${moduleConfig.icon}</span>
+                    Pronajímatel - 
+                    <span class="type-icon">${typeIcon}</span>
+                    ${typeName}
+                </h1>
+                <button class="btn btn-primary" onclick="Pronajimatel.showAddDialog('${type}')">
+                    <span class="btn-icon">+</span>
+                    <span class="btn-text">Přidat ${type === 'zastupce' ? 'zástupce' : 'pronajímatele'}</span>
+                </button>
             </div>
-            
+        
             <div class="card">
-                <form id="pronajimatel-form" class="form">
-                    <div class="form-body">
-                        ${commonFields}
-                        ${specificFields}
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-secondary" onclick="window.history.back()">
-                            Zpět
+                ${filteredData.length === 0 ? 
+                    `<div class="empty-state">
+                        <div class="empty-state-icon">📁</div>
+                        <p class="empty-state-text">Zatím nejsou žádní ${type === 'zastupce' ? 'zástupci' : 'pronajímatelé'} typu "${typeName}"</p>
+                        <button class="btn btn-primary" onclick="Pronajimatel.showAddDialog('${type}')">
+                            Přidat prvního ${type === 'zastupce' ? 'zástupce' : 'pronajímatele'}
                         </button>
-                        ${!isView ? `
-                            <button type="submit" class="btn btn-primary">
-                                ${isEdit ? 'Uložit změny' : 'Vytvořit'}
-                            </button>
-                        ` : `
-                            <button type="button" class="btn btn-primary" onclick="Pronajimatel.showForm('${type}', '${data.id}')">
-                                Upravit
-                            </button>
-                        `}
-                    </div>
-                </form>
+                    </div>` :
+                    `<div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 60px;">ID</th>
+                                    <th style="width: 200px;">Název/Jméno</th>
+                                    <th style="width: 100px;">Typ</th>
+                                    <th style="width: 100px;">IČO</th>
+                                    <th style="width: 150px;">Telefon</th>
+                                    <th style="width: 250px;">Email</th>
+                                    <th style="width: 150px;">Město</th>
+                                    <th style="width: 120px;">Akce</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${filteredData.map(item => `
+                                    <tr>
+                                        <td>${item.id}</td>
+                                        <td class="text-truncate">${item.nazev || `${item.jmeno || ''} ${item.prijmeni || ''}`}</td>
+                                        <td><span class="badge badge-${item.typ_subjektu}">${getTypeName(item.typ_subjektu)}</span></td>
+                                        <td>${item.ico || '-'}</td>
+                                        <td class="text-truncate">${item.telefon || '-'}</td>
+                                        <td class="text-truncate">${item.email || '-'}</td>
+                                        <td class="text-truncate">${item.mesto || '-'}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn-icon btn-view" onclick="Pronajimatel.view('${item.id}')" title="Zobrazit">
+                                                    👁️
+                                                </button>
+                                                <button class="btn-icon btn-edit" onclick="Pronajimatel.edit('${item.id}')" title="Upravit">
+                                                    ✏️
+                                                </button>
+                                                <button class="btn-icon btn-archive" onclick="Pronajimatel.archive('${item.id}')" title="Archivovat">
+                                                    📁
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>`
+                }
             </div>
         `;
-    }
-
     // Upravíme všechny field funkce aby podporovaly viewOnly režim
     function getOsobaFields(data, isView = false) {
         const disabled = isView ? 'disabled' : '';
