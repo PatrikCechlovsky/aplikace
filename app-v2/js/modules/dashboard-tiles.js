@@ -30,36 +30,13 @@ window.Dashboard = (function() {
         const container = document.getElementById('main-content');
         if (!container) return;
 
-        // Získat oblíbené dlaždice
-        const favorites = dashboardTiles.filter(tile => AppState.isFavorite(tile.id));
-        const others = dashboardTiles.filter(tile => !AppState.isFavorite(tile.id));
-
         let html = `
             <div class="dashboard-header">
                 <h1>Hlavní panel</h1>
                 <p class="dashboard-subtitle">Rychlý přístup k důležitým funkcím</p>
             </div>
-        `;
-
-        // Sekce oblíbených
-        if (favorites.length > 0) {
-            html += `
-                <div class="favorites-section">
-                    <h2>⭐ Oblíbené</h2>
-                    <div class="dashboard-tiles" id="favorites-tiles">
-                        ${renderTiles(favorites, true)}
-                    </div>
-                </div>
-            `;
-        }
-
-        // Všechny dlaždice
-        html += `
-            <div class="all-section">
-                <h2 style="margin: 20px;">📦 Všechny moduly</h2>
-                <div class="dashboard-tiles" id="all-tiles">
-                    ${renderTiles(others, false)}
-                </div>
+            <div class="dashboard-tiles">
+                ${renderTiles(dashboardTiles)}
             </div>
         `;
 
@@ -76,7 +53,7 @@ window.Dashboard = (function() {
     }
 
     // Render dlaždic
-    function renderTiles(tiles, inFavorites) {
+    function renderTiles(tiles) {
         const tilesOrder = AppState.getTilesOrder();
         
         // Seřadit podle uloženého pořadí
@@ -117,13 +94,15 @@ window.Dashboard = (function() {
                 const tileId = this.dataset.tileId;
                 const isFavorite = AppState.toggleFavorite(tileId);
                 
+                // Aktualizuj vzhled tlačítka
+                this.classList.toggle('active', isFavorite);
+                this.closest('.tile').classList.toggle('is-favorite', isFavorite);
+                this.title = isFavorite ? 'Odebrat z oblíbených' : 'Přidat do oblíbených';
+                
                 App.showToast(
                     isFavorite ? 'Přidáno do oblíbených' : 'Odebráno z oblíbených', 
                     'info'
                 );
-                
-                // Překreslit dashboard
-                render();
             });
         });
 
