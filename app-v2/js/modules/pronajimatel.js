@@ -371,6 +371,7 @@ window.Pronajimatel = (function() {
         return types[type] || type;
     }
 
+    // Najdi funkci showAddDialog a nahraď ji tímto:
     function showAddDialog(preselectedType = 'all') {
         const mainContent = document.getElementById('main-content');
         
@@ -385,27 +386,15 @@ window.Pronajimatel = (function() {
             showForm(preselectedType, null);
             return;
         }
-
+    
         // Zobrazit výběr typu
         mainContent.innerHTML = `
             <div class="page-header">
-                <div class="page-title-wrapper">
-                    <h1 class="page-title">
-                        <span class="module-icon">${moduleConfig.icon}</span>
-                        Pronajímatel
-                        <span style="color: var(--text-muted); margin: 0 8px;">-</span>
-                        <span class="type-icon">${typeIcon}</span>
-                        ${typeName}
-                    </h1>
-                </div>
-                <div class="page-actions">
-                    <button class="btn btn-primary" onclick="Pronajimatel.showAddDialog('${type}')">
-                        <span class="btn-icon">+</span>
-                        <span class="btn-text">Přidat ${type === 'zastupce' ? 'zástupce' : 'pronajímatele'}</span>
-                    </button>
-                </div>
+                <h1 class="page-title">
+                    <span class="module-icon">🏠</span>
+                    Vyberte typ pronajímatele
+                </h1>
             </div>
-            
             
             <div class="type-selector">
                 <div class="type-cards">
@@ -434,9 +423,17 @@ window.Pronajimatel = (function() {
                         <h3 class="type-card-title">Státní instituce</h3>
                         <p class="type-card-description">Státní nebo městská organizace</p>
                     </div>
+                    <div class="type-card" onclick="Pronajimatel.showForm('zastupce')">
+                        <div class="type-card-icon">🤝</div>
+                        <h3 class="type-card-title">Zastupující osoba</h3>
+                        <p class="type-card-description">Osoba zastupující pronajímatele</p>
+                    </div>
                 </div>
                 <div class="form-actions">
-                    <button class="btn btn-secondary" onclick="window.history.back()">Zpět</button>
+                    <button class="btn btn-secondary" onclick="window.history.back()">
+                        <span class="btn-icon">←</span>
+                        <span class="btn-text">Zpět</span>
+                    </button>
                 </div>
             </div>
         `;
