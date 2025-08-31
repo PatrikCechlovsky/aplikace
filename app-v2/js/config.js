@@ -54,8 +54,8 @@ window.APP_CONFIG = {
                 { id: 'osvc', name: 'OSVČ', icon: '🧑‍💼' },
                 { id: 'firma', name: 'Firma', icon: '🏢' },
                 { id: 'spolek', name: 'Spolek/skupina', icon: '🫂' },
-                { id: 'stat', name: 'Státní instituce', icon: '🏛️' }
-                { id: 'zastupce', name: 'Zastupující osoba', icon: '🤝' }  // NOVÁ POLOŽKA
+                { id: 'stat', name: 'Státní instituce', icon: '🏛️' },
+                { id: 'zastupce', name: 'Zastupující osoba', icon: '🤝' }
             ]
         },
         
@@ -71,8 +71,8 @@ window.APP_CONFIG = {
                 { id: 'osvc', name: 'OSVČ', icon: '🧑‍💼' },
                 { id: 'firma', name: 'Firma', icon: '🏢' },
                 { id: 'spolek', name: 'Spolek/skupina', icon: '🫂' },
-                { id: 'stat', name: 'Státní instituce', icon: '🏛️' }
-                { id: 'zastupce', name: 'Zastupující osoba', icon: '🤝' }  // NOVÁ POLOŽKA
+                { id: 'stat', name: 'Státní instituce', icon: '🏛️' },
+                { id: 'zastupce', name: 'Zastupující osoba', icon: '🤝' }
             ]
         },
         
@@ -99,10 +99,10 @@ window.APP_CONFIG = {
             description: 'Správa nájemních smluv',
             types: [
                 { id: 'all', name: 'Přehled', icon: '📊' },
-                { id: 'aktivni', name: 'Aktivní', icon: '✅' },
-                { id: 'ukoncene', name: 'Ukončené', icon: '❌' },
-                { id: 'navrhy', name: 'Návrhy', icon: '📝' },
-                { id: 'sablony', name: 'Šablony', icon: '📋' }
+                { id: 'aktivni', name: 'Aktivní' },
+                { id: 'ukoncene', name: 'Ukončené' },
+                { id: 'navrhy', name: 'Návrhy' },
+                { id: 'sablony', name: 'Šablony' }
             ]
         },
         
@@ -114,10 +114,10 @@ window.APP_CONFIG = {
             description: 'Evidence plateb a pohledávek',
             types: [
                 { id: 'all', name: 'Přehled', icon: '📊' },
-                { id: 'prijate', name: 'Přijaté', icon: '💵' },
-                { id: 'dluzne', name: 'Dlužné', icon: '🔴' },
-                { id: 'predpisy', name: 'Předpisy', icon: '📋' },
-                { id: 'upominky', name: 'Upomínky', icon: '⚠️' }
+                { id: 'prijate', name: 'Přijaté' },
+                { id: 'dluzne', name: 'Dlužné' },
+                { id: 'predpisy', name: 'Předpisy' },
+                { id: 'upominky', name: 'Upomínky' }
             ]
         },
         
@@ -129,9 +129,9 @@ window.APP_CONFIG = {
             description: 'Evidence služeb spojených s nájmem',
             types: [
                 { id: 'all', name: 'Přehled', icon: '📊' },
-                { id: 'definice', name: 'Definice služeb', icon: '📝' },
-                { id: 'rozpocitani', name: 'Rozpočítání', icon: '🧮' },
-                { id: 'vyuctovani', name: 'Vyúčtování', icon: '📑' }
+                { id: 'definice', name: 'Definice služeb' },
+                { id: 'rozpocitani', name: 'Rozpočítání' },
+                { id: 'vyuctovani', name: 'Vyúčtování' }
             ]
         },
         
@@ -142,11 +142,11 @@ window.APP_CONFIG = {
             icon: '📊',
             description: 'Přehledy a statistiky',
             types: [
-                { id: 'all', name: 'Dashboard', icon: '📊' },
-                { id: 'prijmy', name: 'Příjmy', icon: '📈' },
-                { id: 'obsazenost', name: 'Obsazenost', icon: '🏘️' },
-                { id: 'dluznici', name: 'Dlužníci', icon: '⚠️' },
-                { id: 'custom', name: 'Vlastní reporty', icon: '📋' }
+                { id: 'all', name: 'Dashboard' },
+                { id: 'prijmy', name: 'Příjmy' },
+                { id: 'obsazenost', name: 'Obsazenost' },
+                { id: 'dluznici', name: 'Dlužníci' },
+                { id: 'custom', name: 'Vlastní reporty' }
             ]
         },
         
@@ -154,14 +154,14 @@ window.APP_CONFIG = {
         {
             id: 'finance',
             name: 'Finance',
-            icon: '💳',
+            icon: '💸',
             description: 'Finanční přehledy a účetnictví',
             types: [
                 { id: 'all', name: 'Přehled', icon: '📊' },
-                { id: 'bankovni-ucty', name: 'Bankovní účty', icon: '🏦' },
-                { id: 'pokladna', name: 'Pokladna', icon: '💵' },
-                { id: 'naklady', name: 'Náklady', icon: '📉' },
-                { id: 'dane', name: 'Daně', icon: '📋' }
+                { id: 'bankovni-ucty', name: 'Bankovní účty' },
+                { id: 'pokladna', name: 'Pokladna' },
+                { id: 'naklady', name: 'Náklady' },
+                { id: 'dane', name: 'Daně' }
             ]
         },
         
@@ -173,10 +173,10 @@ window.APP_CONFIG = {
             description: 'Evidence spotřeby energií',
             types: [
                 { id: 'all', name: 'Přehled', icon: '📊' },
-                { id: 'elektrina', name: 'Elektřina', icon: '💡' },
-                { id: 'plyn', name: 'Plyn', icon: '🔥' },
-                { id: 'voda', name: 'Voda', icon: '💧' },
-                { id: 'meraky', name: 'Měřáky', icon: '📏' }
+                { id: 'elektrina', name: 'Elektřina' },
+                { id: 'plyn', name: 'Plyn' },
+                { id: 'voda', name: 'Voda' },
+                { id: 'meraky', name: 'Měřáky' }
             ]
         },
         
@@ -188,10 +188,10 @@ window.APP_CONFIG = {
             description: 'Evidence údržby a oprav',
             types: [
                 { id: 'all', name: 'Přehled', icon: '📊' },
-                { id: 'pozadavky', name: 'Požadavky', icon: '📝' },
-                { id: 'planovana', name: 'Plánovaná', icon: '📅' },
-                { id: 'probihajici', name: 'Probíhající', icon: '🚧' },
-                { id: 'dokoncena', name: 'Dokončená', icon: '✅' }
+                { id: 'pozadavky', name: 'Požadavky' },
+                { id: 'planovana', name: 'Plánovaná' },
+                { id: 'probihajici', name: 'Probíhající' },
+                { id: 'dokoncena', name: 'Dokončená' }
             ]
         },
         
@@ -203,10 +203,10 @@ window.APP_CONFIG = {
             description: 'Správa dokumentů',
             types: [
                 { id: 'all', name: 'Přehled', icon: '📊' },
-                { id: 'smlouvy', name: 'Smlouvy', icon: '📄' },
-                { id: 'faktury', name: 'Faktury', icon: '🧾' },
-                { id: 'fotografie', name: 'Fotografie', icon: '📸' },
-                { id: 'ostatni', name: 'Ostatní', icon: '📎' }
+                { id: 'smlouvy', name: 'Smlouvy' },
+                { id: 'faktury', name: 'Faktury' },
+                { id: 'fotografie', name: 'Fotografie' },
+                { id: 'ostatni', name: 'Ostatní' }
             ]
         },
         
@@ -214,14 +214,14 @@ window.APP_CONFIG = {
         {
             id: 'komunikace',
             name: 'Komunikace',
-            icon: '💬',
+            icon: '📧',
             description: 'Komunikace s nájemníky',
             types: [
                 { id: 'all', name: 'Přehled', icon: '📊' },
-                { id: 'zpravy', name: 'Zprávy', icon: '✉️' },
-                { id: 'emaily', name: 'E-maily', icon: '📧' },
-                { id: 'sms', name: 'SMS', icon: '📱' },
-                { id: 'sablony', name: 'Šablony zpráv', icon: '📋' }
+                { id: 'zpravy', name: 'Zprávy' },
+                { id: 'emaily', name: 'E-maily' },
+                { id: 'sms', name: 'SMS' },
+                { id: 'sablony', name: 'Šablony zpráv' }
             ]
         },
         
@@ -229,14 +229,14 @@ window.APP_CONFIG = {
         {
             id: 'uzivatele',
             name: 'Uživatelé & Role',
-            icon: '👨‍💼',
+            icon: '👥',
             description: 'Správa uživatelů a oprávnění',
             types: [
                 { id: 'all', name: 'Přehled', icon: '📊' },
-                { id: 'uzivatele', name: 'Uživatelé', icon: '👥' },
-                { id: 'role', name: 'Role', icon: '🎭' },
-                { id: 'opravneni', name: 'Oprávnění', icon: '🔐' },
-                { id: 'pristupovy-log', name: 'Přístupový log', icon: '📋' }
+                { id: 'uzivatele', name: 'Uživatelé' },
+                { id: 'role', name: 'Role' },
+                { id: 'opravneni', name: 'Oprávnění' },
+                { id: 'pristupovy-log', name: 'Přístupový log' }
             ]
         },
         
@@ -247,12 +247,12 @@ window.APP_CONFIG = {
             icon: '⚙️',
             description: 'Nastavení aplikace',
             types: [
-                { id: 'all', name: 'Obecné', icon: '⚙️' },
-                { id: 'vzhled', name: 'Vzhled', icon: '🎨' },
-                { id: 'ciselniky', name: 'Číselníky', icon: '📋' },
-                { id: 'sablony', name: 'Šablony', icon: '📄' },
-                { id: 'zalohovani', name: 'Zálohování', icon: '💾' },
-                { id: 'import-export', name: 'Import/Export', icon: '🔄' }
+                { id: 'all', name: 'Obecné' },
+                { id: 'vzhled', name: 'Vzhled' },
+                { id: 'ciselniky', name: 'Číselníky' },
+                { id: 'sablony', name: 'Šablony' },
+                { id: 'zalohovani', name: 'Zálohování' },
+                { id: 'import-export', name: 'Import/Export' }
             ]
         },
         
@@ -263,10 +263,10 @@ window.APP_CONFIG = {
             icon: '👤',
             description: 'Osobní nastavení',
             types: [
-                { id: 'profil', name: 'Profil', icon: '👤' },
-                { id: 'nastaveni', name: 'Nastavení', icon: '⚙️' },
-                { id: 'zmena-hesla', name: 'Změna hesla', icon: '🔐' },
-                { id: 'aktivita', name: 'Moje aktivita', icon: '📊' }
+                { id: 'profil', name: 'Profil' },
+                { id: 'nastaveni', name: 'Nastavení' },
+                { id: 'zmena-hesla', name: 'Změna hesla' },
+                { id: 'aktivita', name: 'Moje aktivita' }
             ]
         }
     ],
