@@ -1,0 +1,97 @@
+/* Akční tlačítka v tabulkách */
+.btn-icon {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-primary);
+    border-radius: 6px;
+    background: var(--surface-primary);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 16px;
+}
+
+.btn-icon:hover {
+    background: var(--surface-secondary);
+    border-color: var(--brand-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Specifické barvy pro akce */
+.btn-icon.btn-view {
+    color: var(--brand-primary);
+    border-color: var(--brand-primary);
+    background: rgba(82, 146, 247, 0.1);
+}
+
+.btn-icon.btn-view:hover {
+    background: var(--brand-primary);
+    color: white;
+}
+
+.btn-icon.btn-edit {
+    color: #FF9800;
+    border-color: #FF9800;
+    background: rgba(255, 152, 0, 0.1);
+}
+
+.btn-icon.btn-edit:hover {
+    background: #FF9800;
+    color: white;
+}
+
+.btn-icon.btn-archive {
+    color: #9E9E9E;
+    border-color: #9E9E9E;
+    background: rgba(158, 158, 158, 0.1);
+}
+
+.btn-icon.btn-archive:hover {
+    background: #9E9E9E;
+    color: white;
+}
+
+.btn-icon.btn-delete {
+    color: #F44336;
+    border-color: #F44336;
+    background: rgba(244, 67, 54, 0.1);
+}
+
+.btn-icon.btn-delete:hover {
+    background: #F44336;
+    color: white;
+}
+
+/* Skupina tlačítek */
+.btn-group {
+    display: inline-flex;
+    gap: 4px;
+}
+
+/* Breadcrumb v page title */
+.page-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.page-breadcrumb a {
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+.page-breadcrumb a:hover {
+    color: var(--brand-primary);
+}
+
+.page-breadcrumb .separator {
+    color: var(--text-muted);
+}
