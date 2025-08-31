@@ -1,78 +1,73 @@
+// Dashboard modul - hlavní panel s dlaždicemi
 window.Dashboard = (function() {
     'use strict';
 
+    let draggedElement = null;
+
     // Dlaždice pro hlavní panel
     const dashboardTiles = [
-        { icon: '🏘️', title: 'Byty – přehled', tags: ['#byty', '#nemovitosti'], desc: 'Souhrn jednotek, obsazenost, nájemné' },
-        { icon: '👥', title: 'Nájemníci', tags: ['#najemnici'], desc: 'Seznam osob + kontakty' },
-        { icon: '📄', title: 'Smlouvy', tags: ['#smlouvy'], desc: 'Aktivní / končící smlouvy' },
-        { icon: '💰', title: 'Cashflow', tags: ['#finance'], desc: 'Nájemné, zálohy, nedoplatky' },
-        { icon: '🔧', title: 'Údržba', tags: ['#udrzba'], desc: 'Opravy, požadavky, SLA' },
-        { icon: '🛠️', title: 'Revize', tags: ['#revize'], desc: 'Plynové, elektro, komíny…' },
-        { icon: '🔗', title: 'Integrace', tags: ['#integrace', '#nastaveni'], desc: 'ARES, e-maily, exporty' },
-        { icon: '🏢', title: 'Volné byty', tags: ['#volne', '#byty'], desc: 'Marketing a inzerce' },
-        { icon: '📝', title: 'Požadavky nájemníků', tags: ['#pozadavky', '#udrzba'], desc: 'Příchozí hlášení závad' },
-        { icon: '🧾', title: 'Vyúčtování služeb', tags: ['#vyuctovani', '#finance'], desc: 'Voda, teplo, teplá voda…' },
-        { icon: '💸', title: 'Dlužníci', tags: ['#dluhy', '#finance'], desc: 'Přehled nedoplatků' },
-        { icon: '🔋', title: 'Měřidla a odečty', tags: ['#energie'], desc: 'Evidence měřidel, odečty' },
-        { icon: '📊', title: 'Spotřeby a grafy', tags: ['#spotreby', '#energie'], desc: 'Vizualizace energií' },
-        { icon: '📁', title: 'Dokumenty', tags: ['#dokumenty'], desc: 'Složky, šablony, archiv' },
-        { icon: '📑', title: 'Reporty a exporty', tags: ['#reporty'], desc: 'CSV, PDF, účetnictví' },
-        { icon: '✉️', title: 'E-maily & SMS', tags: ['#komunikace'], desc: 'Hromadná i cílená komunikace' },
-        { icon: '🔚', title: 'Ukončení nájmů', tags: ['#ukonceni', '#smlouvy'], desc: 'Výpovědi, převzetí, předávací protokoly' }
+        { id: 'byty-prehled', icon: '🏘️', title: 'Byty – přehled', tags: ['#byty', '#nemovitosti'], desc: 'Souhrn jednotek, obsazenost, nájemné' },
+        { id: 'najemnici', icon: '👥', title: 'Nájemníci', tags: ['#najemnici'], desc: 'Seznam osob + kontakty' },
+        { id: 'smlouvy', icon: '📄', title: 'Smlouvy', tags: ['#smlouvy'], desc: 'Aktivní / končící smlouvy' },
+        { id: 'cashflow', icon: '💰', title: 'Cashflow', tags: ['#finance'], desc: 'Nájemné, zálohy, nedoplatky' },
+        { id: 'udrzba', icon: '🔧', title: 'Údržba', tags: ['#udrzba'], desc: 'Opravy, požadavky, SLA' },
+        { id: 'revize', icon: '🛠️', title: 'Revize', tags: ['#revize'], desc: 'Plynové, elektro, komíny…' },
+        { id: 'integrace', icon: '🔗', title: 'Integrace', tags: ['#integrace', '#nastaveni'], desc: 'ARES, e-maily, exporty' },
+        { id: 'volne-byty', icon: '🏢', title: 'Volné byty', tags: ['#volne', '#byty'], desc: 'Marketing a inzerce' },
+        { id: 'pozadavky', icon: '📝', title: 'Požadavky nájemníků', tags: ['#pozadavky', '#udrzba'], desc: 'Příchozí hlášení závad' },
+        { id: 'vyuctovani', icon: '🧾', title: 'Vyúčtování služeb', tags: ['#vyuctovani', '#finance'], desc: 'Voda, teplo, teplá voda…' },
+        { id: 'dluznici', icon: '💸', title: 'Dlužníci', tags: ['#dluhy', '#finance'], desc: 'Přehled nedoplatků' },
+        { id: 'meridla', icon: '🔋', title: 'Měřidla a odečty', tags: ['#energie'], desc: 'Evidence měřidel, odečty' },
+        { id: 'spotreby', icon: '📊', title: 'Spotřeby a grafy', tags: ['#spotreby', '#energie'], desc: 'Vizualizace energií' },
+        { id: 'dokumenty', icon: '📁', title: 'Dokumenty', tags: ['#dokumenty'], desc: 'Složky, šablony, archiv' },
+        { id: 'reporty', icon: '📑', title: 'Reporty a exporty', tags: ['#reporty'], desc: 'CSV, PDF, účetnictví' },
+        { id: 'komunikace', icon: '✉️', title: 'E-maily & SMS', tags: ['#komunikace'], desc: 'Hromadná i cílená komunikace' },
+        { id: 'ukonceni', icon: '🔚', title: 'Ukončení nájmů', tags: ['#ukonceni', '#smlouvy'], desc: 'Výpovědi, převzetí, předávací protokoly' }
     ];
 
+    // Render hlavního dashboardu
     function render() {
         const container = document.getElementById('main-content');
         if (!container) return;
+
+        // Získat oblíbené dlaždice
+        const favorites = dashboardTiles.filter(tile => AppState.isFavorite(tile.id));
+        const others = dashboardTiles.filter(tile => !AppState.isFavorite(tile.id));
 
         let html = `
             <div class="dashboard-header">
                 <h1>Hlavní panel</h1>
                 <p class="dashboard-subtitle">Rychlý přístup k důležitým funkcím</p>
             </div>
-            <div class="dashboard-tiles">
         `;
 
-        dashboardTiles.forEach((tile, index) => {
+        // Sekce oblíbených
+        if (favorites.length > 0) {
             html += `
-                <div class="tile" data-index="${index}">
-                    <div class="tile-title">
-                        <span class="tile-icon">${tile.icon}</span>
-                        ${tile.title}
+                <div class="favorites-section">
+                    <h2>⭐ Oblíbené</h2>
+                    <div class="dashboard-tiles" id="favorites-tiles">
+                        ${renderTiles(favorites, true)}
                     </div>
-                    <div class="tile-tags">
-                        ${tile.tags.map(tag => `<span class="tile-tag">${tag}</span>`).join('')}
-                    </div>
-                    <div class="tile-desc">${tile.desc}</div>
-                    <button class="pin-button" title="Přidat do oblíbených">
-                        <span class="pin-icon">★</span>
-                    </button>
                 </div>
             `;
-        });
+        }
 
-        html += '</div>';
+        // Všechny dlaždice
+        html += `
+            <div class="all-section">
+                <h2 style="margin: 20px;">📦 Všechny moduly</h2>
+                <div class="dashboard-tiles" id="all-tiles">
+                    ${renderTiles(others, false)}
+                </div>
+            </div>
+        `;
+
         container.innerHTML = html;
 
-        // Event listenery
-        container.querySelectorAll('.pin-button').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                this.classList.toggle('active');
-                App.showToast(this.classList.contains('active') ? 'Přidáno do oblíbených' : 'Odebráno z oblíbených', 'info');
-            });
-        });
-
-        container.querySelectorAll('.tile').forEach(tile => {
-            tile.addEventListener('click', function(e) {
-                if (!e.target.closest('.pin-button')) {
-                    const index = this.dataset.index;
-                    const tileData = dashboardTiles[index];
-                    console.log('Kliknuto na dlaždici:', tileData.title);
-                }
-            });
-        });
+        // Inicializace event handlerů
+        initializeEventHandlers();
+        initializeDragAndDrop();
 
         // Nastavit stav
         if (window.AppState) {
@@ -80,6 +75,149 @@ window.Dashboard = (function() {
         }
     }
 
+    // Render dlaždic
+    function renderTiles(tiles, inFavorites) {
+        const tilesOrder = AppState.getTilesOrder();
+        
+        // Seřadit podle uloženého pořadí
+        const sortedTiles = [...tiles].sort((a, b) => {
+            const orderA = tilesOrder[a.id] || 999;
+            const orderB = tilesOrder[b.id] || 999;
+            return orderA - orderB;
+        });
+
+        return sortedTiles.map((tile, index) => `
+            <div class="tile${AppState.isFavorite(tile.id) ? ' is-favorite' : ''}" 
+                 data-tile-id="${tile.id}" 
+                 data-order="${tilesOrder[tile.id] || index}"
+                 draggable="true">
+                <button class="favorite-button${AppState.isFavorite(tile.id) ? ' active' : ''}" 
+                        data-tile-id="${tile.id}"
+                        title="${AppState.isFavorite(tile.id) ? 'Odebrat z oblíbených' : 'Přidat do oblíbených'}">
+                    <span class="favorite-icon">⭐</span>
+                </button>
+                <div class="tile-title">
+                    <span class="tile-icon">${tile.icon}</span>
+                    ${tile.title}
+                </div>
+                <div class="tile-tags">
+                    ${tile.tags.map(tag => `<span class="tile-tag">${tag}</span>`).join('')}
+                </div>
+                <div class="tile-desc">${tile.desc}</div>
+            </div>
+        `).join('');
+    }
+
+    // Inicializace event handlerů
+    function initializeEventHandlers() {
+        // Oblíbené tlačítka
+        document.querySelectorAll('.favorite-button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const tileId = this.dataset.tileId;
+                const isFavorite = AppState.toggleFavorite(tileId);
+                
+                App.showToast(
+                    isFavorite ? 'Přidáno do oblíbených' : 'Odebráno z oblíbených', 
+                    'info'
+                );
+                
+                // Překreslit dashboard
+                render();
+            });
+        });
+
+        // Kliknutí na dlaždice
+        document.querySelectorAll('.tile').forEach(tile => {
+            tile.addEventListener('click', function(e) {
+                if (!e.target.closest('.favorite-button')) {
+                    const tileId = this.dataset.tileId;
+                    const tileData = dashboardTiles.find(t => t.id === tileId);
+                    console.log('Kliknuto na dlaždici:', tileData.title);
+                    // TODO: Navigace na příslušný modul
+                }
+            });
+        });
+    }
+
+    // Inicializace drag & drop
+    function initializeDragAndDrop() {
+        const tiles = document.querySelectorAll('.tile');
+        
+        tiles.forEach(tile => {
+            tile.addEventListener('dragstart', handleDragStart);
+            tile.addEventListener('dragend', handleDragEnd);
+            tile.addEventListener('dragover', handleDragOver);
+            tile.addEventListener('drop', handleDrop);
+            tile.addEventListener('dragenter', handleDragEnter);
+            tile.addEventListener('dragleave', handleDragLeave);
+        });
+    }
+
+    // Drag & drop handlery
+    function handleDragStart(e) {
+        draggedElement = this;
+        this.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+    }
+
+    function handleDragEnd(e) {
+        this.classList.remove('dragging');
+        
+        // Uložit nové pořadí
+        saveTilesOrder();
+    }
+
+    function handleDragOver(e) {
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+        e.dataTransfer.dropEffect = 'move';
+        return false;
+    }
+
+    function handleDragEnter(e) {
+        this.classList.add('drag-over');
+    }
+
+    function handleDragLeave(e) {
+        this.classList.remove('drag-over');
+    }
+
+    function handleDrop(e) {
+        if (e.stopPropagation) {
+            e.stopPropagation();
+        }
+        
+        this.classList.remove('drag-over');
+        
+        if (draggedElement !== this) {
+            // Prohoď dlaždice
+            const container = this.parentNode;
+            const allTiles = [...container.children];
+            const draggedIndex = allTiles.indexOf(draggedElement);
+            const targetIndex = allTiles.indexOf(this);
+            
+            if (draggedIndex < targetIndex) {
+                container.insertBefore(draggedElement, this.nextSibling);
+            } else {
+                container.insertBefore(draggedElement, this);
+            }
+        }
+        
+        return false;
+    }
+
+    // Uložení pořadí dlaždic
+    function saveTilesOrder() {
+        const order = {};
+        document.querySelectorAll('.tile').forEach((tile, index) => {
+            order[tile.dataset.tileId] = index;
+        });
+        AppState.saveTilesOrder(order);
+    }
+
+    // Veřejné API
     return {
         render
     };
