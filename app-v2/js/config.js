@@ -55,6 +55,7 @@ window.APP_CONFIG = {
                 { id: 'firma', name: 'Firma', icon: '🏢' },
                 { id: 'spolek', name: 'Spolek/skupina', icon: '🫂' },
                 { id: 'stat', name: 'Státní instituce', icon: '🏛️' }
+                { id: 'zastupce', name: 'Zastupující osoba', icon: '🤝' }  // NOVÁ POLOŽKA
             ]
         },
         
@@ -71,6 +72,7 @@ window.APP_CONFIG = {
                 { id: 'firma', name: 'Firma', icon: '🏢' },
                 { id: 'spolek', name: 'Spolek/skupina', icon: '🫂' },
                 { id: 'stat', name: 'Státní instituce', icon: '🏛️' }
+                { id: 'zastupce', name: 'Zastupující osoba', icon: '🤝' }  // NOVÁ POLOŽKA
             ]
         },
         
