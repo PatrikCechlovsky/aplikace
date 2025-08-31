@@ -12,6 +12,9 @@ window.Sidebar = (function() {
 
         let html = '';
         menuItems.forEach(item => {
+            // Přeskočit dashboard v menu
+            if (item.id === 'dashboard') return;
+            
             const isExpanded = activeModule === item.id;
             
             if (item.types && item.types.length > 0) {
@@ -37,7 +40,7 @@ window.Sidebar = (function() {
             } else {
                 html += `
                     <div class="nav-section" data-module="${item.id}">
-                        <button class="nav-item${item.id === 'dashboard' ? ' active' : ''}" data-action="${item.id}">
+                        <button class="nav-item" data-action="${item.id}">
                             <span class="nav-icon">${item.icon}</span>
                             <span class="nav-label">${item.name}</span>
                         </button>
