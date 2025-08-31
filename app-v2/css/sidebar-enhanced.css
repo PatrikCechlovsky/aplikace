@@ -169,3 +169,21 @@
         transform: translateX(0);
     }
 }
+/* Ikona u pod-položky */
+.nav-child-icon {
+    font-size: 14px !important;
+    width: 20px !important;
+    height: 20px !important;
+    margin-right: 8px !important;
+    margin-left: -28px !important; /* Posunout ikonu doleva k bullet pointu */
+}
+
+/* Upravit odsazení když je ikona */
+.nav-child.has-icon {
+    padding-left: 48px !important;
+}
+
+/* Skrýt bullet point když je ikona */
+.nav-child:has(.nav-child-icon)::before {
+    display: none;
+}
