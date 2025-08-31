@@ -1,170 +1,165 @@
-/* Dashboard a dlaždice - tmavý design */
-
-/* Header dashboardu */
-.dashboard-header {
-    padding: 20px;
-}
-
-.dashboard-header h1 {
-    font-size: 24px;
-    color: var(--text-primary);
-    margin-bottom: 8px;
-}
-
-.dashboard-subtitle {
-    color: var(--text-secondary);
-    font-size: 14px;
-}
-
-/* Grid pro dlaždice */
-.dashboard-tiles, .tiles-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-    padding: 0 20px 20px;
-}
-
-/* Hlavní styl dlaždice */
-.tile {
-    position: relative;
-    background: var(--surface-primary);
-    border: 1px solid var(--border-primary);
-    border-radius: var(--radius-md);
-    padding: 20px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    overflow: hidden;
-}
-
-/* Hover efekt */
-.tile:hover {
-    background: var(--surface-secondary);
-    border-color: var(--border-secondary);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-/* Hlavička dlaždice */
-.tile-title {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.tile-icon {
-    font-size: 24px;
-}
-
-/* Popis */
-.tile-desc {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.5;
-    margin-bottom: 12px;
-}
-
-/* Tagy */
-.tile-tags {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
-}
-
-.tile-tag {
-    font-size: 11px;
-    color: var(--brand-primary);
-    background: rgba(88, 166, 255, 0.1);
-    padding: 2px 8px;
-    border-radius: 4px;
-}
-
-/* Hvězdička pro oblíbené */
-.favorite-button {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    opacity: 0;
-    transition: all 0.2s ease;
-    padding: 4px;
-    border-radius: var(--radius-sm);
-    z-index: 10;
-}
-
-.tile:hover .favorite-button {
-    opacity: 0.6;
-}
-
-.favorite-button:hover {
-    opacity: 1 !important;
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.favorite-icon {
-    font-size: 16px;
-    color: var(--text-muted);
-    transition: all 0.2s ease;
-}
-
-.favorite-button:hover .favorite-icon,
-.favorite-button.active .favorite-icon {
-    color: #fbbf24;
-    text-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
-}
-
-.tile.is-favorite .favorite-button {
-    opacity: 1;
-}
-
-.tile.is-favorite .favorite-icon {
-    color: #fbbf24;
-}
-
-/* Drag & Drop styly */
-.tile.dragging {
-    opacity: 0.5;
-    cursor: grabbing;
-    z-index: 1000;
-}
-
-.tile.drag-over {
-    border-color: var(--brand-primary);
-    background: rgba(88, 166, 255, 0.1);
-}
-
-/* Sekce oblíbených */
-.favorites-section {
-    margin-bottom: 32px;
-}
-
-.favorites-section h2 {
-    font-size: 18px;
-    color: var(--text-primary);
-    margin: 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.favorites-section .empty-state {
-    background: var(--surface-primary);
-    border: 1px dashed var(--border-secondary);
-    border-radius: var(--radius-md);
-    padding: 32px;
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 14px;
-    margin: 0 20px;
-}
-
-/* Pořadí dlaždic je uložitelné */
-.tile[data-order] {
-    order: attr(data-order);
-}
+// Správa stavu aplikace
+window.AppState = (function() {
+    'use strict';
+    
+    // Privátní stav aplikace
+    const _state = {
+        currentUser: null,
+        currentView: 'dashboard',
+        currentModule: null,
+        favorites: [],  // Oblíbené dlaždice
+        tilesOrder: {}, // Pořadí dlaždic
+        data: {
+            najemnici: [],
+            platby: [],
+            jednotky: [],
+            pronajimatele: [],
+            nemovitosti: []
+        }
+    };
+    
+    // Posluchači změn
+    const _listeners = [];
+    
+    // Získat hodnotu ze stavu
+    function get(path) {
+        const keys = path.split('.');
+        let result = _state;
+        
+        for (const key of keys) {
+            result = result[key];
+            if (result === undefined) return undefined;
+        }
+        
+        return result;
+    }
+    
+    // Nastavit hodnotu ve stavu
+    function set(path, value) {
+        const keys = path.split('.');
+        let target = _state;
+        
+        for (let i = 0; i < keys.length - 1; i++) {
+            if (!target[keys[i]]) {
+                target[keys[i]] = {};
+            }
+            target = target[keys[i]];
+        }
+        
+        target[keys[keys.length - 1]] = value;
+        
+        // Notifikovat posluchače
+        _listeners.forEach(listener => listener(path, value));
+        
+        // Uložit do localStorage
+        localStorage.setItem('appState', JSON.stringify(_state));
+    }
+    
+    // Přidat posluchače změn
+    function subscribe(callback) {
+        _listeners.push(callback);
+        
+        // Vrátit funkci pro odhlášení
+        return () => {
+            const index = _listeners.indexOf(callback);
+            if (index > -1) {
+                _listeners.splice(index, 1);
+            }
+        };
+    }
+    
+    // Získat data
+    function getData(type) {
+        return _state.data[type] || [];
+    }
+    
+    // Smazat položku
+    function deleteItem(type, id) {
+        if (_state.data[type]) {
+            _state.data[type] = _state.data[type].filter(item => item.id !== id);
+            set(`data.${type}`, _state.data[type]);
+        }
+    }
+    
+    // Správa oblíbených
+    function toggleFavorite(tileId) {
+        const favorites = get('favorites') || [];
+        const index = favorites.indexOf(tileId);
+        
+        if (index > -1) {
+            favorites.splice(index, 1);
+        } else {
+            favorites.push(tileId);
+        }
+        
+        set('favorites', favorites);
+        return favorites.includes(tileId);
+    }
+    
+    function isFavorite(tileId) {
+        const favorites = get('favorites') || [];
+        return favorites.includes(tileId);
+    }
+    
+    // Správa pořadí dlaždic
+    function saveTilesOrder(order) {
+        set('tilesOrder', order);
+    }
+    
+    function getTilesOrder() {
+        return get('tilesOrder') || {};
+    }
+    
+    // Získat celý stav
+    function getAll() {
+        return JSON.parse(JSON.stringify(_state));
+    }
+    
+    // Inicializace defaultních oblíbených
+    function initializeDefaultFavorites() {
+        const defaultFavorites = [
+            'byty-prehled', 'najemnici', 'smlouvy', 'cashflow', 
+            'udrzba', 'revize', 'integrace', 'volne-byty', 
+            'pozadavky', 'vyuctovani', 'dluznici', 'meridla', 
+            'spotreby', 'dokumenty', 'reporty', 'komunikace', 'ukonceni'
+        ];
+        
+        // Pokud ještě nemáme žádné oblíbené, nastavíme všechny jako oblíbené
+        if (!_state.favorites || _state.favorites.length === 0) {
+            set('favorites', defaultFavorites);
+        }
+    }
+    
+    // Inicializace
+    function init() {
+        console.log('AppState inicializován');
+        // Načíst data z localStorage pokud existují
+        const saved = localStorage.getItem('appState');
+        if (saved) {
+            try {
+                const data = JSON.parse(saved);
+                Object.assign(_state, data);
+            } catch (e) {
+                console.error('Chyba při načítání stavu:', e);
+            }
+        }
+        
+        // Inicializovat defaultní oblíbené
+        initializeDefaultFavorites();
+    }
+    
+    // Veřejné API
+    return {
+        init,
+        get,
+        set,
+        subscribe,
+        getAll,
+        getData,
+        deleteItem,
+        toggleFavorite,
+        isFavorite,
+        saveTilesOrder,
+        getTilesOrder
+    };
+})();
