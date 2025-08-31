@@ -1,3 +1,111 @@
+/* Page header styling - DŮLEŽITÉ PRO SPRÁVNÉ ZOBRAZENÍ */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-primary);
+    min-height: 48px;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.module-icon,
+.type-icon {
+    font-size: 28px;
+}
+
+/* Table improvements */
+.table-responsive {
+    overflow-x: auto;
+    margin: -1px;
+}
+
+.table {
+    width: 100%;
+    min-width: 800px;
+}
+
+.table th {
+    white-space: nowrap;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: var(--surface-secondary);
+}
+
+.table td {
+    white-space: nowrap;
+}
+
+.text-truncate {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Badge styling */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.badge-osoba {
+    background: rgba(33, 150, 243, 0.1);
+    color: #2196F3;
+}
+
+.badge-osvc {
+    background: rgba(156, 39, 176, 0.1);
+    color: #9C27B0;
+}
+
+.badge-firma {
+    background: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+}
+
+.badge-spolek {
+    background: rgba(255, 152, 0, 0.1);
+    color: #FF9800;
+}
+
+.badge-stat {
+    background: rgba(233, 30, 99, 0.1);
+    color: #E91E63;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-secondary);
+}
+
+.empty-state-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.empty-state-text {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
 /* Type cards - vylepšený design */
 .type-selector {
     max-width: 1200px;
@@ -113,6 +221,16 @@
 
 /* Responsivní design */
 @media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .page-header .btn {
+        width: 100%;
+    }
+    
     .type-cards {
         grid-template-columns: 1fr;
         gap: 16px;
