@@ -406,6 +406,7 @@ window.Pronajimatel = (function() {
                 </div>
             </div>
             
+            
             <div class="type-selector">
                 <div class="type-cards">
                     <div class="type-card" onclick="Pronajimatel.showForm('osoba')">
