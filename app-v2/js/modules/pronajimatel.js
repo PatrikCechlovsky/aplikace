@@ -90,11 +90,14 @@ window.Pronajimatel = (function() {
                                         <td class="text-truncate">${item.mesto || '-'}</td>
                                         <td>
                                             <div class="btn-group">
-                                                <button class="btn btn-sm btn-icon" onclick="Pronajimatel.view('${item.id}')" title="Zobrazit">
-                                                    👁️
+                                              <button class="btn-icon btn-view" onclick="Pronajimatel.view('${item.id}')" title="Zobrazit">
+                                                        👁️
                                                 </button>
-                                                <button class="btn btn-sm btn-icon" onclick="Pronajimatel.archive('${item.id}')" title="Archivovat">
-                                                    📁
+                                                <button class="btn-icon btn-edit" onclick="Pronajimatel.edit('${item.id}')" title="Upravit">
+                                                        ✏️
+                                                </button>
+                                                <button class="btn-icon btn-archive" onclick="Pronajimatel.archive('${item.id}')" title="Archivovat">
+                                                        📁
                                                 </button>
                                             </div>
                                         </td>
@@ -115,7 +118,14 @@ window.Pronajimatel = (function() {
         // Zobrazit formulář v režimu prohlížení
         showForm(item.typ_subjektu || 'zastupce', id, true);
     }
-
+        // A přidej novou metodu edit:
+        function edit(id) {
+            const item = getItemById(id);
+            if (!item) return;
+    
+            // Zobrazit formulář v režimu editace
+            showForm(item.typ_subjektu || 'zastupce', id, false);
+}
     function showForm(type, id = null, viewOnly = false) {
         const mainContent = document.getElementById('main-content');
         const isEdit = id !== null && !viewOnly;
@@ -870,6 +880,7 @@ window.Pronajimatel = (function() {
         showAddDialog,
         showForm,
         view,
+        edit, // přidat
         archive
     };
 })();
