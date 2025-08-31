@@ -2,7 +2,28 @@ window.App = (function() {
     'use strict';
 
     console.log('Inicializace aplikace...');
+    // Na začátek souboru přidáme funkci pro inicializaci vzorových dat
+    function initializeSampleData() {
+    // Zkontrolovat, jestli už data existují
+    const hasPronajimatelData = localStorage.getItem('pronajimatel_data');
+    const hasNajemniciData = localStorage.getItem('najemnici_data');
+    
+    // Pokud data neexistují, načíst vzorová data
+    if (!hasPronajimatelData && window.SampleData) {
+        localStorage.setItem('pronajimatel_data', JSON.stringify(window.SampleData.pronajimatel));
+        localStorage.setItem('zastupce_data', JSON.stringify(window.SampleData.zastupce));
+    }
+    
+    if (!hasNajemniciData && window.SampleData) {
+        localStorage.setItem('najemnici_data', JSON.stringify(window.SampleData.najemnici));
+    }
+}
 
+// Přidat volání do init funkce (někde v kódu kde se inicializuje aplikace)
+window.addEventListener('DOMContentLoaded', function() {
+    initializeSampleData();
+    // ... zbytek inicializace
+});
     // Inicializace aplikace
     function initApp() {
         try {
