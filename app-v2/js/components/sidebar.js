@@ -22,7 +22,7 @@ window.Sidebar = (function() {
                     <div class="nav-section${isExpanded ? ' expanded' : ''}" data-module="${item.id}">
                         <button class="nav-parent" data-action="${item.id}">
                             <span class="chevron">▶</span>
-                            <span class="nav-icon">${item.icon}</span>
+                            <span class="nav-icon">${item.icon || '📄'}</span>
                             <span class="nav-label">${item.name}</span>
                         </button>
                         <div class="nav-children" style="display:${isExpanded ? 'block' : 'none'};">
@@ -41,7 +41,7 @@ window.Sidebar = (function() {
                 html += `
                     <div class="nav-section" data-module="${item.id}">
                         <button class="nav-item" data-action="${item.id}">
-                            <span class="nav-icon">${item.icon}</span>
+                            <span class="nav-icon">${item.icon || '📄'}</span>
                             <span class="nav-label">${item.name}</span>
                         </button>
                     </div>
