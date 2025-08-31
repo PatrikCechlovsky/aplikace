@@ -31,18 +31,28 @@ window.Pronajimatel = (function() {
             filteredData = data.pronajimatel.filter(p => p.typ_subjektu === type);
         }
 
-        // Získat název typu pro zobrazení
+        // Získat název a ikonu typu pro zobrazení
         const moduleConfig = APP_CONFIG.modules.find(m => m.id === 'pronajimatel');
         const typeConfig = moduleConfig.types.find(t => t.id === type);
         const typeName = typeConfig ? typeConfig.name : 'Přehled';
+        const typeIcon = typeConfig ? typeConfig.icon : '📊';
 
         mainContent.innerHTML = `
             <div class="page-header">
-                <h1 class="page-title">Pronajímatel - ${typeName}</h1>
-                <button class="btn btn-primary" onclick="Pronajimatel.showAddDialog('${type}')">
-                    <span class="btn-icon">+</span>
-                    <span class="btn-text">Přidat ${type === 'zastupce' ? 'zástupce' : 'pronajímatele'}</span>
-                </button>
+                <div class="page-title-wrapper">
+                    <h1 class="page-title">
+                        <span class="module-icon">${moduleConfig.icon}</span>
+                        Pronajímatel - 
+                        <span class="type-icon">${typeIcon}</span>
+                        ${typeName}
+                    </h1>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-primary" onclick="Pronajimatel.showAddDialog('${type}')">
+                        <span class="btn-icon">+</span>
+                        <span class="btn-text">Přidat ${type === 'zastupce' ? 'zástupce' : 'pronajímatele'}</span>
+                    </button>
+                </div>
             </div>
 
             <div class="card">
@@ -58,26 +68,26 @@ window.Pronajimatel = (function() {
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Název/Jméno</th>
-                                    <th>Typ</th>
-                                    <th>IČO</th>
-                                    <th>Telefon</th>
-                                    <th>Email</th>
-                                    <th>Město</th>
-                                    <th>Akce</th>
+                                    <th style="width: 60px;">ID</th>
+                                    <th style="width: 200px;">Název/Jméno</th>
+                                    <th style="width: 100px;">Typ</th>
+                                    <th style="width: 100px;">IČO</th>
+                                    <th style="width: 150px;">Telefon</th>
+                                    <th style="width: 250px;">Email</th>
+                                    <th style="width: 150px;">Město</th>
+                                    <th style="width: 100px;">Akce</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 ${filteredData.map(item => `
                                     <tr>
                                         <td>${item.id}</td>
-                                        <td>${item.nazev || `${item.jmeno || ''} ${item.prijmeni || ''}`}</td>
+                                        <td class="text-truncate">${item.nazev || `${item.jmeno || ''} ${item.prijmeni || ''}`}</td>
                                         <td><span class="badge badge-${item.typ_subjektu}">${getTypeName(item.typ_subjektu)}</span></td>
                                         <td>${item.ico || '-'}</td>
-                                        <td>${item.telefon || '-'}</td>
-                                        <td>${item.email || '-'}</td>
-                                        <td>${item.mesto || '-'}</td>
+                                        <td class="text-truncate">${item.telefon || '-'}</td>
+                                        <td class="text-truncate">${item.email || '-'}</td>
+                                        <td class="text-truncate">${item.mesto || '-'}</td>
                                         <td>
                                             <div class="btn-group">
                                                 <button class="btn btn-sm btn-icon" onclick="Pronajimatel.view('${item.id}')" title="Zobrazit">
@@ -98,6 +108,248 @@ window.Pronajimatel = (function() {
         `;
     }
 
+    function view(id) {
+        const item = getItemById(id);
+        if (!item) return;
+        
+        // Zobrazit formulář v režimu prohlížení
+        showForm(item.typ_subjektu || 'zastupce', id, true);
+    }
+
+    function showForm(type, id = null, viewOnly = false) {
+        const mainContent = document.getElementById('main-content');
+        const isEdit = id !== null && !viewOnly;
+        const isView = viewOnly;
+        const data = id ? getItemById(id) : {};
+        
+        let formHtml = '';
+        
+        if (type === 'zastupce' || data.role === 'zastupce') {
+            formHtml = getZastupceForm(data, isEdit, isView);
+        } else {
+            formHtml = getPronajimatelForm(type, data, isEdit, isView);
+        }
+        
+        mainContent.innerHTML = formHtml;
+        
+        // Přidat event listener pro formulář pouze pokud není v režimu prohlížení
+        if (!isView) {
+            const form = document.getElementById('pronajimatel-form');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveForm(type, id);
+            });
+        }
+    }
+
+    function getPronajimatelForm(type, data, isEdit, isView = false) {
+        let title = 'Nový pronajímatel';
+        if (isView) {
+            title = 'Detail pronajímatele';
+        } else if (isEdit) {
+            title = 'Upravit pronajímatele';
+        }
+        
+        // Společná pole pro všechny typy
+        let commonFields = `
+            <input type="hidden" name="id" value="${data.id || ''}">
+            <input type="hidden" name="typ_subjektu" value="${type}">
+            <input type="hidden" name="role" value="pronajimatel">
+        `;
+        
+        // Specifická pole podle typu
+        let specificFields = '';
+        
+        switch(type) {
+            case 'osoba':
+                specificFields = getOsobaFields(data, isView);
+                break;
+            case 'osvc':
+                specificFields = getOsvcFields(data, isView);
+                break;
+            case 'firma':
+            case 'stat':
+                specificFields = getFirmaFields(data, isView);
+                break;
+            case 'spolek':
+                specificFields = getSpolekFields(data, isView);
+                break;
+        }
+        
+        return `
+            <div class="page-header">
+                <h1 class="page-title">${title} - ${getTypeName(type)}</h1>
+            </div>
+            
+            <div class="card">
+                <form id="pronajimatel-form" class="form">
+                    <div class="form-body">
+                        ${commonFields}
+                        ${specificFields}
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="window.history.back()">
+                            Zpět
+                        </button>
+                        ${!isView ? `
+                            <button type="submit" class="btn btn-primary">
+                                ${isEdit ? 'Uložit změny' : 'Vytvořit'}
+                            </button>
+                        ` : `
+                            <button type="button" class="btn btn-primary" onclick="Pronajimatel.showForm('${type}', '${data.id}')">
+                                Upravit
+                            </button>
+                        `}
+                    </div>
+                </form>
+            </div>
+        `;
+    }
+
+    // Upravíme všechny field funkce aby podporovaly viewOnly režim
+    function getOsobaFields(data, isView = false) {
+        const disabled = isView ? 'disabled' : '';
+        const required = isView ? '' : 'required';
+        
+        return `
+            <div class="form-group-header">Osobní údaje</div>
+            
+            <div class="form-row">
+                <div class="form-col-3">
+                    <div class="form-field">
+                        <label class="form-label">Titul před</label>
+                        <input type="text" name="titul_pred" class="form-control" value="${data.titul_pred || ''}" ${disabled}>
+                    </div>
+                </div>
+                <div class="form-col-3">
+                    <div class="form-field">
+                        <label class="form-label ${!isView ? 'required' : ''}">Jméno</label>
+                        <input type="text" name="jmeno" class="form-control" value="${data.jmeno || ''}" ${required} ${disabled}>
+                    </div>
+                </div>
+                <div class="form-col-3">
+                    <div class="form-field">
+                        <label class="form-label ${!isView ? 'required' : ''}">Příjmení</label>
+                        <input type="text" name="prijmeni" class="form-control" value="${data.prijmeni || ''}" ${required} ${disabled}>
+                    </div>
+                </div>
+                <div class="form-col-3">
+                    <div class="form-field">
+                        <label class="form-label">Titul za</label>
+                        <input type="text" name="titul_za" class="form-control" value="${data.titul_za || ''}" ${disabled}>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-col-4">
+                    <div class="form-field">
+                        <label class="form-label ${!isView ? 'required' : ''}">Datum narození</label>
+                        <input type="date" name="datum_narozeni" class="form-control" value="${data.datum_narozeni || ''}" ${required} ${disabled}>
+                    </div>
+                </div>
+                <div class="form-col-4">
+                    <div class="form-field">
+                        <label class="form-label ${!isView ? 'required' : ''}">Typ dokladu totožnosti</label>
+                        <div class="form-control-wrapper">
+                            <select name="typ_dokladu" class="form-control" ${required} ${disabled}>
+                                <option value="">Vyberte...</option>
+                                <option value="op" ${data.typ_dokladu === 'op' ? 'selected' : ''}>Občanský průkaz</option>
+                                <option value="pas" ${data.typ_dokladu === 'pas' ? 'selected' : ''}>Pas</option>
+                                <option value="rp" ${data.typ_dokladu === 'rp' ? 'selected' : ''}>Řidičský průkaz</option>
+                            </select>
+                            <span class="form-icon">▼</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-col-4">
+                    <div class="form-field">
+                        <label class="form-label ${!isView ? 'required' : ''}">Číslo dokladu totožnosti</label>
+                        <input type="text" name="cislo_dokladu" class="form-control" value="${data.cislo_dokladu || ''}" ${required} ${disabled}>
+                    </div>
+                </div>
+            </div>
+            
+            ${getContactFields(data, isView)}
+            ${getBankFields(data, isView)}
+            ${getLoginFields(data, isView)}
+            ${getZastupceSelect(data, false, isView)}
+        `;
+    }
+
+    // Podobně upravíme i ostatní field funkce...
+    function getContactFields(data, isView = false) {
+        const disabled = isView ? 'disabled' : '';
+        const required = isView ? '' : 'required';
+        
+        return `
+            <div class="form-group-header">Kontaktní údaje</div>
+            
+            <div class="form-row">
+                <div class="form-col-3">
+                    <div class="form-field">
+                        <label class="form-label ${!isView ? 'required' : ''}">Stát</label>
+                        <div class="form-control-wrapper">
+                            <select name="stat" class="form-control" ${required} ${disabled}>
+                                <option value="CZ" ${data.stat === 'CZ' ? 'selected' : ''}>Česká republika</option>
+                                <option value="SK" ${data.stat === 'SK' ? 'selected' : ''}>Slovensko</option>
+                                <option value="AT" ${data.stat === 'AT' ? 'selected' : ''}>Rakousko</option>
+                                <option value="DE" ${data.stat === 'DE' ? 'selected' : ''}>Německo</option>
+                                <option value="PL" ${data.stat === 'PL' ? 'selected' : ''}>Polsko</option>
+                            </select>
+                            <span class="form-icon">▼</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-col-3">
+                    <div class="form-field">
+                        <label class="form-label ${!isView ? 'required' : ''}">PSČ</label>
+                        <input type="text" name="psc" class="form-control" value="${data.psc || ''}" ${required} ${disabled}>
+                    </div>
+                </div>
+                <div class="form-col-6">
+                    <div class="form-field">
+                        <label class="form-label ${!isView ? 'required' : ''}">Město</label>
+                        <input type="text" name="mesto" class="form-control" value="${data.mesto || ''}" ${required} ${disabled}>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-col-8">
+                    <div class="form-field">
+                        <label class="form-label ${!isView ? 'required' : ''}">Ulice</label>
+                        <input type="text" name="ulice" class="form-control" value="${data.ulice || ''}" ${required} ${disabled}>
+                    </div>
+                </div>
+                <div class="form-col-4">
+                    <div class="form-field">
+                        <label class="form-label ${!isView ? 'required' : ''}">Číslo popisné</label>
+                        <input type="text" name="cislo_popisne" class="form-control" value="${data.cislo_popisne || ''}" ${required} ${disabled}>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-col-6">
+                    <div class="form-field">
+                        <label class="form-label ${!isView ? 'required' : ''}">Telefon</label>
+                        <input type="tel" name="telefon" class="form-control" value="${data.telefon || ''}" ${required} ${disabled}>
+                        <span class="form-help">Předvolba podle státu s možností změny</span>
+                    </div>
+                </div>
+                <div class="form-col-6">
+                    <div class="form-field">
+                        <label class="form-label ${!isView ? 'required' : ''}">Email</label>
+                        <input type="email" name="email" class="form-control" value="${data.email || ''}" ${required} ${disabled}>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Zbytek funkcí zůstává stejný...
     function getTypeName(type) {
         const types = {
             'osoba': 'Osoba',
@@ -165,84 +417,11 @@ window.Pronajimatel = (function() {
         `;
     }
 
-    function showForm(type, id = null) {
-        const mainContent = document.getElementById('main-content');
-        const isEdit = id !== null;
-        const data = isEdit ? getItemById(id) : {};
+    // Zbytek kódu zůstává stejný...
+    function getOsvcFields(data, isView = false) {
+        const disabled = isView ? 'disabled' : '';
+        const required = isView ? '' : 'required';
         
-        let formHtml = '';
-        
-        if (type === 'zastupce') {
-            formHtml = getZastupceForm(data, isEdit);
-        } else {
-            formHtml = getPronajimatelForm(type, data, isEdit);
-        }
-        
-        mainContent.innerHTML = formHtml;
-        
-        // Přidat event listener pro formulář
-        const form = document.getElementById('pronajimatel-form');
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            saveForm(type, id);
-        });
-    }
-
-    function getPronajimatelForm(type, data, isEdit) {
-        const title = isEdit ? 'Upravit pronajímatele' : 'Nový pronajímatel';
-        
-        // Společná pole pro všechny typy
-        let commonFields = `
-            <input type="hidden" name="id" value="${data.id || ''}">
-            <input type="hidden" name="typ_subjektu" value="${type}">
-            <input type="hidden" name="role" value="pronajimatel">
-        `;
-        
-        // Specifická pole podle typu
-        let specificFields = '';
-        
-        switch(type) {
-            case 'osoba':
-                specificFields = getOsobaFields(data);
-                break;
-            case 'osvc':
-                specificFields = getOsvcFields(data);
-                break;
-            case 'firma':
-            case 'stat':
-                specificFields = getFirmaFields(data);
-                break;
-            case 'spolek':
-                specificFields = getSpolekFields(data);
-                break;
-        }
-        
-        return `
-            <div class="page-header">
-                <h1 class="page-title">${title} - ${getTypeName(type)}</h1>
-            </div>
-            
-            <div class="card">
-                <form id="pronajimatel-form" class="form">
-                    <div class="form-body">
-                        ${commonFields}
-                        ${specificFields}
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-secondary" onclick="window.history.back()">
-                            Zrušit
-                        </button>
-                        <button type="submit" class="btn btn-primary">
-                            ${isEdit ? 'Uložit změny' : 'Vytvořit'}
-                        </button>
-                    </div>
-                </form>
-            </div>
-        `;
-    }
-
-    function getOsobaFields(data) {
         return `
             <div class="form-group-header">Osobní údaje</div>
             
@@ -250,92 +429,25 @@ window.Pronajimatel = (function() {
                 <div class="form-col-3">
                     <div class="form-field">
                         <label class="form-label">Titul před</label>
-                        <input type="text" name="titul_pred" class="form-control" value="${data.titul_pred || ''}">
+                        <input type="text" name="titul_pred" class="form-control" value="${data.titul_pred || ''}" ${disabled}>
                     </div>
                 </div>
                 <div class="form-col-3">
                     <div class="form-field">
-                        <label class="form-label required">Jméno</label>
-                        <input type="text" name="jmeno" class="form-control" value="${data.jmeno || ''}" required>
+                        <label class="form-label ${!isView ? 'required' : ''}">Jméno</label>
+                        <input type="text" name="jmeno" class="form-control" value="${data.jmeno || ''}" ${required} ${disabled}>
                     </div>
                 </div>
                 <div class="form-col-3">
                     <div class="form-field">
-                        <label class="form-label required">Příjmení</label>
-                        <input type="text" name="prijmeni" class="form-control" value="${data.prijmeni || ''}" required>
-                    </div>
-                </div>
-                <div class="form-col-3">
-                    <div class="form-field">
-                        <label class="form-label">Titul za</label>
-                        <input type="text" name="titul_za" class="form-control" value="${data.titul_za || ''}">
-                    </div>
-                </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-col-4">
-                    <div class="form-field">
-                        <label class="form-label required">Datum narození</label>
-                        <input type="date" name="datum_narozeni" class="form-control" value="${data.datum_narozeni || ''}" required>
-                    </div>
-                </div>
-                <div class="form-col-4">
-                    <div class="form-field">
-                        <label class="form-label required">Typ dokladu totožnosti</label>
-                        <div class="form-control-wrapper">
-                            <select name="typ_dokladu" class="form-control" required>
-                                <option value="">Vyberte...</option>
-                                <option value="op" ${data.typ_dokladu === 'op' ? 'selected' : ''}>Občanský průkaz</option>
-                                <option value="pas" ${data.typ_dokladu === 'pas' ? 'selected' : ''}>Pas</option>
-                                <option value="rp" ${data.typ_dokladu === 'rp' ? 'selected' : ''}>Řidičský průkaz</option>
-                            </select>
-                            <span class="form-icon">▼</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-col-4">
-                    <div class="form-field">
-                        <label class="form-label required">Číslo dokladu totožnosti</label>
-                        <input type="text" name="cislo_dokladu" class="form-control" value="${data.cislo_dokladu || ''}" required>
-                    </div>
-                </div>
-            </div>
-            
-            ${getContactFields(data)}
-            ${getBankFields(data)}
-            ${getLoginFields(data)}
-            ${getZastupceSelect(data)}
-        `;
-    }
-
-    function getOsvcFields(data) {
-        return `
-            <div class="form-group-header">Osobní údaje</div>
-            
-            <div class="form-row">
-                <div class="form-col-3">
-                    <div class="form-field">
-                        <label class="form-label">Titul před</label>
-                        <input type="text" name="titul_pred" class="form-control" value="${data.titul_pred || ''}">
-                    </div>
-                </div>
-                <div class="form-col-3">
-                    <div class="form-field">
-                        <label class="form-label required">Jméno</label>
-                        <input type="text" name="jmeno" class="form-control" value="${data.jmeno || ''}" required>
-                    </div>
-                </div>
-                <div class="form-col-3">
-                    <div class="form-field">
-                        <label class="form-label required">Příjmení</label>
-                        <input type="text" name="prijmeni" class="form-control" value="${data.prijmeni || ''}" required>
+                        <label class="form-label ${!isView ? 'required' : ''}">Příjmení</label>
+                        <input type="text" name="prijmeni" class="form-control" value="${data.prijmeni || ''}" ${required} ${disabled}>
                     </div>
                 </div>
                 <div class="form-col-3">
                     <div class="form-field">
                         <label class="form-label">Titul za</label>
-                        <input type="text" name="titul_za" class="form-control" value="${data.titul_za || ''}">
+                        <input type="text" name="titul_za" class="form-control" value="${data.titul_za || ''}" ${disabled}>
                     </div>
                 </div>
             </div>
@@ -343,21 +455,21 @@ window.Pronajimatel = (function() {
             <div class="form-row">
                 <div class="form-col-3">
                     <div class="form-field">
-                        <label class="form-label required">IČO</label>
-                        <input type="text" name="ico" class="form-control" value="${data.ico || ''}" pattern="[0-9]{8}" required>
+                        <label class="form-label ${!isView ? 'required' : ''}">IČO</label>
+                        <input type="text" name="ico" class="form-control" value="${data.ico || ''}" pattern="[0-9]{8}" ${required} ${disabled}>
                         <span class="form-help">Doplnit z ARES</span>
                     </div>
                 </div>
                 <div class="form-col-3">
                     <div class="form-field">
-                        <label class="form-label required">DIČ</label>
-                        <input type="text" name="dic" class="form-control" value="${data.dic || ''}" required>
+                        <label class="form-label ${!isView ? 'required' : ''}">DIČ</label>
+                        <input type="text" name="dic" class="form-control" value="${data.dic || ''}" ${required} ${disabled}>
                     </div>
                 </div>
                 <div class="form-col-3">
                     <div class="form-field">
-                        <label class="form-label required">Datum narození</label>
-                        <input type="date" name="datum_narozeni" class="form-control" value="${data.datum_narozeni || ''}" required>
+                        <label class="form-label ${!isView ? 'required' : ''}">Datum narození</label>
+                        <input type="date" name="datum_narozeni" class="form-control" value="${data.datum_narozeni || ''}" ${required} ${disabled}>
                     </div>
                 </div>
             </div>
@@ -365,9 +477,9 @@ window.Pronajimatel = (function() {
             <div class="form-row">
                 <div class="form-col-4">
                     <div class="form-field">
-                        <label class="form-label required">Typ dokladu totožnosti</label>
+                        <label class="form-label ${!isView ? 'required' : ''}">Typ dokladu totožnosti</label>
                         <div class="form-control-wrapper">
-                            <select name="typ_dokladu" class="form-control" required>
+                            <select name="typ_dokladu" class="form-control" ${required} ${disabled}>
                                 <option value="">Vyberte...</option>
                                 <option value="op" ${data.typ_dokladu === 'op' ? 'selected' : ''}>Občanský průkaz</option>
                                 <option value="pas" ${data.typ_dokladu === 'pas' ? 'selected' : ''}>Pas</option>
@@ -379,28 +491,31 @@ window.Pronajimatel = (function() {
                 </div>
                 <div class="form-col-4">
                     <div class="form-field">
-                        <label class="form-label required">Číslo dokladu totožnosti</label>
-                        <input type="text" name="cislo_dokladu" class="form-control" value="${data.cislo_dokladu || ''}" required>
+                        <label class="form-label ${!isView ? 'required' : ''}">Číslo dokladu totožnosti</label>
+                        <input type="text" name="cislo_dokladu" class="form-control" value="${data.cislo_dokladu || ''}" ${required} ${disabled}>
                     </div>
                 </div>
             </div>
             
-            ${getContactFields(data)}
-            ${getBankFields(data)}
-            ${getLoginFields(data)}
-            ${getZastupceSelect(data)}
+            ${getContactFields(data, isView)}
+            ${getBankFields(data, isView)}
+            ${getLoginFields(data, isView)}
+            ${getZastupceSelect(data, false, isView)}
         `;
     }
 
-    function getFirmaFields(data) {
+    function getFirmaFields(data, isView = false) {
+        const disabled = isView ? 'disabled' : '';
+        const required = isView ? '' : 'required';
+        
         return `
             <div class="form-group-header">Údaje o firmě</div>
             
             <div class="form-row">
                 <div class="form-col-12">
                     <div class="form-field">
-                        <label class="form-label required">Název společnosti</label>
-                        <input type="text" name="nazev" class="form-control" value="${data.nazev || ''}" required>
+                        <label class="form-label ${!isView ? 'required' : ''}">Název společnosti</label>
+                        <input type="text" name="nazev" class="form-control" value="${data.nazev || ''}" ${required} ${disabled}>
                     </div>
                 </div>
             </div>
@@ -408,34 +523,37 @@ window.Pronajimatel = (function() {
             <div class="form-row">
                 <div class="form-col-6">
                     <div class="form-field">
-                        <label class="form-label required">IČO</label>
-                        <input type="text" name="ico" class="form-control" value="${data.ico || ''}" pattern="[0-9]{8}" required>
+                        <label class="form-label ${!isView ? 'required' : ''}">IČO</label>
+                        <input type="text" name="ico" class="form-control" value="${data.ico || ''}" pattern="[0-9]{8}" ${required} ${disabled}>
                         <span class="form-help">Doplnit z ARES</span>
                     </div>
                 </div>
                 <div class="form-col-6">
                     <div class="form-field">
                         <label class="form-label">DIČ</label>
-                        <input type="text" name="dic" class="form-control" value="${data.dic || ''}">
+                        <input type="text" name="dic" class="form-control" value="${data.dic || ''}" ${disabled}>
                     </div>
                 </div>
             </div>
             
-            ${getContactFields(data)}
-            ${getBankFields(data)}
-            ${getZastupceSelect(data, true)}
+            ${getContactFields(data, isView)}
+            ${getBankFields(data, isView)}
+            ${getZastupceSelect(data, true, isView)}
         `;
     }
 
-    function getSpolekFields(data) {
+    function getSpolekFields(data, isView = false) {
+        const disabled = isView ? 'disabled' : '';
+        const required = isView ? '' : 'required';
+        
         return `
             <div class="form-group-header">Údaje o spolku/skupině</div>
             
             <div class="form-row">
                 <div class="form-col-12">
                     <div class="form-field">
-                        <label class="form-label required">Název spolku/skupiny</label>
-                        <input type="text" name="nazev" class="form-control" value="${data.nazev || ''}" required>
+                        <label class="form-label ${!isView ? 'required' : ''}">Název spolku/skupiny</label>
+                        <input type="text" name="nazev" class="form-control" value="${data.nazev || ''}" ${required} ${disabled}>
                     </div>
                 </div>
             </div>
@@ -444,101 +562,37 @@ window.Pronajimatel = (function() {
                 <div class="form-col-6">
                     <div class="form-field">
                         <label class="form-label">IČO</label>
-                        <input type="text" name="ico" class="form-control" value="${data.ico || ''}" pattern="[0-9]{8}">
+                        <input type="text" name="ico" class="form-control" value="${data.ico || ''}" pattern="[0-9]{8}" ${disabled}>
                         <span class="form-help">Je možné ostatní doplnit z ARES?</span>
                     </div>
                 </div>
                 <div class="form-col-6">
                     <div class="form-field">
                         <label class="form-label">DIČ</label>
-                        <input type="text" name="dic" class="form-control" value="${data.dic || ''}">
+                        <input type="text" name="dic" class="form-control" value="${data.dic || ''}" ${disabled}>
                     </div>
                 </div>
             </div>
             
-            ${getContactFields(data)}
-            ${getBankFields(data)}
-            ${getZastupceSelect(data, true)}
+            ${getContactFields(data, isView)}
+            ${getBankFields(data, isView)}
+            ${getZastupceSelect(data, true, isView)}
         `;
     }
 
-    function getContactFields(data) {
-        return `
-            <div class="form-group-header">Kontaktní údaje</div>
-            
-            <div class="form-row">
-                <div class="form-col-3">
-                    <div class="form-field">
-                        <label class="form-label required">Stát</label>
-                        <div class="form-control-wrapper">
-                            <select name="stat" class="form-control" required>
-                                <option value="CZ" ${data.stat === 'CZ' ? 'selected' : ''}>Česká republika</option>
-                                <option value="SK" ${data.stat === 'SK' ? 'selected' : ''}>Slovensko</option>
-                                <option value="AT" ${data.stat === 'AT' ? 'selected' : ''}>Rakousko</option>
-                                <option value="DE" ${data.stat === 'DE' ? 'selected' : ''}>Německo</option>
-                                <option value="PL" ${data.stat === 'PL' ? 'selected' : ''}>Polsko</option>
-                            </select>
-                            <span class="form-icon">▼</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-col-3">
-                    <div class="form-field">
-                        <label class="form-label required">PSČ</label>
-                        <input type="text" name="psc" class="form-control" value="${data.psc || ''}" required>
-                    </div>
-                </div>
-                <div class="form-col-6">
-                    <div class="form-field">
-                        <label class="form-label required">Město</label>
-                        <input type="text" name="mesto" class="form-control" value="${data.mesto || ''}" required>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-col-8">
-                    <div class="form-field">
-                        <label class="form-label required">Ulice</label>
-                        <input type="text" name="ulice" class="form-control" value="${data.ulice || ''}" required>
-                    </div>
-                </div>
-                <div class="form-col-4">
-                    <div class="form-field">
-                        <label class="form-label required">Číslo popisné</label>
-                        <input type="text" name="cislo_popisne" class="form-control" value="${data.cislo_popisne || ''}" required>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-col-6">
-                    <div class="form-field">
-                        <label class="form-label required">Telefon</label>
-                        <input type="tel" name="telefon" class="form-control" value="${data.telefon || ''}" required>
-                        <span class="form-help">Předvolba podle státu s možností změny</span>
-                    </div>
-                </div>
-                <div class="form-col-6">
-                    <div class="form-field">
-                        <label class="form-label required">Email</label>
-                        <input type="email" name="email" class="form-control" value="${data.email || ''}" required>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    function getBankFields(data) {
+    function getBankFields(data, isView = false) {
+        const disabled = isView ? 'disabled' : '';
+        const required = isView ? '' : 'required';
+        
         return `
             <div class="form-group-header">Bankovní údaje</div>
             
             <div class="form-row">
                 <div class="form-col-12">
                     <div class="form-field">
-                        <label class="form-label required">Číslo účtu / kód banky</label>
+                        <label class="form-label ${!isView ? 'required' : ''}">Číslo účtu / kód banky</label>
                         <input type="text" name="bankovni_ucet" class="form-control" value="${data.bankovni_ucet || ''}" 
-                               placeholder="123456789/0800" required>
+                               placeholder="123456789/0800" ${required} ${disabled}>
                         <span class="form-help">Bude obsahovat čísla, pomlčky a lomítka</span>
                     </div>
                 </div>
@@ -546,29 +600,34 @@ window.Pronajimatel = (function() {
         `;
     }
 
-    function getLoginFields(data) {
+    function getLoginFields(data, isView = false) {
+        const disabled = isView ? 'disabled' : '';
+        const required = isView ? '' : 'required';
+        
         return `
             <div class="form-group-header">Přihlašovací údaje</div>
             
             <div class="form-row">
                 <div class="form-col-6">
                     <div class="form-field">
-                        <label class="form-label required">Přihlašovací jméno</label>
-                        <input type="text" name="login" class="form-control" value="${data.login || ''}" required>
+                        <label class="form-label ${!isView ? 'required' : ''}">Přihlašovací jméno</label>
+                        <input type="text" name="login" class="form-control" value="${data.login || ''}" ${required} ${disabled}>
                     </div>
                 </div>
                 <div class="form-col-6">
                     <div class="form-field">
-                        <label class="form-label required">Heslo</label>
-                        <input type="password" name="heslo" class="form-control" value="${data.heslo || ''}" required>
+                        <label class="form-label ${!isView ? 'required' : ''}">Heslo</label>
+                        <input type="${isView ? 'text' : 'password'}" name="heslo" class="form-control" value="${data.heslo || ''}" ${required} ${disabled}>
                     </div>
                 </div>
             </div>
         `;
     }
 
-    function getZastupceSelect(data, required = false) {
+    function getZastupceSelect(data, required = false, isView = false) {
         const zastupci = getZastupciList();
+        const disabled = isView ? 'disabled' : '';
+        const req = isView ? '' : (required ? 'required' : '');
         
         return `
             <div class="form-group-header">Zástupce</div>
@@ -576,9 +635,9 @@ window.Pronajimatel = (function() {
             <div class="form-row">
                 <div class="form-col-12">
                     <div class="form-field">
-                        <label class="form-label ${required ? 'required' : ''}">Zástupce</label>
+                        <label class="form-label ${!isView && required ? 'required' : ''}">Zástupce</label>
                         <div class="form-control-wrapper">
-                            <select name="zastupce_id" class="form-control" ${required ? 'required' : ''}>
+                            <select name="zastupce_id" class="form-control" ${req} ${disabled}>
                                 <option value="">Bez zástupce</option>
                                 ${zastupci.map(z => `
                                     <option value="${z.id}" ${data.zastupce_id === z.id ? 'selected' : ''}>
@@ -595,8 +654,16 @@ window.Pronajimatel = (function() {
         `;
     }
 
-    function getZastupceForm(data, isEdit) {
-        const title = isEdit ? 'Upravit zástupce' : 'Nový zástupce';
+    function getZastupceForm(data, isEdit, isView = false) {
+        let title = 'Nový zástupce';
+        if (isView) {
+            title = 'Detail zástupce';
+        } else if (isEdit) {
+            title = 'Upravit zástupce';
+        }
+        
+        const disabled = isView ? 'disabled' : '';
+        const required = isView ? '' : 'required';
         
         return `
             <div class="page-header">
@@ -616,9 +683,9 @@ window.Pronajimatel = (function() {
                         <div class="form-row">
                             <div class="form-col-6">
                                 <div class="form-field">
-                                    <label class="form-label required">Typ oprávnění</label>
+                                    <label class="form-label ${!isView ? 'required' : ''}">Typ oprávnění</label>
                                     <div class="form-control-wrapper">
-                                        <select name="typ_opravneni" class="form-control" required>
+                                        <select name="typ_opravneni" class="form-control" ${required} ${disabled}>
                                             <option value="cteni_vybranych" ${data.typ_opravneni === 'cteni_vybranych' ? 'selected' : ''}>
                                                 Čtení vybraných informací
                                             </option>
@@ -635,9 +702,9 @@ window.Pronajimatel = (function() {
                             </div>
                             <div class="form-col-6">
                                 <div class="form-field">
-                                    <label class="form-label required">Koho zastupuje</label>
+                                    <label class="form-label ${!isView ? 'required' : ''}">Koho zastupuje</label>
                                     <div class="form-control-wrapper">
-                                        <select name="zastupuje_id" class="form-control" required>
+                                        <select name="zastupuje_id" class="form-control" ${required} ${disabled}>
                                             <option value="">Vyberte...</option>
                                             ${getPronajimatelList().map(p => `
                                                 <option value="${p.id}" ${data.zastupuje_id === p.id ? 'selected' : ''}>
@@ -657,19 +724,19 @@ window.Pronajimatel = (function() {
                             <div class="form-col-3">
                                 <div class="form-field">
                                     <label class="form-label">Titul</label>
-                                    <input type="text" name="titul" class="form-control" value="${data.titul || ''}">
+                                    <input type="text" name="titul" class="form-control" value="${data.titul || ''}" ${disabled}>
                                 </div>
                             </div>
                             <div class="form-col-3">
                                 <div class="form-field">
-                                    <label class="form-label required">Jméno</label>
-                                    <input type="text" name="jmeno" class="form-control" value="${data.jmeno || ''}" required>
+                                    <label class="form-label ${!isView ? 'required' : ''}">Jméno</label>
+                                    <input type="text" name="jmeno" class="form-control" value="${data.jmeno || ''}" ${required} ${disabled}>
                                 </div>
                             </div>
                             <div class="form-col-3">
                                 <div class="form-field">
-                                    <label class="form-label required">Příjmení</label>
-                                    <input type="text" name="prijmeni" class="form-control" value="${data.prijmeni || ''}" required>
+                                    <label class="form-label ${!isView ? 'required' : ''}">Příjmení</label>
+                                    <input type="text" name="prijmeni" class="form-control" value="${data.prijmeni || ''}" ${required} ${disabled}>
                                 </div>
                             </div>
                         </div>
@@ -677,15 +744,15 @@ window.Pronajimatel = (function() {
                         <div class="form-row">
                             <div class="form-col-4">
                                 <div class="form-field">
-                                    <label class="form-label required">Datum narození</label>
-                                    <input type="date" name="datum_narozeni" class="form-control" value="${data.datum_narozeni || ''}" required>
+                                    <label class="form-label ${!isView ? 'required' : ''}">Datum narození</label>
+                                    <input type="date" name="datum_narozeni" class="form-control" value="${data.datum_narozeni || ''}" ${required} ${disabled}>
                                 </div>
                             </div>
                             <div class="form-col-4">
                                 <div class="form-field">
-                                    <label class="form-label required">Typ dokladu totožnosti</label>
+                                    <label class="form-label ${!isView ? 'required' : ''}">Typ dokladu totožnosti</label>
                                     <div class="form-control-wrapper">
-                                        <select name="typ_dokladu" class="form-control" required>
+                                        <select name="typ_dokladu" class="form-control" ${required} ${disabled}>
                                             <option value="">Vyberte...</option>
                                             <option value="op" ${data.typ_dokladu === 'op' ? 'selected' : ''}>Občanský průkaz</option>
                                             <option value="pas" ${data.typ_dokladu === 'pas' ? 'selected' : ''}>Pas</option>
@@ -697,31 +764,36 @@ window.Pronajimatel = (function() {
                             </div>
                             <div class="form-col-4">
                                 <div class="form-field">
-                                    <label class="form-label required">Číslo dokladu totožnosti</label>
-                                    <input type="text" name="cislo_dokladu" class="form-control" value="${data.cislo_dokladu || ''}" required>
+                                    <label class="form-label ${!isView ? 'required' : ''}">Číslo dokladu totožnosti</label>
+                                    <input type="text" name="cislo_dokladu" class="form-control" value="${data.cislo_dokladu || ''}" ${required} ${disabled}>
                                 </div>
                             </div>
                         </div>
                         
-                        ${getContactFields(data)}
-                        ${getBankFields(data)}
-                        ${getLoginFields(data)}
+                        ${getContactFields(data, isView)}
+                        ${getBankFields(data, isView)}
+                        ${getLoginFields(data, isView)}
                     </div>
                     
                     <div class="form-actions">
                         <button type="button" class="btn btn-secondary" onclick="window.history.back()">
-                            Zrušit
+                            Zpět
                         </button>
-                        <button type="submit" class="btn btn-primary">
-                            ${isEdit ? 'Uložit změny' : 'Vytvořit'}
-                        </button>
+                        ${!isView ? `
+                            <button type="submit" class="btn btn-primary">
+                                ${isEdit ? 'Uložit změny' : 'Vytvořit'}
+                            </button>
+                        ` : `
+                            <button type="button" class="btn btn-primary" onclick="Pronajimatel.showForm('zastupce', '${data.id}')">
+                                Upravit
+                            </button>
+                        `}
                     </div>
                 </form>
             </div>
         `;
     }
 
-    // Zbytek funkcí zůstává stejný...
     function saveForm(type, id) {
         const form = document.getElementById('pronajimatel-form');
         const formData = new FormData(form);
@@ -783,14 +855,6 @@ window.Pronajimatel = (function() {
 
     function getZastupciList() {
         return data.zastupce.filter(z => z.typ_zastoupeni === 'pronajimatel');
-    }
-
-    function view(id) {
-        const item = getItemById(id);
-        if (!item) return;
-        
-        // TODO: Implementovat detailní zobrazení
-        alert(`Zobrazení detailu pro ID: ${id}\n${JSON.stringify(item, null, 2)}`);
     }
 
     function archive(id) {
