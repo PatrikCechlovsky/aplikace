@@ -147,25 +147,26 @@ window.Nastaveni = (function() {
         `;
     }
     
+
     // Nastavení tématu
     function setTheme(themeId) {
-        // Odstraň všechny theme třídy
-        document.body.className = document.body.className.replace(/theme-\w+/g, '');
-        
-        // Přidej novou
-        document.body.classList.add(`theme-${themeId}`);
-        
-        // Ulož do state
-        AppState.set('theme', themeId);
-        
-        // Aktualizuj UI
-        document.querySelectorAll('.theme-option').forEach(option => {
-            option.classList.remove('active');
-        });
-        event.currentTarget.classList.add('active');
-        
-        App.showToast('Téma změněno', 'success');
-    }
+     // Odstraň všechny theme třídy
+     document.body.className = document.body.className.replace(/theme-\w+/g, '');
+    
+     // Přidej novou
+     document.body.classList.add(`theme-${themeId}`);
+    
+     // Ulož do localStorage
+     localStorage.setItem('appTheme', themeId);  // <-- změna zde
+    
+     // Aktualizuj UI
+     document.querySelectorAll('.theme-option').forEach(option => {
+        option.classList.remove('active');
+     });
+     event.currentTarget.classList.add('active');
+    
+     App.showToast('Téma změněno', 'success');
+}
     
     // Přepnutí kompaktního režimu
     function toggleCompactMode() {
