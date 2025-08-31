@@ -5,11 +5,15 @@
     box-sizing: border-box;
 }
 
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-color: #f5f5f5;
-    height: 100vh;
-    overflow: hidden;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
 }
 
 /* Hlavní kontejner aplikace */
@@ -24,11 +28,11 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 60px;
-    background-color: #1a1d23;
-    color: white;
+    height: var(--header-height);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
     padding: 0 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-bottom: 1px solid var(--border-primary);
     z-index: 1000;
 }
 
@@ -40,7 +44,7 @@ body {
 .brand-link {
     display: flex;
     align-items: center;
-    color: white;
+    color: var(--brand-primary);
     text-decoration: none;
     font-size: 18px;
     font-weight: 600;
@@ -59,11 +63,14 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
+    flex: 1;
+    justify-content: space-between;
+    margin-left: 20px;
 }
 
 .breadcrumb {
     font-size: 14px;
-    color: #999;
+    color: var(--text-secondary);
 }
 
 .header-actions {
@@ -81,75 +88,82 @@ body {
 
 /* Sidebar */
 .sidebar {
-    width: 250px;
-    background-color: #2c3038;
-    color: white;
+    width: var(--sidebar-width);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
     display: flex;
     flex-direction: column;
     overflow-y: auto;
     transition: transform 0.3s ease;
+    border-right: 1px solid var(--border-primary);
 }
 
 .navigation {
     flex: 1;
-    padding: 20px 0;
+    padding: 10px;
 }
 
 .sidebar-footer {
     padding: 20px;
     text-align: center;
-    border-top: 1px solid #3a3f4b;
-    color: #666;
+    border-top: 1px solid var(--border-primary);
+    color: var(--text-muted);
 }
 
 /* Hlavní obsah */
 .main-content {
     flex: 1;
-    background-color: #f5f5f5;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     overflow-y: auto;
 }
 
 .content {
-    padding: 20px;
+    padding: 0;
+    background-color: var(--bg-primary);
+    min-height: 100%;
 }
 
 /* Tlačítka */
 .btn {
     padding: 8px 16px;
     border: none;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
     font-size: 14px;
-    transition: all 0.2s;
+    transition: all var(--transition-fast);
+    color: var(--text-primary);
 }
 
 .btn-primary {
-    background-color: #007bff;
+    background-color: var(--brand-primary);
     color: white;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
+    background-color: var(--brand-secondary);
 }
 
 .btn-secondary {
-    background-color: #6c757d;
-    color: white;
+    background-color: var(--surface-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-primary);
 }
 
 .btn-secondary:hover {
-    background-color: #545b62;
+    background-color: var(--surface-hover);
+    border-color: var(--border-secondary);
 }
 
 .btn-ghost {
     background: transparent;
-    color: #999;
+    color: var(--text-secondary);
     padding: 8px;
 }
 
 .btn-ghost:hover {
-    color: white;
-    background-color: rgba(255,255,255,0.1);
+    color: var(--text-primary);
+    background-color: var(--surface-secondary);
 }
 
 /* Overlay pro mobilní verzi */
@@ -168,7 +182,7 @@ body {
 @media (max-width: 768px) {
     .sidebar {
         position: fixed;
-        top: 60px;
+        top: var(--header-height);
         left: 0;
         bottom: 0;
         transform: translateX(-100%);
