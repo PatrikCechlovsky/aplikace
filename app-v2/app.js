@@ -12,17 +12,22 @@ window.App = (function() {
             // 2. Vykreslení navigace
             if (window.Sidebar && Sidebar.render) Sidebar.render();
 
-            // 3. Zobrazit hlavní panel
-            if (window.Dashboard && Dashboard.render) Dashboard.render();
+            // 3. Zobrazit hlavní panel při startu
+            if (window.Dashboard && Dashboard.render) {
+                Dashboard.render();
+            }
 
             // 4. Nastavení aktivní položky v menu
             setActiveMenuItem();
 
             // 5. Inicializace routeru
             if (window.Router && Router.handleRoute) {
-                Router.handleRoute();
-            } else {
-                console.error('✗ Router chybí!');
+                // Pokud není hash, nastav dashboard
+                if (!window.location.hash) {
+                    window.location.hash = '#dashboard';
+                } else {
+                    Router.handleRoute();
+                }
             }
 
         } catch (error) {
@@ -46,10 +51,11 @@ window.App = (function() {
     // Nastavení aktivní položky menu podle URL
     function setActiveMenuItem() {
         const hash = window.location.hash.slice(1) || 'dashboard';
-        const menuItems = document.querySelectorAll('.menu-item');
+        const menuItems = document.querySelectorAll('.nav-item');
 
         menuItems.forEach(item => {
-            if (item.getAttribute('href') === `#${hash}`) {
+            const action = item.getAttribute('data-action');
+            if (action === hash) {
                 item.classList.add('active');
             } else {
                 item.classList.remove('active');
@@ -91,7 +97,6 @@ window.App = (function() {
 
     // Event listenery
     window.addEventListener('resize', () => {
-        console.log('Změna velikosti okna');
         handleResponsive();
     });
 
