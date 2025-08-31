@@ -17,49 +17,52 @@
     <link rel="stylesheet" href="css/layout-fixes.css">
 </head>
 <body>
-    <div id="navigation"></div>
-    <div id="main-content"></div>
     <div class="app-container">
-        <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <div class="brand">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <a href="/" class="brand-link">
                     <span class="brand-icon">🏠</span>
-                    <span>Aplikace pronajímatel</span>
-                </div>
+                    <span class="brand-name">Aplikace pronajímatel</span>
+                </a>
             </div>
-            <nav class="navigation" id="navigation">
-                <!-- Menu se generuje zde -->
-            </nav>
-            <div class="sidebar-footer">
-                <small>v2.0 - Patrik Cechlovský</small>
-            </div>
-        </aside>
-
-        <!-- Hlavní oblast -->
-        <main class="main">
-            <header class="header">
-                <button class="menu-toggle" id="menuToggle">☰</button>
+            <div class="header-right">
                 <div class="breadcrumb" id="breadcrumb">
-                    <span class="breadcrumb-item">Hlavní panel</span>
+                    <span>Hlavní panel</span>
                 </div>
                 <div class="header-actions">
                     <button class="btn btn-ghost" id="btnBack" style="display:none">← Zpět</button>
                     <button class="btn btn-secondary" id="btnReset">Zrušit filtr</button>
                     <button class="btn btn-primary" id="btnAdd">+ Přidat záznam</button>
-                    <button class="btn btn-ghost">🔍</button>
-                    <button class="btn btn-ghost">🔔</button>
-                    <button class="btn btn-ghost">👤</button>
+                    <button class="btn btn-ghost" title="Hledat">🔍</button>
+                    <button class="btn btn-ghost" title="Notifikace">🔔</button>
+                    <button class="btn btn-ghost" title="Můj účet">👤</button>
                 </div>
-            </header>
-
-            <!-- HLAVNÍ OBSAH -->
-            <div class="content" id="main-content">
-                <!-- Sem se má vykreslovat obsah modulů -->
             </div>
-        </main>
+        </header>
+
+        <!-- Main Layout Container -->
+        <div class="main-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <nav class="navigation" id="navigation">
+                    <!-- Menu se generuje zde -->
+                </nav>
+                <div class="sidebar-footer">
+                    <small>v2.0 - Patrik Cechlovský</small>
+                </div>
+            </aside>
+
+            <!-- Hlavní oblast -->
+            <main class="main-content">
+                <div class="content" id="main-content">
+                    <!-- Sem se vykresluje obsah modulů -->
+                </div>
+            </main>
+        </div>
     </div>
 
+    <!-- Overlay pro mobilní verzi -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <!-- Modální okno -->
@@ -73,22 +76,14 @@
         </div>
     </div>
 
-    <!-- JavaScript soubory - správné pořadí -->
-
-    <!-- 1. Konfigurace a základní moduly -->
+    <!-- JavaScript soubory -->
     <script src="js/config.js"></script>
     <script src="js/state.js"></script>
-
-    <!-- 2. Komponenty UI -->
     <script src="js/components/sidebar.js"></script>
     <script src="js/components/modal.js"></script>
     <script src="js/components/forms.js"></script>
     <script src="js/components/forms-extended.js"></script>
-
-    <!-- 3. Router musí být před všemi moduly! -->
     <script src="js/router.js"></script>
-
-    <!-- 4. Všechny moduly v pořadí -->
     <script src="js/modules/modules-tiles.js"></script>
     <script src="js/modules/pronajimatel.js"></script>
     <script src="js/modules/najemnici.js"></script>
@@ -106,8 +101,6 @@
     <script src="js/modules/nastaveni.js"></script>
     <script src="js/modules/muj-ucet.js"></script>
     <script src="js/modules/dashboard-tiles.js"></script>
-
-    <!-- 5. Hlavní aplikační soubor -->
     <script src="app.js"></script>
     <script src="js/app-forms-integration.js"></script>
 </body>
