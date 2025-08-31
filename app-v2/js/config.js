@@ -238,7 +238,7 @@ window.APP_CONFIG = {
             description: 'Nastavení aplikace',
             types: [
                 { id: 'all', name: 'Obecné', icon: '⚙️' },
-                 { id: 'vzhled', name: 'Vzhled', icon: '🎨' },
+                { id: 'vzhled', name: 'Vzhled', icon: '🎨' },
                 { id: 'ciselniky', name: 'Číselníky', icon: '📋' },
                 { id: 'sablony', name: 'Šablony', icon: '📄' },
                 { id: 'zalohovani', name: 'Zálohování', icon: '💾' },
