@@ -26,7 +26,7 @@ window.Sidebar = (function() {
                             ${item.types.map(type => `
                                 <button class="nav-item nav-child" data-action="${item.id}/${type.id}">
                                     <span class="nav-label">
-                                        ${type.name}
+                                        <span>${type.name}</span>
                                         ${type.id !== 'all' ? `<span class="nav-hashtag">#${type.id}</span>` : ''}
                                     </span>
                                 </button>
@@ -56,12 +56,23 @@ window.Sidebar = (function() {
                 
                 // Toggle expand/collapse
                 document.querySelectorAll('.nav-section').forEach(sec => {
-                    if (sec !== section) sec.classList.remove('expanded');
+                    if (sec !== section) {
+                        sec.classList.remove('expanded');
+                        const children = sec.querySelector('.nav-children');
+                        if (children) children.style.display = 'none';
+                    }
                 });
-                section.classList.toggle('expanded');
                 
-                activeModule = section.classList.contains('expanded') ? moduleId : null;
-                render();
+                const children = section.querySelector('.nav-children');
+                if (section.classList.contains('expanded')) {
+                    section.classList.remove('expanded');
+                    if (children) children.style.display = 'none';
+                    activeModule = null;
+                } else {
+                    section.classList.add('expanded');
+                    if (children) children.style.display = 'block';
+                    activeModule = moduleId;
+                }
                 
                 // Navigate to module
                 window.location.hash = moduleId;
@@ -69,13 +80,6 @@ window.Sidebar = (function() {
         });
 
         nav.querySelectorAll('.nav-item:not(.nav-parent)').forEach(btn => {
-            btn.onclick = function(e) {
-                const action = btn.getAttribute('data-action');
-                window.location.hash = action;
-            };
-        });
-
-        nav.querySelectorAll('.nav-child').forEach(btn => {
             btn.onclick = function(e) {
                 const action = btn.getAttribute('data-action');
                 window.location.hash = action;
