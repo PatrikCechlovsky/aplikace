@@ -1,35 +1,85 @@
-/* Dashboard a dlaždice - moderní vzhled */
+/* Dashboard a dlaždice - tmavý design */
+
+/* Header dashboardu */
+.dashboard-header {
+    padding: 20px;
+}
+
+.dashboard-header h1 {
+    font-size: 24px;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
 
 /* Grid pro dlaždice */
-.tiles-grid {
+.dashboard-tiles, .tiles-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 16px;
-    margin-top: 16px;
+    padding: 0 20px 20px;
 }
 
 /* Hlavní styl dlaždice */
 .tile {
     position: relative;
-    background: rgba(255, 255, 255, 0.02); /* Malinko světlejší než pozadí */
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 12px; /* Zakulacené rohy */
-    padding: 24px;
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 8px;
+    padding: 20px;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.2s ease;
     overflow: hidden;
 }
 
 /* Hover efekt */
 .tile:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.1);
+    background: #1c2128;
+    border-color: #30363d;
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* Tlačítko připnutí - jemnější */
-.tile .pin-button {
+/* Hlavička dlaždice */
+.tile-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #c9d1d9;
+}
+
+.tile-icon {
+    font-size: 24px;
+}
+
+/* Popis */
+.tile-desc {
+    font-size: 13px;
+    color: #8b949e;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+/* Tagy */
+.tile-tags {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.tile-tag {
+    font-size: 11px;
+    color: #58a6ff;
+    background: rgba(88, 166, 255, 0.1);
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+/* Hvězdička pro připnutí */
+.pin-button {
     position: absolute;
     top: 12px;
     right: 12px;
@@ -51,104 +101,15 @@
     background: rgba(255, 255, 255, 0.1);
 }
 
-/* Menší, jemnější hvězdička */
 .pin-icon {
     font-size: 14px;
-    color: #94a3b8;
+    color: #8b949e;
     transition: color 0.2s ease;
 }
 
-.pin-button:hover .pin-icon {
+.pin-button:hover .pin-icon,
+.pin-button.active .pin-icon {
     color: #fbbf24;
-}
-
-.tile.pinned .pin-icon {
-    color: #fbbf24;
-    opacity: 1;
-}
-
-/* Obsah dlaždice */
-.tile-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-bottom: 12px;
-}
-
-.tile-icon {
-    font-size: 28px;
-    margin-bottom: 12px;
-}
-
-.tile-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: #e2e8f0;
-    margin-bottom: 8px;
-}
-
-.tile-description {
-    font-size: 14px;
-    color: #94a3b8;
-    line-height: 1.5;
-}
-
-/* Tagy/hashtagy v dlaždici */
-.tile-tags {
-    display: flex;
-    gap: 8px;
-    margin-top: 12px;
-    flex-wrap: wrap;
-}
-
-.tile-tag {
-    font-size: 12px;
-    color: #64748b;
-    background: rgba(148, 163, 184, 0.1);
-    padding: 4px 8px;
-    border-radius: 4px;
-}
-
-/* Drag & Drop styly */
-.tile.dragging {
-    opacity: 0.5;
-    cursor: grabbing;
-}
-
-.tile.drag-over {
-    border-color: #5292f7;
-    background: rgba(82, 146, 247, 0.05);
-}
-
-/* Různá barevná témata */
-/* Výchozí tmavé téma */
-.theme-dark {
-    --tile-bg: rgba(255, 255, 255, 0.02);
-    --tile-bg-hover: rgba(255, 255, 255, 0.04);
-    --tile-border: rgba(255, 255, 255, 0.06);
-    --tile-border-hover: rgba(255, 255, 255, 0.1);
-}
-
-/* Světlé téma */
-.theme-light .tile {
-    background: rgba(0, 0, 0, 0.02);
-    border-color: rgba(0, 0, 0, 0.08);
-}
-
-.theme-light .tile:hover {
-    background: rgba(0, 0, 0, 0.04);
-    border-color: rgba(0, 0, 0, 0.12);
-}
-
-/* Modrý akcent */
-.theme-blue .tile {
-    background: rgba(82, 146, 247, 0.05);
-    border-color: rgba(82, 146, 247, 0.15);
-}
-
-.theme-blue .tile:hover {
-    background: rgba(82, 146, 247, 0.08);
-    border-color: rgba(82, 146, 247, 0.25);
 }
 
 /* Sekce připnutých položek */
@@ -158,48 +119,20 @@
 
 .pinned-section h2 {
     font-size: 18px;
-    color: #cbd5e1;
-    margin-bottom: 16px;
+    color: #c9d1d9;
+    margin: 20px;
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
 .pinned-section .empty-state {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px dashed rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
+    background: #161b22;
+    border: 1px dashed #30363d;
+    border-radius: 8px;
     padding: 32px;
     text-align: center;
-    color: #64748b;
+    color: #6e7681;
     font-size: 14px;
-}
-/* Přidej toto na konec souboru dashboard.css */
-
-/* Hvězdička pro oblíbené */
-.tile-favorite {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    font-size: 20px;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    opacity: 0.5;
-    z-index: 2;
-}
-
-.tile-favorite:hover {
-    opacity: 1;
-    transform: scale(1.2);
-}
-
-.tile-favorite.active {
-    opacity: 1;
-    color: #FFD700;
-    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
-}
-
-/* Upravit pozici tile pro hvězdičku */
-.module-tile {
-    position: relative;
+    margin: 0 20px;
 }
