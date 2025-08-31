@@ -28,6 +28,7 @@ window.Sidebar = (function() {
                         <div class="nav-children" style="display:${isExpanded ? 'block' : 'none'};">
                             ${item.types.map(type => `
                                 <button class="nav-item nav-child" data-action="${item.id}/${type.id}">
+                                    ${type.icon ? `<span class="nav-icon nav-child-icon">${type.icon}</span>` : ''}
                                     <span class="nav-label">
                                         <span>${type.name}</span>
                                         ${type.id !== 'all' ? `<span class="nav-hashtag">#${type.id}</span>` : ''}
