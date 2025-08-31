@@ -1,39 +1,91 @@
-/* Doplnění stylů pro nové komponenty */
+/* Předchozí obsah... */
 
-/* Formulářové styly */
-.form-group {
-    margin-bottom: 16px;
+/* Toast notifikace */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--surface-secondary);
+    color: var(--text-primary);
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    transform: translateX(400px);
+    transition: transform var(--transition-base);
+    z-index: 1100;
+    border: 1px solid var(--border-primary);
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 4px;
-    font-weight: 500;
-    color: var(--text-secondary);
+.toast.show {
+    transform: translateX(0);
 }
 
-.form-control {
+.toast-success {
+    border-left: 4px solid var(--success);
+}
+
+.toast-error {
+    border-left: 4px solid var(--error);
+}
+
+.toast-warning {
+    border-left: 4px solid var(--warning);
+}
+
+.toast-info {
+    border-left: 4px solid var(--info);
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+}
+
+/* Module header */
+.module-header {
+    padding: 20px;
+    background-color: var(--bg-primary);
+    border-bottom: 1px solid var(--border-primary);
+}
+
+.module-header h1,
+.module-header h2 {
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+/* Data table */
+.data-table {
     width: 100%;
-    padding: 8px 12px;
     background: var(--surface-primary);
     border: 1px solid var(--border-primary);
     border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.data-table th {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    padding: 12px;
+    text-align: left;
+    font-weight: 500;
+    border-bottom: 1px solid var(--border-primary);
+}
+
+.data-table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border-primary);
     color: var(--text-primary);
-    font-size: 14px;
-    transition: all var(--transition-fast);
 }
 
-.form-control:focus {
-    outline: none;
-    border-color: var(--brand-primary);
-    box-shadow: 0 0 0 2px rgba(82, 146, 247, 0.2);
+.data-table tr:last-child td {
+    border-bottom: none;
 }
 
-/* Stavové třídy */
-.empty-state {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--text-muted);
+.data-table tr:hover {
+    background: var(--surface-secondary);
 }
 
 /* Statistiky */
@@ -69,7 +121,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
-    margin-top: 20px;
+    padding: 20px;
 }
 
 .data-card, .property-card {
@@ -77,6 +129,7 @@
     border: 1px solid var(--border-primary);
     border-radius: var(--radius-lg);
     padding: 20px;
+    color: var(--text-primary);
 }
 
 .card-actions {
@@ -93,6 +146,7 @@
     border-radius: var(--radius-xl);
     background: var(--surface-secondary);
     border: 1px solid var(--border-primary);
+    color: var(--text-secondary);
 }
 
 /* Status */
@@ -104,13 +158,19 @@
 }
 
 .status.active {
-    background: rgba(34, 197, 94, 0.1);
-    color: #22c55e;
-    border: 1px solid rgba(34, 197, 94, 0.3);
+    background: rgba(63, 185, 80, 0.1);
+    color: #3fb950;
+    border: 1px solid rgba(63, 185, 80, 0.3);
 }
 
 .status.inactive {
-    background: rgba(239, 68, 68, 0.1);
-    color: #ef4444;
-    border: 1px solid rgba(239, 68, 68, 0.3);
+    background: rgba(248, 81, 73, 0.1);
+    color: #f85149;
+    border: 1px solid rgba(248, 81, 73, 0.3);
+}
+
+/* Module content */
+.module-content {
+    background-color: var(--bg-primary);
+    min-height: calc(100vh - var(--header-height) - 100px);
 }
