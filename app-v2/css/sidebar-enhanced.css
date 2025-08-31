@@ -37,7 +37,6 @@
     width: 100%;
     display: flex;
     align-items: center;
-    gap: 10px;
     padding: 10px 15px;
     background: transparent;
     border: none;
@@ -46,6 +45,7 @@
     cursor: pointer;
     transition: all 0.2s;
     border-radius: 6px;
+    position: relative;
 }
 
 .nav-parent:hover {
@@ -56,7 +56,9 @@
 .chevron {
     font-size: 10px;
     transition: transform 0.2s;
-    width: 16px;
+    width: 12px;
+    margin-right: 8px;
+    display: inline-block;
 }
 
 .nav-section.expanded .chevron {
@@ -68,7 +70,6 @@
     width: 100%;
     display: flex;
     align-items: center;
-    gap: 10px;
     padding: 10px 15px;
     background: transparent;
     border: none;
@@ -96,9 +97,10 @@
 }
 
 .nav-child {
-    padding-left: 45px;
+    padding-left: 40px; /* Zarovnání s textem rodičovské položky */
     font-size: 13px;
     color: #8b949e;
+    position: relative;
 }
 
 .nav-child:hover {
@@ -109,7 +111,9 @@
 .nav-icon {
     font-size: 16px;
     width: 20px;
+    margin-right: 12px;
     text-align: center;
+    display: inline-block;
 }
 
 /* Label */
@@ -117,8 +121,30 @@
     flex: 1;
 }
 
+/* Zarovnání tagů */
+.nav-child .nav-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Hashtag styl */
+.nav-hashtag {
+    color: #6e7681;
+    font-size: 12px;
+    margin-left: auto;
+}
+
 /* Footer sidebaru */
 .sidebar-footer {
     color: #6e7681;
     font-size: 12px;
+}
+
+/* Tečka před položkou (bullet point) */
+.nav-child::before {
+    content: "•";
+    position: absolute;
+    left: 24px;
+    color: #6e7681;
 }
