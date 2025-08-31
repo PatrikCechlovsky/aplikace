@@ -122,6 +122,7 @@ window.Najemnici = (function() {
         return types[type] || type;
     }
 
+    // Najdi funkci showAddDialog a nahraď ji tímto:
     function showAddDialog(preselectedType = 'all') {
         const mainContent = document.getElementById('main-content');
         
@@ -136,11 +137,14 @@ window.Najemnici = (function() {
             showForm(preselectedType, null);
             return;
         }
-
+    
         // Zobrazit výběr typu
         mainContent.innerHTML = `
             <div class="page-header">
-                <h1 class="page-title">Vyberte typ nájemníka</h1>
+                <h1 class="page-title">
+                    <span class="module-icon">👥</span>
+                    Vyberte typ nájemníka
+                </h1>
             </div>
             
             <div class="type-selector">
@@ -170,14 +174,21 @@ window.Najemnici = (function() {
                         <h3 class="type-card-title">Státní instituce</h3>
                         <p class="type-card-description">Státní nebo městská organizace</p>
                     </div>
+                    <div class="type-card" onclick="Najemnici.showForm('zastupce')">
+                        <div class="type-card-icon">🤝</div>
+                        <h3 class="type-card-title">Zastupující osoba</h3>
+                        <p class="type-card-description">Osoba zastupující nájemníka</p>
+                    </div>
                 </div>
                 <div class="form-actions">
-                    <button class="btn btn-secondary" onclick="window.history.back()">Zpět</button>
+                    <button class="btn btn-secondary" onclick="window.history.back()">
+                        <span class="btn-icon">←</span>
+                        <span class="btn-text">Zpět</span>
+                    </button>
                 </div>
             </div>
         `;
     }
-
     function view(id) {
         const item = getItemById(id);
         if (!item) return;
