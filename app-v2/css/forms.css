@@ -1,34 +1,16 @@
 /* Formuláře - základní styly */
 .form {
     width: 100%;
-    max-width: 1200px; /* Maximální šířka formuláře */
+    max-width: 1000px; /* Omezená šířka */
     margin: 0 auto; /* Vycentrování */
 }
 
 .form-body {
-    padding: var(--spacing-lg);
-    background: var(--surface-color);
-    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
 }
 
-/* Responzivní úpravy pro menší obrazovky */
-@media (max-width: 1400px) {
-    .form {
-        max-width: 1000px;
-    }
-}
-
-@media (max-width: 1200px) {
-    .form {
-        max-width: 900px;
-    }
-}
-
+/* Responzivní úpravy */
 @media (max-width: 768px) {
-    .form {
-        max-width: 100%;
-    }
-    
     .form-body {
         padding: var(--spacing-md);
     }
@@ -43,21 +25,21 @@
     margin-bottom: 0;
 }
 
-/* Hlavička skupiny */
+/* Hlavička skupiny - barevná a výrazná */
 .form-group-header {
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--primary-color);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
     padding-bottom: var(--spacing-sm);
-    border-bottom: 2px solid var(--border-color);
+    border-bottom: 2px solid var(--primary-color);
 }
 
 /* Řádky formuláře */
 .form-row {
     display: flex;
     gap: var(--spacing-md);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
     flex-wrap: wrap;
 }
 
@@ -93,15 +75,18 @@
 
 /* Pole formuláře */
 .form-field {
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
 }
 
+/* Label - výrazný a čitelný */
 .form-label {
     display: block;
     font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--text-secondary);
+    font-weight: 600;
+    color: var(--text-primary);
     margin-bottom: var(--spacing-xs);
+    text-transform: none;
+    letter-spacing: normal;
 }
 
 .form-label.required::after {
@@ -109,31 +94,37 @@
     color: var(--danger-color);
 }
 
-/* Základní styly pro form controls */
+/* Form controls - světlé pozadí pro lepší čitelnost */
 .form-control {
     width: 100%;
     padding: var(--spacing-sm) var(--spacing-md);
     font-size: 1rem;
     line-height: 1.5;
     color: var(--text-primary);
-    background-color: var(--input-bg);
-    border: 1px solid var(--input-border);
+    background-color: var(--bg-primary); /* Světlé pozadí */
+    border: 2px solid var(--border-color);
     border-radius: var(--radius-md);
     transition: var(--transition-fast);
 }
 
+/* Focus state - výrazný pro lepší viditelnost */
 .form-control:focus {
     outline: none;
     border-color: var(--primary-color);
-    background-color: var(--input-focus-bg);
+    background-color: var(--bg-primary);
     box-shadow: 0 0 0 3px var(--primary-alpha-20);
+}
+
+/* Hover state */
+.form-control:hover:not(:disabled) {
+    border-color: var(--primary-color);
 }
 
 .form-control:disabled {
     background-color: var(--disabled-bg);
     color: var(--text-disabled);
     cursor: not-allowed;
-    opacity: 0.6;
+    opacity: 0.7;
 }
 
 /* Select wrapper pro ikonu */
@@ -177,19 +168,22 @@ textarea.form-control {
 .form-check-label {
     cursor: pointer;
     user-select: none;
+    font-weight: normal;
 }
 
 /* Help text */
 .form-help {
     display: block;
     font-size: 0.813rem;
-    color: var(--text-tertiary);
+    color: var(--text-secondary);
     margin-top: var(--spacing-xs);
+    font-style: italic;
 }
 
 /* Error state */
 .form-field.has-error .form-control {
     border-color: var(--danger-color);
+    background-color: var(--danger-alpha-10);
 }
 
 .form-field.has-error .form-control:focus {
@@ -201,11 +195,13 @@ textarea.form-control {
     font-size: 0.813rem;
     color: var(--danger-color);
     margin-top: var(--spacing-xs);
+    font-weight: 500;
 }
 
 /* Success state */
 .form-field.has-success .form-control {
     border-color: var(--success-color);
+    background-color: var(--success-alpha-10);
 }
 
 .form-field.has-success .form-control:focus {
@@ -217,11 +213,36 @@ textarea.form-control {
     display: flex;
     gap: var(--spacing-md);
     justify-content: flex-end;
-    padding: var(--spacing-lg);
-    background: var(--bg-secondary);
+    padding-top: var(--spacing-xl);
+    margin-top: var(--spacing-xl);
     border-top: 1px solid var(--border-color);
-    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-    margin: 0 calc(-1 * var(--spacing-lg)) calc(-1 * var(--spacing-lg));
+}
+
+/* Alternativní styl pro karty ve formuláři */
+.form-card {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-card .form-group-header {
+    margin-top: 0;
+}
+
+/* View mode styly */
+.form-view .form-label {
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.813rem;
+}
+
+.form-view .form-value {
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: var(--spacing-xs) 0;
 }
 
 /* Inline forms */
@@ -262,33 +283,6 @@ textarea.form-control {
     }
 }
 
-/* Floating labels */
-.form-floating {
-    position: relative;
-}
-
-.form-floating .form-control {
-    padding-top: 1.625rem;
-    padding-bottom: 0.625rem;
-}
-
-.form-floating .form-label {
-    position: absolute;
-    top: 0;
-    left: var(--spacing-md);
-    height: 100%;
-    padding: 1rem 0;
-    pointer-events: none;
-    transform-origin: 0 0;
-    transition: var(--transition-fast);
-}
-
-.form-floating .form-control:focus ~ .form-label,
-.form-floating .form-control:not(:placeholder-shown) ~ .form-label {
-    opacity: 0.65;
-    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
-}
-
 /* Custom file input */
 .form-file {
     position: relative;
@@ -322,83 +316,6 @@ textarea.form-control {
     background-color: var(--primary-hover);
 }
 
-/* Range input */
-.form-range {
-    width: 100%;
-    height: 0.25rem;
-    padding: 0;
-    background-color: var(--border-color);
-    border-radius: var(--radius-full);
-    -webkit-appearance: none;
-    appearance: none;
-}
-
-.form-range::-webkit-slider-thumb {
-    width: 1rem;
-    height: 1rem;
-    background-color: var(--primary-color);
-    border: 0;
-    border-radius: var(--radius-full);
-    cursor: pointer;
-    -webkit-appearance: none;
-    appearance: none;
-}
-
-.form-range::-moz-range-thumb {
-    width: 1rem;
-    height: 1rem;
-    background-color: var(--primary-color);
-    border: 0;
-    border-radius: var(--radius-full);
-    cursor: pointer;
-}
-
-/* Switch */
-.form-switch {
-    position: relative;
-    display: inline-block;
-    width: 3rem;
-    height: 1.5rem;
-}
-
-.form-switch-input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.form-switch-label {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--border-color);
-    transition: var(--transition-fast);
-    border-radius: var(--radius-full);
-}
-
-.form-switch-label:before {
-    position: absolute;
-    content: "";
-    height: 1.125rem;
-    width: 1.125rem;
-    left: 0.1875rem;
-    bottom: 0.1875rem;
-    background-color: white;
-    transition: var(--transition-fast);
-    border-radius: var(--radius-full);
-}
-
-.form-switch-input:checked + .form-switch-label {
-    background-color: var(--primary-color);
-}
-
-.form-switch-input:checked + .form-switch-label:before {
-    transform: translateX(1.5rem);
-}
-
 /* Animace */
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
@@ -408,4 +325,30 @@ textarea.form-control {
 
 .form-field.shake {
     animation: shake 0.3s ease-in-out;
+}
+
+/* Přidáme světlejší pozadí pro celý formulář */
+.card .form {
+    background-color: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+/* Skupiny polí s jemným pozadím */
+.form-section {
+    background-color: var(--surface-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    border: 1px solid var(--border-color);
+}
+
+.form-section .form-group-header {
+    margin-top: calc(-1 * var(--spacing-lg));
+    margin-left: calc(-1 * var(--spacing-lg));
+    margin-right: calc(-1 * var(--spacing-lg));
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
 }
