@@ -80,9 +80,6 @@
     font-weight: 700;
 }
 
-/* Form controls - moderní design s jemným barevným rozlišením */
-/* Aktualizace pro silnější bordery */
-
 /* Form controls - silnější bordery pro lepší viditelnost */
 .form-control {
     width: 100%;
@@ -91,7 +88,7 @@
     line-height: 1.5;
     color: var(--text-primary);
     background-color: rgba(255, 255, 255, 0.05);
-    border: 2px solid;  /* Změněno z 1.5px na 2px */
+    border: 2px solid;
     border-radius: 6px;
     transition: all 0.2s ease;
 }
@@ -99,55 +96,40 @@
 /* BAREVNÉ ROZLIŠENÍ - silnější barvy */
 /* Povinná pole - výraznější červená */
 .form-control:required {
-    border-color: rgba(231, 76, 60, 0.7);  /* Zvýšeno z 0.5 na 0.7 */
-    background-color: rgba(231, 76, 60, 0.04);  /* Trochu tmavší pozadí */
+    border-color: rgba(231, 76, 60, 0.7);
+    background-color: rgba(231, 76, 60, 0.04);
 }
 
 .form-control:required:hover {
-    border-color: rgba(231, 76, 60, 0.85);  /* Zvýšeno z 0.7 na 0.85 */
+    border-color: rgba(231, 76, 60, 0.85);
     background-color: rgba(231, 76, 60, 0.06);
 }
 
 .form-control:required:focus {
     border-color: #e74c3c;
     background-color: rgba(231, 76, 60, 0.06);
-    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);  /* Silnější stín */
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
     outline: none;
 }
 
 /* Nepovinná pole - výraznější zelená */
 .form-control:not(:required) {
-    border-color: rgba(46, 204, 113, 0.7);  /* Zvýšeno z 0.5 na 0.7 */
-    background-color: rgba(46, 204, 113, 0.04);  /* Trochu tmavší pozadí */
+    border-color: rgba(46, 204, 113, 0.7);
+    background-color: rgba(46, 204, 113, 0.04);
 }
 
 .form-control:not(:required):hover {
-    border-color: rgba(46, 204, 113, 0.85);  /* Zvýšeno z 0.7 na 0.85 */
+    border-color: rgba(46, 204, 113, 0.85);
     background-color: rgba(46, 204, 113, 0.06);
 }
 
 .form-control:not(:required):focus {
     border-color: #2ecc71;
     background-color: rgba(46, 204, 113, 0.06);
-    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);  /* Silnější stín */
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);
     outline: none;
 }
 
-/* Pro lepší viditelnost v tmavém tématu */
-@media (prefers-color-scheme: dark) {
-    .form-control {
-        border-width: 2.5px;  /* Ještě o trochu silnější v tmavém režimu */
-    }
-}
-
-/* Responzivní - na mobilech zachovat silnější border */
-@media (max-width: 768px) {
-    .form-control {
-        border-width: 2px;  /* Zachovat 2px i na mobilech */
-        padding: 0.5rem 0.75rem;
-        font-size: 0.875rem;
-    }
-}
 /* Placeholder text */
 .form-control::placeholder {
     color: var(--text-tertiary);
@@ -198,12 +180,14 @@ textarea.form-control {
 }
 
 /* Error state */
-.form-field.has-error .form-control {
+.form-field.has-error .form-control,
+.form-control.error {
     border-color: #e74c3c !important;
-    background-color: rgba(231, 76, 60, 0.08);
+    background-color: rgba(231, 76, 60, 0.1) !important;
 }
 
-.form-field.has-error .form-control:focus {
+.form-field.has-error .form-control:focus,
+.form-control.error:focus {
     box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
 }
 
@@ -269,7 +253,100 @@ textarea.form-control {
     background-color: rgba(46, 204, 113, 0.03);
 }
 
-/* Animace při změně */
+/* === NOVÉ STYLY PRO PROPOJENÍ FORMULÁŘŮ === */
+
+/* Input s akcí (tlačítkem) */
+.input-with-action {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+.input-with-action .form-control {
+    flex: 1;
+}
+
+.input-with-action .btn-sm {
+    margin-top: 28px; /* Zarovnat s inputem kvůli labelu */
+    white-space: nowrap;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.813rem;
+}
+
+/* Shake animace pro error */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.form-control.error {
+    animation: shake 0.3s ease-in-out;
+}
+
+/* Indikátor rozpracovaného formuláře */
+.form-draft-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    background: rgba(241, 196, 15, 0.1);
+    color: #f1c40f;
+    border-radius: 4px;
+    font-size: 0.813rem;
+    margin-left: 12px;
+}
+
+.form-draft-indicator::before {
+    content: '⏱';
+}
+
+/* Notifikace o uloženém formuláři */
+.form-saved-notice {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: rgba(46, 204, 113, 0.1);
+    border: 1px solid rgba(46, 204, 113, 0.3);
+    border-radius: 6px;
+    margin-bottom: var(--spacing-md);
+    font-size: 0.875rem;
+    color: #2ecc71;
+}
+
+.form-saved-notice::before {
+    content: '✓';
+    font-weight: bold;
+}
+
+/* Tlačítko přidat inline */
+.btn-add-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.813rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-add-inline:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.btn-add-inline span {
+    font-size: 1rem;
+}
+
+/* === ANIMACE === */
+
+/* Pulse animace při focusu */
 @keyframes pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.02); }
@@ -280,7 +357,16 @@ textarea.form-control {
     animation: pulse 0.3s ease-in-out;
 }
 
-/* Responzivní design */
+/* === RESPONZIVNÍ DESIGN === */
+
+/* Pro lepší viditelnost v tmavém tématu */
+@media (prefers-color-scheme: dark) {
+    .form-control {
+        border-width: 2.5px;
+    }
+}
+
+/* Mobilní zařízení */
 @media (max-width: 768px) {
     .form-row {
         gap: var(--spacing-xs);
@@ -291,12 +377,33 @@ textarea.form-control {
     }
     
     .form-control {
+        border-width: 2px;
         padding: 0.5rem 0.75rem;
         font-size: 0.875rem;
     }
+    
+    .input-with-action {
+        flex-direction: column;
+        gap: 4px;
+    }
+    
+    .input-with-action .btn-sm {
+        margin-top: 0;
+        width: 100%;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-actions button {
+        width: 100%;
+    }
 }
 
-/* Speciální styly pro různé typy */
+/* === SPECIÁLNÍ STYLY === */
+
+/* Datové inputy */
 input[type="date"].form-control,
 input[type="datetime-local"].form-control,
 input[type="time"].form-control {
@@ -320,4 +427,96 @@ input[type="time"].form-control {
 .form-check-label {
     cursor: pointer;
     user-select: none;
+}
+
+/* Switch toggle */
+.form-switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+}
+
+.form-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.form-switch .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--border-color);
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.form-switch .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+.form-switch input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+.form-switch input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+/* === UTILITY CLASSES === */
+
+.form-compact .form-section {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-compact .form-row {
+    margin-bottom: var(--spacing-sm);
+}
+
+.form-inline {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: flex-end;
+}
+
+.form-inline .form-field {
+    flex: 1;
+}
+
+/* === PŘECHODOVÉ STAVY === */
+
+.form-loading {
+    position: relative;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.form-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
 }
