@@ -142,4 +142,22 @@ document.addEventListener('DOMContentLoaded', () => {
     App.init();
     App.checkComponents();
     console.log('✅ Aplikace připravena! 🚀');
+    
+    // Inicializace help tlačítka
+    const initHelpButton = () => {
+        const helpBtn = document.getElementById('help-button');
+        if (helpBtn && window.Help) {
+            helpBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.Help.showFullDocumentation();
+            });
+            console.log('✅ Help tlačítko inicializováno');
+        } else if (!window.Help) {
+            console.warn('⚠️ Help modul ještě není načten, zkouším znovu...');
+            setTimeout(initHelpButton, 500);
+        }
+    };
+    
+    // Spustit inicializaci s malým zpožděním
+    setTimeout(initHelpButton, 100);
 });
