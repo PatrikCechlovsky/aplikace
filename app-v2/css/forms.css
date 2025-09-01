@@ -1,24 +1,17 @@
 /* Formuláře - základní styly */
 .form {
     width: 100%;
-    max-width: 1000px; /* Omezená šířka */
-    margin: 0 auto; /* Vycentrování */
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .form-body {
-    padding: var(--spacing-xl);
-}
-
-/* Responzivní úpravy */
-@media (max-width: 768px) {
-    .form-body {
-        padding: var(--spacing-md);
-    }
+    padding: var(--spacing-md);
 }
 
 /* Sekce formuláře */
 .form-section {
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
 }
 
 .form-section:last-child {
@@ -27,19 +20,19 @@
 
 /* Hlavička skupiny - barevná a výrazná */
 .form-group-header {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     color: var(--primary-color);
-    margin-bottom: var(--spacing-lg);
-    padding-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: var(--spacing-xs);
     border-bottom: 2px solid var(--primary-color);
 }
 
-/* Řádky formuláře */
+/* Řádky formuláře - menší mezery */
 .form-row {
     display: flex;
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-lg);
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
     flex-wrap: wrap;
 }
 
@@ -68,6 +61,10 @@
 
 /* Responzivní sloupce */
 @media (max-width: 768px) {
+    .form-row {
+        gap: var(--spacing-xs);
+    }
+    
     [class^="form-col-"] {
         flex: 0 0 100%;
     }
@@ -75,18 +72,16 @@
 
 /* Pole formuláře */
 .form-field {
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: 0;
 }
 
-/* Label - výrazný a čitelný */
+/* Label */
 .form-label {
     display: block;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: var(--spacing-xs);
-    text-transform: none;
-    letter-spacing: normal;
+    font-size: 0.813rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
 }
 
 .form-label.required::after {
@@ -94,37 +89,36 @@
     color: var(--danger-color);
 }
 
-/* Form controls - světlé pozadí pro lepší čitelnost */
+/* Form controls - barevné bordery podle stavu */
 .form-control {
     width: 100%;
-    padding: var(--spacing-sm) var(--spacing-md);
-    font-size: 1rem;
-    line-height: 1.5;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.938rem;
+    line-height: 1.4;
     color: var(--text-primary);
-    background-color: var(--bg-primary); /* Světlé pozadí */
-    border: 2px solid var(--border-color);
-    border-radius: var(--radius-md);
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius-sm);
     transition: var(--transition-fast);
 }
 
-/* Focus state - výrazný pro lepší viditelnost */
+/* Barevné bordery pro různé stavy */
 .form-control:focus {
     outline: none;
     border-color: var(--primary-color);
-    background-color: var(--bg-primary);
-    box-shadow: 0 0 0 3px var(--primary-alpha-20);
+    background-color: var(--input-focus-bg);
+    box-shadow: 0 0 0 2px var(--primary-alpha-20);
 }
 
-/* Hover state */
-.form-control:hover:not(:disabled) {
-    border-color: var(--primary-color);
+.form-control:hover:not(:disabled):not(:focus) {
+    border-color: var(--primary-alpha-60);
 }
 
 .form-control:disabled {
     background-color: var(--disabled-bg);
     color: var(--text-disabled);
     cursor: not-allowed;
-    opacity: 0.7;
+    opacity: 0.6;
 }
 
 /* Select wrapper pro ikonu */
@@ -133,116 +127,137 @@
 }
 
 .form-control-wrapper .form-control {
-    padding-right: 2.5rem;
+    padding-right: 2rem;
 }
 
 .form-control-wrapper .form-icon {
     position: absolute;
-    right: var(--spacing-md);
+    right: 0.75rem;
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-secondary);
     pointer-events: none;
+    font-size: 0.875rem;
 }
 
 /* Textarea */
 textarea.form-control {
-    min-height: 100px;
+    min-height: 80px;
     resize: vertical;
-}
-
-/* Checkbox a Radio */
-.form-check {
-    display: flex;
-    align-items: center;
-    margin-bottom: var(--spacing-sm);
-}
-
-.form-check-input {
-    width: 1.25rem;
-    height: 1.25rem;
-    margin-right: var(--spacing-sm);
-    cursor: pointer;
-}
-
-.form-check-label {
-    cursor: pointer;
-    user-select: none;
-    font-weight: normal;
 }
 
 /* Help text */
 .form-help {
     display: block;
-    font-size: 0.813rem;
-    color: var(--text-secondary);
-    margin-top: var(--spacing-xs);
-    font-style: italic;
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    margin-top: 0.125rem;
 }
 
-/* Error state */
+/* Error state - červený border */
 .form-field.has-error .form-control {
     border-color: var(--danger-color);
-    background-color: var(--danger-alpha-10);
 }
 
 .form-field.has-error .form-control:focus {
-    box-shadow: 0 0 0 3px var(--danger-alpha-20);
+    box-shadow: 0 0 0 2px var(--danger-alpha-20);
 }
 
 .form-error {
     display: block;
-    font-size: 0.813rem;
+    font-size: 0.75rem;
     color: var(--danger-color);
-    margin-top: var(--spacing-xs);
-    font-weight: 500;
+    margin-top: 0.125rem;
 }
 
-/* Success state */
+/* Success state - zelený border */
 .form-field.has-success .form-control {
     border-color: var(--success-color);
-    background-color: var(--success-alpha-10);
 }
 
 .form-field.has-success .form-control:focus {
-    box-shadow: 0 0 0 3px var(--success-alpha-20);
+    box-shadow: 0 0 0 2px var(--success-alpha-20);
 }
 
 /* Form actions */
 .form-actions {
     display: flex;
-    gap: var(--spacing-md);
+    gap: var(--spacing-sm);
     justify-content: flex-end;
-    padding-top: var(--spacing-xl);
-    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
     border-top: 1px solid var(--border-color);
 }
 
-/* Alternativní styl pro karty ve formuláři */
-.form-card {
-    background: var(--surface-color);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-lg);
+/* Pro view mode - lepší čitelnost */
+.form-view .form-row {
+    padding: var(--spacing-xs) 0;
+    border-bottom: 1px solid var(--border-light);
 }
 
-.form-card .form-group-header {
-    margin-top: 0;
+.form-view .form-row:last-child {
+    border-bottom: none;
 }
 
-/* View mode styly */
 .form-view .form-label {
     color: var(--text-secondary);
-    font-weight: 500;
-    font-size: 0.813rem;
+    font-weight: 400;
+    margin-bottom: 0.125rem;
 }
 
 .form-view .form-value {
     color: var(--text-primary);
-    font-size: 1rem;
-    font-weight: 600;
-    padding: var(--spacing-xs) 0;
+    font-weight: 500;
+}
+
+/* Barevné inputy podle typu */
+/* Primární/povinné pole */
+.form-control:required {
+    border-color: var(--primary-alpha-40);
+}
+
+.form-control:required:focus {
+    border-color: var(--primary-color);
+}
+
+/* Nepovinné pole */
+.form-control:not(:required) {
+    border-color: var(--border-color);
+}
+
+/* Speciální styly pro různé typy inputů */
+input[type="date"].form-control,
+input[type="datetime-local"].form-control {
+    border-color: var(--info-alpha-40);
+}
+
+input[type="email"].form-control,
+input[type="tel"].form-control {
+    border-color: var(--success-alpha-40);
+}
+
+input[type="password"].form-control {
+    border-color: var(--warning-alpha-40);
+}
+
+/* Kompaktní mód pro mobily */
+@media (max-width: 480px) {
+    .form-body {
+        padding: var(--spacing-sm);
+    }
+    
+    .form-control {
+        padding: 0.375rem 0.625rem;
+        font-size: 0.875rem;
+    }
+    
+    .form-label {
+        font-size: 0.75rem;
+    }
+    
+    .form-group-header {
+        font-size: 0.938rem;
+    }
 }
 
 /* Inline forms */
@@ -250,70 +265,30 @@ textarea.form-control {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--spacing-md);
+    gap: var(--spacing-sm);
 }
 
 .form-inline .form-field {
     margin-bottom: 0;
 }
 
-/* Form grid */
-.form-grid {
-    display: grid;
-    gap: var(--spacing-md);
+/* Checkbox a Radio */
+.form-check {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-xs);
 }
 
-.form-grid-2 {
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.form-grid-3 {
-    grid-template-columns: repeat(3, 1fr);
-}
-
-.form-grid-4 {
-    grid-template-columns: repeat(4, 1fr);
-}
-
-@media (max-width: 768px) {
-    .form-grid-2,
-    .form-grid-3,
-    .form-grid-4 {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Custom file input */
-.form-file {
-    position: relative;
-    display: inline-block;
+.form-check-input {
+    width: 1.125rem;
+    height: 1.125rem;
+    margin-right: var(--spacing-xs);
     cursor: pointer;
-    overflow: hidden;
 }
 
-.form-file-input {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-}
-
-.form-file-label {
-    display: inline-block;
-    padding: var(--spacing-sm) var(--spacing-md);
-    background-color: var(--primary-color);
-    color: white;
-    border-radius: var(--radius-md);
-    transition: var(--transition-fast);
-}
-
-.form-file:hover .form-file-label {
-    background-color: var(--primary-hover);
+.form-check-label {
+    cursor: pointer;
+    user-select: none;
 }
 
 /* Animace */
@@ -325,30 +300,4 @@ textarea.form-control {
 
 .form-field.shake {
     animation: shake 0.3s ease-in-out;
-}
-
-/* Přidáme světlejší pozadí pro celý formulář */
-.card .form {
-    background-color: var(--bg-primary);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
-}
-
-/* Skupiny polí s jemným pozadím */
-.form-section {
-    background-color: var(--surface-color);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-lg);
-    border: 1px solid var(--border-color);
-}
-
-.form-section .form-group-header {
-    margin-top: calc(-1 * var(--spacing-lg));
-    margin-left: calc(-1 * var(--spacing-lg));
-    margin-right: calc(-1 * var(--spacing-lg));
-    padding: var(--spacing-md) var(--spacing-lg);
-    background-color: var(--bg-secondary);
-    border-bottom: 1px solid var(--border-color);
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
 }
