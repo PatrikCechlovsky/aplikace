@@ -219,6 +219,89 @@
     }
 }
 
+/* ===================================
+   HELP COMPONENT
+   =================================== */
+
+/* Help module styles */
+.help-menu {
+    padding: 20px;
+}
+
+.help-modules {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.help-module-card {
+    padding: 20px;
+    text-align: center;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.help-module-card:hover {
+    background: var(--bg-secondary);
+    border-color: var(--brand-primary);
+    transform: translateY(-2px);
+}
+
+.help-module-icon {
+    font-size: 32px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.help-module-title {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.help-links {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.help-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.help-links li {
+    margin: 10px 0;
+}
+
+.help-links a {
+    color: var(--brand-primary);
+    text-decoration: none;
+}
+
+.help-links a:hover {
+    text-decoration: underline;
+}
+
+.shortcuts-table {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.shortcuts-table td {
+    padding: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.shortcuts-table kbd {
+    background: var(--bg-secondary);
+    padding: 3px 6px;
+    border-radius: 3px;
+    border: 1px solid var(--border-color);
+    font-family: monospace;
+}
 /* Responsivní design */
 @media (max-width: 768px) {
     .page-header {
