@@ -71,7 +71,7 @@ window.Komunikace = (function() {
     
     return {
         render(type = 'all') {
-            const container = document.getElementById('mainContent');
+            const container = document.getElementById('main-content');
             if (!container) return;
             
             container.innerHTML = renderOverview();
