@@ -161,6 +161,14 @@ window.Pronajimatel = (function() {
                 e.preventDefault();
                 saveForm(type, id);
             });
+            
+            // Inicializovat FormLinking pro pole zástupce
+            setTimeout(() => {
+                // Kontrola zda FormLinking existuje
+                if (window.FormLinking) {
+                    FormLinking.init('#pronajimatel-form', 'select[name="zastupce_id"]');
+                }
+            }, 100);
         }
     }
 
