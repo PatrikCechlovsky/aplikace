@@ -64,7 +64,9 @@ window.Modal = (function() {
         document.body.style.overflow = 'hidden';
         
         // Nastavit stav
-        AppState.openModal();
+        if (window.AppState) {
+            AppState.set('modalOpen', true);
+        }
     }
     
     // Zavření modalu
@@ -83,7 +85,9 @@ window.Modal = (function() {
         }, 300);
         
         // Nastavit stav
-        AppState.closeModal();
+        if (window.AppState) {
+            AppState.set('modalOpen', false);
+        }
     }
     
     // Veřejné API
