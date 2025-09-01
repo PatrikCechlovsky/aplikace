@@ -175,8 +175,8 @@ window.Pronajimatel = (function() {
                     const entityId = data.id || 'new_' + Date.now();
                     AttachmentSystem.init('#pronajimatel-form', entityType, entityId);
                 }
-                    // Inicializovat FormGuard
-            setTimeout(() => {
+                
+                // Inicializovat FormGuard
                 if (window.FormGuard) {
                     FormGuard.track('#pronajimatel-form');
                 }
