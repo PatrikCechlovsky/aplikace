@@ -37,7 +37,6 @@ window.Najemnici = (function() {
         const typeName = typeConfig ? typeConfig.name : 'Přehled';
         const typeIcon = typeConfig ? typeConfig.icon : '📊';
 
-        // V metodě render() najdi část s mainContent.innerHTML a uprav ji takto:
         mainContent.innerHTML = `
             <div class="page-header">
                 <h1 class="page-title">
@@ -106,6 +105,7 @@ window.Najemnici = (function() {
                 }
             </div>
         `;
+    }
 
     function getTypeName(type) {
         const types = {
@@ -118,7 +118,6 @@ window.Najemnici = (function() {
         return types[type] || type;
     }
 
-    // Najdi funkci showAddDialog a nahraď ji tímto:
     function showAddDialog(preselectedType = 'all') {
         const mainContent = document.getElementById('main-content');
         
@@ -185,6 +184,7 @@ window.Najemnici = (function() {
             </div>
         `;
     }
+
     function view(id) {
         const item = getItemById(id);
         if (!item) return;
