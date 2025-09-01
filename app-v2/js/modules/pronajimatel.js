@@ -111,6 +111,17 @@ window.Pronajimatel = (function() {
         `;
     }
 
+    function getTypeName(type) {
+        const types = {
+            'osoba': 'Osoba',
+            'osvc': 'OSVČ',
+            'firma': 'Firma',
+            'spolek': 'Spolek',
+            'stat': 'Stát'
+        };
+        return types[type] || type;
+    }
+
     function view(id) {
         const item = getItemById(id);
         if (!item) return;
@@ -118,14 +129,15 @@ window.Pronajimatel = (function() {
         // Zobrazit formulář v režimu prohlížení
         showForm(item.typ_subjektu || 'zastupce', id, true);
     }
-        // A přidej novou metodu edit:
-        function edit(id) {
-            const item = getItemById(id);
-            if (!item) return;
-    
-            // Zobrazit formulář v režimu editace
-            showForm(item.typ_subjektu || 'zastupce', id, false);
-}
+
+    function edit(id) {
+        const item = getItemById(id);
+        if (!item) return;
+        
+        // Zobrazit formulář v režimu editace
+        showForm(item.typ_subjektu || 'zastupce', id, false);
+    }
+
     function showForm(type, id = null, viewOnly = false) {
         const mainContent = document.getElementById('main-content');
         const isEdit = id !== null && !viewOnly;
@@ -187,76 +199,104 @@ window.Pronajimatel = (function() {
         }
         
         return `
-        // V metodě render() najdi část s mainContent.innerHTML a uprav ji takto:
+            <div class="page-header">
+                <h1 class="page-title">${title} - ${getTypeName(type)}</h1>
+            </div>
+            
+            <div class="card">
+                <form id="pronajimatel-form" class="form">
+                    <div class="form-body">
+                        ${commonFields}
+                        ${specificFields}
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="window.history.back()">
+                            Zpět
+                        </button>
+                        ${!isView ? `
+                            <button type="submit" class="btn btn-primary">
+                                ${isEdit ? 'Uložit změny' : 'Vytvořit'}
+                            </button>
+                        ` : `
+                            <button type="button" class="btn btn-primary" onclick="Pronajimatel.edit('${data.id}')">
+                                Upravit
+                            </button>
+                        `}
+                    </div>
+                </form>
+            </div>
+        `;
+    }
+
+    function showAddDialog(preselectedType = 'all') {
+        const mainContent = document.getElementById('main-content');
+        
+        if (preselectedType === 'zastupce') {
+            // Přímo zobrazit formulář pro zástupce
+            showForm('zastupce', null);
+            return;
+        }
+        
+        if (preselectedType !== 'all') {
+            // Přímo zobrazit formulář pro konkrétní typ
+            showForm(preselectedType, null);
+            return;
+        }
+    
+        // Zobrazit výběr typu
         mainContent.innerHTML = `
             <div class="page-header">
                 <h1 class="page-title">
-                    <span class="module-icon">${moduleConfig.icon}</span>
-                    Pronajímatel - 
-                    <span class="type-icon">${typeIcon}</span>
-                    ${typeName}
+                    <span class="module-icon">🏠</span>
+                    Vyberte typ pronajímatele
                 </h1>
-                <button class="btn btn-primary" onclick="Pronajimatel.showAddDialog('${type}')">
-                    <span class="btn-icon">+</span>
-                    <span class="btn-text">Přidat ${type === 'zastupce' ? 'zástupce' : 'pronajímatele'}</span>
-                </button>
             </div>
-        
-            <div class="card">
-                ${filteredData.length === 0 ? 
-                    `<div class="empty-state">
-                        <div class="empty-state-icon">📁</div>
-                        <p class="empty-state-text">Zatím nejsou žádní ${type === 'zastupce' ? 'zástupci' : 'pronajímatelé'} typu "${typeName}"</p>
-                        <button class="btn btn-primary" onclick="Pronajimatel.showAddDialog('${type}')">
-                            Přidat prvního ${type === 'zastupce' ? 'zástupce' : 'pronajímatele'}
-                        </button>
-                    </div>` :
-                    `<div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th style="width: 60px;">ID</th>
-                                    <th style="width: 200px;">Název/Jméno</th>
-                                    <th style="width: 100px;">Typ</th>
-                                    <th style="width: 100px;">IČO</th>
-                                    <th style="width: 150px;">Telefon</th>
-                                    <th style="width: 250px;">Email</th>
-                                    <th style="width: 150px;">Město</th>
-                                    <th style="width: 120px;">Akce</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${filteredData.map(item => `
-                                    <tr>
-                                        <td>${item.id}</td>
-                                        <td class="text-truncate">${item.nazev || `${item.jmeno || ''} ${item.prijmeni || ''}`}</td>
-                                        <td><span class="badge badge-${item.typ_subjektu}">${getTypeName(item.typ_subjektu)}</span></td>
-                                        <td>${item.ico || '-'}</td>
-                                        <td class="text-truncate">${item.telefon || '-'}</td>
-                                        <td class="text-truncate">${item.email || '-'}</td>
-                                        <td class="text-truncate">${item.mesto || '-'}</td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <button class="btn-icon btn-view" onclick="Pronajimatel.view('${item.id}')" title="Zobrazit">
-                                                    👁️
-                                                </button>
-                                                <button class="btn-icon btn-edit" onclick="Pronajimatel.edit('${item.id}')" title="Upravit">
-                                                    ✏️
-                                                </button>
-                                                <button class="btn-icon btn-archive" onclick="Pronajimatel.archive('${item.id}')" title="Archivovat">
-                                                    📁
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
-                    </div>`
-                }
+            
+            <div class="type-selector">
+                <div class="type-cards">
+                    <div class="type-card" onclick="Pronajimatel.showForm('osoba')">
+                        <div class="type-card-icon">👤</div>
+                        <h3 class="type-card-title">Fyzická osoba</h3>
+                        <p class="type-card-description">Jednotlivec jako pronajímatel</p>
+                    </div>
+                    <div class="type-card" onclick="Pronajimatel.showForm('osvc')">
+                        <div class="type-card-icon">🧑‍💼</div>
+                        <h3 class="type-card-title">OSVČ</h3>
+                        <p class="type-card-description">Osoba samostatně výdělečně činná</p>
+                    </div>
+                    <div class="type-card" onclick="Pronajimatel.showForm('firma')">
+                        <div class="type-card-icon">🏢</div>
+                        <h3 class="type-card-title">Firma</h3>
+                        <p class="type-card-description">Společnost s ručením omezeným, a.s., atd.</p>
+                    </div>
+                    <div class="type-card" onclick="Pronajimatel.showForm('spolek')">
+                        <div class="type-card-icon">🫂</div>
+                        <h3 class="type-card-title">Spolek/Skupina</h3>
+                        <p class="type-card-description">Nezisková organizace, spolek</p>
+                    </div>
+                    <div class="type-card" onclick="Pronajimatel.showForm('stat')">
+                        <div class="type-card-icon">🏛️</div>
+                        <h3 class="type-card-title">Státní instituce</h3>
+                        <p class="type-card-description">Státní nebo městská organizace</p>
+                    </div>
+                    <div class="type-card" onclick="Pronajimatel.showForm('zastupce')">
+                        <div class="type-card-icon">🤝</div>
+                        <h3 class="type-card-title">Zastupující osoba</h3>
+                        <p class="type-card-description">Osoba zastupující pronajímatele</p>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-secondary" onclick="window.history.back()">
+                        <span class="btn-icon">←</span>
+                        <span class="btn-text">Zpět</span>
+                    </button>
+                </div>
             </div>
         `;
-    // Upravíme všechny field funkce aby podporovaly viewOnly režim
+    }
+
+    // Pole pro osobu
     function getOsobaFields(data, isView = false) {
         const disabled = isView ? 'disabled' : '';
         const required = isView ? '' : 'required';
@@ -327,158 +367,7 @@ window.Pronajimatel = (function() {
         `;
     }
 
-    // Podobně upravíme i ostatní field funkce...
-    function getContactFields(data, isView = false) {
-        const disabled = isView ? 'disabled' : '';
-        const required = isView ? '' : 'required';
-        
-        return `
-            <div class="form-group-header">Kontaktní údaje</div>
-            
-            <div class="form-row">
-                <div class="form-col-3">
-                    <div class="form-field">
-                        <label class="form-label ${!isView ? 'required' : ''}">Stát</label>
-                        <div class="form-control-wrapper">
-                            <select name="stat" class="form-control" ${required} ${disabled}>
-                                <option value="CZ" ${data.stat === 'CZ' ? 'selected' : ''}>Česká republika</option>
-                                <option value="SK" ${data.stat === 'SK' ? 'selected' : ''}>Slovensko</option>
-                                <option value="AT" ${data.stat === 'AT' ? 'selected' : ''}>Rakousko</option>
-                                <option value="DE" ${data.stat === 'DE' ? 'selected' : ''}>Německo</option>
-                                <option value="PL" ${data.stat === 'PL' ? 'selected' : ''}>Polsko</option>
-                            </select>
-                            <span class="form-icon">▼</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-col-3">
-                    <div class="form-field">
-                        <label class="form-label ${!isView ? 'required' : ''}">PSČ</label>
-                        <input type="text" name="psc" class="form-control" value="${data.psc || ''}" ${required} ${disabled}>
-                    </div>
-                </div>
-                <div class="form-col-6">
-                    <div class="form-field">
-                        <label class="form-label ${!isView ? 'required' : ''}">Město</label>
-                        <input type="text" name="mesto" class="form-control" value="${data.mesto || ''}" ${required} ${disabled}>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-col-8">
-                    <div class="form-field">
-                        <label class="form-label ${!isView ? 'required' : ''}">Ulice</label>
-                        <input type="text" name="ulice" class="form-control" value="${data.ulice || ''}" ${required} ${disabled}>
-                    </div>
-                </div>
-                <div class="form-col-4">
-                    <div class="form-field">
-                        <label class="form-label ${!isView ? 'required' : ''}">Číslo popisné</label>
-                        <input type="text" name="cislo_popisne" class="form-control" value="${data.cislo_popisne || ''}" ${required} ${disabled}>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-col-6">
-                    <div class="form-field">
-                        <label class="form-label ${!isView ? 'required' : ''}">Telefon</label>
-                        <input type="tel" name="telefon" class="form-control" value="${data.telefon || ''}" ${required} ${disabled}>
-                        <span class="form-help">Předvolba podle státu s možností změny</span>
-                    </div>
-                </div>
-                <div class="form-col-6">
-                    <div class="form-field">
-                        <label class="form-label ${!isView ? 'required' : ''}">Email</label>
-                        <input type="email" name="email" class="form-control" value="${data.email || ''}" ${required} ${disabled}>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    // Zbytek funkcí zůstává stejný...
-    function getTypeName(type) {
-        const types = {
-            'osoba': 'Osoba',
-            'osvc': 'OSVČ',
-            'firma': 'Firma',
-            'spolek': 'Spolek',
-            'stat': 'Stát'
-        };
-        return types[type] || type;
-    }
-
-    // Najdi funkci showAddDialog a nahraď ji tímto:
-    function showAddDialog(preselectedType = 'all') {
-        const mainContent = document.getElementById('main-content');
-        
-        if (preselectedType === 'zastupce') {
-            // Přímo zobrazit formulář pro zástupce
-            showForm('zastupce', null);
-            return;
-        }
-        
-        if (preselectedType !== 'all') {
-            // Přímo zobrazit formulář pro konkrétní typ
-            showForm(preselectedType, null);
-            return;
-        }
-    
-        // Zobrazit výběr typu
-        mainContent.innerHTML = `
-            <div class="page-header">
-                <h1 class="page-title">
-                    <span class="module-icon">🏠</span>
-                    Vyberte typ pronajímatele
-                </h1>
-            </div>
-            
-            <div class="type-selector">
-                <div class="type-cards">
-                    <div class="type-card" onclick="Pronajimatel.showForm('osoba')">
-                        <div class="type-card-icon">👤</div>
-                        <h3 class="type-card-title">Fyzická osoba</h3>
-                        <p class="type-card-description">Jednotlivec jako pronajímatel</p>
-                    </div>
-                    <div class="type-card" onclick="Pronajimatel.showForm('osvc')">
-                        <div class="type-card-icon">🧑‍💼</div>
-                        <h3 class="type-card-title">OSVČ</h3>
-                        <p class="type-card-description">Osoba samostatně výdělečně činná</p>
-                    </div>
-                    <div class="type-card" onclick="Pronajimatel.showForm('firma')">
-                        <div class="type-card-icon">🏢</div>
-                        <h3 class="type-card-title">Firma</h3>
-                        <p class="type-card-description">Společnost s ručením omezeným, a.s., atd.</p>
-                    </div>
-                    <div class="type-card" onclick="Pronajimatel.showForm('spolek')">
-                        <div class="type-card-icon">🫂</div>
-                        <h3 class="type-card-title">Spolek/Skupina</h3>
-                        <p class="type-card-description">Nezisková organizace, spolek</p>
-                    </div>
-                    <div class="type-card" onclick="Pronajimatel.showForm('stat')">
-                        <div class="type-card-icon">🏛️</div>
-                        <h3 class="type-card-title">Státní instituce</h3>
-                        <p class="type-card-description">Státní nebo městská organizace</p>
-                    </div>
-                    <div class="type-card" onclick="Pronajimatel.showForm('zastupce')">
-                        <div class="type-card-icon">🤝</div>
-                        <h3 class="type-card-title">Zastupující osoba</h3>
-                        <p class="type-card-description">Osoba zastupující pronajímatele</p>
-                    </div>
-                </div>
-                <div class="form-actions">
-                    <button class="btn btn-secondary" onclick="window.history.back()">
-                        <span class="btn-icon">←</span>
-                        <span class="btn-text">Zpět</span>
-                    </button>
-                </div>
-            </div>
-        `;
-    }
-
-    // Zbytek kódu zůstává stejný...
+    // Pole pro OSVČ
     function getOsvcFields(data, isView = false) {
         const disabled = isView ? 'disabled' : '';
         const required = isView ? '' : 'required';
@@ -565,6 +454,7 @@ window.Pronajimatel = (function() {
         `;
     }
 
+    // Pole pro firmu
     function getFirmaFields(data, isView = false) {
         const disabled = isView ? 'disabled' : '';
         const required = isView ? '' : 'required';
@@ -603,6 +493,7 @@ window.Pronajimatel = (function() {
         `;
     }
 
+    // Pole pro spolek
     function getSpolekFields(data, isView = false) {
         const disabled = isView ? 'disabled' : '';
         const required = isView ? '' : 'required';
@@ -641,6 +532,78 @@ window.Pronajimatel = (function() {
         `;
     }
 
+    // Kontaktní pole
+    function getContactFields(data, isView = false) {
+        const disabled = isView ? 'disabled' : '';
+        const required = isView ? '' : 'required';
+        
+        return `
+            <div class="form-group-header">Kontaktní údaje</div>
+            
+            <div class="form-row">
+                <div class="form-col-3">
+                    <div class="form-field">
+                        <label class="form-label ${!isView ? 'required' : ''}">Stát</label>
+                        <div class="form-control-wrapper">
+                            <select name="stat" class="form-control" ${required} ${disabled}>
+                                <option value="CZ" ${data.stat === 'CZ' ? 'selected' : ''}>Česká republika</option>
+                                <option value="SK" ${data.stat === 'SK' ? 'selected' : ''}>Slovensko</option>
+                                <option value="AT" ${data.stat === 'AT' ? 'selected' : ''}>Rakousko</option>
+                                <option value="DE" ${data.stat === 'DE' ? 'selected' : ''}>Německo</option>
+                                <option value="PL" ${data.stat === 'PL' ? 'selected' : ''}>Polsko</option>
+                            </select>
+                            <span class="form-icon">▼</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-col-3">
+                    <div class="form-field">
+                        <label class="form-label ${!isView ? 'required' : ''}">PSČ</label>
+                        <input type="text" name="psc" class="form-control" value="${data.psc || ''}" ${required} ${disabled}>
+                    </div>
+                </div>
+                <div class="form-col-6">
+                    <div class="form-field">
+                        <label class="form-label ${!isView ? 'required' : ''}">Město</label>
+                        <input type="text" name="mesto" class="form-control" value="${data.mesto || ''}" ${required} ${disabled}>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-col-8">
+                    <div class="form-field">
+                        <label class="form-label ${!isView ? 'required' : ''}">Ulice</label>
+                        <input type="text" name="ulice" class="form-control" value="${data.ulice || ''}" ${required} ${disabled}>
+                    </div>
+                </div>
+                <div class="form-col-4">
+                    <div class="form-field">
+                        <label class="form-label ${!isView ? 'required' : ''}">Číslo popisné</label>
+                        <input type="text" name="cislo_popisne" class="form-control" value="${data.cislo_popisne || ''}" ${required} ${disabled}>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-col-6">
+                    <div class="form-field">
+                        <label class="form-label ${!isView ? 'required' : ''}">Telefon</label>
+                        <input type="tel" name="telefon" class="form-control" value="${data.telefon || ''}" ${required} ${disabled}>
+                        <span class="form-help">Předvolba podle státu s možností změny</span>
+                    </div>
+                </div>
+                <div class="form-col-6">
+                    <div class="form-field">
+                        <label class="form-label ${!isView ? 'required' : ''}">Email</label>
+                        <input type="email" name="email" class="form-control" value="${data.email || ''}" ${required} ${disabled}>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Bankovní pole
     function getBankFields(data, isView = false) {
         const disabled = isView ? 'disabled' : '';
         const required = isView ? '' : 'required';
@@ -661,6 +624,7 @@ window.Pronajimatel = (function() {
         `;
     }
 
+    // Přihlašovací pole
     function getLoginFields(data, isView = false) {
         const disabled = isView ? 'disabled' : '';
         const required = isView ? '' : 'required';
@@ -685,6 +649,7 @@ window.Pronajimatel = (function() {
         `;
     }
 
+    // Výběr zástupce
     function getZastupceSelect(data, required = false, isView = false) {
         const zastupci = getZastupciList();
         const disabled = isView ? 'disabled' : '';
@@ -715,6 +680,7 @@ window.Pronajimatel = (function() {
         `;
     }
 
+    // Formulář pro zástupce
     function getZastupceForm(data, isEdit, isView = false) {
         let title = 'Nový zástupce';
         if (isView) {
@@ -845,7 +811,7 @@ window.Pronajimatel = (function() {
                                 ${isEdit ? 'Uložit změny' : 'Vytvořit'}
                             </button>
                         ` : `
-                            <button type="button" class="btn btn-primary" onclick="Pronajimatel.showForm('zastupce', '${data.id}')">
+                            <button type="button" class="btn btn-primary" onclick="Pronajimatel.edit('${data.id}')">
                                 Upravit
                             </button>
                         `}
@@ -855,6 +821,7 @@ window.Pronajimatel = (function() {
         `;
     }
 
+    // Uložení formuláře
     function saveForm(type, id) {
         const form = document.getElementById('pronajimatel-form');
         const formData = new FormData(form);
@@ -904,6 +871,7 @@ window.Pronajimatel = (function() {
         window.history.back();
     }
 
+    // Pomocné funkce
     function getItemById(id) {
         return data.pronajimatel.find(p => p.id === id) || 
                data.zastupce.find(z => z.id === id) || 
@@ -931,7 +899,7 @@ window.Pronajimatel = (function() {
         showAddDialog,
         showForm,
         view,
-        edit, // přidat
+        edit,
         archive
     };
 })();
