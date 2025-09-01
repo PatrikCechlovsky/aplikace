@@ -218,6 +218,139 @@
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     }
 }
+/* Help documentation styles */
+.help-navigation {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.help-nav-btn {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border-radius: 8px 8px 0 0;
+}
+
+.help-nav-btn:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.help-nav-btn.active {
+    background: var(--brand-primary);
+    color: white;
+}
+
+.help-content {
+    padding: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.doc-section {
+    margin-bottom: 30px;
+}
+
+.doc-section h2 {
+    color: var(--text-primary);
+    margin-bottom: 15px;
+}
+
+.doc-section h3 {
+    color: var(--text-primary);
+    margin: 20px 0 10px 0;
+}
+
+.quick-start-steps {
+    margin-top: 20px;
+}
+
+.step {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+}
+
+.step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--brand-primary);
+    color: white;
+    border-radius: 50%;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.step-content h4 {
+    margin: 0 0 5px 0;
+    color: var(--text-primary);
+}
+
+.module-structure {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.structure-level {
+    background: var(--bg-secondary);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.structure-level strong {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--text-primary);
+}
+
+.structure-level ul {
+    list-style: none;
+    padding: 0;
+}
+
+.structure-level li {
+    padding: 5px 0;
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.tip-card {
+    background: var(--bg-secondary);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.tip-card h4 {
+    margin: 0 0 10px 0;
+    color: var(--text-primary);
+}
+
+.tip-card p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+}    
 
 /* ===================================
    HELP COMPONENT
