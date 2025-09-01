@@ -237,9 +237,9 @@ window.Najemnici = (function() {
                     const entityType = 'najemnik';
                     const entityId = data.id || 'new_' + Date.now();
                     AttachmentSystem.init('#najemnik-form', entityType, entityId);
-                }   
+                }
+                
                 // Inicializovat FormGuard
-                setTimeout(() => {
                 if (window.FormGuard) {
                     FormGuard.track('#najemnik-form');
                 }
