@@ -377,5 +377,22 @@ window.Help = (function() {
         showFullDocumentation,
         showDocSection,
         showKeyboardShortcuts
+        // Na konec souboru help.js před })(); přidejte:
+
+    // Expose to global scope for onclick
+    window.Help = {
+        showHelp,
+        showFullDocumentation,
+        showDocSection,
+        showKeyboardShortcuts
+    };
+    
+    return {
+        showHelp,
+        showFullDocumentation,
+        showDocSection,
+        showKeyboardShortcuts
+    };
+})();
     };
 })();
