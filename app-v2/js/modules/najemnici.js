@@ -226,7 +226,15 @@ window.Najemnici = (function() {
             });
         }
     }
-
+            // Inicializovat FormLinking pro pole zástupce
+            setTimeout(() => {
+                // Kontrola zda FormLinking existuje
+                if (window.FormLinking) {
+                    FormLinking.init('#najemnik-form', 'select[name="zastupce_id"]');
+                }
+            }, 100);
+        }
+    }
     function getNajemnikForm(type, data, isEdit, isView = false) {
         let title = 'Nový nájemník';
         if (isView) {
