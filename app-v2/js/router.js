@@ -2,11 +2,11 @@
 window.Router = (function() {
     'use strict';
 
-    // Mapování rout na moduly - OPRAVENÉ NÁZVY
+    // Mapování rout na moduly
     const routes = {
         'dashboard': 'Dashboard',
         'pronajimatel': 'Pronajimatel',
-        'najemnici': 'Najemnici',      // <- bylo 'Najemnici', má být 'Najemnici' (zkontrolovat velikost písmen)
+        'najemnici': 'Najemnici',
         'nemovitosti': 'Nemovitosti',
         'smlouvy': 'Smlouvy',
         'platby': 'Platby',
@@ -28,16 +28,20 @@ window.Router = (function() {
         const [module, action] = hash.split('/');
 
         console.log(`Navigace: ${module}${action ? '/' + action : ''}`);
+        
+        // DEBUG - vypsat všechny dostupné moduly
+        console.log('Hledám modul:', module);
+        console.log('Má být název objektu:', routes[module]);
+        console.log('Existuje window.' + routes[module] + '?', window[routes[module]]);
+        console.log('Typ:', typeof window[routes[module]]);
 
         const moduleName = routes[module];
         if (moduleName && window[moduleName]) {
             const mainContent = document.getElementById('main-content');
             if (mainContent) {
-                // Kontrola jestli modul má render metodu
                 if (window[moduleName].render) {
                     window[moduleName].render(action);
                     
-                    // Nastavit aktuální modul v AppState
                     if (window.AppState) {
                         AppState.set('currentModule', module);
                     }
@@ -46,11 +50,18 @@ window.Router = (function() {
                 }
             }
         } else {
-            console.error(`Modul ${module} nenalezen`);
-            console.log('Dostupné moduly:', Object.keys(window).filter(key => key[0] === key[0].toUpperCase()));
+            console.error(`❌ Modul ${module} nenalezen`);
+            console.error(`Hledal jsem: window.${moduleName}`);
+            
+            // Vypsat všechny dostupné moduly
+            console.log('📋 Dostupné moduly:');
+            Object.keys(window).forEach(key => {
+                if (key.match(/^[A-Z]/) && typeof window[key] === 'object' && window[key].render) {
+                    console.log(`  ✓ ${key}`);
+                }
+            });
         }
         
-        // Aktualizovat breadcrumb
         updateBreadcrumb(module, action);
     }
     
