@@ -224,23 +224,20 @@ window.Najemnici = (function() {
                 e.preventDefault();
                 saveForm(type, id);
             });
-        }
-    }
-            // Inicializovat FormLinking pro pole zástupce
+            
+            // Inicializovat komponenty
             setTimeout(() => {
                 // Kontrola zda FormLinking existuje
                 if (window.FormLinking) {
                     FormLinking.init('#najemnik-form', 'select[name="zastupce_id"]');
                 }
-                // Přidat do funkce showForm po vykreslení formuláře:
-                setTimeout(() => {
-                    // Inicializovat systém příloh
-                    if (window.AttachmentSystem) {
-                        const entityType = 'najemnici'; // nebo 'najemnik', 'nemovitost' atd.
-                        const entityId = data.id || 'new_' + Date.now(); // Pro nové záznamy temporary ID
-                        AttachmentSystem.init('#pronajimatel-form', entityType, entityId);
-                    }
-                 }
+                
+                // Inicializovat systém příloh
+                if (window.AttachmentSystem) {
+                    const entityType = 'najemnik';
+                    const entityId = data.id || 'new_' + Date.now();
+                    AttachmentSystem.init('#najemnik-form', entityType, entityId);
+                }
             }, 100);
         }
     }
