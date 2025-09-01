@@ -372,27 +372,17 @@ window.Help = (function() {
         }
     }
     
-    return {
-        showHelp,
-        showFullDocumentation,
-        showDocSection,
-        showKeyboardShortcuts
-        // Na konec souboru help.js před })(); přidejte:
-
-    // Expose to global scope for onclick
-    window.Help = {
+    // Exportovat funkce
+    const api = {
         showHelp,
         showFullDocumentation,
         showDocSection,
         showKeyboardShortcuts
     };
     
-    return {
-        showHelp,
-        showFullDocumentation,
-        showDocSection,
-        showKeyboardShortcuts
-    };
-})();
-    };
+    // Přidat do globálního scope
+    window.Help = api;
+    
+    // Vrátit API
+    return api;
 })();
