@@ -57,6 +57,20 @@ window.Nastaveni = (function() {
                         </div>
                     </div>
                     
+                    <!-- PŘIDAT TUTO NOVOU DLAŽDICI -->
+                    <div class="settings-card">
+                        <h3>❓ Nápověda a podpora</h3>
+                        <p>Dokumentace a návody k používání aplikace</p>
+                        <div class="help-actions">
+                            <button class="btn btn-primary" onclick="Help.showFullDocumentation()">
+                                Otevřít nápovědu
+                            </button>
+                            <button class="btn btn-secondary" onclick="Help.showKeyboardShortcuts()">
+                                Klávesové zkratky
+                            </button>
+                        </div>
+                    </div>
+                    
                     <div class="settings-card">
                         <h3>💾 Zálohování</h3>
                         <p>Poslední záloha: Dnes 03:00</p>
