@@ -236,7 +236,7 @@ window.Najemnici = (function() {
                 setTimeout(() => {
                     // Inicializovat systém příloh
                     if (window.AttachmentSystem) {
-                        const entityType = 'pronajimatel'; // nebo 'najemnik', 'nemovitost' atd.
+                        const entityType = 'najemnici'; // nebo 'najemnik', 'nemovitost' atd.
                         const entityId = data.id || 'new_' + Date.now(); // Pro nové záznamy temporary ID
                         AttachmentSystem.init('#pronajimatel-form', entityType, entityId);
                     }
