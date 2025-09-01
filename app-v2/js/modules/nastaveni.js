@@ -157,7 +157,7 @@ window.Nastaveni = (function() {
      document.body.classList.add(`theme-${themeId}`);
     
      // Ulož do localStorage
-     localStorage.setItem('appTheme', themeId);  // <-- změna zde
+     localStorage.setItem('appTheme', themeId);
     
      // Aktualizuj UI
      document.querySelectorAll('.theme-option').forEach(option => {
@@ -211,7 +211,7 @@ window.Nastaveni = (function() {
     
     return {
         render(type = 'all') {
-            const container = document.getElementById('mainContent');
+            const container = document.getElementById('main-content');
             if (!container) return;
             
             switch(type) {
