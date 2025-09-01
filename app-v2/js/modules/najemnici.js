@@ -237,6 +237,11 @@ window.Najemnici = (function() {
                     const entityType = 'najemnik';
                     const entityId = data.id || 'new_' + Date.now();
                     AttachmentSystem.init('#najemnik-form', entityType, entityId);
+                }   
+                // Inicializovat FormGuard
+                setTimeout(() => {
+                if (window.FormGuard) {
+                    FormGuard.track('#najemnik-form');
                 }
             }, 100);
         }
@@ -889,6 +894,10 @@ window.Najemnici = (function() {
 
     // Zbytek funkcí je stejný jako u pronajímatele
     function saveForm(type, id) {
+            // Resetovat FormGuard po úspěšném uložení
+        if (window.FormGuard) {
+            FormGuard.reset();
+        }
         const form = document.getElementById('najemnik-form');
         const formData = new FormData(form);
         const item = {};
