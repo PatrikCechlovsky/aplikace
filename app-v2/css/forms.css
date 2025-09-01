@@ -1,4 +1,8 @@
-/* Formuláře - základní styly */
+/* Přidejte toto na začátek forms.css pro TEST */
+.form-control {
+    border: 2px solid red !important;
+    background: yellow !important;
+}/* Formuláře - základní styly */
 .form {
     width: 100%;
     max-width: 1000px;
