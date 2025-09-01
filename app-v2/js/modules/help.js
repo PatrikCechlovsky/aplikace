@@ -239,7 +239,7 @@ window.Help = (function() {
         const help = modules[moduleId];
         if (!help) return;
         
-        if (window.Modal && typeof window.Modal.open === 'function') {
+        if (window.Modal && window.Modal.open) {
             window.Modal.open({
                 title: `Nápověda - ${help.title}`,
                 content: help.quickHelp,
@@ -258,16 +258,16 @@ window.Help = (function() {
         const content = `
             <div class="help-menu">
                 <div class="help-navigation">
-                    <button class="help-nav-btn active" onclick="Help.showDocSection('overview')">
+                    <button class="help-nav-btn active" onclick="window.Help.showDocSection('overview', event)">
                         📋 Přehled
                     </button>
-                    <button class="help-nav-btn" onclick="Help.showDocSection('quickStart')">
+                    <button class="help-nav-btn" onclick="window.Help.showDocSection('quickStart', event)">
                         🚀 Rychlý start
                     </button>
-                    <button class="help-nav-btn" onclick="Help.showDocSection('modules')">
+                    <button class="help-nav-btn" onclick="window.Help.showDocSection('modules', event)">
                         📦 Moduly
                     </button>
-                    <button class="help-nav-btn" onclick="Help.showDocSection('tips')">
+                    <button class="help-nav-btn" onclick="window.Help.showDocSection('tips', event)">
                         💡 Tipy
                     </button>
                 </div>
@@ -278,7 +278,7 @@ window.Help = (function() {
             </div>
         `;
         
-        if (window.Modal && typeof window.Modal.open === 'function') {
+        if (window.Modal && window.Modal.open) {
             window.Modal.open({
                 title: '❓ Nápověda aplikace',
                 content: content,
@@ -294,12 +294,14 @@ window.Help = (function() {
         }
     }
     
-    function showDocSection(section) {
+    function showDocSection(section, event) {
         // Aktualizace navigace
         document.querySelectorAll('.help-nav-btn').forEach(btn => {
             btn.classList.remove('active');
         });
-        event.target.classList.add('active');
+        if (event && event.target) {
+            event.target.classList.add('active');
+        }
         
         // Zobrazení sekce
         const contentEl = document.getElementById('help-content');
@@ -316,7 +318,7 @@ window.Help = (function() {
                         <p>Klikněte na modul pro zobrazení podrobné nápovědy:</p>
                         <div class="help-modules">
                             ${Object.entries(modules).map(([id, module]) => `
-                                <div class="help-module-card" onclick="Help.showHelp('${id}')">
+                                <div class="help-module-card" onclick="window.Help.showHelp('${id}')">
                                     <span class="help-module-icon">${module.icon}</span>
                                     <span class="help-module-title">${module.title}</span>
                                 </div>
@@ -363,26 +365,27 @@ window.Help = (function() {
             </div>
         `;
         
-        if (window.Modal && typeof window.Modal.open === 'function') {
+        if (window.Modal && window.Modal.open) {
             window.Modal.open({
                 title: 'Klávesové zkratky',
                 content: content,
-                size: 'small'
+                size: 'small',
+                buttons: [
+                    {
+                        text: 'Zavřít',
+                        class: 'btn-secondary',
+                        onClick: () => window.Modal.close()
+                    }
+                ]
             });
         }
     }
     
-    // Exportovat funkce
-    const api = {
+    // Veřejné API
+    return {
         showHelp,
         showFullDocumentation,
         showDocSection,
         showKeyboardShortcuts
     };
-    
-    // Přidat do globálního scope
-    window.Help = api;
-    
-    // Vrátit API
-    return api;
 })();
