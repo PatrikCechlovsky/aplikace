@@ -72,7 +72,7 @@ window.MujUcet = (function() {
     
     return {
         render(type = 'profil') {
-            const container = document.getElementById('mainContent');
+            const container = document.getElementById('main-content');
             if (!container) return;
             
             container.innerHTML = renderProfile();
