@@ -59,17 +59,23 @@ window.Help = (function() {
         const help = modules[moduleId];
         if (!help) return;
         
-        Modal.show({
-            title: `Nápověda - ${help.title}`,
-            content: help.quickHelp,
-            buttons: [
-                {
-                    text: 'Zavřít',
-                    class: 'btn-primary',
-                    onClick: () => Modal.hide()
-                }
-            ]
-        });
+        // Kontrola zda Modal existuje
+        if (window.Modal && typeof window.Modal.show === 'function') {
+            window.Modal.show({
+                title: `Nápověda - ${help.title}`,
+                content: help.quickHelp,
+                buttons: [
+                    {
+                        text: 'Zavřít',
+                        class: 'btn-primary',
+                        onClick: () => window.Modal.hide()
+                    }
+                ]
+            });
+        } else {
+            // Fallback - použít alert
+            alert('Nápověda není momentálně dostupná');
+        }
     }
     
     function showFullDocumentation() {
@@ -89,17 +95,22 @@ window.Help = (function() {
                     <ul>
                         <li><a href="docs/README.md" target="_blank">📖 Hlavní dokumentace</a></li>
                         <li><a href="docs/DEPENDENCIES.md" target="_blank">🔗 Závislosti modulů</a></li>
-                        <li><a href="#" onclick="Help.showKeyboardShortcuts()">⌨️ Klávesové zkratky</a></li>
+                        <li><a href="#" onclick="Help.showKeyboardShortcuts(); return false;">⌨️ Klávesové zkratky</a></li>
                     </ul>
                 </div>
             </div>
         `;
         
-        Modal.show({
-            title: 'Nápověda aplikace',
-            content: content,
-            size: 'large'
-        });
+        // Kontrola zda Modal existuje
+        if (window.Modal && typeof window.Modal.show === 'function') {
+            window.Modal.show({
+                title: 'Nápověda aplikace',
+                content: content,
+                size: 'large'
+            });
+        } else {
+            alert('Nápověda není momentálně dostupná');
+        }
     }
     
     function showKeyboardShortcuts() {
@@ -123,10 +134,12 @@ window.Help = (function() {
             </div>
         `;
         
-        Modal.show({
-            title: 'Klávesové zkratky',
-            content: content
-        });
+        if (window.Modal && typeof window.Modal.show === 'function') {
+            window.Modal.show({
+                title: 'Klávesové zkratky',
+                content: content
+            });
+        }
     }
     
     return {
