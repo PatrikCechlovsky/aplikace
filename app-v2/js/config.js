@@ -58,8 +58,23 @@ window.APP_CONFIG = {
                 { id: 'zastupce', name: 'Zastupující osoba', icon: '🤝' }
             ]
         },
+
+         // 2. Nemovitosti
+        {
+            id: 'nemovitosti',
+            name: 'Nemovitosti',
+            icon: '🏘️',
+            description: 'Správa nemovitostí',
+            types: [
+                { id: 'all', name: 'Přehled', icon: '📊' },
+                { id: 'budovy', name: 'Budovy', icon: '🏢' },
+                { id: 'jednotky', name: 'Jednotky/byty', icon: '🏘️' },
+                { id: 'volne', name: 'Volné', icon: '🟢' },
+                { id: 'obsazene', name: 'Obsazené', icon: '🔴' }
+            ]
+        },
         
-        // 2. Nájemníci
+        // 3. Nájemníci
         {
             id: 'najemnici',
             name: 'Nájemníci',
