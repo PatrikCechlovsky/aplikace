@@ -1,8 +1,4 @@
-/* Přidejte toto na začátek forms.css pro TEST */
-.form-control {
-    border: 2px solid red !important;
-    background: yellow !important;
-}/* Formuláře - základní styly */
+/* Formuláře - moderní design */
 .form {
     width: 100%;
     max-width: 1000px;
@@ -22,21 +18,21 @@
     margin-bottom: 0;
 }
 
-/* Hlavička skupiny - barevná a výrazná */
+/* Hlavička skupiny - výrazná ale elegantní */
 .form-group-header {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: var(--primary-color);
-    margin-bottom: var(--spacing-sm);
-    padding-bottom: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
     border-bottom: 2px solid var(--primary-color);
 }
 
-/* Řádky formuláře - menší mezery */
+/* Řádky formuláře */
 .form-row {
     display: flex;
     gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
     flex-wrap: wrap;
 }
 
@@ -63,124 +59,152 @@
 .form-col-11 { flex: 0 0 91.666%; }
 .form-col-12 { flex: 0 0 100%; }
 
-/* Responzivní sloupce */
-@media (max-width: 768px) {
-    .form-row {
-        gap: var(--spacing-xs);
-    }
-    
-    [class^="form-col-"] {
-        flex: 0 0 100%;
-    }
-}
-
 /* Pole formuláře */
 .form-field {
     margin-bottom: 0;
 }
 
-/* Label */
+/* Label - výrazný a moderní */
 .form-label {
     display: block;
-    font-size: 0.813rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    margin-bottom: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.375rem;
+    letter-spacing: 0.025em;
 }
 
 .form-label.required::after {
     content: ' *';
-    color: var(--danger-color);
+    color: #e74c3c;
+    font-weight: 700;
 }
 
-/* Form controls - barevné bordery podle stavu */
+/* Form controls - moderní design s jemným barevným rozlišením */
 .form-control {
     width: 100%;
-    padding: 0.5rem 0.75rem;
+    padding: 0.625rem 0.875rem;
     font-size: 0.938rem;
-    line-height: 1.4;
+    line-height: 1.5;
     color: var(--text-primary);
-    background-color: var(--input-bg);
-    border: 1px solid var(--input-border);
-    border-radius: var(--radius-sm);
-    transition: var(--transition-fast);
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1.5px solid;
+    border-radius: 6px;
+    transition: all 0.2s ease;
 }
 
-/* Barevné bordery pro různé stavy */
-.form-control:focus {
+/* BAREVNÉ ROZLIŠENÍ - jemné a elegantní */
+/* Povinná pole - jemná červená */
+.form-control:required {
+    border-color: rgba(231, 76, 60, 0.5);
+    background-color: rgba(231, 76, 60, 0.03);
+}
+
+.form-control:required:hover {
+    border-color: rgba(231, 76, 60, 0.7);
+    background-color: rgba(231, 76, 60, 0.05);
+}
+
+.form-control:required:focus {
+    border-color: #e74c3c;
+    background-color: rgba(231, 76, 60, 0.05);
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.15);
     outline: none;
-    border-color: var(--primary-color);
-    background-color: var(--input-focus-bg);
-    box-shadow: 0 0 0 2px var(--primary-alpha-20);
 }
 
-.form-control:hover:not(:disabled):not(:focus) {
-    border-color: var(--primary-alpha-60);
+/* Nepovinná pole - jemná zelená */
+.form-control:not(:required) {
+    border-color: rgba(46, 204, 113, 0.5);
+    background-color: rgba(46, 204, 113, 0.03);
 }
 
+.form-control:not(:required):hover {
+    border-color: rgba(46, 204, 113, 0.7);
+    background-color: rgba(46, 204, 113, 0.05);
+}
+
+.form-control:not(:required):focus {
+    border-color: #2ecc71;
+    background-color: rgba(46, 204, 113, 0.05);
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.15);
+    outline: none;
+}
+
+/* Placeholder text */
+.form-control::placeholder {
+    color: var(--text-tertiary);
+    opacity: 0.7;
+}
+
+/* Disabled state */
 .form-control:disabled {
     background-color: var(--disabled-bg);
     color: var(--text-disabled);
     cursor: not-allowed;
     opacity: 0.6;
+    border-color: var(--border-color) !important;
 }
 
-/* Select wrapper pro ikonu */
+/* Select wrapper */
 .form-control-wrapper {
     position: relative;
 }
 
 .form-control-wrapper .form-control {
-    padding-right: 2rem;
+    padding-right: 2.5rem;
 }
 
 .form-control-wrapper .form-icon {
     position: absolute;
-    right: 0.75rem;
+    right: 0.875rem;
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-secondary);
     pointer-events: none;
-    font-size: 0.875rem;
+    font-size: 1rem;
 }
 
 /* Textarea */
 textarea.form-control {
-    min-height: 80px;
+    min-height: 100px;
     resize: vertical;
 }
 
 /* Help text */
 .form-help {
     display: block;
-    font-size: 0.75rem;
-    color: var(--text-tertiary);
-    margin-top: 0.125rem;
+    font-size: 0.813rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+    font-style: italic;
 }
 
-/* Error state - červený border */
+/* Error state */
 .form-field.has-error .form-control {
-    border-color: var(--danger-color);
+    border-color: #e74c3c !important;
+    background-color: rgba(231, 76, 60, 0.08);
 }
 
 .form-field.has-error .form-control:focus {
-    box-shadow: 0 0 0 2px var(--danger-alpha-20);
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
 }
 
 .form-error {
     display: block;
-    font-size: 0.75rem;
-    color: var(--danger-color);
-    margin-top: 0.125rem;
+    font-size: 0.813rem;
+    color: #e74c3c;
+    margin-top: 0.25rem;
+    font-weight: 500;
 }
 
-/* Success state - zelený border */
+/* Success state */
 .form-field.has-success .form-control {
-    border-color: var(--success-color);
+    border-color: #2ecc71 !important;
+    background-color: rgba(46, 204, 113, 0.08);
 }
 
 .form-field.has-success .form-control:focus {
-    box-shadow: 0 0 0 2px var(--success-alpha-20);
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);
 }
 
 /* Form actions */
@@ -193,115 +217,89 @@ textarea.form-control {
     border-top: 1px solid var(--border-color);
 }
 
-/* Pro view mode - lepší čitelnost */
-.form-view .form-row {
-    padding: var(--spacing-xs) 0;
-    border-bottom: 1px solid var(--border-light);
+/* Legenda pro barevné kódování */
+.form-color-legend {
+    display: flex;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-sm);
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: 6px;
+    font-size: 0.813rem;
 }
 
-.form-view .form-row:last-child {
-    border-bottom: none;
+.form-legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
 }
 
-.form-view .form-label {
-    color: var(--text-secondary);
-    font-weight: 400;
-    margin-bottom: 0.125rem;
+.form-legend-color {
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid;
+    border-radius: 4px;
 }
 
-.form-view .form-value {
-    color: var(--text-primary);
-    font-weight: 500;
+.form-legend-color.required {
+    border-color: rgba(231, 76, 60, 0.5);
+    background-color: rgba(231, 76, 60, 0.03);
 }
 
-/* Barevné inputy podle typu */
-/* Primární/povinné pole */
-.form-control:required {
-    border-color: var(--primary-alpha-40);
+.form-legend-color.optional {
+    border-color: rgba(46, 204, 113, 0.5);
+    background-color: rgba(46, 204, 113, 0.03);
 }
 
-.form-control:required:focus {
-    border-color: var(--primary-color);
+/* Animace při změně */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
 }
 
-/* Nepovinné pole */
-.form-control:not(:required) {
-    border-color: var(--border-color);
+.form-control:focus {
+    animation: pulse 0.3s ease-in-out;
 }
 
-/* Speciální styly pro různé typy inputů */
-input[type="date"].form-control,
-input[type="datetime-local"].form-control {
-    border-color: var(--info-alpha-40);
-}
-
-input[type="email"].form-control,
-input[type="tel"].form-control {
-    border-color: var(--success-alpha-40);
-}
-
-input[type="password"].form-control {
-    border-color: var(--warning-alpha-40);
-}
-
-/* Kompaktní mód pro mobily */
-@media (max-width: 480px) {
-    .form-body {
-        padding: var(--spacing-sm);
+/* Responzivní design */
+@media (max-width: 768px) {
+    .form-row {
+        gap: var(--spacing-xs);
+    }
+    
+    [class^="form-col-"] {
+        flex: 0 0 100%;
     }
     
     .form-control {
-        padding: 0.375rem 0.625rem;
+        padding: 0.5rem 0.75rem;
         font-size: 0.875rem;
     }
-    
-    .form-label {
-        font-size: 0.75rem;
-    }
-    
-    .form-group-header {
-        font-size: 0.938rem;
-    }
 }
 
-/* Inline forms */
-.form-inline {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--spacing-sm);
-}
-
-.form-inline .form-field {
-    margin-bottom: 0;
+/* Speciální styly pro různé typy */
+input[type="date"].form-control,
+input[type="datetime-local"].form-control,
+input[type="time"].form-control {
+    font-family: inherit;
 }
 
 /* Checkbox a Radio */
 .form-check {
     display: flex;
     align-items: center;
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
 }
 
 .form-check-input {
-    width: 1.125rem;
-    height: 1.125rem;
-    margin-right: var(--spacing-xs);
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: var(--spacing-sm);
     cursor: pointer;
 }
 
 .form-check-label {
     cursor: pointer;
     user-select: none;
-}
-
-/* Animace */
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-}
-
-.form-field.shake {
-    animation: shake 0.3s ease-in-out;
 }
