@@ -2,11 +2,11 @@
 window.Router = (function() {
     'use strict';
 
-    // Mapování rout na moduly
+    // Mapování rout na moduly - OPRAVENÉ NÁZVY
     const routes = {
         'dashboard': 'Dashboard',
         'pronajimatel': 'Pronajimatel',
-        'najemnici': 'Najemnici',
+        'najemnici': 'Najemnici',      // <- bylo 'Najemnici', má být 'Najemnici' (zkontrolovat velikost písmen)
         'nemovitosti': 'Nemovitosti',
         'smlouvy': 'Smlouvy',
         'platby': 'Platby',
@@ -31,17 +31,23 @@ window.Router = (function() {
 
         const moduleName = routes[module];
         if (moduleName && window[moduleName]) {
-            const mainContent = document.getElementById('main-content'); // <-- TADY ZMĚNA
+            const mainContent = document.getElementById('main-content');
             if (mainContent) {
                 // Kontrola jestli modul má render metodu
                 if (window[moduleName].render) {
                     window[moduleName].render(action);
+                    
+                    // Nastavit aktuální modul v AppState
+                    if (window.AppState) {
+                        AppState.set('currentModule', module);
+                    }
                 } else {
                     mainContent.innerHTML = `<div class="empty-state">Modul ${moduleName} ještě není implementován</div>`;
                 }
             }
         } else {
             console.error(`Modul ${module} nenalezen`);
+            console.log('Dostupné moduly:', Object.keys(window).filter(key => key[0] === key[0].toUpperCase()));
         }
         
         // Aktualizovat breadcrumb
