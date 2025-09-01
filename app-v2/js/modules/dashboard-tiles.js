@@ -53,37 +53,38 @@ window.Dashboard = (function() {
     }
 
     // Render dlaždic
-    function renderTiles(tiles) {
-        const tilesOrder = AppState.getTilesOrder();
-        
-        // Seřadit podle uloženého pořadí
-        const sortedTiles = [...tiles].sort((a, b) => {
-            const orderA = tilesOrder[a.id] || 999;
-            const orderB = tilesOrder[b.id] || 999;
-            return orderA - orderB;
-        });
+  // V metodě renderTiles() najděte část kde se generují dlaždice a upravte ji takto:
+function renderTiles(tiles) {
+    const tilesOrder = AppState.getTilesOrder();
+    
+    // Seřadit podle uloženého pořadí
+    const sortedTiles = [...tiles].sort((a, b) => {
+        const orderA = tilesOrder[a.id] || 999;
+        const orderB = tilesOrder[b.id] || 999;
+        return orderA - orderB;
+    });
 
-        return sortedTiles.map((tile, index) => `
-            <div class="tile${AppState.isFavorite(tile.id) ? ' is-favorite' : ''}" 
-                 data-tile-id="${tile.id}" 
-                 data-order="${tilesOrder[tile.id] || index}"
-                 draggable="true">
-                <button class="favorite-button${AppState.isFavorite(tile.id) ? ' active' : ''}" 
-                        data-tile-id="${tile.id}"
-                        title="${AppState.isFavorite(tile.id) ? 'Odebrat z oblíbených' : 'Přidat do oblíbených'}">
-                    <span class="favorite-icon">⭐</span>
-                </button>
-                <div class="tile-title">
-                    <span class="tile-icon">${tile.icon}</span>
-                    ${tile.title}
-                </div>
-                <div class="tile-tags">
-                    ${tile.tags.map(tag => `<span class="tile-tag">${tag}</span>`).join('')}
-                </div>
-                <div class="tile-desc">${tile.desc}</div>
+    return sortedTiles.map((tile, index) => `
+        <div class="tile${AppState.isFavorite(tile.id) ? ' is-favorite' : ''}" 
+             data-tile-id="${tile.id}" 
+             data-order="${tilesOrder[tile.id] || index}"
+             draggable="true">
+            <button class="favorite-button${AppState.isFavorite(tile.id) ? ' active' : ''}" 
+                    data-tile-id="${tile.id}"
+                    title="${AppState.isFavorite(tile.id) ? 'Odebrat z oblíbených' : 'Přidat do oblíbených'}">
+                <span class="favorite-icon">⭐</span>
+            </button>
+            <div class="tile-title">
+                <span class="tile-icon">${tile.icon}</span>
+                ${tile.title}
             </div>
-        `).join('');
-    }
+            <div class="tile-tags">
+                ${tile.tags.map(tag => `<span class="tile-tag">${tag}</span>`).join('')}
+            </div>
+            <div class="tile-desc">${tile.desc}</div>
+        </div>
+    `).join('');
+}
 
     // Inicializace event handlerů
     function initializeEventHandlers() {
