@@ -138,49 +138,47 @@ window.Pronajimatel = (function() {
         showForm(item.typ_subjektu || 'zastupce', id, false);
     }
 
-    function showForm(type, id = null, viewOnly = false) {
-        const mainContent = document.getElementById('main-content');
-        const isEdit = id !== null && !viewOnly;
-        const isView = viewOnly;
-        const data = id ? getItemById(id) : {};
-        
-        let formHtml = '';
-        
-        if (type === 'zastupce' || data.role === 'zastupce') {
-            formHtml = getZastupceForm(data, isEdit, isView);
-        } else {
-            formHtml = getPronajimatelForm(type, data, isEdit, isView);
-        }
-        
-        mainContent.innerHTML = formHtml;
-        
-        // Přidat event listener pro formulář pouze pokud není v režimu prohlížení
-        if (!isView) {
-            const form = document.getElementById('pronajimatel-form');
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                saveForm(type, id);
-            });
-            
-            // Inicializovat FormLinking pro pole zástupce
-            setTimeout(() => {
-                // Kontrola zda FormLinking existuje
-                if (window.FormLinking) {
-                    FormLinking.init('#pronajimatel-form', 'select[name="zastupce_id"]');
-                }
-                // Přidat do funkce showForm po vykreslení formuláře:
-                setTimeout(() => {
-                    // Inicializovat systém příloh
-                    if (window.AttachmentSystem) {
-                        const entityType = 'pronajimatel'; // nebo 'najemnik', 'nemovitost' atd.
-                        const entityId = data.id || 'new_' + Date.now(); // Pro nové záznamy temporary ID
-                        AttachmentSystem.init('#pronajimatel-form', entityType, entityId);
-                    }
-                  }  
-            }, 100);
-        }
+function showForm(type, id = null, viewOnly = false) {
+    const mainContent = document.getElementById('main-content');
+    const isEdit = id !== null && !viewOnly;
+    const isView = viewOnly;
+    const data = id ? getItemById(id) : {};
+    
+    let formHtml = '';
+    
+    if (type === 'zastupce' || data.role === 'zastupce') {
+        formHtml = getZastupceForm(data, isEdit, isView);
+    } else {
+        formHtml = getPronajimatelForm(type, data, isEdit, isView);
     }
-
+    
+    mainContent.innerHTML = formHtml;
+    
+    // Přidat event listener pro formulář pouze pokud není v režimu prohlížení
+    if (!isView) {
+        const form = document.getElementById('pronajimatel-form');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            saveForm(type, id);
+        });
+        
+        // Inicializovat komponenty
+        setTimeout(() => {
+            // Kontrola zda FormLinking existuje
+            if (window.FormLinking) {
+                FormLinking.init('#pronajimatel-form', 'select[name="zastupce_id"]');
+            }
+            
+            // Inicializovat systém příloh
+            if (window.AttachmentSystem) {
+                const entityType = 'pronajimatel';
+                const entityId = data.id || 'new_' + Date.now();
+                AttachmentSystem.init('#pronajimatel-form', entityType, entityId);
+            }
+        }, 100);
+    }
+}
+    
     function getPronajimatelForm(type, data, isEdit, isView = false) {
         let title = 'Nový pronajímatel';
         if (isView) {
