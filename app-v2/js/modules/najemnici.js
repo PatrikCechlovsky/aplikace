@@ -232,6 +232,15 @@ window.Najemnici = (function() {
                 if (window.FormLinking) {
                     FormLinking.init('#najemnik-form', 'select[name="zastupce_id"]');
                 }
+                // Přidat do funkce showForm po vykreslení formuláře:
+                setTimeout(() => {
+                    // Inicializovat systém příloh
+                    if (window.AttachmentSystem) {
+                        const entityType = 'pronajimatel'; // nebo 'najemnik', 'nemovitost' atd.
+                        const entityId = data.id || 'new_' + Date.now(); // Pro nové záznamy temporary ID
+                        AttachmentSystem.init('#pronajimatel-form', entityType, entityId);
+                    }
+                 }
             }, 100);
         }
     }
