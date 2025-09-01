@@ -91,21 +91,6 @@ window.APP_CONFIG = {
             ]
         },
         
-        // 3. Nemovitosti
-        {
-            id: 'nemovitosti',
-            name: 'Nemovitosti',
-            icon: '🏘️',
-            description: 'Správa nemovitostí',
-            types: [
-                { id: 'all', name: 'Přehled', icon: '📊' },
-                { id: 'budovy', name: 'Budovy', icon: '🏢' },
-                { id: 'jednotky', name: 'Jednotky/byty', icon: '🏘️' },
-                { id: 'volne', name: 'Volné', icon: '🟢' },
-                { id: 'obsazene', name: 'Obsazené', icon: '🔴' }
-            ]
-        },
-        
         // 4. Smlouvy
         {
             id: 'smlouvy',
