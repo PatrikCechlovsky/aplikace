@@ -239,15 +239,15 @@ window.Help = (function() {
         const help = modules[moduleId];
         if (!help) return;
         
-        if (window.Modal && typeof window.Modal.show === 'function') {
-            window.Modal.show({
+        if (window.Modal && typeof window.Modal.open === 'function') {
+            window.Modal.open({
                 title: `Nápověda - ${help.title}`,
                 content: help.quickHelp,
                 buttons: [
                     {
                         text: 'Zavřít',
                         class: 'btn-primary',
-                        onClick: () => window.Modal.hide()
+                        onClick: () => window.Modal.close()
                     }
                 ]
             });
@@ -278,8 +278,8 @@ window.Help = (function() {
             </div>
         `;
         
-        if (window.Modal && typeof window.Modal.show === 'function') {
-            window.Modal.show({
+        if (window.Modal && typeof window.Modal.open === 'function') {
+            window.Modal.open({
                 title: '❓ Nápověda aplikace',
                 content: content,
                 size: 'large',
@@ -287,7 +287,7 @@ window.Help = (function() {
                     {
                         text: 'Zavřít',
                         class: 'btn-secondary',
-                        onClick: () => window.Modal.hide()
+                        onClick: () => window.Modal.close()
                     }
                 ]
             });
@@ -363,8 +363,8 @@ window.Help = (function() {
             </div>
         `;
         
-        if (window.Modal && typeof window.Modal.show === 'function') {
-            window.Modal.show({
+        if (window.Modal && typeof window.Modal.open === 'function') {
+            window.Modal.open({
                 title: 'Klávesové zkratky',
                 content: content,
                 size: 'small'
