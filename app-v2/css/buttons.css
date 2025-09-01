@@ -21,7 +21,20 @@
     transform: translateY(-1px);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+/* Help button */
+.btn-help {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+}
 
+.btn-help:hover {
+    background: var(--bg-secondary);
+}
 /* Specifické barvy pro akce */
 .btn-icon.btn-view {
     color: var(--brand-primary);
