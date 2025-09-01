@@ -176,6 +176,7 @@ window.Pronajimatel = (function() {
                         const entityId = data.id || 'new_' + Date.now(); // Pro nové záznamy temporary ID
                         AttachmentSystem.init('#pronajimatel-form', entityType, entityId);
                     }
+                  }  
             }, 100);
         }
     }
