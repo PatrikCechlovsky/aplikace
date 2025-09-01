@@ -175,6 +175,11 @@ window.Pronajimatel = (function() {
                     const entityId = data.id || 'new_' + Date.now();
                     AttachmentSystem.init('#pronajimatel-form', entityType, entityId);
                 }
+                    // Inicializovat FormGuard
+            setTimeout(() => {
+                if (window.FormGuard) {
+                    FormGuard.track('#pronajimatel-form');
+                }
             }, 100);
         }
     }
@@ -838,6 +843,10 @@ window.Pronajimatel = (function() {
 
     // Uložení formuláře
     function saveForm(type, id) {
+             // Resetovat FormGuard po úspěšném uložení
+        if (window.FormGuard) {
+            FormGuard.reset();
+        }
         const form = document.getElementById('pronajimatel-form');
         const formData = new FormData(form);
         const item = {};
