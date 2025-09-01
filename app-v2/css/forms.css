@@ -81,6 +81,9 @@
 }
 
 /* Form controls - moderní design s jemným barevným rozlišením */
+/* Aktualizace pro silnější bordery */
+
+/* Form controls - silnější bordery pro lepší viditelnost */
 .form-control {
     width: 100%;
     padding: 0.625rem 0.875rem;
@@ -88,48 +91,63 @@
     line-height: 1.5;
     color: var(--text-primary);
     background-color: rgba(255, 255, 255, 0.05);
-    border: 1.5px solid;
+    border: 2px solid;  /* Změněno z 1.5px na 2px */
     border-radius: 6px;
     transition: all 0.2s ease;
 }
 
-/* BAREVNÉ ROZLIŠENÍ - jemné a elegantní */
-/* Povinná pole - jemná červená */
+/* BAREVNÉ ROZLIŠENÍ - silnější barvy */
+/* Povinná pole - výraznější červená */
 .form-control:required {
-    border-color: rgba(231, 76, 60, 0.5);
-    background-color: rgba(231, 76, 60, 0.03);
+    border-color: rgba(231, 76, 60, 0.7);  /* Zvýšeno z 0.5 na 0.7 */
+    background-color: rgba(231, 76, 60, 0.04);  /* Trochu tmavší pozadí */
 }
 
 .form-control:required:hover {
-    border-color: rgba(231, 76, 60, 0.7);
-    background-color: rgba(231, 76, 60, 0.05);
+    border-color: rgba(231, 76, 60, 0.85);  /* Zvýšeno z 0.7 na 0.85 */
+    background-color: rgba(231, 76, 60, 0.06);
 }
 
 .form-control:required:focus {
     border-color: #e74c3c;
-    background-color: rgba(231, 76, 60, 0.05);
-    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.15);
+    background-color: rgba(231, 76, 60, 0.06);
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);  /* Silnější stín */
     outline: none;
 }
 
-/* Nepovinná pole - jemná zelená */
+/* Nepovinná pole - výraznější zelená */
 .form-control:not(:required) {
-    border-color: rgba(46, 204, 113, 0.5);
-    background-color: rgba(46, 204, 113, 0.03);
+    border-color: rgba(46, 204, 113, 0.7);  /* Zvýšeno z 0.5 na 0.7 */
+    background-color: rgba(46, 204, 113, 0.04);  /* Trochu tmavší pozadí */
 }
 
 .form-control:not(:required):hover {
-    border-color: rgba(46, 204, 113, 0.7);
-    background-color: rgba(46, 204, 113, 0.05);
+    border-color: rgba(46, 204, 113, 0.85);  /* Zvýšeno z 0.7 na 0.85 */
+    background-color: rgba(46, 204, 113, 0.06);
 }
 
 .form-control:not(:required):focus {
     border-color: #2ecc71;
-    background-color: rgba(46, 204, 113, 0.05);
-    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.15);
+    background-color: rgba(46, 204, 113, 0.06);
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);  /* Silnější stín */
     outline: none;
 }
 
+/* Pro lepší viditelnost v tmavém tématu */
+@media (prefers-color-scheme: dark) {
+    .form-control {
+        border-width: 2.5px;  /* Ještě o trochu silnější v tmavém režimu */
+    }
+}
+
+/* Responzivní - na mobilech zachovat silnější border */
+@media (max-width: 768px) {
+    .form-control {
+        border-width: 2px;  /* Zachovat 2px i na mobilech */
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+    }
+}
 /* Placeholder text */
 .form-control::placeholder {
     color: var(--text-tertiary);
