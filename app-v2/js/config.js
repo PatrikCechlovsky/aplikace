@@ -67,8 +67,8 @@ window.APP_CONFIG = {
             description: 'Správa nemovitostí',
             types: [
                 { id: 'all', name: 'Přehled', icon: '📊' },
-                { id: 'budovy', name: 'Budovy', icon: '🏢' },
-                { id: 'jednotky', name: 'Jednotky/byty', icon: '🏘️' },
+                { id: 'budovy', name: 'Budovy', icon: '🏢', separator: true },
+                { id: 'jednotky', name: 'Jednotky/byty', icon: '🏠' },
                 { id: 'volne', name: 'Volné', icon: '🟢' },
                 { id: 'obsazene', name: 'Obsazené', icon: '🔴' }
             ]
