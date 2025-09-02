@@ -27,6 +27,23 @@ window.ModuleTiles = (function() {
             // ...další oblíbené moduly
         ];
     }
+    
+    {
+        id: 'help',
+        title: 'Nápověda',
+        icon: 'fa-question-circle',
+        color: '#6c757d',
+        size: 'small',
+        action: () => {
+            if (window.Help && window.Help.show) {
+                window.Help.show();
+            } else {
+                console.error('Help modul není načten');
+                // Alternativně můžete zobrazit jednoduchý alert
+                alert('Nápověda není momentálně dostupná');
+            }
+        }
+    },
 
     // Funkce handleTileClick
     function handleTileClick(module, action) {
