@@ -605,13 +605,13 @@ window.Nemovitosti = (function() {
         const najemciData = JSON.parse(localStorage.getItem('najemnici_data') || '[]');
         
         // Přidat tlačítko příloh do headeru
-        //const attachmentButton = `
-         //   <div class="form-attachments">
-        //        <button type="button" class="btn-icon btn-attachment" title="Přílohy" onclick="window.AttachmentSystem.show()">
-         //           📎
-         //       </button>
-        //    </div>
-        //`;
+            const attachmentButton = `
+            <div class="form-attachments">
+                <button type="button" class="btn-icon btn-attachment" title="Přílohy" onclick="window.AttachmentSystem.show()">
+                    📎
+                </button>
+            </div>
+        `;
         
         const mainContent = document.getElementById('main-content');
         mainContent.innerHTML = `
