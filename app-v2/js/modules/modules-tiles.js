@@ -35,12 +35,10 @@ window.ModuleTiles = (function() {
         color: '#6c757d',
         size: 'small',
         action: () => {
-            if (window.Help && window.Help.show) {
-                window.Help.show();
+            if (window.Help && window.Help.showFullDocumentation) {
+                window.Help.showFullDocumentation();
             } else {
                 console.error('Help modul není načten');
-                // Alternativně můžete zobrazit jednoduchý alert
-                alert('Nápověda není momentálně dostupná');
             }
         }
     },
