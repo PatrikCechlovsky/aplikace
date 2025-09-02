@@ -997,9 +997,13 @@ window.Nemovitosti = (function() {
         
         // Spočítat jednotky pro každou nemovitost
         const jednotkyCount = {};
+        const volneJednotkyCount = {};
         data.jednotky.forEach(j => {
             if (!j.archived) {
                 jednotkyCount[j.nemovitost_id] = (jednotkyCount[j.nemovitost_id] || 0) + 1;
+                if (j.stav === 'volna') {
+                    volneJednotkyCount[j.nemovitost_id] = (volneJednotkyCount[j.nemovitost_id] || 0) + 1;
+                }
             }
         });
         
@@ -1042,61 +1046,37 @@ window.Nemovitosti = (function() {
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th style="width: 50px;">ID</th>
-                                    <th style="width: 250px;">Název/Adresa</th>
+                                    <th style="width: 80px;">ID</th>
+                                    <th style="width: 250px;">Název</th>
                                     <th style="width: 120px;">Typ</th>
+                                    <th style="width: 250px;">Adresa</th>
                                     <th style="width: 100px;">Město</th>
-                                    <th style="width: 120px;">Jednotek</th>
-                                    <th style="width: 150px;">Vlastník</th>
-                                    <th style="width: 100px;">Správce</th>
-                                    <th style="width: 120px;">Akce</th>
+                                    <th style="width: 80px;">Jednotek</th>
+                                    <th style="width: 200px;">Vlastník</th>
+                                    <th style="width: 150px;">Akce</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 ${filteredData.map(item => {
                                     const vlastnik = pronajimatelData.find(p => p.id === item.pronajimatel_id);
                                     const pocetJednotek = jednotkyCount[item.id] || 0;
-                                    const pocetVolnych = data.jednotky.filter(j => 
-                                        j.nemovitost_id === item.id && 
-                                        j.stav === 'volna' && 
-                                        !j.archived
-                                    ).length;
+                                    const pocetVolnych = volneJednotkyCount[item.id] || 0;
                                     
                                     return `
                                         <tr class="${item.archived ? 'archived-row' : ''}">
                                             <td>${item.id}</td>
-                                            <td>
-                                                <div class="primary-text">${item.nazev}</div>
-                                                <div class="secondary-text">
-                                                    ${item.ulice} ${item.cisloPopisne || ''}
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-${item.typ}">
-                                                    ${typyNemovitosti[item.typ]?.icon} ${typyNemovitosti[item.typ]?.name || item.typ}
-                                                </span>
-                                            </td>
-                                            <td>${item.mesto || '-'}</td>
-                                            <td>
-                                                <div class="units-info">
-                                                    <span class="badge ${pocetJednotek > 0 ? 'badge-primary' : 'badge-secondary'}">
-                                                        ${pocetJednotek}/${item.pocetJednotek || 0}
-                                                    </span>
-                                                    ${pocetVolnych > 0 ? `
-                                                        <span class="badge badge-success ml-1">
-                                                            ${pocetVolnych} volných
-                                                        </span>
-                                                    ` : ''}
-                                                </div>
-                                            </td>
                                             <td class="text-truncate">
-                                                ${vlastnik ? `
-                                                    <a href="#" onclick="window.Router.navigate('pronajimatel'); Pronajimatel.view('${vlastnik.id}'); return false;">
-                                                        ${vlastnik.nazev || `${vlastnik.jmeno} ${vlastnik.prijmeni}`}
-                                                    </a>
-                                                ` : '-'}
+                                                ${item.nazev}
+                                                ${item.archived ? '<span class="badge badge-secondary">Archiv</span>' : ''}
                                             </td>
-                                            <td class="text-truncate">${item.spravce || '-'}</td>
+                                            <td><span class="badge badge-${item.typ}">${getTypeName(item.typ)}</span></td>
+                                            <td class="text-truncate">${item.ulice} ${item.cisloPopisne || ''}</td>
+                                            <td class="text-truncate">${item.mesto || '-'}</td>
+                                            <td>
+                                                <span class="units-count">${pocetJednotek}/${item.pocetJednotek || 0}</span>
+                                                ${pocetVolnych > 0 ? `<br><small class="text-success">${pocetVolnych} volných</small>` : ''}
+                                            </td>
+                                            <td class="text-truncate">${vlastnik?.nazev || vlastnik?.prijmeni || '-'}</td>
                                             <td>
                                                 <div class="btn-group">
                                                     <button class="btn-icon btn-view" onclick="Nemovitosti.view('${item.id}')" title="Zobrazit">
@@ -1109,7 +1089,14 @@ window.Nemovitosti = (function() {
                                                         <button class="btn-icon btn-units" onclick="Nemovitosti.showUnits('${item.id}')" title="Jednotky">
                                                             🔑
                                                         </button>
-                                                    ` : ''}
+                                                        <button class="btn-icon btn-archive" onclick="Nemovitosti.archive('${item.id}')" title="Archivovat">
+                                                            📁
+                                                        </button>
+                                                    ` : `
+                                                        <button class="btn-icon btn-restore" onclick="Nemovitosti.restore('${item.id}')" title="Obnovit">
+                                                            ♻️
+                                                        </button>
+                                                    `}
                                                 </div>
                                             </td>
                                         </tr>
@@ -1125,6 +1112,72 @@ window.Nemovitosti = (function() {
         // Přidat styly
         addArchiveStyles();
         addTableStyles();
+    }
+    
+    // Aktualizovat styly pro jednotné zobrazení
+    function addTableStyles() {
+        if (document.getElementById('nemovitosti-table-styles')) return;
+        
+        const styles = document.createElement('style');
+        styles.id = 'nemovitosti-table-styles';
+        styles.textContent = `
+            .units-count {
+                font-weight: 500;
+            }
+            
+            .badge-bytovy_dum { 
+                background-color: #007bff; 
+                color: white; 
+            }
+            
+            .badge-rodinny_dum { 
+                background-color: #28a745; 
+                color: white; 
+            }
+            
+            .badge-admin_budova { 
+                background-color: #6610f2; 
+                color: white; 
+            }
+            
+            .badge-prumyslovy { 
+                background-color: #fd7e14; 
+                color: white; 
+            }
+            
+            .badge-pozemek { 
+                background-color: #20c997; 
+                color: white; 
+            }
+            
+            .badge-jiny { 
+                background-color: #6c757d; 
+                color: white; 
+            }
+            
+            .btn-units {
+                color: #17a2b8;
+            }
+            
+            .btn-units:hover {
+                color: #138496;
+                transform: scale(1.1);
+            }
+            
+            .btn-archive {
+                color: #ffc107;
+            }
+            
+            .btn-archive:hover {
+                color: #e0a800;
+                transform: scale(1.1);
+            }
+            
+            .text-success {
+                color: #28a745;
+            }
+        `;
+        document.head.appendChild(styles);
     }
     
     // Přidat novou funkci pro styly tabulky
