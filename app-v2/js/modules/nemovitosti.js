@@ -985,39 +985,38 @@ window.Nemovitosti = (function() {
 
     // ... všechny ostatní funkce zůstávají stejné ...
 
-    // Public API
+    // Public API - exportovat všechny potřebné funkce
     return {
-        render,
-        showAddDialog,
-        showForm,
-        view,
-        edit,
-        archive,
-        archiveUnit,
-        restore,
-        restoreUnit,
-        toggleArchived,
-        showUnits,
-        showUnitForm,
-        editUnit,
-        deleteUnit,
-        viewJednotka,
-        updateJednotkyInfo,
-        toggleNajemceField,
-        saveForm,
-        saveUnit,
-        getTypeName,
-        getStavBadge,
-        getItemById,
-        getPronajimatelList,
-        getPronajimatelById,
-        showAddDialog,
-        renderPrehled,
-        renderBudovy,
-        renderJednotky,
-        toggleNajemceField,
-        addStatsStyles,
-        addArchiveStyles,
-        getCurrentView
+        // Hlavní render funkce
+        render: render,
+        
+        // Render funkce pro různé pohledy
+        renderPrehled: renderPrehled,
+        renderBudovy: renderBudovy,
+        renderJednotky: renderJednotky,
+        
+        // Formuláře a dialogy
+        showAddDialog: showAddDialog,
+        showForm: showForm,
+        showUnitForm: showUnitForm,
+        showUnits: showUnits,
+        
+        // CRUD operace
+        view: view,
+        edit: edit,
+        archive: archive,
+        archiveUnit: archiveUnit,
+        restore: restore,
+        restoreUnit: restoreUnit,
+        deleteUnit: deleteUnit,
+        editUnit: editUnit,
+        viewJednotka: viewJednotka,
+        
+        // Pomocné funkce
+        toggleArchived: toggleArchived,
+        updateJednotkyInfo: updateJednotkyInfo,
+        toggleNajemceField: toggleNajemceField,
+        saveForm: saveForm,
+        saveUnit: saveUnit
     };
 })();
