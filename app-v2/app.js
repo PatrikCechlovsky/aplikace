@@ -31,7 +31,7 @@ window.App = (function() {
             initializeSampleData();
             
             // 1. Inicializace AppState
-            if (window.AppState && AppState.init) AppState.init();
+            //if (window.AppState && AppState.init) AppState.init();//
 
             // 2. Vykreslení navigace
             if (window.Sidebar && Sidebar.render) Sidebar.render();
