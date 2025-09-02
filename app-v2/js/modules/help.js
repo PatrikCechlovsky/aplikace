@@ -1,6 +1,7 @@
 window.Help = (function() {
     'use strict';
-        // Přidejte tuto funkci na začátek souboru (za 'use strict'):
+    
+    // Funkce pro vytvoření vlastního modalu
     function createSimpleModal(options) {
         // Odstranit existující modal
         const existingModal = document.querySelector('.help-modal-overlay');
@@ -51,6 +52,7 @@ window.Help = (function() {
                     width: 90%;
                     display: flex;
                     flex-direction: column;
+                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
                 }
                 .help-modal-header {
                     padding: 20px;
@@ -67,6 +69,16 @@ window.Help = (function() {
                     border: none;
                     font-size: 24px;
                     cursor: pointer;
+                    padding: 0;
+                    width: 30px;
+                    height: 30px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .help-modal-close:hover {
+                    background: #f0f0f0;
+                    border-radius: 4px;
                 }
                 .help-modal-content {
                     padding: 20px;
@@ -78,6 +90,130 @@ window.Help = (function() {
                     border-top: 1px solid #eee;
                     text-align: right;
                 }
+                
+                /* Styly pro navigaci v nápovědě */
+                .help-menu {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                }
+                .help-navigation {
+                    display: flex;
+                    gap: 10px;
+                    border-bottom: 1px solid #eee;
+                    padding-bottom: 10px;
+                }
+                .help-nav-btn {
+                    padding: 8px 16px;
+                    border: none;
+                    background: #f0f0f0;
+                    cursor: pointer;
+                    border-radius: 4px;
+                    transition: all 0.2s;
+                }
+                .help-nav-btn:hover {
+                    background: #e0e0e0;
+                }
+                .help-nav-btn.active {
+                    background: #007bff;
+                    color: white;
+                }
+                .help-content {
+                    padding-top: 20px;
+                }
+                
+                /* Styly pro obsah dokumentace */
+                .doc-section h3, .doc-section h4 {
+                    margin-top: 20px;
+                    margin-bottom: 10px;
+                }
+                .quick-start-steps {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                    margin-top: 20px;
+                }
+                .step {
+                    display: flex;
+                    gap: 15px;
+                    align-items: start;
+                }
+                .step-number {
+                    background: #007bff;
+                    color: white;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: bold;
+                    flex-shrink: 0;
+                }
+                .step-content h4 {
+                    margin-top: 0;
+                }
+                
+                /* Styly pro moduly */
+                .help-modules {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                    gap: 15px;
+                    margin-top: 20px;
+                }
+                .help-module-card {
+                    border: 1px solid #eee;
+                    border-radius: 8px;
+                    padding: 20px;
+                    cursor: pointer;
+                    transition: all 0.2s;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+                .help-module-card:hover {
+                    background: #f8f9fa;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                }
+                .help-module-icon {
+                    font-size: 24px;
+                }
+                
+                /* Styly pro tipy */
+                .tips-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                    gap: 20px;
+                    margin-top: 20px;
+                }
+                .tip-card {
+                    border: 1px solid #eee;
+                    border-radius: 8px;
+                    padding: 20px;
+                    background: #f8f9fa;
+                }
+                .tip-card h4 {
+                    margin-top: 0;
+                }
+                
+                /* Styly pro klávesové zkratky */
+                .shortcuts-table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 20px;
+                }
+                .shortcuts-table td {
+                    padding: 10px;
+                    border-bottom: 1px solid #eee;
+                }
+                .shortcuts-table kbd {
+                    background: #f0f0f0;
+                    padding: 2px 6px;
+                    border-radius: 3px;
+                    border: 1px solid #ccc;
+                    font-family: monospace;
+                }
             `;
             document.head.appendChild(styles);
         }
@@ -85,46 +221,6 @@ window.Help = (function() {
         document.body.appendChild(overlay);
     }
     
-    // Pak upravte funkce showHelp a showFullDocumentation:
-    function showHelp(moduleId) {
-        const help = modules[moduleId];
-        if (!help) return;
-        
-        createSimpleModal({
-            title: `Nápověda - ${help.title}`,
-            content: help.quickHelp
-        });
-    }
-    
-    function showFullDocumentation() {
-        const content = `
-            <div class="help-menu">
-                <div class="help-navigation">
-                    <button class="help-nav-btn active" onclick="window.Help.showDocSection('overview', event)">
-                        📋 Přehled
-                    </button>
-                    <button class="help-nav-btn" onclick="window.Help.showDocSection('quickStart', event)">
-                        🚀 Rychlý start
-                    </button>
-                    <button class="help-nav-btn" onclick="window.Help.showDocSection('modules', event)">
-                        📦 Moduly
-                    </button>
-                    <button class="help-nav-btn" onclick="window.Help.showDocSection('tips', event)">
-                        💡 Tipy
-                    </button>
-                </div>
-                
-                <div id="help-content" class="help-content">
-                    ${mainDocumentation.overview}
-                </div>
-            </div>
-        `;
-        
-        createSimpleModal({
-            title: '❓ Nápověda aplikace',
-            content: content
-        });
-    }
     // Kompletní dokumentace modulů
     const modules = {
         pronajimatel: {
@@ -359,25 +455,18 @@ window.Help = (function() {
         `
     };
     
+    // Funkce pro zobrazení nápovědy konkrétního modulu
     function showHelp(moduleId) {
         const help = modules[moduleId];
         if (!help) return;
         
-        if (window.Modal && window.Modal.open) {
-            window.Modal.open({
-                title: `Nápověda - ${help.title}`,
-                content: help.quickHelp,
-                buttons: [
-                    {
-                        text: 'Zavřít',
-                        class: 'btn-primary',
-                        onClick: () => window.Modal.close()
-                    }
-                ]
-            });
-        }
+        createSimpleModal({
+            title: `Nápověda - ${help.title}`,
+            content: help.quickHelp
+        });
     }
     
+    // Funkce pro zobrazení hlavní dokumentace
     function showFullDocumentation() {
         const content = `
             <div class="help-menu">
@@ -402,22 +491,13 @@ window.Help = (function() {
             </div>
         `;
         
-        if (window.Modal && window.Modal.open) {
-            window.Modal.open({
-                title: '❓ Nápověda aplikace',
-                content: content,
-                size: 'large',
-                buttons: [
-                    {
-                        text: 'Zavřít',
-                        class: 'btn-secondary',
-                        onClick: () => window.Modal.close()
-                    }
-                ]
-            });
-        }
+        createSimpleModal({
+            title: '❓ Nápověda aplikace',
+            content: content
+        });
     }
     
+    // Funkce pro přepínání sekcí dokumentace
     function showDocSection(section, event) {
         // Aktualizace navigace
         document.querySelectorAll('.help-nav-btn').forEach(btn => {
@@ -460,6 +540,7 @@ window.Help = (function() {
         }
     }
     
+    // Funkce pro zobrazení klávesových zkratek
     function showKeyboardShortcuts() {
         const content = `
             <div class="keyboard-shortcuts">
@@ -489,20 +570,10 @@ window.Help = (function() {
             </div>
         `;
         
-        if (window.Modal && window.Modal.open) {
-            window.Modal.open({
-                title: 'Klávesové zkratky',
-                content: content,
-                size: 'small',
-                buttons: [
-                    {
-                        text: 'Zavřít',
-                        class: 'btn-secondary',
-                        onClick: () => window.Modal.close()
-                    }
-                ]
-            });
-        }
+        createSimpleModal({
+            title: 'Klávesové zkratky',
+            content: content
+        });
     }
     
     // Veřejné API
@@ -510,6 +581,8 @@ window.Help = (function() {
         showHelp,
         showFullDocumentation,
         showDocSection,
-        showKeyboardShortcuts
+        showKeyboardShortcuts,
+        // Přidáme alias pro kompatibilitu
+        show: showFullDocumentation
     };
 })();
