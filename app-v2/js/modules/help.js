@@ -1,6 +1,130 @@
 window.Help = (function() {
     'use strict';
+        // Přidejte tuto funkci na začátek souboru (za 'use strict'):
+    function createSimpleModal(options) {
+        // Odstranit existující modal
+        const existingModal = document.querySelector('.help-modal-overlay');
+        if (existingModal) {
+            existingModal.remove();
+        }
+        
+        // Vytvořit nový modal
+        const overlay = document.createElement('div');
+        overlay.className = 'help-modal-overlay';
+        overlay.innerHTML = `
+            <div class="help-modal">
+                <div class="help-modal-header">
+                    <h2>${options.title || 'Nápověda'}</h2>
+                    <button class="help-modal-close" onclick="this.closest('.help-modal-overlay').remove()">✕</button>
+                </div>
+                <div class="help-modal-content">
+                    ${options.content || ''}
+                </div>
+                <div class="help-modal-footer">
+                    <button class="btn btn-primary" onclick="this.closest('.help-modal-overlay').remove()">Zavřít</button>
+                </div>
+            </div>
+        `;
+        
+        // Přidat styly pokud neexistují
+        if (!document.querySelector('#help-modal-styles')) {
+            const styles = document.createElement('style');
+            styles.id = 'help-modal-styles';
+            styles.textContent = `
+                .help-modal-overlay {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0,0,0,0.5);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 9999;
+                }
+                .help-modal {
+                    background: white;
+                    border-radius: 8px;
+                    max-width: 800px;
+                    max-height: 80vh;
+                    width: 90%;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .help-modal-header {
+                    padding: 20px;
+                    border-bottom: 1px solid #eee;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .help-modal-header h2 {
+                    margin: 0;
+                }
+                .help-modal-close {
+                    background: none;
+                    border: none;
+                    font-size: 24px;
+                    cursor: pointer;
+                }
+                .help-modal-content {
+                    padding: 20px;
+                    overflow-y: auto;
+                    flex: 1;
+                }
+                .help-modal-footer {
+                    padding: 20px;
+                    border-top: 1px solid #eee;
+                    text-align: right;
+                }
+            `;
+            document.head.appendChild(styles);
+        }
+        
+        document.body.appendChild(overlay);
+    }
     
+    // Pak upravte funkce showHelp a showFullDocumentation:
+    function showHelp(moduleId) {
+        const help = modules[moduleId];
+        if (!help) return;
+        
+        createSimpleModal({
+            title: `Nápověda - ${help.title}`,
+            content: help.quickHelp
+        });
+    }
+    
+    function showFullDocumentation() {
+        const content = `
+            <div class="help-menu">
+                <div class="help-navigation">
+                    <button class="help-nav-btn active" onclick="window.Help.showDocSection('overview', event)">
+                        📋 Přehled
+                    </button>
+                    <button class="help-nav-btn" onclick="window.Help.showDocSection('quickStart', event)">
+                        🚀 Rychlý start
+                    </button>
+                    <button class="help-nav-btn" onclick="window.Help.showDocSection('modules', event)">
+                        📦 Moduly
+                    </button>
+                    <button class="help-nav-btn" onclick="window.Help.showDocSection('tips', event)">
+                        💡 Tipy
+                    </button>
+                </div>
+                
+                <div id="help-content" class="help-content">
+                    ${mainDocumentation.overview}
+                </div>
+            </div>
+        `;
+        
+        createSimpleModal({
+            title: '❓ Nápověda aplikace',
+            content: content
+        });
+    }
     // Kompletní dokumentace modulů
     const modules = {
         pronajimatel: {
