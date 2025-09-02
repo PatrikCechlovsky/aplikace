@@ -985,6 +985,597 @@ window.Nemovitosti = (function() {
 
     // ... všechny ostatní funkce zůstávají stejné ...
 
+        // Přidejte tyto funkce PŘED sekci "return" na konci souboru:
+    
+    function renderPrehled() {
+        const mainContent = document.getElementById('main-content');
+        
+        // Statistiky
+        const pocetNemovitosti = data.nemovitosti.filter(n => !n.archived).length;
+        const pocetJednotek = data.jednotky.filter(j => !j.archived).length;
+        const volneJednotky = data.jednotky.filter(j => j.stav === 'volna' && !j.archived).length;
+        const obsazeneJednotky = data.jednotky.filter(j => j.stav === 'obsazena' && !j.archived).length;
+        
+        mainContent.innerHTML = `
+            <div class="page-header">
+                <div class="page-title-wrapper">
+                    <h1 class="page-title">
+                        <span class="module-icon">🏘️</span>
+                        Nemovitosti - 
+                        <span class="type-icon">📊</span>
+                        Přehled
+                    </h1>
+                </div>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-icon">🏢</div>
+                    <div class="stat-content">
+                        <div class="stat-value">${pocetNemovitosti}</div>
+                        <div class="stat-label">Celkem budov</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏠</div>
+                    <div class="stat-content">
+                        <div class="stat-value">${pocetJednotek}</div>
+                        <div class="stat-label">Celkem jednotek</div>
+                    </div>
+                </div>
+                <div class="stat-card success">
+                    <div class="stat-icon">🟢</div>
+                    <div class="stat-content">
+                        <div class="stat-value">${volneJednotky}</div>
+                        <div class="stat-label">Volné jednotky</div>
+                    </div>
+                </div>
+                <div class="stat-card danger">
+                    <div class="stat-icon">🔴</div>
+                    <div class="stat-content">
+                        <div class="stat-value">${obsazeneJednotky}</div>
+                        <div class="stat-label">Obsazené jednotky</div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        addStatsStyles();
+    }
+    
+    function showAddDialog(preselectedType = 'all') {
+        const mainContent = document.getElementById('main-content');
+        
+        if (preselectedType !== 'all' && typyNemovitosti[preselectedType]) {
+            showForm(preselectedType, null);
+            return;
+        }
+    
+        mainContent.innerHTML = `
+            <div class="page-header">
+                <h1 class="page-title">
+                    <span class="module-icon">🏘️</span>
+                    Vyberte typ nemovitosti
+                </h1>
+            </div>
+            
+            <div class="type-selector">
+                <div class="type-cards">
+                    ${Object.entries(typyNemovitosti).map(([key, typ]) => `
+                        <div class="type-card" onclick="Nemovitosti.showForm('${key}')">
+                            <div class="type-card-icon">${typ.icon}</div>
+                            <h3 class="type-card-title">${typ.name}</h3>
+                            <p class="type-card-description">
+                                ${key === 'bytovy_dum' ? 'Vícepodlažní budova s byty' :
+                                  key === 'rodinny_dum' ? 'Samostatný dům' :
+                                  key === 'admin_budova' ? 'Kancelářská budova' :
+                                  key === 'prumyslovy' ? 'Skladové a výrobní prostory' :
+                                  key === 'pozemek' ? 'Stavební nebo zemědělský pozemek' :
+                                  'Jiný typ objektu'}
+                            </p>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-secondary" onclick="window.history.back()">
+                        <span class="btn-icon">←</span>
+                        <span class="btn-text">Zpět</span>
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+    
+    function view(id) {
+        const item = getItemById(id);
+        if (!item) return;
+        
+        showForm(item.typ, id, true);
+    }
+    
+    function edit(id) {
+        const item = getItemById(id);
+        if (!item) return;
+        
+        showForm(item.typ, id, false);
+    }
+    
+    function showUnits(nemovitostId, isNew = false) {
+        const nemovitost = getItemById(nemovitostId);
+        if (!nemovitost) return;
+        
+        const jednotky = data.jednotky.filter(j => j.nemovitost_id === nemovitostId && !j.archived);
+        
+        const mainContent = document.getElementById('main-content');
+        mainContent.innerHTML = `
+            <div class="page-header">
+                <div class="page-title-wrapper">
+                    <h1 class="page-title">
+                        <span class="module-icon">🔑</span>
+                        Jednotky - ${nemovitost.nazev}
+                    </h1>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-primary" onclick="Nemovitosti.showUnitForm('${nemovitostId}')">
+                        <span class="btn-icon">+</span>
+                        <span class="btn-text">Přidat jednotku</span>
+                    </button>
+                </div>
+            </div>
+            
+            ${isNew ? `
+                <div class="alert alert-success">
+                    <strong>Nemovitost byla úspěšně vytvořena!</strong> 
+                    Nyní můžete přidat jednotky. Celkem jednotek: ${nemovitost.pocetJednotek}
+                </div>
+            ` : ''}
+            
+            <div class="info-box">
+                <p><strong>Adresa:</strong> ${nemovitost.ulice} ${nemovitost.cisloPopisne}, ${nemovitost.mesto}</p>
+                <p><strong>Počet jednotek:</strong> ${jednotky.length} / ${nemovitost.pocetJednotek}</p>
+            </div>
+            
+            <div class="card">
+                ${jednotky.length === 0 ? 
+                    `<div class="empty-state">
+                        <div class="empty-state-icon">🔑</div>
+                        <p class="empty-state-text">Zatím nejsou vytvořeny žádné jednotky</p>
+                        <button class="btn btn-primary" onclick="Nemovitosti.showUnitForm('${nemovitostId}')">
+                            Vytvořit první jednotku
+                        </button>
+                    </div>` :
+                    `<div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Označení</th>
+                                    <th>Typ</th>
+                                    <th>Plocha</th>
+                                    <th>Dispozice</th>
+                                    <th>Stav</th>
+                                    <th>Nájemce</th>
+                                    <th>Akce</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${jednotky.map(j => `
+                                    <tr>
+                                        <td>${j.id}</td>
+                                        <td>${j.oznaceni}</td>
+                                        <td>${typyJednotek[j.typ]?.name || j.typ}</td>
+                                        <td>${j.plocha} m²</td>
+                                        <td>${j.dispozice || '-'}</td>
+                                        <td>${getStavBadge(j.stav)}</td>
+                                        <td>${j.najemce || '-'}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn-icon btn-edit" onclick="Nemovitosti.editUnit('${j.id}')" title="Upravit">
+                                                    ✏️
+                                                </button>
+                                                <button class="btn-icon btn-delete" onclick="Nemovitosti.deleteUnit('${j.id}')" title="Smazat">
+                                                    🗑️
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>`
+                }
+            </div>
+            
+            <div class="form-actions">
+                <button class="btn btn-secondary" onclick="Nemovitosti.render('budovy')">
+                    Zpět na seznam budov
+                </button>
+            </div>
+        `;
+    }
+    
+    function editUnit(jednotkaId) {
+        const jednotka = data.jednotky.find(j => j.id === jednotkaId);
+        if (jednotka) {
+            showUnitForm(jednotka.nemovitost_id, jednotkaId);
+        }
+    }
+    
+    function deleteUnit(jednotkaId) {
+        if (confirm('Opravdu chcete smazat tuto jednotku?')) {
+            const jednotka = data.jednotky.find(j => j.id === jednotkaId);
+            if (jednotka) {
+                const nemovitostId = jednotka.nemovitost_id;
+                data.jednotky = data.jednotky.filter(j => j.id !== jednotkaId);
+                saveData();
+                showUnits(nemovitostId);
+            }
+        }
+    }
+    
+    function viewJednotka(jednotkaId) {
+        const jednotka = data.jednotky.find(j => j.id === jednotkaId);
+        if (!jednotka) return;
+        
+        const nemovitost = data.nemovitosti.find(n => n.id === jednotka.nemovitost_id);
+        const najemciData = JSON.parse(localStorage.getItem('najemnici_data') || '[]');
+        const najemce = jednotka.najemce_id ? najemciData.find(n => n.id === jednotka.najemce_id) : null;
+        
+        const mainContent = document.getElementById('main-content');
+        mainContent.innerHTML = `
+            <div class="page-header">
+                <h1 class="page-title">Detail jednotky - ${jednotka.oznaceni}</h1>
+            </div>
+            
+            <div class="card">
+                <div class="detail-grid">
+                    <div class="detail-section">
+                        <h3>Základní informace</h3>
+                        <dl>
+                            <dt>ID:</dt>
+                            <dd>${jednotka.id}</dd>
+                            
+                            <dt>Označení:</dt>
+                            <dd>${jednotka.oznaceni}</dd>
+                            
+                            <dt>Typ:</dt>
+                            <dd>${typyJednotek[jednotka.typ]?.name || jednotka.typ}</dd>
+                            
+                            <dt>Plocha:</dt>
+                            <dd>${jednotka.plocha} m²</dd>
+                            
+                            <dt>Dispozice:</dt>
+                            <dd>${jednotka.dispozice || '-'}</dd>
+                            
+                            <dt>Podlaží:</dt>
+                            <dd>${jednotka.podlazi || '-'}</dd>
+                            
+                            <dt>Stav:</dt>
+                            <dd>${getStavBadge(jednotka.stav)}</dd>
+                        </dl>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h3>Budova</h3>
+                        <dl>
+                            <dt>Název:</dt>
+                            <dd>
+                                <a href="#" onclick="Nemovitosti.view('${nemovitost?.id}'); return false;">
+                                    ${nemovitost?.nazev || '-'}
+                                </a>
+                            </dd>
+                            
+                            <dt>Adresa:</dt>
+                            <dd>${nemovitost ? `${nemovitost.ulice} ${nemovitost.cisloPopisne}, ${nemovitost.mesto}` : '-'}</dd>
+                        </dl>
+                        
+                        ${jednotka.stav === 'obsazena' && najemce ? `
+                            <h3>Nájemce</h3>
+                            <dl>
+                                <dt>Jméno:</dt>
+                                <dd>
+                                    <a href="#" onclick="window.Router.navigate('najemnici'); Najemnici.view('${najemce.id}'); return false;">
+                                        ${najemce.jmeno} ${najemce.prijmeni}
+                                    </a>
+                                </dd>
+                                
+                                <dt>Telefon:</dt>
+                                <dd>${najemce.telefon || '-'}</dd>
+                                
+                                <dt>Email:</dt>
+                                <dd>${najemce.email || '-'}</dd>
+                            </dl>
+                        ` : ''}
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button class="btn btn-secondary" onclick="window.history.back()">Zpět</button>
+                    <button class="btn btn-primary" onclick="Nemovitosti.editUnit('${jednotka.id}')">Upravit</button>
+                </div>
+            </div>
+        `;
+    }
+    
+    function saveForm(type, id) {
+        const form = document.getElementById('nemovitost-form');
+        const formData = new FormData(form);
+        const item = {};
+        
+        for (let [key, value] of formData.entries()) {
+            if (key === 'vybaveni') {
+                if (!item.vybaveni) item.vybaveni = [];
+                item.vybaveni.push(value);
+            } else {
+                item[key] = value;
+            }
+        }
+        
+        if (!item.id) {
+            item.id = getNextId('nemovitost');
+        }
+        
+        if (!id) {
+            item.created_at = new Date().toISOString();
+        }
+        item.updated_at = new Date().toISOString();
+        
+        if (id) {
+            const index = data.nemovitosti.findIndex(n => n.id === id);
+            if (index !== -1) {
+                data.nemovitosti[index] = item;
+            }
+        } else {
+            data.nemovitosti.push(item);
+        }
+        
+        saveData();
+        
+        const pocetJednotek = parseInt(item.pocetJednotek) || 0;
+        if (!id && pocetJednotek > 0) {
+            showUnits(item.id, true);
+        } else {
+            window.history.back();
+        }
+    }
+    
+    function saveUnit(nemovitostId, jednotkaId) {
+        const form = document.getElementById('jednotka-form');
+        const formData = new FormData(form);
+        const item = {};
+        
+        for (let [key, value] of formData.entries()) {
+            item[key] = value;
+        }
+        
+        if (!item.id) {
+            item.id = getNextId('jednotka');
+        }
+        
+        if (!jednotkaId) {
+            item.created_at = new Date().toISOString();
+            data.jednotky.push(item);
+        } else {
+            const index = data.jednotky.findIndex(j => j.id === jednotkaId);
+            if (index !== -1) {
+                item.updated_at = new Date().toISOString();
+                data.jednotky[index] = { ...data.jednotky[index], ...item };
+            }
+        }
+        
+        saveData();
+        showUnits(nemovitostId);
+    }
+    
+    function updateJednotkyInfo(pocet) {
+        const infoDiv = document.getElementById('jednotky-info');
+        const messageSpan = document.getElementById('jednotky-message');
+        
+        if (!infoDiv || !messageSpan) return;
+        
+        pocet = parseInt(pocet) || 0;
+        
+        if (pocet === 0) {
+            infoDiv.style.display = 'none';
+        } else if (pocet === 1) {
+            messageSpan.textContent = 'Po uložení budete přesměrováni na vytvoření jednotky.';
+            infoDiv.style.display = 'block';
+        } else {
+            messageSpan.textContent = `Po uložení budete moci vytvořit ${pocet} jednotek.`;
+            infoDiv.style.display = 'block';
+        }
+    }
+    
+    function toggleNajemceField(stav) {
+        const najemceFields = document.getElementById('najemce-fields');
+        const najemFields = document.getElementById('najem-fields');
+        
+        if (najemceFields) {
+            if (stav === 'obsazena' || stav === 'rezervovana') {
+                najemceFields.style.display = '';
+            } else {
+                najemceFields.style.display = 'none';
+            }
+        }
+        
+        if (najemFields) {
+            if (stav === 'obsazena') {
+                najemFields.style.display = '';
+            } else {
+                najemFields.style.display = 'none';
+            }
+        }
+    }
+    
+    function getTypeName(type) {
+        return typyNemovitosti[type]?.name || type;
+    }
+    
+    function getStavBadge(stav) {
+        const stavy = {
+            'volna': '<span class="badge badge-success">Volná</span>',
+            'obsazena': '<span class="badge badge-danger">Obsazená</span>',
+            'rezervovana': '<span class="badge badge-warning">Rezervovaná</span>',
+            'rekonstrukce': '<span class="badge badge-info">V rekonstrukci</span>'
+        };
+        return stavy[stav] || '<span class="badge badge-secondary">Neznámý</span>';
+    }
+    
+    function getItemById(id) {
+        return data.nemovitosti.find(n => n.id === id) || {};
+    }
+    
+    function getPronajimatelList() {
+        return JSON.parse(localStorage.getItem('pronajimatel_data') || '[]');
+    }
+    
+    function getPronajimatelById(id) {
+        const list = getPronajimatelList();
+        return list.find(p => p.id === id);
+    }
+    
+    function addStatsStyles() {
+        if (document.getElementById('nemovitosti-stats-styles')) return;
+        
+        const styles = document.createElement('style');
+        styles.id = 'nemovitosti-stats-styles';
+        styles.textContent = `
+            .stats-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 20px;
+                margin-bottom: 30px;
+            }
+            
+            .stat-card {
+                background: white;
+                border-radius: 8px;
+                padding: 20px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                border-left: 4px solid #007bff;
+            }
+            
+            .stat-card.success {
+                border-left-color: #28a745;
+            }
+            
+            .stat-card.danger {
+                border-left-color: #dc3545;
+            }
+            
+            .stat-icon {
+                font-size: 32px;
+            }
+            
+            .stat-content {
+                flex: 1;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: bold;
+                color: #333;
+            }
+            
+            .stat-label {
+                color: #666;
+                font-size: 14px;
+            }
+            
+            .type-selector {
+                padding: 20px;
+            }
+            
+            .type-cards {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+                margin-bottom: 30px;
+            }
+            
+            .type-card {
+                background: white;
+                border: 2px solid #e9ecef;
+                border-radius: 12px;
+                padding: 30px;
+                text-align: center;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            
+            .type-card:hover {
+                border-color: #007bff;
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+            
+            .type-card-icon {
+                font-size: 48px;
+                margin-bottom: 15px;
+            }
+            
+            .type-card-title {
+                font-size: 18px;
+                font-weight: 600;
+                margin-bottom: 10px;
+                color: #333;
+            }
+            
+            .type-card-description {
+                font-size: 14px;
+                color: #666;
+                margin: 0;
+            }
+            
+            .info-box {
+                background: #f8f9fa;
+                border-left: 4px solid #007bff;
+                padding: 15px 20px;
+                margin-bottom: 20px;
+            }
+            
+            .info-box p {
+                margin: 5px 0;
+            }
+            
+            .detail-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 30px;
+                padding: 20px;
+            }
+            
+            .detail-section {
+                background: #f8f9fa;
+                padding: 20px;
+                border-radius: 8px;
+            }
+            
+            .detail-section h3 {
+                margin: 0 0 15px 0;
+                color: #333;
+            }
+            
+            .detail-section dl {
+                margin: 0;
+            }
+            
+            .detail-section dt {
+                font-weight: 500;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .detail-section dd {
+                margin: 0 0 15px 0;
+                color: #333;
+            }
+        `;
+        document.head.appendChild(styles);
+    }
     // Public API - exportovat všechny potřebné funkce
     return {
         // Hlavní render funkce
