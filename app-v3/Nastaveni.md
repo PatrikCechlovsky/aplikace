@@ -167,5 +167,13 @@ Důraz je kladen na jednoduchost, bezpečnost a přehlednost – včetně optima
 - [Modul Energie](./energie.md)
 
 ---
+📱 Rady k nastavení pro telefony:
+Omezit počet „viditelných“ modulů na hlavní obrazovce:
+V mobilní verzi nabídněte pouze nejčastěji používané (Platby, Údržba, Komunikace). Ostatní skryjte do menu.
+Použít tzv. „bottom navigation“ (spodní lišta s 3–5 nejdůležitějšími ikonami), zbytek v hamburger menu.
+Zajistit „sticky“ (vždy viditelnou) možnost návratu na hlavní panel nebo rychlou akci (např. + pro nový požadavek/platbu).
+Důležité akce (např. nahlásit závadu, odeslat platbu) umístit na jedno kliknutí z hlavní obrazovky.
+Možnost rychle přepnout mezi účty, jednotkami, nemovitostmi.
+Testovat na různých zařízeních (iOS, Android, různé rozlišení) – kritické je, aby se nic neztrácelo a menu bylo intuitivní.
 
 > Modul Nastavení zajišťuje správu systémových parametrů, usnadňuje práci uživatelům a umožňuje personalizovat aplikaci na míru, včetně optimalizace pro telefony a tablety.
