@@ -501,20 +501,593 @@ Napojení na modul Platby (co se stane, když není zaplaceno?)
     
     > Každý workflow lze dále rozpracovat do schématu (sekvenční diagram, stavový diagram) nebo pseudokódu. Pokud chceš detailní scénář pro konkrétní bod, napiš!
 
+3. Vztahy mezi entitami
+Jednotka ↔ Služba ↔ Nájemník ↔ Platba ↔ Vyúčtování
+Kdo je plátcem, kdo je příjemcem, kdo má přístup k historii, kdo schvaluje změny
+Možnost sledovat historii tarifů, záloh, měřidel
+    ## 🔗 Vztahy mezi entitami v modulu Služby
+    
+    ---
+    
+    ### 1. Vazby a tok dat
+    
+    #### Základní relace
+    - **Jednotka**  
+      ↔ eviduje, jaké služby, zálohy, měřidla a platby se k ní vztahují  
+    - **Služba (záloha, poplatek, kauce)**  
+      ↔ vždy přiřazena ke konkrétní jednotce (nebo nemovitosti) a smlouvě  
+      ↔ má nastaveného plátce (nájemník, případně více osob)  
+    - **Nájemník**  
+      ↔ je plátcem služeb/záloh/plateb  
+      ↔ má přístup ke své historii předpisů, plateb, vyúčtování  
+    - **Platba**  
+      ↔ je přiřazena ke konkrétnímu předpisu zálohy/služby/kauce/ostatní platby  
+      ↔ páruje se s příslušným nájemníkem (plátcem) a službou  
+    - **Vyúčtování**  
+      ↔ vztahuje se k jednotce, období, službě a nájemníkovi  
+      ↔ zohledňuje všechny platby, zálohy, odečty měřidel, tarify  
+      ↔ produkuje přeplatek/nedoplatek (nový předpis)
+    
+    #### Schéma (textově)
+    ```
+    Jednotka
+      │
+      ├── Služby/Zálohy/Kauce/Jiné platby
+      │       │
+      │       ├── Měřidla (odečty, tarify)
+      │       │
+      │       └── Předpis (vazba na Platby)
+      │
+      └── Vyúčtování (na základě Služeb, Záloh, Měřidel)
+              │
+              └── Výsledek (přeplatek/nedoplatek) → nový předpis platby
+    ```
+    
+    ---
+    
+    ### 2. Role a přístupová práva
+    
+    | Entita       | Plátce         | Příjemce      | Přístup k historii        | Schvaluje změny      |
+    |--------------|----------------|---------------|--------------------------|----------------------|
+    | Jednotka     | Nájemník       | Pronajímatel  | Správce, nájemník        | Správce, admin       |
+    | Služba/záloha| Nájemník       | Pronajímatel  | Správce, nájemník        | Správce, účetní      |
+    | Kauce        | Nájemník       | Pronajímatel  | Správce, nájemník        | Správce, admin       |
+    | Platba       | Nájemník       | Pronajímatel  | Správce, nájemník, účetní| Správce, účetní      |
+    | Vyúčtování   | Nájemník       | Pronajímatel  | Správce, nájemník        | Správce, účetní      |
+    
+    - **Plátce:** typicky nájemník, ale může být i více osob (spolubydlící, ručitel)
+    - **Příjemce:** obvykle pronajímatel nebo správce nemovitosti
+    - **Přístup k historii:** nájemník vidí jen své předpisy/platby, správce vidí vše, účetní může mít čtení/výpis
+    - **Schvaluje změny:** změny záloh, služeb, tarifů a vyúčtování schvaluje správce/účetní, některé změny může iniciovat i nájemník (např. samoodečet měřidla – schvaluje správce)
+    
+    ---
+    
+    ### 3. Historie tarifů, záloh, měřidel
+    
+    - **Tarify služeb:**  
+      Všechny změny tarifů (např. růst ceny vody, tepla) jsou evidovány s datem platnosti, kdo změnu provedl, a jaký byl předchozí tarif.
+      - Při generování vyúčtování systém počítá s platným tarifem pro dané období.
+    
+    - **Historie záloh:**  
+      Každá změna zálohy (výše, periodicita, služba) je auditována s časovým razítkem a uživatelem, který změnu provedl.  
+      Umožňuje zpětnou kontrolu, proč se změnila výše záloh.
+    
+    - **Historie měřidel:**  
+      Každý odečet měřidla je uložen s datem, hodnotou, uživatelem a přílohou (např. foto odečtu).  
+      Umožňuje kontrolu správnosti vyúčtování a řešení reklamací.
+    
+    ---
+    
+    ### 4. Ukázka datových vazeb (JSON)
+    
+    ```json
+    {
+      "jednotka_id": "101",
+      "najemnik_id": "6",
+      "sluzby": [
+        {
+          "typ": "teplo",
+          "zaloha": [
+            {
+              "castka": 1200,
+              "frekvence": "mesicni",
+              "platnost_od": "2025-01-01",
+              "platnost_do": "2025-12-31",
+              "historie": [
+                { "castka": 1100, "platnost_od": "2024-01-01", "platnost_do": "2024-12-31" }
+              ]
+            }
+          ],
+          "meridla": [
+            {
+              "typ": "teplo",
+              "odecety": [
+                { "datum": "2025-01-01", "stav": 1000, "uzivatel": "spravce" },
+                { "datum": "2025-12-31", "stav": 1200, "uzivatel": "najemnik" }
+              ]
+            }
+          ]
+        }
+      ],
+      "vyuctovani": [
+        {
+          "obdobi": "2025",
+          "sluzba": "teplo",
+          "zaloha_celkem": 14400,
+          "spotreba": 200,
+          "tarif": 65,
+          "cena_skutecna": 13000,
+          "doplatek": -1400
+        }
+      ],
+      "platby": [
+        {
+          "typ": "zaloha",
+          "castka": 1200,
+          "splatnost": "2025-01-15",
+          "stav": "zaplaceno"
+        },
+        {
+          "typ": "nedoplatek",
+          "castka": -1400,
+          "splatnost": "2026-01-31",
+          "stav": "nezaplaceno"
+        }
+      ]
+    }
+    ```
+    
+    ---
+    
+    ### 5. Důležité poznámky
+    
+    - **Každá entita (služba/záloha/platba)** musí být vždy přiřazena ke konkrétní jednotce a nájemníkovi (neexistuje „osamocená“ záloha).
+    - **Předpisy i platby** mají vždy jasně daného plátce a příjemce.
+    - **Historie je nedílnou součástí** – umožňuje zpětnou kontrolu, reklamace, řešení sporů a správné vyúčtování.
+    - **Schvalovací workflow** může být nastavitelné podle typu změny (např. samoodečet schvaluje správce, změnu tarifu musí schválit admin/účetní).
+    
+    ---
+    
+    > Tato sekce by měla být doplněna o diagramy ERD (entity-relationship) nebo sekvenční schémata, pokud je potřeba pro vývoj.
+
 4. Ukázky datových struktur
 Vzory JSON pro komplexní evidenci (např. záloha s historií změn, měřidlo s odečty, vyúčtování s rozúčtováním)
 Příklady exportů/importů (CSV, XLSX)
+    ## 💾 Ukázky datových struktur pro modul Služby
+    
+    ---
+    
+    ### 1. Záloha se sledováním historie změn
+    
+    ```json
+    {
+      "id": "zl1001",
+      "jednotka_id": "101",
+      "najemnik_id": "6",
+      "sluzba": "teplo",
+      "smlouva_id": "501",
+      "historie": [
+        {
+          "castka": 1000,
+          "frekvence": "mesicni",
+          "platnost_od": "2024-09-01",
+          "platnost_do": "2025-02-28",
+          "zadal": "spravce",
+          "datum_zmeny": "2024-08-20"
+        },
+        {
+          "castka": 1200,
+          "frekvence": "mesicni",
+          "platnost_od": "2025-03-01",
+          "platnost_do": null,
+          "zadal": "spravce",
+          "datum_zmeny": "2025-02-25"
+        }
+      ]
+    }
+    ```
+    
+    ---
+    
+    ### 2. Měřidlo s historií odečtů
+    
+    ```json
+    {
+      "id": "sm401",
+      "jednotka_id": "101",
+      "typ_meric": "voda_tepla",
+      "cislo_meridla": "VT101-23",
+      "historie_odecetu": [
+        {
+          "datum": "2024-09-01",
+          "stav": 1200,
+          "zadal": "najemnik",
+          "priloha": "foto_2024-09-01.jpg"
+        },
+        {
+          "datum": "2025-03-01",
+          "stav": 1500,
+          "zadal": "spravce",
+          "priloha": "foto_2025-03-01.jpg"
+        }
+      ]
+    }
+    ```
+    
+    ---
+    
+    ### 3. Vyúčtování s rozúčtováním služeb
+    
+    ```json
+    {
+      "id": "vu501",
+      "jednotka_id": "101",
+      "najemnik_id": "6",
+      "obdobi_od": "2025-01-01",
+      "obdobi_do": "2025-12-31",
+      "sluzby": [
+        {
+          "typ": "teplo",
+          "zaloha_celkem": 14400,
+          "spotreba": 200,
+          "tarif": 65,
+          "cena_skutecna": 13000,
+          "doplatek": -1400
+        },
+        {
+          "typ": "voda",
+          "zaloha_celkem": 3000,
+          "spotreba": 35,
+          "tarif": 80,
+          "cena_skutecna": 2800,
+          "preplatek": 200
+        }
+      ],
+      "celkem_doplatek": -1200,
+      "vytvoreno": "2026-01-15",
+      "priloha": "vyuctovani_101_2025.pdf",
+      "stav": "odeslano"
+    }
+    ```
+    
+    ---
+    
+    ### 4. Příklad exportu/importu záloh (CSV)
+    
+    ```
+    id,jednotka_id,najemnik_id,sluzba,castka,frekvence,platnost_od,platnost_do,smlouva_id
+    zl1001,101,6,teplo,1200,mesicni,2025-03-01,,501
+    zl1002,102,7,voda,350,mesicni,2025-01-01,2025-12-31,502
+    zl1003,103,8,elektrina,900,mesicni,2025-01-01,,503
+    ```
+    
+    ---
+    
+    ### 5. Příklad exportu/importu měřidel – odečty (CSV)
+    
+    ```
+    meridlo_id,jednotka_id,typ_meric,cislo_meridla,datum_odecet,stav,zadal,priloha
+    sm401,101,voda_tepla,VT101-23,2025-03-01,1500,spravce,foto_2025-03-01.jpg
+    sm402,102,teplo,T102-11,2025-03-01,560,najemnik,foto_2025-03-01.jpg
+    sm403,103,voda_studena,VS103-07,2025-03-01,2100,spravce,
+    ```
+    
+    ---
+    
+    ### 6. Příklad exportu vyúčtování (XLSX – popis struktury listu)
+    
+    | jednotka_id | najemnik_id | obdobi_od  | obdobi_do  | sluzba  | zaloha_celkem | spotreba | tarif | cena_skutecna | doplatek/preplatek |
+    |-------------|-------------|------------|------------|---------|---------------|----------|-------|---------------|--------------------|
+    | 101         | 6           |2025-01-01  |2025-12-31  | teplo   | 14400         | 200      | 65    | 13000         | -1400              |
+    | 101         | 6           |2025-01-01  |2025-12-31  | voda    | 3000          | 35       | 80    | 2800          | 200                |
+    | 102         | 7           |2025-01-01  |2025-12-31  | teplo   | 16000         | 210      | 65    | 13650         | -2350              |
+    
+    ---
+    
+    > Tyto ukázky reprezentují doporučený způsob evidence i výměny dat mezi moduly nebo se správci/externími partnery.
 
+5. Ukázky datových struktur
+Vzory JSON pro komplexní evidenci (např. záloha s historií změn, měřidlo s odečty, vyúčtování s rozúčtováním)
+Příklady exportů/importů (CSV, XLSX)
+    ## 💾 Ukázky datových struktur pro modul Služby
+    
+    ---
+    
+    ### 1. Záloha se sledováním historie změn
+    
+    ```json
+    {
+      "id": "zl1001",
+      "jednotka_id": "101",
+      "najemnik_id": "6",
+      "sluzba": "teplo",
+      "smlouva_id": "501",
+      "historie": [
+        {
+          "castka": 1000,
+          "frekvence": "mesicni",
+          "platnost_od": "2024-09-01",
+          "platnost_do": "2025-02-28",
+          "zadal": "spravce",
+          "datum_zmeny": "2024-08-20"
+        },
+        {
+          "castka": 1200,
+          "frekvence": "mesicni",
+          "platnost_od": "2025-03-01",
+          "platnost_do": null,
+          "zadal": "spravce",
+          "datum_zmeny": "2025-02-25"
+        }
+      ]
+    }
+    ```
+    
+    ---
+    
+    ### 2. Měřidlo s historií odečtů
+    
+    ```json
+    {
+      "id": "sm401",
+      "jednotka_id": "101",
+      "typ_meric": "voda_tepla",
+      "cislo_meridla": "VT101-23",
+      "historie_odecetu": [
+        {
+          "datum": "2024-09-01",
+          "stav": 1200,
+          "zadal": "najemnik",
+          "priloha": "foto_2024-09-01.jpg"
+        },
+        {
+          "datum": "2025-03-01",
+          "stav": 1500,
+          "zadal": "spravce",
+          "priloha": "foto_2025-03-01.jpg"
+        }
+      ]
+    }
+    ```
+    
+    ---
+    
+    ### 3. Vyúčtování s rozúčtováním služeb
+    
+    ```json
+    {
+      "id": "vu501",
+      "jednotka_id": "101",
+      "najemnik_id": "6",
+      "obdobi_od": "2025-01-01",
+      "obdobi_do": "2025-12-31",
+      "sluzby": [
+        {
+          "typ": "teplo",
+          "zaloha_celkem": 14400,
+          "spotreba": 200,
+          "tarif": 65,
+          "cena_skutecna": 13000,
+          "doplatek": -1400
+        },
+        {
+          "typ": "voda",
+          "zaloha_celkem": 3000,
+          "spotreba": 35,
+          "tarif": 80,
+          "cena_skutecna": 2800,
+          "preplatek": 200
+        }
+      ],
+      "celkem_doplatek": -1200,
+      "vytvoreno": "2026-01-15",
+      "priloha": "vyuctovani_101_2025.pdf",
+      "stav": "odeslano"
+    }
+    ```
+    
+    ---
+    
+    ### 4. Příklad exportu/importu záloh (CSV)
+    
+    ```
+    id,jednotka_id,najemnik_id,sluzba,castka,frekvence,platnost_od,platnost_do,smlouva_id
+    zl1001,101,6,teplo,1200,mesicni,2025-03-01,,501
+    zl1002,102,7,voda,350,mesicni,2025-01-01,2025-12-31,502
+    zl1003,103,8,elektrina,900,mesicni,2025-01-01,,503
+    ```
+    
+    ---
+    
+    ### 5. Příklad exportu/importu měřidel – odečty (CSV)
+    
+    ```
+    meridlo_id,jednotka_id,typ_meric,cislo_meridla,datum_odecet,stav,zadal,priloha
+    sm401,101,voda_tepla,VT101-23,2025-03-01,1500,spravce,foto_2025-03-01.jpg
+    sm402,102,teplo,T102-11,2025-03-01,560,najemnik,foto_2025-03-01.jpg
+    sm403,103,voda_studena,VS103-07,2025-03-01,2100,spravce,
+    ```
+    
+    ---
+    
+    ### 6. Příklad exportu vyúčtování (XLSX – popis struktury listu)
+    
+    | jednotka_id | najemnik_id | obdobi_od  | obdobi_do  | sluzba  | zaloha_celkem | spotreba | tarif | cena_skutecna | doplatek/preplatek |
+    |-------------|-------------|------------|------------|---------|---------------|----------|-------|---------------|--------------------|
+    | 101         | 6           |2025-01-01  |2025-12-31  | teplo   | 14400         | 200      | 65    | 13000         | -1400              |
+    | 101         | 6           |2025-01-01  |2025-12-31  | voda    | 3000          | 35       | 80    | 2800          | 200                |
+    | 102         | 7           |2025-01-01  |2025-12-31  | teplo   | 16000         | 210      | 65    | 13650         | -2350              |
+    
+    ---
+    
+    > Tyto ukázky reprezentují doporučený způsob evidence i výměny dat mezi moduly nebo se správci/externími partnery.
 
-5. Chybové stavy a výjimky
+6. Chybové stavy a výjimky
 Co se stane, když není zadán odečet?
 Co když je přeplatek/nedoplatek?
 Jak se řeší zpožděné platby, penalizace?
 Kdy je možné (ne)vrátit kauci?
+  ## ⚠️ Chybové stavy a výjimky v modulu Služby
+  
+  ---
+  
+  ### 1. Není zadán odečet měřidla
+  
+  **Popis:**  
+  Při generování vyúčtování nebo výpočtu spotřeby chybí aktuální nebo počáteční stav měřidla.
+  
+  **Řešení systému:**
+  - Systém upozorní správce/nájemníka na chybějící odečet (notifikace, zvýraznění v UI).
+  - Není možné dokončit vyúčtování bez zadání chybějícího odečtu.
+  - Možnost zadat odečet zpětně, případně použít odhad (s nutností schválení a zaznamenání do historie).
+  - Všechny výjimky (odhad, zpětný odečet) jsou auditovány.
+  
+  **Uživatelská hláška:**  
+  „Pro tuto jednotku nebyl zadán aktuální stav měřidla. Bez odečtu nelze provést vyúčtování.“
+  
+  ---
+  
+  ### 2. Přeplatek / nedoplatek při vyúčtování
+  
+  **Popis:**  
+  Po porovnání součtu zaplacených záloh a skutečné spotřeby vznikne přeplatek (nájemník má nárok na vrácení) nebo nedoplatek (nájemník musí doplatit).
+  
+  **Řešení systému:**
+  - **Přeplatek:**  
+    - Systém umožní správci rozhodnout o vrácení přeplatku (vytvoření příkazu k úhradě, započtení na další období, ponechání v systému).
+    - Uživatel je informován o vzniku přeplatku a zvoleném způsobu vypořádání.
+  - **Nedoplatek:**  
+    - Systém automaticky vygeneruje nový předpis na úhradu nedoplatku (s platností a splatností).
+    - Nájemník je notifikován o povinnosti úhrady.
+    - Sleduje se úhrada, v případě neuhrazení navazuje workflow upomínek a penalizací.
+  
+  **Uživatelská hláška:**  
+  - Přeplatek: „Byl Vám vypočten přeplatek ve výši X Kč. Správce rozhodne o způsobu jeho vypořádání.“  
+  - Nedoplatek: „Vznikl nedoplatek ve výši X Kč. Prosíme o jeho úhradu do data Y.“
+  
+  ---
+  
+  ### 3. Zpožděné platby a penalizace
+  
+  **Popis:**  
+  Nájemník neuhradil předpis (zálohu, nedoplatek, kauci) do data splatnosti.
+  
+  **Řešení systému:**
+  - Systém automaticky označí předpis jako „po splatnosti“.
+  - Vygeneruje a zašle upomínku (e-mail, SMS, systémové upozornění).
+  - Po uplynutí určité doby může systém připočítat penále (podle smluvních podmínek).
+  - Penalizace je v systému evidována jako samostatný předpis k úhradě.
+  - Správce může eskalovat případ (druhá upomínka, výzva k úhradě, právní kroky).
+  
+  **Uživatelská hláška:**  
+  - „Platba za službu X je po splatnosti. Prosíme o úhradu, jinak Vám bude účtováno penále.“
+  - „Bylo Vám připočteno penále za opožděnou platbu ve výši Y Kč.“
+  
+  ---
+  
+  ### 4. Vrácení (nevrácení) kauce
+  
+  **Popis:**  
+  Po ukončení smlouvy má nájemník nárok na vrácení kauce při splnění všech podmínek.
+  
+  **Řešení systému:**
+  - Systém umožní správci zadat stav kauce: „vráceno“, „započteno na dluhy/opravay“, případně „ponecháno“ (např. při nedodržení podmínek).
+  - Kauci lze vrátit pouze pokud:
+      - Jsou uhrazeny všechny platby a nedoplatky.
+      - Nebyly zjištěny škody na majetku (řešeno protokolem o předání).
+  - V případě zápočtu systém umožní zadat důvod a částku zápočtu (auditní stopa).
+  - Historie kauce je vždy dostupná pro zpětnou kontrolu.
+  
+  **Uživatelská hláška:**  
+  - „Kauce Vám byla vrácena v plné výši.“
+  - „Část kauce byla použita na úhradu nedoplatků/škod – viz detailní rozpis.“
+  
+  ---
+  
+  ### 5. Další typické chybové stavy
+  
+  | Chyba / výjimka                         | Řešení systému / reakce                 | Uživatelská hláška                                |
+  |------------------------------------------|-----------------------------------------|---------------------------------------------------|
+  | Duplicita předpisu pro jednotku/období   | Zamezit uložení/zvýraznit pole          | „Předpis pro toto období již existuje.“           |
+  | Chybějící povinné pole                   | Zvýraznit, zamezit uložení              | „Není vyplněno povinné pole XY.“                  |
+  | Neplatný formát platby                   | Zvýraznit, zamezit uložení              | „Zadaná částka/splatnost není platná.“            |
+  | Pokus o smazání předpisu s navázanou platbou | Zamezit smazání, nabídnout archivaci   | „Nelze smazat – existuje navázaná platba.“        |
+  
+  ---
+  
+  > Všechny výjimky a chybové stavy jsou logovány pro audit a zpětnou kontrolu. Uživatel je vždy informován srozumitelnou hláškou, správce má možnost dohledat detaily v systému.
 
-
-6. Hromadné operace
+7. Hromadné operace
 Hromadné zadání záloh/odečtů
 Hromadné generování vyúčtování a upomínek
+## 🗂️ Hromadné operace v modulu Služby
 
+---
+
+### 1. Hromadné zadání záloh/odečtů
+
+#### Popis
+- **Cíl:** Umožnit správci nebo účetnímu rychle a efektivně zadat nebo upravit více záloh/odečtů měřidel najednou, např. při změně tarifů, změně nájemníků, nebo po hromadném odečtu měřidel.
+- **Vstup:** Ručně přes rozhraní (tabulka), nebo importem dat (CSV, XLSX).
+
+#### Typický workflow
+1. Správce otevře sekci „Hromadné zadání záloh“ nebo „Hromadné zadání odečtů“.
+2. Vybere jednotky (možnost filtrovat podle domu, patra, druhu služby).
+3. Vyplní (nebo nahraje soubor) s potřebnými údaji: typ služby, částka, periodicita, datum platnosti, případně stav měřidla a datum odečtu.
+4. Systém zobrazí náhled dat a validuje duplicity/chybějící údaje.
+5. Po potvrzení správce systém vytvoří/aktualizuje záznamy pro všechny vybrané jednotky.
+6. Systém po úspěšném zadání nabídne možnost automatického vygenerování předpisů nebo upozornění nájemníků.
+
+#### Ukázka struktury importu (CSV)
+```
+jednotka_id,najemnik_id,sluzba,castka,frekvence,platnost_od,platnost_do,smlouva_id
+101,6,teplo,1200,mesicni,2025-09-01,,501
+102,7,voda,400,mesicni,2025-09-01,,502
+...
+
+meridlo_id,jednotka_id,typ_meric,stav,datum_odecet,zadal
+sm401,101,voda_tepla,1500,2025-09-01,spravce
+sm402,102,teplo,600,2025-09-01,spravce
+...
+```
+
+---
+
+### 2. Hromadné generování vyúčtování a upomínek
+
+#### Popis
+- **Cíl:** Zajistit rychlou tvorbu vyúčtování (např. na konci roku pro všechny jednotky najednou) a hromadné odeslání upomínek na neuhrazené platby.
+- **Vstup:** Spuštění akce (ručně), nebo automaticky podle kalendáře/periodicity.
+
+#### Typický workflow – vyúčtování
+1. Správce spustí akci „Hromadné vyúčtování“ pro vybrané období a skupinu jednotek.
+2. Systém načte všechny zálohy, měřidla, platby a vypočte přeplatky/nedoplatky pro každou jednotku.
+3. Pro každého nájemníka vygeneruje vyúčtovací doklad (PDF, XLSX), uloží jej do systému a nastaví vazbu na platby.
+4. Po schválení správce jsou dokumenty automaticky rozeslány nájemníkům (e-mail, portál).
+
+#### Typický workflow – upomínky
+1. Správce otevře přehled neuhrazených plateb.
+2. Vybere možnost „Hromadně odeslat upomínky“ (možnost filtrovat podle výše, stáří, typu služby).
+3. Systém vygeneruje a odešle upomínky všem vybraným nájemníkům (e-mail, SMS, interní oznámení).
+4. V systému se zaznamená historie upomínek (kdy, komu, za co).
+
+#### Ukázka exportu/importu upomínek (CSV)
+```
+najemnik_id,email,typ_sluzby,castka,datum_splatnosti,pocet_upominek,posledni_upominka
+6,najemnik1@email.cz,teplo,1200,2025-09-15,1,2025-09-20
+7,najemnik2@email.cz,voda,350,2025-09-15,2,2025-09-25
+...
+```
+
+---
+
+### 3. Důležité aspekty
+- Každá hromadná operace je auditována (kdo, kdy, jaké záznamy upravil/vytvořil).
+- Systém vždy nabídne náhled a možnost storna před finálním uložením.
+- Kontrola duplicit, validace vstupních dat.
+- Možnost automatického nastavení notifikací a workflow navazujících akcí (např. po neuhrazení automaticky vygenerovat upomínku).
+
+---
+
+> Hromadné operace výrazně zvyšují efektivitu správy většího počtu jednotek a snižují chybovost při rutinních úkonech.
 > Modul Služby je klíčový pro správnou a transparentní evidenci všech poplatků, záloh, služeb a energií v rámci nemovitosti. Je těsně propojen s moduly Platby a Vyúčtování.
