@@ -17,11 +17,11 @@ Tento dokument slouží jako hlavní poznámkový blok pro návrh správy uživa
 
 ## 2. Role
 
-- Pronajímatel (aktivní)
-- Nájemník (archivováno, pozváno)
-- Zástupce (pozváno)
-- Údržbář (zablokovaný)
-- Administrátor (neaktivní)
+- Pronajímatel
+- Nájemník
+- Zástupce
+- Údržbář
+- Administrátor
 - Kontakt
 - Správce nemovitostí
 - Revizní technik
@@ -29,11 +29,13 @@ Tento dokument slouží jako hlavní poznámkový blok pro návrh správy uživa
 
 ---
 
-## 3. Jednotky
+## 3. Stav
 
-- 101 – Byt 1 (např. adresa: Ulice 1, Město)
-- 102 – Byt 2
-- 103 – Byt 3
+- aktivní
+- archivováno
+- pozváno
+- zablokovan
+- neaktivní
 
 ---
 
@@ -79,28 +81,41 @@ Tento dokument slouží jako hlavní poznámkový blok pro návrh správy uživa
 |-----------|--------------------|--------------------|--------------------------|
 | Uživatelé | založení uživatele | přehled            | Založení uživatele       |
 |           | přehled            |                    |                          |
-| Oprávnění |                    | založení uživatele | Seznam Oprávnění         |
-| Funkce    |                    | založení uživatele | Seznam Funkcí            |
-| Role      |                    | založení uživatele | Seznam rolí              |
+|           | Oprávnění          | založení uživatele | Seznam Oprávnění         |
+|           | Funkce             | založení uživatele | Seznam Funkcí            |
+|           | Role               | založení uživatele | Seznam rolí              |
 
 ---
 
 ## 9. Funkce (tlačítka/akce v aplikaci)
 
-- Vytvořit uživatele
-- Vygenerovat ověřovací kód (email + SMS)
-- Odeslat pozvánku
-- Přidat dokument (např. nájemní smlouva, ověření identity)
-- Archivovat uživatele
-- Zablokovat uživatele
-- Obnovit přístup
-- Zobrazit historii přihlášení/aktivit
-- Resetovat heslo
-- Přiřadit další roli/jednotku
+- ✅ Vytvořit uživatele
+- 📨 Vygenerovat ověřovací kód (email + SMS)
+- ✉️ Odeslat pozvánku
+- 📑 Přidat dokument (např. nájemní smlouva, ověření identity)
+- 🗄️ Archivovat uživatele
+- ⛔ Zablokovat uživatele
+- 🔒 Obnovit přístup
+- 🧑‍💻 Zobrazit historii přihlášení / aktivit
+- 🔁 Resetovat heslo
+- ✳️ Přiřadit další roli / jednotku
 
 ---
 
-## 10. Poznámky, nápady a úkoly
+## 10. Funkce (nad tabulkou nebo v řádku seznamu uživatelů)
+
+- 🔍 Vyhledávání / filtrování (podle role, stavu, jednotky...)
+- ➕ Přidat nového uživatele
+- 📤 Export seznamu (např. do Excelu)
+- 📥 Import uživatelů (např. z CSV)
+- 📑 Zobrazit dokumenty
+- ⛔ Zablokovat / Archivovat
+- 🔁 Reset hesla
+- ✳️ Správa oprávnění
+- 📊 Statistiky přístupu / využití funkcí
+---
+
+## 11. Poznámky, nápady a úkoly
 
 Sem si piš vše, co tě napadne, co je potřeba doplnit, změnit nebo vyřešit.
 
