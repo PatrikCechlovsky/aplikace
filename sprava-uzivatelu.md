@@ -120,5 +120,24 @@ Tento dokument slouží jako hlavní poznámkový blok pro návrh správy uživa
 Sem si piš vše, co tě napadne, co je potřeba doplnit, změnit nebo vyřešit.
 
 ---
+1. Historie změn / auditní log
+  Sleduje kdo, kdy a co v uživatelských datech změnil (užitečné pro administrátory a při řešení reklamací).
+2. Zabezpečení
+  Nastavení síly hesla, expirace hesla, 2FA, blokace po více neúspěšných pokusech, případně logy přístupů.
+3. Správa skupin / týmů
+  Pokud budeš mít více jednotek/rolí, někdy se hodí přiřazovat práva/skupiny hromadně.
+4. Oprávnění nad více objekty
+  Máš práva k jednotce – chceš časem i práva např. ke konkrétním smlouvám, dokumentům, akcím (jemnější řízení oprávnění)?
+5. Možné workflow pro schvalování
+  Například: žádosti o změnu údajů, schvalování přijetí nájemníka, atd.
+6. Notifikace
+  Jaké události mají spouštět informování uživatelů (email, sms, interní oznámení)?
+7. Export a import dat
+  Procesy pro hromadný export/import uživatelů, audit, zálohování.
+8. Uživatelské preference
+  Např. jazyk rozhraní, nastavení notifikací, vlastní profilové údaje.
+9. Přehled o vazbách mezi uživateli
+  Kdo je např. odpovědný za jednotku, kdo je „hlavní nájemník“, kdo patří pod koho (hierarchie).
+
 
 > Tento soubor slouží jako živý dokument a bude se rozšiřovat podle potřeb projektu.
