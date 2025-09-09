@@ -1088,6 +1088,39 @@ najemnik_id,email,typ_sluzby,castka,datum_splatnosti,pocet_upominek,posledni_upo
 - Možnost automatického nastavení notifikací a workflow navazujících akcí (např. po neuhrazení automaticky vygenerovat upomínku).
 
 ---
+1. Diagramy a vizualizace
+ERD (Entity-Relationship Diagram):
+Graficky znázornit vazby mezi entitami (Jednotka, Služba, Záloha, Kauce, Měřidlo, Platba, Vyúčtování…)
+Workflow diagramy:
+Sekvenční diagramy pro hlavní scénáře (např. „Vyúčtování“, „Zadání odečtu“, „Hromadná operace“)
+Ukázky obrazovek (skicy, wireframy):
+Jak bude vypadat zadání zálohy, schválení odečtu, přehled vyúčtování
+2. Testovací scénáře & akceptační kritéria
+Popis konkrétních testovacích případů pro jednotlivé workflow (co je úspěch, co selhání)
+Např.: „Co se stane, když zadám odečet zpětně?“, „Jak systém reaguje na duplicitní předpis?“
+Příklady reálných dat pro testování (malý dataset v JSON/CSV)
+3. Notifikace a šablony e-mailů/SMS
+Vzory textů pro upomínky, potvrzení, informace o přeplatku/nedoplatku
+Kdo všechny může být adresát (nájemník, správce, účetní)
+Možnost individualizace/šablon (např. proměnné v textu)
+4. API a integrace
+Popis REST API (pokud bude systém komunikovat s dalšími aplikacemi)
+Vzory request/response, struktura endpointů (např. GET /zaloha, POST /vyuctovani)
+Pravidla pro export/import dat (CSV/XLSX) – co je povinné, co volitelné
+5. Bezpečnost, audit, GDPR
+Jak jsou logovány změny, kdo má jaký přístup, kdo může měnit/schvalovat
+Jak dlouho se data uchovávají, jak je řešeno smazání/anonymizace
+Možnosti exportu historie pro audit
+6. FAQ a typické situace
+Nejčastější dotazy správců, nájemníků
+Typické chybové scénáře a doporučený postup
+7. Roadmapa / Další rozvoj
+Co plánujete do budoucna (např. automatické napojení na banku, integrace s účetnictvím, API pro mobilní appku)
+Otevřené otázky a závislosti na jiných modulech
+Doporučený postup:
+Začni jednoduššími vizualizacemi (ERD, sekvenční diagram pro 1–2 klíčové scénáře), přidej k nim popis. Potom se zaměř na testovací scénáře a šablony notifikací – tyto části rychle pomohou dalším členům týmu i testování. Pokud plánujete API nebo integrace, začni připravovat i jejich popis.
+
+Rád ti připravím konkrétní vzor (např. ERD, sekvenční diagram, šablonu notifikace, testovací scénář) – stačí říct, co bys chtěl rozpracovat jako první!
 
 > Hromadné operace výrazně zvyšují efektivitu správy většího počtu jednotek a snižují chybovost při rutinních úkonech.
 > Modul Služby je klíčový pro správnou a transparentní evidenci všech poplatků, záloh, služeb a energií v rámci nemovitosti. Je těsně propojen s moduly Platby a Vyúčtování.
