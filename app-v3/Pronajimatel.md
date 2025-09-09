@@ -17,6 +17,14 @@
   - 🏛️ Státní instituce
   - 🤝 Zastupující osoba
 
+## 🧑‍💼 Průvodce založením
+V každém formuláři (např. **Jednotka**, **Nájemník**, **Smlouva**) bude tlačítko  
+🌸 **„Spustit průvodce“**  
+Uživatel může:  
+- ✅ Pokračovat v průvodci a uložit rozpracovaná data.  
+- 🏁 Přeskočit kroky, které nezná nebo nechce řešit hned.  
+- 💾 Uložit stav a vrátit se později.
+
 - **Vazba na jiné moduly:**
   - **Nemovitost** = **Jednotka** = **Nájemník** = **Smlouva** = **Služby** = **Platby** = **Uživatelé**
   - **Nemovitosti:** Pronajímatel je vlastníkem/uživatelem nemovitosti.
@@ -45,7 +53,16 @@ Základní pole (návrh):
   // další pole dle potřeb
 }
 ```
-
+## 📋 Funkce v přehledu
+- 🔍 Filtrace podle typu subjektu
+- 🔄 Změna stavu (aktivní / archivovaný)
+- 📑 Zobrazení dokumentů
+- 🏢 Zobrazení připojených jednotek
+- ✳️ Správa rolí
+- 📤 Export seznamu
+- ➕ Přidat nového pronajímatele
+- 📜 Auditní log / historie změn
+- 📊 Statistiky pronajímatelů (např. počet jednotek)
 ---
 
 ## 🔘 Hlavní funkce / tlačítka
@@ -56,7 +73,7 @@ Základní pole (návrh):
 - ✏️ **Upravit pronajímatele**
 - 👁️ **Zobrazit detail**
 - 📁 **Archivovat**
-- 🗑️ **Smazat**
+- 🗑️ **Smazat** půjde jen záznam který nemá vazby, historii 
 - 🔁 **Obnovit přístup / zneplatnit**
 - ➕ **Přidat zástupce**
 - 📤 **Exportovat seznam**
@@ -66,6 +83,16 @@ Základní pole (návrh):
 - 📊 **Statistiky využití**
 - 🧑‍💼 **Přiřadit správce / uživatele**
 - ⚙️ **Nastavení modulu**
+- ✅ Uložit
+- 📑 Přidat dokument
+- 🏢 Připojit jednotku
+- 🔒 Přiřadit oprávnění
+- 📨 Vygenerovat přístup / pozvánku
+- ✳️ Přiřadit roli
+- 🗄️ Archivovat subjekt
+- ⛔ Zablokovat subjekt
+- 📤 Export dat subjektu
+- 📜 Zobrazit historii změn
 
 ---
 
@@ -121,7 +148,11 @@ Sem si piš vše, co tě napadne k modulu Pronajímatel...
 1. vytvořit průvodce pro založení **Nemovitost** = **Jednotka** = **Nájemník** = **Smlouva** = **Služby** = **Platby**
   bude mít několik záložek, na každé záložce bude formulář jednotlivých modulů, bude možné uložit rozpracované a později dokončit
   záložky se budou například zabarvovat podle toho zda jsou dokončené
-2. potřebuju vidět propojení (vazby) jaké má nemovitosti, jaké smlouvy a jaké trable
+  ✅ Pokračovat v průvodci a uložit rozpracovaná data.
+  🏁 Přeskočit kroky, které uživatel nezná/nechce řešit.
+  💾 Uložit stav a vrátit se později.
+
+3. potřebuju vidět propojení (vazby) jaké má nemovitosti, jaké smlouvy a jaké trable
   chtěl bych si mít možnost nastavit ve svém profilu vybrané pronajímatele a mít možnost přepnout a vidět všechny na které mám přístup
 
 ---
