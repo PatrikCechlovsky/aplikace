@@ -472,7 +472,57 @@ Tabulka „Kdo na co má právo“ – pro různé role (admin, správce, účet
 
 8. Integrace na externí služby
 Je-li v plánu napojení na ARES, ISZR, banky apod., napiš sekci „Plánované integrace“.
+    ## 🌐 Plánované integrace na externí služby
 
+    Pro modul Pronajímatel jsou plánovány následující integrace na externí služby, které zjednoduší správu údajů, zvýší přesnost dat a automatizují ověřovací procesy.
+    
+    ---
+    
+    ### 🏢 ARES (Administrativní registr ekonomických subjektů)
+    - **Účel:** Automatické dohledání a ověření údajů firem, OSVČ a institucí podle IČ.
+    - **Funkce:**
+      - Vyplnění a ověření základních údajů subjektu (název, adresa, DIČ, právní forma, stav).
+      - Kontrola platnosti IČ/DIČ.
+      - Automatické doplnění údajů při zadání IČ v průvodci.
+    - **Poznámka:**  
+      Možnost napojení přes veřejné API ARES, případně přes proxy server kvůli limitům dostupnosti.
+    
+    ---
+    
+    ### 🏦 Bankovní služby
+    - **Účel:** Ověření vlastnictví bankovního účtu, párování plateb, automatické načítání výpisů.
+    - **Funkce:**
+      - Ověření IBAN a názvu majitele účtu.
+      - Online párování příchozích plateb s evidovanými pronajímateli.
+      - Možnost automatického zpracování hromadných výpisů.
+    - **Poznámka:**  
+      Zvážit využití PSD2 API (bankovní agregátory) pro napojení na více bank.
+    
+    ---
+    
+    ### 🏛️ ISZR (Informační systém základních registrů)
+    - **Účel:** Ověření a doplnění údajů o osobách a státních organizacích.
+    - **Funkce:**
+      - Kontrola údajů o osobách (např. rodné číslo, adresa, platnost dokladu).
+      - Ověření státních organizací, spolků, veřejných subjektů.
+    - **Poznámka:**  
+      Přístup dle legislativy a možností napojení (např. přes CzechPOINT, NIA apod.).
+    
+    ---
+    
+    ### 📄 Další plánované integrace
+    - **E-mailové služby:** Automatické odesílání pozvánek, notifikací, výzev k doplnění údajů.
+    - **SMS brány:** Dvoufaktorová autentizace, upozornění na změny.
+    - **Externí registry (např. insolvenční rejstřík, rejstřík spolků):** Kontrola solventnosti, validace subjektů.
+    
+    ---
+    
+    ### 💡 Poznámka pro vývojáře
+    
+    - Integrace budou implementovány modulárně, aby šly snadno zapnout/vypnout dle potřeby a legislativy.
+    - Každá akce přes externí službu je auditována (záznam o dotazu, odpovědi, chybách).
+
+---
 
 9. Ukázka datové věty / JSON objektu
 Přidej konkrétní příklad, jak bude vypadat uložený objekt pronajímatele v DB (vzorový JSON).
@@ -480,12 +530,106 @@ Přidej konkrétní příklad, jak bude vypadat uložený objekt pronajímatele 
 
 10. Přehled závislostí na dalších modulech
 Přidej diagram nebo tabulku, které další moduly závisí na pronajímateli a naopak.
+    
+    ## 🔗 Přehled závislostí na dalších modulech
+    
+    Modul Pronajímatel je ústředním bodem systému a má vazby na několik dalších klíčových modulů. Níže najdeš tabulku i diagram, které znázorňují vzájemné závislosti – tedy na které moduly je Pronajímatel napojen a které moduly naopak závisí na něm.
+    
+    ---
+    
+    ### 📋 Tabulka závislostí
+    
+    | Modul           | Závisí na Pronajímateli | Pronajímatel závisí na | Popis vazby                                                     |
+    |-----------------|:-----------------------:|:----------------------:|-----------------------------------------------------------------|
+    | Nemovitost      |         ✅              |         ❌             | Pronajímatel je vlastníkem/nájemcem nemovitosti                 |
+    | Jednotka        |         ✅              |         ❌             | Jednotky jsou součástí nemovitosti vlastněné pronajímatelem     |
+    | Nájemník        |         ✅              |         ❌             | Nájemník je přiřazen k jednotce, kterou spravuje pronajímatel   |
+    | Smlouva         |         ✅              |         ❌             | Pronajímatel je smluvní stranou                                 |
+    | Služby          |         ✅              |         ❌             | Služby jsou nastaveny pronajímatelem pro dané jednotky/smlouvy  |
+    | Platby          |         ✅              |         ❌             | Platby směřují pronajímateli a jsou s ním párovány              |
+    | Uživatelé       |         ✅              |         ✅*            | Správci a účetní mají přístupová práva k pronajímatelům         |
+    | Dokumenty       |         ✅              |         ❌             | Dokumenty jsou přiřazeny ke konkrétnímu pronajímateli           |
+    | Auditní log     |         ✅              |         ❌             | Všechny akce nad pronajímatelem se logují                       |
+    
+    *Poznámka: Pronajímatel může být spravován konkrétním uživatelem, tj. přístupová práva jsou vázána na uživatele.*
+    
+    ---
+    
+    ### 🗺️ Diagram vztahů (textová verze)
+    
+    ```
+               +---------------------+
+               |     Uživatelé       |
+               +---------------------+
+                         ^
+                         |
+    +----------+  +------------+  +---------+  +---------+
+    | Platby   |  | Nemovitost |  | Jednotka|  | Smlouvy |
+    +----------+  +------------+  +---------+  +---------+
+         \           |                |           /
+          \          |                |          /
+           \         v                v         /
+                 +--------------------------+
+                 |      Pronajímatel        |
+                 +--------------------------+
+           /          ^                ^         \
+          /           |                |          \
+    +---------+  +---------+    +---------+  +--------------+
+    | Služby  |  | Nájemník|    | Dokumenty|  | Auditní log |
+    +---------+  +---------+    +---------+  +--------------+
+    ```
+    
+    ---
+    
+    ### 💡 Poznámky
+    
+    - Pokud je Pronajímatel odstraněn/archivován, je třeba řešit i navázané entity (vazby se ruší/archivují, případně jsou jen ke čtení).
+    - Veškeré vazby jsou evidovány v databázi a změny jsou zaznamenány v auditním logu.
+    - Závislosti se mohou dále rozšiřovat s novými moduly (např. integrace, notifikace).
 
-
+---
 11. Chybové stavy a výjimky
 Co dělat, když se nepodaří uložit, napojit na ARES, při duplicitě apod.
 
-
+    ## ⚠️ Chybové stavy a výjimky – Pronajímatel
+    
+    Správné ošetření chybových stavů je klíčové pro stabilitu systému a komfort uživatelů. Níže jsou uvedeny typické chybové situace v modulu Pronajímatel a doporučený způsob jejich řešení.
+    
+    ---
+    
+    ### Typické chybové stavy
+    
+    | Chyba / výjimka                             | Doporučené řešení / reakce systému                                             | Uživatelská hláška                  | Logování/Audit      |
+    |---------------------------------------------|-------------------------------------------------------------------------------|--------------------------------------|---------------------|
+    | Nepodaří se uložit data (DB chyba, síť)     | Zobrazit chybovou hlášku, nabídnout opakování akce, nic neukládat do DB       | „Nepodařilo se uložit změny. Zkuste to prosím znovu.“ | Zapsat detail chyby do logu |
+    | Duplicitní IČ/DIČ nebo jiný unikátní údaj   | Zamezit uložení, zvýraznit duplicitní pole, nabídnout možnost najít existující záznam | „Zadané IČ/DIČ již existuje v systému.“ | Logovat pokus o duplicitní zápis |
+    | Chyba napojení na ARES                      | Informovat uživatele, že ověření neproběhlo, umožnit ruční zadání údajů       | „Nepodařilo se ověřit subjekt v ARES. Zkontrolujte údaje nebo zkuste později.“ | Logovat detail chyby + odpověď ARES |
+    | Chyba napojení na bankovní API              | Informovat uživatele, umožnit uložit bez ověření, nabídnout opakování         | „Ověření účtu selhalo. Data byla uložena, bankovní účet ověřte později.“ | Logovat odpověď API      |
+    | Povinné pole není vyplněno                  | Zvýraznit chybějící pole, zamezit uložení                                     | „Vyplňte prosím všechna povinná pole.“ | Není třeba logovat  |
+    | Nevalidní formát (např. špatný e-mail, datum)| Zvýraznit pole, zamezit uložení                                               | „Zadaný údaj není v platném formátu.“ | Není třeba logovat  |
+    | Neoprávněný přístup k datům                 | Zamezit akci, přesměrovat na přihlášení/přístup zamítnut                      | „Nemáte oprávnění pro tuto akci.“    | Povinně logovat pokus |
+    | Změna stavu není povolena                   | Zamezit změnu, zobrazit důvod (např. kvůli navázané smlouvě)                  | „Nelze změnit stav, dokud existují aktivní smlouvy.“ | Logovat pokus         |
+    | Chyba při mazání/archivaci                  | Zamezit akci, zobrazit důvod, nabídnout archivaci místo mazání                | „Subjekt nelze smazat – existují navázané záznamy. Archivujte místo toho.“ | Logovat pokus         |
+    
+    ---
+    
+    ### Obecné pokyny pro ošetření chyb
+    
+    - **Srozumitelnost:** Hlášky mají být jasné, uživatelsky srozumitelné, bez technických detailů.
+    - **Podpora:** U kritických chyb nabídnout kontakt na podporu nebo možnost nahlášení chyby.
+    - **Logování:** Každý technický problém a pokus o neautorizovanou akci je zaznamenán v audit logu včetně detailu chyby, času a uživatele.
+    - **Opakovatelnost:** Tam, kde je to možné, nabídnout možnost opakovat akci bez nutnosti znovu vyplňovat celý formulář.
+    - **Bezpečnost:** Chybové hlášky nesmí obsahovat citlivé údaje (např. detail SQL dotazu).
+    
+    ---
+    
+    ### 💡 Poznámka pro vývojáře
+    
+    - Chybové kódy a zprávy udržujte centralizovaně – možnost překladů a úpravy wordingů.
+    - Vždy validujte vstupy na klientovi i serveru.
+    - Sledujte počet výskytů chyb pro včasné odhalení systémových problémů.
+    
+    ---
 ---
 
 > Tento dokument bude rozšiřován podle vývoje a potřeb projektu.
