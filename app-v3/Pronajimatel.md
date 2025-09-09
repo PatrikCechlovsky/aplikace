@@ -95,6 +95,20 @@ Základní pole (návrh):
 - 📜 Zobrazit historii změn
 
 ---
+## Povinnost a viditelnost polí podle typu subjektu
+
+| Pole                    | Osoba      | OSVČ        | Firma       | Spolek/skupina | Státní organizace | Zástupce   |
+|-------------------------|------------|-------------|-------------|----------------|-------------------|------------|
+| Titul před jménem       | Nepovinné  | Nepovinné   | Nezobrazovat| Nezobrazovat   | Nezobrazovat      | Nepovinné  |
+| Jméno                   | Povinné    | Povinné     | Nezobrazovat| Nezobrazovat   | Nezobrazovat      | Povinné    |
+| Příjmení                | Povinné    | Povinné     | Nezobrazovat| Nezobrazovat   | Nezobrazovat      | Povinné    |
+| Název společnosti       | Nezobrazovat| Nezobrazovat| Povinné     | Povinné        | Povinné           | Nezobrazovat|
+| IČ                      | Povinné    | Povinné     | Povinné     | Povinné        | Povinné           | Nezobrazovat|
+| DIČ                     | Nepovinné  | Povinné     | Povinné     | Nepovinné      | Nepovinné         | Nezobrazovat|
+| Typ dokladu totožnosti  | Povinné    | Povinné     | Nezobrazovat| Nezobrazovat   | Nezobrazovat      | Povinné    |
+| ...                     | ...        | ...         | ...         | ...            | ...               | ...        |
+
+---
 
 ## 🛡️ Role a oprávnění
 
@@ -152,8 +166,61 @@ Sem si piš vše, co tě napadne k modulu Pronajímatel...
   🏁 Přeskočit kroky, které uživatel nezná/nechce řešit.
   💾 Uložit stav a vrátit se později.
 
-3. potřebuju vidět propojení (vazby) jaké má nemovitosti, jaké smlouvy a jaké trable
+2. potřebuju vidět propojení (vazby) jaké má nemovitosti, jaké smlouvy a jaké trable
   chtěl bych si mít možnost nastavit ve svém profilu vybrané pronajímatele a mít možnost přepnout a vidět všechny na které mám přístup
+
+další potřebné poznámky
+
+1. Seznam možností pro výběrová pole ve formuláři
+Přidej sekci, kde budou vypsány všechny hodnoty používané ve selectech (typ subjektu, role, typ oprávnění, stát, stav apod.)
+Výhoda: Přehled pro vývojáře i správce, snadná údržba.
+## Možnosti výběrových polí ve formuláři
+
+### Typ oprávnění
+- Čtení vybraných informací
+- Čtení všech informací
+- Úprava všech informací
+
+### Typ dokladu totožnosti
+- Občanský průkaz
+- Pas
+- Řidičský průkaz
+
+### Stát
+- Česká republika (CZ)
+- Slovensko (SK)
+- Rakousko (AT)
+- Německo (DE)
+- Polsko (PL)
+- (další podle potřeby)
+
+### Zástupce
+- Seznam osob zastupujících (dynamicky dle databáze)
+3. Stavy a workflow subjektu
+Vysvětli (nejlépe tabulkou), jaké může mít pronajímatel stavy (aktivní, archivovaný, zablokovaný, čeká na doplnění, atd.) a jak může přecházet mezi stavy.
+Přidej krátký popis, kdo a kdy může změnit stav.
+4. Podmínky mazání a archivace
+Definuj, za jakých okolností lze subjekt smazat/archivovat (např. nesmí mít aktivní smlouvy, vazby na platby atd.)
+Přidej varování pro správce.
+5. Historie a auditní log
+Zvaž sekci popisující, jak a kde se zaznamenávají změny údajů (kdo, kdy, co upravil)
+Možnost zobrazit historii změn v detailu subjektu.
+6. Notifikace a upozornění
+Popiš, jaká upozornění/pravidla mají být v systému (např. při změně účtu, blížící se expirační datum smlouvy, apod.)
+Jaké akce vyvolají notifikaci a komu.
+7. GDPR a export/smazání dat
+Sekce s poznámkou, jak je možné exportovat veškerá data subjektu a jak řešit žádost o „právo být zapomenut“ (mazání všech osobních údajů).
+8. Přístupová práva k jednotlivým funkcím
+Tabulka „Kdo na co má právo“ – pro různé role (admin, správce, účetní, jen čtení) – co může vidět, upravovat, exportovat, mazat.
+9. Integrace na externí služby
+Je-li v plánu napojení na ARES, ISZR, banky apod., napiš sekci „Plánované integrace“.
+10. Ukázka datové věty / JSON objektu
+Přidej konkrétní příklad, jak bude vypadat uložený objekt pronajímatele v DB (vzorový JSON).
+11. Přehled závislostí na dalších modulech
+Přidej diagram nebo tabulku, které další moduly závisí na pronajímateli a naopak.
+12. Chybové stavy a výjimky
+Co dělat, když se nepodaří uložit, napojit na ARES, při duplicitě apod.
+
 
 ---
 
