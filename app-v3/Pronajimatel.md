@@ -630,6 +630,32 @@ Co dělat, když se nepodaří uložit, napojit na ARES, při duplicitě apod.
     - Sledujte počet výskytů chyb pro včasné odhalení systémových problémů.
     
     ---
----
+   Krátký úvod pro uživatele v modulu pronajimatel
+  Pokud dokument bude číst i business uživatel, můžeš na začátek přidat stručné „Co je modul Pronajimatel a kdy ho použít
+    ## 🏢 Co je modul Pronajímatel a kdy ho použít
+
+    **Modul Pronajímatel** slouží k evidenci a správě všech osob, firem nebo institucí, které vlastní nebo pronajímají byty, jednotky či jiné prostory v rámci spravovaného portfolia.  
+    Umožňuje přehledně sledovat pronajímatele, jejich kontaktní a identifikační údaje, vlastnické vztahy, historii změn i další související informace.
+    
+    ### Kdy modul použít?
+    
+    - Pokud potřebuješ evidovat, kdo je vlastníkem nebo pronajímatelem konkrétní jednotky/bytu.
+    - Pro správu kontaktů a údajů pronajímatelů (telefon, email, adresa, bankovní účet apod.).
+    - Při správě a přidělování jednotek a bytů jednotlivým vlastníkům/pronajímatelům.
+    - Pro řešení změn vlastnických vztahů, např. při prodeji jednotky nebo změně majitele.
+    - Pokud chceš mít přehled o všech vlastnících, spoluvlastnících a jejich podílech na nemovitostech.
+    - Pro kontrolu a správu příjmů z nájmů, záloh a dalších plateb ve vztahu k pronajímatelům.
+    - Pro napojení na další související moduly (jednotky, platby, dokumenty, nájemníky apod.).
+    
+    ### Typické využití:
+    
+    - Bytová družstva, SVJ, správci nemovitostí, realitní kanceláře.
+    - Evidence dlouhodobých i krátkodobých pronajímatelů.
+    - Správa spoluvlastníků, právnických osob, institucí i fyzických osob v roli vlastníka/pronajímatele.
+    
+    > Modul Pronajímatel je klíčovou součástí systému a tvoří základ pro správné fungování dalších navázaných modulů (jednotky, platby, smlouvy, nájemníci atd.).
+    
+    ---
+    ---
 
 > Tento dokument bude rozšiřován podle vývoje a potřeb projektu.
