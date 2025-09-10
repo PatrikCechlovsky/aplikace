@@ -1,46 +1,60 @@
+> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)
+
 # Modul: Můj účet
 
-> ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
-> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
-
 ---
 
-## 👤 Úvod
+## 🟦 Dlaždice: Osobní údaje a kontakty
 
-Modul **Můj účet** slouží každému uživateli k osobní správě svého účtu, bezpečnosti, kontaktních údajů a notifikací.  
-Umožňuje změnit přihlašovací údaje, upravit své kontaktní informace, nastavit zabezpečení (např. dvoufaktorová autentizace), spravovat notifikace a sledovat aktivitu v systému.
-
----
-
-## 🟦 Hlavní sekce / dlaždice
-
-### 1. Osobní údaje a kontakty
+### 👁️ Přehled osobních údajů
 
 - Úprava jména, příjmení, titulů
 - Správa e-mailu, telefonu, adresy
 - Možnost nahrát profilovou fotografii
 - Zobrazení role v systému a příslušnosti ke společnostem/nemovitostem/jednotkám
 
+### 📝 Formulář: Úprava osobních údajů
+
+Popis polí, validací a chování formuláře pro úpravu osobních údajů.
+
 ---
 
-### 2. Přihlašovací údaje a zabezpečení
+## 🟦 Dlaždice: Přihlašovací údaje a zabezpečení
+
+### 👁️ Přehled zabezpečení
 
 - Změna hesla
 - Nastavení dvoufaktorové autentizace (2FA, např. SMS, aplikace)
 - Správa přihlášených zařízení (odhlášení z jiného zařízení)
 - Historie přihlášení a pokusy o přihlášení
 
+### 📝 Formulář: Změna hesla
+
+Popis polí, validací a chování formuláře pro změnu hesla.
+
+### 📝 Formulář: Nastavení dvoufaktorové autentizace
+
+Popis polí, validací a chování formuláře pro nastavení 2FA.
+
 ---
 
-### 3. Notifikace a upozornění
+## 🟦 Dlaždice: Notifikace a upozornění
+
+### 👁️ Přehled notifikací
 
 - Výběr způsobu zasílání notifikací (e-mail, SMS, interní zpráva, push notifikace)
 - Nastavení, pro které události chce uživatel dostávat upozornění (platba, údržba, nová zpráva…)
 - Možnost dočasně/notrvalo vypnout některá upozornění
 
+### 📝 Formulář: Nastavení notifikací
+
+Popis polí, validací a chování formuláře pro nastavení notifikací.
+
 ---
 
-### 4. Nastavení a preference
+## 🟦 Dlaždice: Nastavení a preference
+
+### 👁️ Přehled nastavení a preferencí
 
 - Výběr vzhledu (světlý/tmavý režim, barvy)
 - Nastavení jazyka aplikace
@@ -48,9 +62,15 @@ Umožňuje změnit přihlašovací údaje, upravit své kontaktní informace, na
 - Správa oblíbených modulů (rychlý přístup)
 - Nastavení časového pásma a formátu data/času
 
+### 📝 Formulář: Nastavení a preference
+
+Popis polí, validací a chování formuláře pro nastavení a preference.
+
 ---
 
-### 5. Aktivita uživatele
+## 🟦 Dlaždice: Aktivita uživatele
+
+### 👁️ Přehled aktivity
 
 - Přehled posledních změn, akcí a přístupů v systému (např. zadání platby, úprava kontaktu, odeslání zprávy)
 - Historie přihlášení a odhlášení
@@ -58,17 +78,23 @@ Umožňuje změnit přihlašovací údaje, upravit své kontaktní informace, na
 
 ---
 
-### 6. Zrušení účtu (volitelné, pokud umožněno)
+## 🟦 Dlaždice: Zrušení účtu (volitelné, pokud umožněno)
+
+### 👁️ Přehled procesu zrušení účtu
 
 - Postup pro zrušení účtu (automaticky nebo na žádost správce)
 - Upozornění na nevratnost kroku, možnost stažení osobních dat před zrušením
 - Informace o zpracování údajů po zrušení účtu (GDPR)
 
+### 📝 Formulář: Zrušení účtu
+
+Popis polí, validací a chování formuláře pro žádost o zrušení účtu.
+
 ---
 
 ## 🗃️ Datové modely (ukázka)
 
-### 1. Uživatel
+### 👁️ Uživatel
 
 ```json
 {
@@ -88,7 +114,7 @@ Umožňuje změnit přihlašovací údaje, upravit své kontaktní informace, na
 }
 ```
 
-### 2. Aktivita uživatele
+### 👁️ Aktivita uživatele
 
 ```json
 {
@@ -114,7 +140,7 @@ Umožňuje změnit přihlašovací údaje, upravit své kontaktní informace, na
 
 ---
 
-## ⚠️ Chybové stavy a výjimky
+## ⚠️ Dlaždice: Chybové stavy a výjimky
 
 | Chyba / výjimka                | Řešení systému / reakce      | Uživatelská hláška                              |
 |---------------------------------|------------------------------|-------------------------------------------------|
@@ -125,7 +151,7 @@ Umožňuje změnit přihlašovací údaje, upravit své kontaktní informace, na
 
 ---
 
-## 🛡️ Role a oprávnění
+## 🛡️ Dlaždice: Role a oprávnění
 
 | Funkce / Akce                | Uživatel | Admin |
 |------------------------------|:--------:|:-----:|
