@@ -41,10 +41,30 @@
 
 📁 Muj-ucet.md ✅  
  🟦 Osobní údaje a kontakty  
+  👁️ Přehled osobních údajů  
+  📝 Úprava osobních údajů  
  🟦 Přihlašovací údaje a zabezpečení  
+  👁️ Přehled zabezpečení  
+  📝 Změna hesla  
+  📝 Nastavení dvoufaktorové autentizace  
  🟦 Notifikace a upozornění  
+  👁️ Přehled notifikací  
+  📝 Nastavení notifikací  
  🟦 Nastavení a preference  
+  👁️ Přehled nastavení a preferencí  
+  📝 Nastavení a preference  
  🟦 Aktivita uživatele  
+  👁️ Přehled aktivity  
+ 🟦 Zrušení účtu (volitelné, pokud umožněno)  
+  👁️ Přehled procesu zrušení účtu  
+  📝 Zrušení účtu  
+ 🗃️ Datové modely (ukázka)  
+  👁️ Uživatel  
+  👁️ Aktivita uživatele  
+ ⚠️ Chybové stavy a výjimky  
+ 🛡️ Role a oprávnění  
+ 📑 Doporučené workflow  
+ 📚 Reference 
 
 📁 Pronajimatel.md ✅  
  🟦 Přehled (typy pronajímatelů, průvodce založením)  
