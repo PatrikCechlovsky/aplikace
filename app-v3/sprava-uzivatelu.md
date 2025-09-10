@@ -1,6 +1,9 @@
-# Správa uživatelů a modulů aplikace Pronajímatel
-    # Modul: Správa uživatelů – přehled sekcí a dlaždic
-    
+ # Modul: Správa uživatelů – přehled sekcí a dlaždic
+
+> ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
+> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
+
+---    
     ## 1. Seznam uživatelů
     - **Dlaždice se zobrazením – přehled**
         - Tabulka s filtry, vyhledáváním
