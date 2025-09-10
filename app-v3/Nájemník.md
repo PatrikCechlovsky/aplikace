@@ -1,5 +1,9 @@
 # Modul: Nájemník
 
+> ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
+> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
+
+---
 ## 📋 Přehled
 **Účel:** Správa nájemníků jednotek (osoby, firmy, instituce) a jejich zástupců.  
 **Databázová tabulka:** `Subjekt`  
