@@ -1,5 +1,9 @@
 # Modul: Služby
 
+> ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
+> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
+
+---
 ## 🏠 Krátký úvod – Co je modul Služby a kdy ho použít
 
 Modul **Služby** slouží k evidenci, nastavení a správě všech pravidelných i jednorázových služeb, záloh, kaucí, energií a dalších plateb spojených s užíváním jednotky/nemovitosti.  
