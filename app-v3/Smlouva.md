@@ -1,5 +1,9 @@
 # Modul: Smlouva
 
+> ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
+> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
+
+---
 ## 📋 Krátký úvod – Co je modul Smlouva a kdy ho použít
 
 **Modul Smlouva** slouží k evidenci, správě a generování všech typů smluv souvisejících s nájmem nemovitostí a jednotek.  
