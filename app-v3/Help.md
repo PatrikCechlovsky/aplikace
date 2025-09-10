@@ -1,5 +1,8 @@
 # Modul: Nápověda (`Help`)
 
+> ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
+> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
+
 ---
 
 ## ❓ Úvod
