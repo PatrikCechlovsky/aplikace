@@ -21,14 +21,23 @@
   👁️ Přehled uživatelů  
   📝 Přidat/pozvat uživatele  
   📝 Editace uživatele  
+  👁️ Detail uživatele  
  🟦 Správa rolí a oprávnění  
-  📝 Přidat/editovat role  
-  📝 Přidat/editovat funkce  
+  👁️ Přehled rolí a oprávnění  
+  📝 Přidat/editovat roli  
+  📝 Přidat/editovat funkci  
+  - Přehled rolí  
+  - Přehled stavů  
+  - Práva k jednotce  
+  - Funkce (oprávnění)  
  🟦 Přehled pozvánek  
+  👁️ Seznam pozvánek a ověřovacích kódů  
  🟦 Správa licencí  
+  👁️ Přehled licencí  
  🟦 Import/Export uživatelů  
  🟦 Auditní log / historie změn  
  🟦 Statistiky a využití  
+ - Poznámky, nápady a úkoly 
 
 📁 Muj-ucet.md ✅  
  🟦 Osobní údaje a kontakty  
