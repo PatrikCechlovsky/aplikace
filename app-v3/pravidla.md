@@ -12,6 +12,13 @@
   > ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)
 - Další odkazy (katalog tlačítek, oprávnění atd.) budou jen zde v tomto souboru a tady se budou rozšiřovat.
 
+## 1.1 Pravidlo pro správu stromové struktury modulů
+
+- Každý nový modul, dlaždice, formulář nebo pohled MUSÍ být ihned po přidání zapsán do stromové struktury v dokumentaci (na začátek příslušného .md souboru nebo a také do hlavního přehledu struktura-app.md).
+- Pokud se sekce/část odstraní z aplikace, musí být označená jako odstraněna i ze stromu.
+- Stav položky označujte ikonou:  
+  - ✅ hotovo, ⏳ rozpracováno, 🌐 hotovo v HTML, 🚫 odstraněno, …
+- Každý vývojář/tester je povinen změnu stromu zahrnout do commitu/PR s úpravou funkcionality.
 ---
 
 ## 2. Centrální katalogy a odkazy
