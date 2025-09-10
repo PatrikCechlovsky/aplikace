@@ -1,107 +1,14 @@
- # Modul: Správa uživatelů – přehled sekcí a dlaždic
+> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)
 
-> ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
-> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
+# Modul: Správa uživatelů
 
----    
-    ## 1. Seznam uživatelů
-    - **Dlaždice se zobrazením – přehled**
-        - Tabulka s filtry, vyhledáváním
-        - Akce na řádku: nový, upravit, archivovat, detail
-    
-        - **Detail uživatele** (formulář)
-        - **Přidat/pozvat uživatele** (formulář)
-        - **Editace uživatele** (formulář)
-        
-    ## Seznam uživatelů
+---
 
-        ### Účel sekce
-        - Přehled všech uživatelů v systému s možností rychlého vyhledání, filtrování, editace, správy oprávnění a exportu/importu.
-        
-        ### Návrh UI
-        
-        | Sloupec              | Popis                                      |
-        |----------------------|--------------------------------------------|
-        | Jméno                | Zobrazované jméno uživatele                |
-        | E-mail               | E-mailová adresa                           |
-        | Telefon              | Telefonní číslo                            |
-        | Role                 | Hlavní role (např. pronajímatel, nájemník) |
-        | Stav                 | Aktivní, pozváno, zablokováno, archivováno |
-        | Datum vytvoření      | Datum registrace/vytvoření účtu            |
-        | Přidružené jednotky  | ID/čísla jednotek, ke kterým má práva      |
-        | Funkce/oprávnění     | Přehled hlavních funkcí/oprávnění          |
-        | Akce                 | Tlačítka pro detail, úpravu, archivaci...  |
-        
-        ### Akce v řádku tabulky
-        
-        - 👁️ Detail
-        - ✏️ Upravit
-        - 📨 Odeslat pozvánku
-        - 🗄️ Archivovat
-        - ⛔ Zablokovat
-        - 🔁 Reset hesla
-        - 🔒 Obnovit přístup
-        - 📑 Dokumenty uživatele
-        - ✳️ Správa oprávnění
-        - 🧑‍💻 Historie aktivit
-        
-        ### Hromadné akce nad tabulkou
-        
-        - ➕ Přidat uživatele
-        - 📤 Export
-        - 📥 Import
-        - ⛔ Hromadná archivace
-        - 🔁 Hromadný reset hesla
-        - ✳️ Hromadná správa oprávnění
-        - 📊 Statistiky
-        - 🔍 Filtrování
-        
-        ### Poznámky k workflow
-        
-        - Akce na řádku otevřou odpovídající modální dialog nebo stránku (detail, edit, potvrzení akce).
-        - Hromadné akce vyžadují označení více uživatelů.
-        - Filtrování/řízené vyhledávání podle role, stavu, jednotky, data apod.
-        
-        ### Ukázka JSON struktury uživatele
-        
-        ```json
-        {
-          "id": "1",
-          "jmeno": "Patrik",
-          "email": "patrik@example.cz",
-          "telefon": "+420123456789",
-          "role": "Pronajímatel",
-          "stav": "aktivní",
-          "datum_vytvoreni": "2025-09-08",
-          "jednotky": ["101", "102"],
-          "funkce": ["Platby", "Správa smluv"]
-        }
-        ```
-        ...
-                  
-          - 
-    ## 2. Správa rolí a oprávnění
-    - *(Možná jako samostatná sekce nebo součást detailu)*
-        - **Dlaždice se zobrazením – přehled**
-        - **Role** – jednoduchý seznam s možností přidat a editovat role pro administrátora
-        - **Funkce (oprávnění)** – jednoduchý seznam s možností přidat a editovat funkce pro administrátora
-    
-    ## 3. Přehled pozvánek
-    - Odeslané, čekající
-    
-    ## 4. Správa licencí
-    - Přiřazení, platnost
-    
-    ## 5. Import/Export uživatelů
-    
-    ## 6. Auditní log / historie změn
-    
-    ## 7. Statistiky a využití
-    Tento dokument slouží jako hlavní poznámkový blok pro návrh správy uživatelů, rolí, práv, jednotek, funkcí, pozvánek, licencí a celkové struktury modulů aplikace Pronajímatel.
-    
-    ---
+## 🟦 Dlaždice: Seznam uživatelů
 
-## 1. Uživatelé
+Přehled všech uživatelů v systému s možností rychlého vyhledání, filtrování, editace, správy oprávnění a exportu/importu.
+
+### 👁️ Přehled uživatelů
 
 | ID | Jméno      | Email               | Telefon        | Role           | Stav      | Pozvánka      | Datum vytvoření | Jednotky (ID) | Práva k jednotce    | Funkce              |
 |----|------------|---------------------|----------------|----------------|-----------|---------------|-----------------|---------------|---------------------|---------------------|
@@ -110,9 +17,83 @@
 | 3  | Syn        | syn@example.cz      |                | Nájemník       | Aktivní   | —             | 08.09.2025      | 101           | Platby              | —                   |
 | 4  | Igor Šebek | igor@example.cz     |                | Správce        | Pozváno   | invite_def456 | 08.09.2025      |               |                     | —                   |
 
+#### Akce v řádku:
+
+- 👁️ Detail
+- ✏️ Upravit
+- 📨 Odeslat pozvánku
+- 🗄️ Archivovat
+- ⛔ Zablokovat
+- 🔁 Reset hesla
+- 🔒 Obnovit přístup
+- 📑 Dokumenty uživatele
+- ✳️ Správa oprávnění
+- 🧑‍💻 Historie aktivit
+
+#### Hromadné akce nad tabulkou
+
+- ➕ Přidat uživatele
+- 📤 Export
+- 📥 Import
+- ⛔ Hromadná archivace
+- 🔁 Hromadný reset hesla
+- ✳️ Hromadná správa oprávnění
+- 📊 Statistiky
+- 🔍 Filtrování
+
+#### Poznámky k workflow
+
+- Akce na řádku otevřou odpovídající modální dialog nebo stránku (detail, edit, potvrzení akce).
+- Hromadné akce vyžadují označení více uživatelů.
+- Filtrování/řízené vyhledávání podle role, stavu, jednotky, data apod.
+
+#### Ukázka JSON struktury uživatele
+
+```json
+{
+  "id": "1",
+  "jmeno": "Patrik",
+  "email": "patrik@example.cz",
+  "telefon": "+420123456789",
+  "role": "Pronajímatel",
+  "stav": "aktivní",
+  "datum_vytvoreni": "2025-09-08",
+  "jednotky": ["101", "102"],
+  "funkce": ["Platby", "Správa smluv"]
+}
+```
+
+### 📝 Formulář: Přidat/pozvat uživatele
+
+Popis polí, validací a chování formuláře pro přidání/pozvání uživatele.
+
+### 📝 Formulář: Editace uživatele
+
+Popis polí, validací a chování formuláře pro editaci uživatele.
+
+### 👁️ Detail uživatele
+
+Popis detailního zobrazení uživatele.
+
 ---
 
-## 2. Role
+## 🟦 Dlaždice: Správa rolí a oprávnění
+
+Možné jako samostatná sekce nebo součást detailu uživatele.
+
+### 👁️ Přehled rolí a oprávnění
+
+Seznam všech rolí a funkcí s možností editace.
+
+### 📝 Formulář: Přidat/editovat roli
+
+Formulář pro přidání nebo editaci role (pro administrátora).
+
+### 📝 Formulář: Přidat/editovat funkci
+
+Formulář pro přidání nebo editaci funkce/oprávnění (pro administrátora).
+
+#### Přehled rolí
 
 - Pronajímatel
 - Nájemník
@@ -124,27 +105,21 @@
 - Revizní technik
 - Účetní
 
----
-
-## 3. Stav
+#### Přehled stavů
 
 - aktivní
 - archivováno
 - pozváno
-- zablokovan
+- zablokován
 - neaktivní
 
----
-
-## 4. Práva k jednotce
+#### Práva k jednotce
 
 - Čtení (náhled)
 - Platby (možnost platit)
 - Plný přístup (všechny funkce)
 
----
-
-## 5. Funkce (oprávnění)
+#### Funkce (oprávnění)
 
 - Potvrzení o platbě
 - Správa smluv
@@ -154,7 +129,11 @@
 
 ---
 
-## 6. Pozvánky a ověřovací kódy
+## 🟦 Dlaždice: Přehled pozvánek
+
+Odeslané, čekající pozvánky.
+
+### 👁️ Seznam pozvánek a ověřovacích kódů
 
 | Uživatelské ID | Stav pozvánky | Kód pro email   | Kód pro SMS | Poznámka        |
 |----------------|---------------|-----------------|-------------|-----------------|
@@ -163,7 +142,11 @@
 
 ---
 
-## 7. Licence
+## 🟦 Dlaždice: Správa licencí
+
+Přiřazení a platnost licencí.
+
+### 👁️ Přehled licencí
 
 | ID licence | Typ licence | Uživatel (ID) | Platnost od  | Platnost do  | Aktivní |
 |------------|-------------|---------------|--------------|--------------|---------|
@@ -172,69 +155,38 @@
 
 ---
 
-## 8. Moduly a dlaždice aplikace
+## 🟦 Dlaždice: Import/Export uživatelů
 
-| Modul     | Dlaždice           | Propojení/dlaždice | Formulář                 |
-|-----------|--------------------|--------------------|--------------------------|
-| Uživatelé | založení uživatele | přehled            | Založení uživatele       |
-|           | přehled            |                    |                          |
-|           | Oprávnění          | založení uživatele | Seznam Oprávnění         |
-|           | Funkce             | založení uživatele | Seznam Funkcí            |
-|           | Role               | založení uživatele | Seznam rolí              |
+Popis procesu importu/exportu uživatelů.
 
 ---
 
-## 9. Funkce (tlačítka/akce v aplikaci)
+## 🟦 Dlaždice: Auditní log / historie změn
 
-- ✅ Vytvořit uživatele
-- 📨 Vygenerovat ověřovací kód (email + SMS)
-- ✉️ Odeslat pozvánku
-- 📑 Přidat dokument (např. nájemní smlouva, ověření identity)
-- 🗄️ Archivovat uživatele
-- ⛔ Zablokovat uživatele
-- 🔒 Obnovit přístup
-- 🧑‍💻 Zobrazit historii přihlášení / aktivit
-- 🔁 Resetovat heslo
-- ✳️ Přiřadit další roli / jednotku
+Sleduje, kdo, kdy a co v uživatelských datech změnil (užitečné pro administrátory a při řešení reklamací).
 
 ---
 
-## 10. Funkce (nad tabulkou nebo v řádku seznamu uživatelů)
+## 🟦 Dlaždice: Statistiky a využití
 
-- 🔍 Vyhledávání / filtrování (podle role, stavu, jednotky...)
-- ➕ Přidat nového uživatele
-- 📤 Export seznamu (např. do Excelu)
-- 📥 Import uživatelů (např. z CSV)
-- 📑 Zobrazit dokumenty
-- ⛔ Zablokovat / Archivovat
-- 🔁 Reset hesla
-- ✳️ Správa oprávnění
-- 📊 Statistiky přístupu / využití funkcí
+Přehled využití funkcí a aktivit uživatelů.
+
 ---
 
-## 11. Poznámky, nápady a úkoly
+Poznámky, nápady a úkoly k modulu i dlaždicím
 
 Sem si piš vše, co tě napadne, co je potřeba doplnit, změnit nebo vyřešit.
 
----
-1. Historie změn / auditní log
-  Sleduje kdo, kdy a co v uživatelských datech změnil (užitečné pro administrátory a při řešení reklamací).
-2. Zabezpečení
-  Nastavení síly hesla, expirace hesla, 2FA, blokace po více neúspěšných pokusech, případně logy přístupů.
-3. Správa skupin / týmů
-  Pokud budeš mít více jednotek/rolí, někdy se hodí přiřazovat práva/skupiny hromadně.
-4. Oprávnění nad více objekty
-  Máš práva k jednotce – chceš časem i práva např. ke konkrétním smlouvám, dokumentům, akcím (jemnější řízení oprávnění)?
-5. Možné workflow pro schvalování
-  Například: žádosti o změnu údajů, schvalování přijetí nájemníka, atd.
-6. Notifikace
-  Jaké události mají spouštět informování uživatelů (email, sms, interní oznámení)?
-7. Export a import dat
-  Procesy pro hromadný export/import uživatelů, audit, zálohování.
-8. Uživatelské preference
-  Např. jazyk rozhraní, nastavení notifikací, vlastní profilové údaje.
-9. Přehled o vazbách mezi uživateli
-  Kdo je např. odpovědný za jednotku, kdo je „hlavní nájemník“, kdo patří pod koho (hierarchie).
+1. Historie změn / auditní log – sleduje kdo, kdy a co v uživatelských datech změnil (užitečné pro administrátory a při řešení reklamací).
+2. Zabezpečení – nastavení síly hesla, expirace hesla, 2FA, blokace po více neúspěšných pokusech, případně logy přístupů.
+3. Správa skupin / týmů – pokud budeš mít více jednotek/rolí, někdy se hodí přiřazovat práva/skupiny hromadně.
+4. Oprávnění nad více objekty – máš práva k jednotce – chceš časem i práva např. ke konkrétním smlouvám, dokumentům, akcím (jemnější řízení oprávnění)?
+5. Možné workflow pro schvalování – např. žádosti o změnu údajů, schvalování přijetí nájemníka, atd.
+6. Notifikace – jaké události mají spouštět informování uživatelů (email, sms, interní oznámení)?
+7. Export a import dat – procesy pro hromadný export/import uživatelů, audit, zálohování.
+8. Uživatelské preference – např. jazyk rozhraní, nastavení notifikací, vlastní profilové údaje.
+9. Přehled o vazbách mezi uživateli – kdo je např. odpovědný za jednotku, kdo je „hlavní nájemník“, kdo patří pod koho (hierarchie).
 
+---
 
 > Tento soubor slouží jako živý dokument a bude se rozšiřovat podle potřeb projektu.
