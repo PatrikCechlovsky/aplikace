@@ -75,4 +75,43 @@ Tuto tabulku můžeš rozšiřovat podle potřeby nebo vést i v samostatném so
 
 ---
 
-> Tento soubor je jediný zdroj pravdy pro pravidla dokumentace v projektu. Všechny změny, přehledy a rozšiřování prováděj zde.
+## 7. Povinná závěrečná struktura každého modulu
+
+Na konci každého modulu (každého `.md` souboru modulu) vždy zařaď následující sekce — a to i tehdy, pokud budou zatím prázdné nebo stručné (pro jednotnost a snadné rozšiřování):
+
+- 🗃️ **Datové modely (ukázka)**
+  - (např. JSON struktura uživatele, pozvánky, transakce…)
+- ⚠️ **Chybové stavy a výjimky**
+  - (tabulka nebo seznam možných chyb a jejich řešení)
+- 🛡️ **Role a oprávnění**
+  - (tabulka přehledu, kdo má práva na jaké akce)
+- 📑 **Doporučené workflow**
+  - (stručný seznam typických uživatelských scénářů)
+- 📚 **Reference**
+  - (odkazy na související moduly, katalogy, případně externí zdroje)
+
+**Struktura v dokumentu modulu bude vypadat např. takto:**
+
+````markdown
+## 🗃️ Datové modely (ukázka)
+### 👁️ Uživatelský model
+```json
+{ ... }
+```
+## ⚠️ Chybové stavy a výjimky
+| Chyba | Řešení | Hláska |
+|---|---|---|
+| ... | ... | ... |
+
+## 🛡️ Role a oprávnění
+| Funkce / Akce | Uživatel | Admin |
+|---|:---:|:---:|
+| ... | ✅ | ✅ |
+
+## 📑 Doporučené workflow
+1. ...
+2. ...
+
+## 📚 Reference
+- [Modul Můj účet](./Muj-ucet.md)
+- [Modul Nastavení](./nastaveni.md)
