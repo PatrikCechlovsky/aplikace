@@ -1,8 +1,102 @@
 # Správa uživatelů a modulů aplikace Pronajímatel
+    # Modul: Správa uživatelů – přehled sekcí a dlaždic
+    
+    ## 1. Seznam uživatelů
+    - **Dlaždice se zobrazením – přehled**
+        - Tabulka s filtry, vyhledáváním
+        - Akce na řádku: nový, upravit, archivovat, detail
+    
+        - **Detail uživatele** (formulář)
+        - **Přidat/pozvat uživatele** (formulář)
+        - **Editace uživatele** (formulář)
+        
+    ## Seznam uživatelů
 
-Tento dokument slouží jako hlavní poznámkový blok pro návrh správy uživatelů, rolí, práv, jednotek, funkcí, pozvánek, licencí a celkové struktury modulů aplikace Pronajímatel.
-
----
+        ### Účel sekce
+        - Přehled všech uživatelů v systému s možností rychlého vyhledání, filtrování, editace, správy oprávnění a exportu/importu.
+        
+        ### Návrh UI
+        
+        | Sloupec              | Popis                                      |
+        |----------------------|--------------------------------------------|
+        | Jméno                | Zobrazované jméno uživatele                |
+        | E-mail               | E-mailová adresa                           |
+        | Telefon              | Telefonní číslo                            |
+        | Role                 | Hlavní role (např. pronajímatel, nájemník) |
+        | Stav                 | Aktivní, pozváno, zablokováno, archivováno |
+        | Datum vytvoření      | Datum registrace/vytvoření účtu            |
+        | Přidružené jednotky  | ID/čísla jednotek, ke kterým má práva      |
+        | Funkce/oprávnění     | Přehled hlavních funkcí/oprávnění          |
+        | Akce                 | Tlačítka pro detail, úpravu, archivaci...  |
+        
+        ### Akce v řádku tabulky
+        
+        - 👁️ Detail
+        - ✏️ Upravit
+        - 📨 Odeslat pozvánku
+        - 🗄️ Archivovat
+        - ⛔ Zablokovat
+        - 🔁 Reset hesla
+        - 🔒 Obnovit přístup
+        - 📑 Dokumenty uživatele
+        - ✳️ Správa oprávnění
+        - 🧑‍💻 Historie aktivit
+        
+        ### Hromadné akce nad tabulkou
+        
+        - ➕ Přidat uživatele
+        - 📤 Export
+        - 📥 Import
+        - ⛔ Hromadná archivace
+        - 🔁 Hromadný reset hesla
+        - ✳️ Hromadná správa oprávnění
+        - 📊 Statistiky
+        - 🔍 Filtrování
+        
+        ### Poznámky k workflow
+        
+        - Akce na řádku otevřou odpovídající modální dialog nebo stránku (detail, edit, potvrzení akce).
+        - Hromadné akce vyžadují označení více uživatelů.
+        - Filtrování/řízené vyhledávání podle role, stavu, jednotky, data apod.
+        
+        ### Ukázka JSON struktury uživatele
+        
+        ```json
+        {
+          "id": "1",
+          "jmeno": "Patrik",
+          "email": "patrik@example.cz",
+          "telefon": "+420123456789",
+          "role": "Pronajímatel",
+          "stav": "aktivní",
+          "datum_vytvoreni": "2025-09-08",
+          "jednotky": ["101", "102"],
+          "funkce": ["Platby", "Správa smluv"]
+        }
+        ```
+        ...
+                  
+          - 
+    ## 2. Správa rolí a oprávnění
+    - *(Možná jako samostatná sekce nebo součást detailu)*
+        - **Dlaždice se zobrazením – přehled**
+        - **Role** – jednoduchý seznam s možností přidat a editovat role pro administrátora
+        - **Funkce (oprávnění)** – jednoduchý seznam s možností přidat a editovat funkce pro administrátora
+    
+    ## 3. Přehled pozvánek
+    - Odeslané, čekající
+    
+    ## 4. Správa licencí
+    - Přiřazení, platnost
+    
+    ## 5. Import/Export uživatelů
+    
+    ## 6. Auditní log / historie změn
+    
+    ## 7. Statistiky a využití
+    Tento dokument slouží jako hlavní poznámkový blok pro návrh správy uživatelů, rolí, práv, jednotek, funkcí, pozvánek, licencí a celkové struktury modulů aplikace Pronajímatel.
+    
+    ---
 
 ## 1. Uživatelé
 
