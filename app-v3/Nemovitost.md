@@ -1,5 +1,9 @@
 # Modul: Nemovitost
 
+> ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
+> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
+
+---
 ## 🏢 Co je modul Nemovitost a kdy ho použít
 
 **Modul Nemovitost** slouží k evidenci a správě všech spravovaných nemovitostí (domů, areálů, budov) a jejich jednotlivých jednotek (bytů, kanceláří, garáží apod.).  
