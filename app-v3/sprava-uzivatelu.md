@@ -26,6 +26,20 @@
  🟦 Import/Export uživatelů
  🟦 Auditní log / historie změn
 
+# Struktura modulu Správa uživatelů
+
+|  |  |  |  |  |
+|---|---|---|---|---|
+| 📁 **sprava-uzivatelu.md** | 🟦 **Seznam uživatelů** | 👁️ Přehled uživatelů | 📝 Přidat/pozvat uživatele | 📝 Editace uživatele |
+|  |  | 👁️ Detail uživatele |  |  |
+|  | 🟦 **Správa rolí a oprávnění** | 👁️ Přehled rolí a oprávnění | 📝 Přidat/editovat roli | 📝 Přidat/editovat funkci |
+|  |  | – Přehled rolí | – Přehled stavů | – Práva k jednotce |
+|  |  | – Funkce (oprávnění) |  |  |
+|  | 🟦 **Přehled pozvánek** | 👁️ Seznam pozvánek a ověřovacích kódů |  |  |
+|  | 🟦 **Správa licencí** | 👁️ Přehled licencí |  |  |
+|  | 🟦 **Import/Export uživatelů** |  |  |  |
+|  | 🟦 **Auditní log / historie změn** |  |  |  |
+
 > Při každé změně obsahu tohoto modulu **aktualizuj tuto strukturu** zde i v souboru struktura-app.md!
 ---
 
