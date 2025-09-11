@@ -17,7 +17,83 @@ Při přidávání/úpravě modulů rozšiř tento katalog o nové entity.
 
 ---
 
-## Hrubý katalog podle modulů a sekcí
+## Hierarchie oprávnění: Správa uživatelů
+
+📁 **spravauzivatelu**
+- 🟦 **seznamuzivatelu**
+  - 👁️ **prehleduzivatelu**
+    - spravauzivatelu.seznamuzivatelu.prehleduzivatelu.zobrazit
+    - spravauzivatelu.seznamuzivatelu.prehleduzivatelu.detail
+    - spravauzivatelu.seznamuzivatelu.prehleduzivatelu.filtrovat
+    - spravauzivatelu.seznamuzivatelu.prehleduzivatelu.exportovat
+    - spravauzivatelu.seznamuzivatelu.prehleduzivatelu.importovat
+    - spravauzivatelu.seznamuzivatelu.prehleduzivatelu.hromadneakce
+    - spravauzivatelu.seznamuzivatelu.prehleduzivatelu.audit
+  - 📝 **pridatpozvatuzivatele**
+    - spravauzivatelu.seznamuzivatelu.pridatpozvatuzivatele.zobrazit
+    - spravauzivatelu.seznamuzivatelu.pridatpozvatuzivatele.pridat
+    - spravauzivatelu.seznamuzivatelu.pridatpozvatuzivatele.pozvat
+  - 📝 **editaceuzivatele**
+    - spravauzivatelu.seznamuzivatelu.editaceuzivatele.zobrazit
+    - spravauzivatelu.seznamuzivatelu.editaceuzivatele.editovat
+  - 👁️ **detailuzivatele**
+    - spravauzivatelu.seznamuzivatelu.detailuzivatele.zobrazit
+    - spravauzivatelu.seznamuzivatelu.detailuzivatele.historie
+    - spravauzivatelu.seznamuzivatelu.detailuzivatele.blokovat
+    - spravauzivatelu.seznamuzivatelu.detailuzivatele.odblokovat
+    - spravauzivatelu.seznamuzivatelu.detailuzivatele.archivovat
+    - spravauzivatelu.seznamuzivatelu.detailuzivatele.odeslatpozvanku
+    - spravauzivatelu.seznamuzivatelu.detailuzivatele.resetovatheslo
+    - spravauzivatelu.seznamuzivatelu.detailuzivatele.spravovatopravneni
+    - spravauzivatelu.seznamuzivatelu.detailuzivatele.dokumenty
+    - spravauzivatelu.seznamuzivatelu.detailuzivatele.funkce
+
+- 🟦 **spravaroliaopravneni**
+  - 👁️ **prehledroliopravneni**
+    - spravauzivatelu.spravaroliaopravneni.prehledroliopravneni.zobrazit
+  - 📝 **pridateditovatrolifunkci**
+    - spravauzivatelu.spravaroliaopravneni.pridatrolizobrazit
+    - spravauzivatelu.spravaroliaopravneni.pridatrolieditovat
+    - spravauzivatelu.spravaroliaopravneni.editovatrolizobrazit
+    - spravauzivatelu.spravaroliaopravneni.editovatrolieditovat
+    - spravauzivatelu.spravaroliaopravneni.pridatfunkcizobrazit
+    - spravauzivatelu.spravaroliaopravneni.pridatfunkcieditovat
+    - spravauzivatelu.spravaroliaopravneni.editovatfunkcizobrazit
+    - spravauzivatelu.spravaroliaopravneni.editovatfunkcieditovat
+  - **prehledy**
+    - spravauzivatelu.spravaroliaopravneni.prehledroli.zobrazit
+    - spravauzivatelu.spravaroliaopravneni.prehledstavu.zobrazit
+    - spravauzivatelu.spravaroliaopravneni.prehledpravkjednotce.zobrazit
+    - spravauzivatelu.spravaroliaopravneni.prehledfunkci.zobrazit
+
+- 🟦 **prehledpozvanek**
+  - 👁️ **seznampozvanek**
+    - spravauzivatelu.prehledpozvanek.seznampozvanek.zobrazit
+    - spravauzivatelu.prehledpozvanek.seznampozvanek.detail
+    - spravauzivatelu.prehledpozvanek.seznampozvanek.odeslat
+    - spravauzivatelu.prehledpozvanek.seznampozvanek.stornovat
+
+- 🟦 **spravalicenci**
+  - 👁️ **prehledlicenci**
+    - spravauzivatelu.spravalicenci.prehledlicenci.zobrazit
+    - spravauzivatelu.spravalicenci.prehledlicenci.editovat
+    - spravauzivatelu.spravalicenci.prehledlicenci.pridat
+    - spravauzivatelu.spravalicenci.prehledlicenci.mazat
+    - spravauzivatelu.spravalicenci.prehledlicenci.audit
+
+- 🟦 **importexportuzivatelu**
+    - spravauzivatelu.importexportuzivatelu.zobrazit
+    - spravauzivatelu.importexportuzivatelu.importovat
+    - spravauzivatelu.importexportuzivatelu.exportovat
+    - spravauzivatelu.importexportuzivatelu.audit
+
+- 🟦 **auditnilog**
+    - spravauzivatelu.auditnilog.zobrazit
+    - spravauzivatelu.auditnilog.detail
+
+---
+
+## Další moduly (příklady)
 
 ### Finance
 - finance.dashboard.zobrazit
@@ -82,4 +158,5 @@ Při přidávání/úpravě modulů rozšiř tento katalog o nové entity.
 
 ---
 
-Tento katalog slouží jako základ pro správu práv, rolí a funkčností napříč aplikací.
+Tento katalog slouží jako základ pro správu práv, rolí a funkčností napříč aplikací.  
+Při změnách vždy aktualizuj tuto strukturu dle stromové hierarchie modulů!
