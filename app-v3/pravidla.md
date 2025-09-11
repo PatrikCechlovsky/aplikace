@@ -7,7 +7,7 @@
 - **Nic se nemaže, pouze se přeškrtává:**  
   Pokud je třeba cokoliv odstranit ze souboru (sekce, řádek, tabulka apod.), nikdy to nemaž!  
   Přeškrtni to pomocí Markdown syntaxe `~~text~~` a případně přidej důvod (např. `~~Nepoužívaný formulář~~ – nahrazen novým postupem`).  
-  Tím zůstává historie zachována a je jasné, proč došlo ke změně.
+  Tím zůstává historie zachována a je jasné, proč došlo ke změně. Pokud je některá sekce rozpracovaná nebo čeká na doplnění, označ ji jako > TODO: … nebo ⏳ rozpracováno.
 
 - **Každá nová ikona se zapisuje do seznamu common-actions.md:**  
   Přidáš-li novou ikonu (pro tlačítko, akci…), vždy ji ihned zapiš do souboru [common-actions.md](./common-actions.md) v centrálním katalogu, včetně jejího významu a použití.  
