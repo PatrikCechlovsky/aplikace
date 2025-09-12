@@ -370,7 +370,14 @@ Tabulka: uživatel, e-mail, stav, kódy, poznámka, akce (znovu poslat, zrušit)
 - ⏳ **Uživatelské preference** – např. jazyk rozhraní, nastavení notifikací, vlastní profilové údaje.
 - ⏳ **Přehled o vazbách mezi uživateli** – kdo je např. odpovědný za jednotku, kdo je „hlavní nájemník“, kdo patří pod koho (hierarchie).
 
+> TODO:  
+> - Specifika pro SSO, API účty, pokročilé workflow (schvalování, notifikace, preference, hierarchie uživatelů).
+> - Rozšířená správa skupin/týmů nebo rozpad oprávnění na jemnější úrovně.
+> - Konkretizace chybových hlášek, importních šablon, detailů exportu.
+> - Doplňkové bezpečnostní politiky, integrace s externími systémy.
+
 ---
 
-> **Dále sem přidávej nové nápady, otázky a poznámky!**  
+> **Dále sem přidávej nové nápady, otázky a poznámky!**
+> > Pokud je něco hotové, přeškrtni nebo přidej stavovou ikonku dle pravidel.
 > Pokud je něco hotové, přeškrtni nebo přidej stavovou ikonku dle pravidel.
