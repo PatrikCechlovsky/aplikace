@@ -1,8 +1,30 @@
-# Modul: Služby
-
+> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)  
 > ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
 > ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
 
+# Modul: Služby
+
+---
+
+## Stromová struktura modulu
+
+| Stav | Sekce | Popis |
+|------|-------|-------|
+| ✅   | 🟦 Přehled služeb | Dlaždice, seznam všech služeb/záloh/kaucí |
+|      | ├── 🧾 Zálohy | Evidence a předpis záloh |
+|      | ├── 💰 Kauce | Evidence jistin (kauce, vratné depozity) |
+|      | ├── 💳 Jiné platby | Pravidelné i jednorázové poplatky |
+|      | ├── ⚡ Stavy měřidel | Evidence a historie měřidel (voda, plyn...) |
+|      | └── 📊 Vyúčtování služeb | Roční/pololetní vyúčtování a rozúčtování |
+| ✅   | 🟦 Import/Export | Import/export předpisů, vyúčtování, odečtů |
+| ✅   | 🟦 Auditní log / historie změn | Historie změn v předpisech, měřidlech, vyúčtování |
+| ✅   | 🟦 Statistiky | Statistiky využití, saldo záloh, stavy měřidel |
+| ✅   | 🟦 Nastavení modulu | Pravidla, šablony, workflow |
+| ✅   | 🟦 Notifikace a upozornění | Přehled a správa notifikací |
+| ✅   | 🟦 Průvodce zadáním služby | Průvodce pro zadání nové služby/zálohy/kauce |
+| ⏳   | 🟦 Vazby na další entity | Přehled vazeb na jednotky, nájemníky, platby |
+
+---
 ---
 ## 🏠 Krátký úvod – Co je modul Služby a kdy ho použít
 
