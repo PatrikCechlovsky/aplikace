@@ -22,6 +22,12 @@ Pro každý modul použij relevantní akce z tohoto katalogu a případně dopl�
 | 📊 Statistiky            | Přehled využití, reporty    | Všechny                      | Role s právem „statistiky“   |                                    |
 | 📨 Odeslat upomínku      | Odeslat upomínku            | Komunikace, Služby, Platby   | Admin, správce               |                                    |
 | 🖨️ Tisk                  | Tisk záznamu/dokumentu      | Dokumenty, Smlouvy, Vyúčtování| Všichni s právem „číst“     |                                    |
+| ✅ Hotovo                | Dokončená sekce/modul       | Struktura, workflow          | Všichni                      | Používá se ve struktuře modulů     |
+| ⏳ Rozpracováno          | Práce v procesu             | Struktura, workflow          | Všichni                      | Používá se ve struktuře modulů     |
+| 🚫 Odstraněno            | Odstraněná/přeškrtnutá sekce| Struktura, workflow          | Všichni                      | Přeškrtnutí řádku                   |
+| 🌐 Hotovo v HTML         | Implementace v HTML         | Struktura, workflow          | Vývojáři/testeři             | Používá se ve struktuře modulů      |
+| 🟦 Dlaždice / sekce      | Hlavní sekce/dlaždice       | Struktura                    | Všichni                      | Používá se ve strukturách           |
+| 📝 Formulář              | Zadávací část               | Struktura                    | Všichni                      | Používá se ve strukturách           |
 
 ---
 
