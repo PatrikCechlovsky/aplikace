@@ -1,69 +1,123 @@
+> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)
+
 # Modul: Energie
 
-> ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
-> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
+---
+
+## Stromová struktura modulu
+
+| Stav | Sekce | Popis |
+|------|-------|-------|
+| ✅   | 🟦 Přehled energií | Souhrnný pohled na všechny typy energií |
+| ✅   | 🟦 Odečty měřidel | Evidence měřidel a historie odečtů      |
+| ✅   | 🟦 Grafy a analýzy spotřeby | Grafy, analýzy, detekce anomálií        |
+| ✅   | 🟦 Podklady pro vyúčtování | Výpočet spotřeb, export podkladů        |
+| ✅   | 🟦 Nastavení a správa měřidel | Správa, archivace, kalibrace měřidel    |
+| ✅   | 🗒️ Poznámky, nápady a úkoly | Prostor pro další poznámky a TODO        |
 
 ---
 
-## ⚡ Úvod
+## 🟦 Přehled energií
 
-Modul **Energie** slouží k evidenci, správě a analýze spotřeby energií (elektřina, plyn, teplo, voda, případně další měřené média) v nemovitostech a jednotkách.  
-Zajišťuje propojení s odečty měřidel, umožňuje sledovat trendy, připravovat podklady pro vyúčtování a nabízí přehledné grafické výstupy.
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Účel sekce/dlaždice (proč existuje, kdo ji používá)
+- ✅ Kdo má přístup/viditelnost podle oprávnění/rolí
+- ✅ Zařazení v hlavní stromové struktuře
+- ✅ Výčet a popis všech polí (přehled i formulář)
+- ✅ Filtrování, řazení, akce v řádku
+- ✅ Hromadné akce
+- ✅ Ukázka tabulky/přehledu
+- ✅ Validace, tlačítka, workflow
+- ✅ Chybové stavy
+- ✅ Oprávnění a viditelnost
+- ✅ Vazby na další moduly a reference
+- ✅ Specifika, rozšíření
 
----
+#### 1️⃣ Popis a účel  
+Souhrnný pohled na všechny typy energií: elektřina, plyn, teplo, voda, jiné média.
 
-## 🟦 Hlavní sekce / dlaždice
+#### 2️⃣ Přístup/viditelnost  
+Pronajímatel, správce, účetní – filtrace podle oprávnění (svoje, vše, konkrétní jednotka/nemovitost).
 
-### 1. Přehled energií
+#### 3️⃣ Pole a validace  
+| Pole        | Povinné | Typ       | Poznámka         |
+|-------------|:-------:|-----------|------------------|
+| Typ energie |   Ano   | výběr     | elektřina, plyn… |
+| Období      |   Ano   | datum     |                  |
+| Spotřeba    |   Ano   | číslo     | součet z odečtů  |
+| Náklady     |   Ano   | číslo     |                  |
+| Jednotka    |   Ano   | výběr     |                  |
+| Anomálie    |   Ne    | systém    | zvýraznění       |
 
-- Souhrnný pohled na všechny typy energií (elektřina, plyn, teplo, voda, jiné)
-- Možnost filtrování podle nemovitosti, jednotky, období, druhu energie
-- Rychlý přehled celkové spotřeby a nákladů za období
-- Upozornění na anomálie (výrazná změna spotřeby, podezření na únik)
+Filtrování: období, typ energie, jednotka, nemovitost, stav.
 
----
-
-### 2. Odečty měřidel
-
-- Evidence všech měřidel (typ, umístění, výrobní číslo, jednotka, stav kalibrace)
-- Historie odečtů (datum, stav, kdo provedl, možnost nahrát fotodokumentaci)
-- Možnost zadání nového odečtu (ručně, import, API)
-- Automatické propojení odečtů s obdobím pro vyúčtování služeb
-- Upozornění na nutnost odečtu (periodická výzva, připomínka před vyúčtováním)
-- Podpora více měřidel na jednotku (např. voda studená/teplá, podružná měřidla)
-
----
-
-### 3. Grafy a analýzy spotřeby
-
-- Grafické zobrazení spotřeby v čase (měsíční, roční, meziroční srovnání)
-- Porovnání spotřeby více jednotek nebo nemovitostí
-- Detekce výkyvů, trendů a neobvyklých hodnot
-- Možnost exportu grafu/tabulky pro vyúčtování či reporting
-- Poměr spotřeby na osobu, m², na jednotku
-
----
-
-### 4. Podklady pro vyúčtování
-
-- Výčet spotřeb pro zvolené období a jednotku/nemovitost (počáteční/koncový stav, spotřeba, jednotková cena, výpočet nákladu)
-- Možnost generovat podklad pro vyúčtování služeb (export do modulu Služby/Vyúčtování)
-- Evidence a historie vyúčtování energií
-- Přehled přeplatků/nedoplatků po vyúčtování
+#### 4️⃣ Akce  
+- Export, filtrování, graf spotřeby, detail jednotky/energie
 
 ---
 
-### 5. Nastavení a správa měřidel
+## 🟦 Odečty měřidel
 
-- Přidávání, editace a archivace měřidel (výměny, zánik, kalibrace)
-- Správa standardních intervalů odečtů pro jednotlivé typy energií
-- Upozornění na blížící se konec kalibrace/životnosti měřidla
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Evidence všech měřidel, historie odečtů
+- ✅ Zadání nového odečtu (ručně, import, API)
+- ✅ Filtrování podle typu, jednotky, období
+- ✅ Automatické propojení s vyúčtováním
+- ✅ Validace, chybové stavy
+
+---
+
+## 🟦 Grafy a analýzy spotřeby
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Grafické zobrazení spotřeby v čase, srovnání období
+- ✅ Export grafu/tabulky
+- ✅ Upozornění na anomálie a výkyvy
+
+---
+
+## 🟦 Podklady pro vyúčtování
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Výpočet spotřeb, nákladů, jednotkové ceny
+- ✅ Generování podkladů pro vyúčtování služeb
+- ✅ Export, historie vyúčtování, přeplatky/nedoplatky
+
+---
+
+## 🟦 Nastavení a správa měřidel
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Přidání, editace, archivace měřidel
+- ✅ Nastavení intervalů odečtů
+- ✅ Upozornění na kalibraci/životnost
+
+---
+
+## 🗒️ Poznámky, nápady a úkoly k modulu i dlaždicím
+
+> Zde piš vše, co je potřeba doplnit, změnit nebo vyřešit.  
+> ⏳ = rozpracováno, přeškrtni hotové.
+
+- ⏳ Automatický import odečtů z API dodavatele
+- ⏳ Notifikace na blížící se kalibraci/expiraci měřidla
+- ⏳ Export souhrnné zprávy o spotřebě všem nájemníkům
+- ⏳ Možnost importu dat z chytrých měřidel (IoT)
+- ⏳ Sledování spotřeby na osobu/M2
+- ⏳ Umožnit zpětné zadání odečtu s auditní stopou
+- ⏳ Zobrazit grafy i pro porovnání více jednotek
+- ⏳ Upozornění na neobvyklou spotřebu s doporučením řešení
+
+> Otázky k doplnění:
+> - Chceme podporovat pravidelný automatický import z externího systému?
+> - Má být možné nastavit různé intervaly odečtů pro různé typy energií?
+> - Potřebujeme detailní historii změn u každého měřidla?
+> - Budeme rozlišovat více typů měřidel na jednu jednotku (podružná, hlavní)?
+> - Chceme podporovat anonymizovaná data pro porovnání s průměrem v domě?
 
 ---
 
 ## 🗃️ Datové modely (ukázka)
-
-### 1. Měřidlo
 
 ```json
 {
@@ -76,9 +130,6 @@ Zajišťuje propojení s odečty měřidel, umožňuje sledovat trendy, připrav
   "stav_kalibrace": "platná"
 }
 ```
-
-### 2. Odečet
-
 ```json
 {
   "id": "odect_2025_09_101",
@@ -89,9 +140,6 @@ Zajišťuje propojení s odečty měřidel, umožňuje sledovat trendy, připrav
   "fotodokumentace": "foto_odectu_2025-09-01.jpg"
 }
 ```
-
-### 3. Podklad pro vyúčtování
-
 ```json
 {
   "id": "vyuctovani_energie_101_2025_09",
@@ -134,19 +182,10 @@ Zajišťuje propojení s odečty měřidel, umožňuje sledovat trendy, připrav
 
 ## 📑 Doporučené workflow
 
-1. **Zadání nového odečtu:**  
-   - Ručně nebo importem, možnost přiložit fotodokumentaci.
-   - Automatické propojení s obdobím pro vyúčtování.
-   - Systém upozorní na nutnost odečtu před vyúčtováním.
-
-2. **Analýza spotřeby:**  
-   - Grafy a tabulky zobrazují spotřebu za období, porovnání s minulostí, detekce odchylek.
-
-3. **Podklady pro vyúčtování:**  
-   - Vygenerování tabulky spotřeb jednotek/nemovitostí, export do modulu Služby/Vyúčtování.
-
-4. **Správa měřidel:**  
-   - Pravidelná kontrola a aktualizace kalibrace, archivace starých měřidel.
+1. Zadání nového odečtu (ručně/import) → propojení s obdobím → upozornění na nutnost odečtu
+2. Analýza spotřeby → grafy, tabulky, detekce odchylek
+3. Generování podkladů pro vyúčtování → export do modulu Služby/Vyúčtování
+4. Správa měřidel → kontrola kalibrace, archivace
 
 ---
 
