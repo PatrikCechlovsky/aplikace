@@ -1,90 +1,140 @@
+> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)
+
 # Modul: Nápověda (`Help`)
 
-> ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
-> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
+---
+
+## Stromová struktura modulu
+
+| Stav | Sekce | Popis |
+|------|-------|-------|
+| ✅   | 🟦 Přehled celé aplikace | Hlavní přehled, seznam modulů, scénáře |
+| ✅   | 🟦 Popis jednotlivých modulů | Vysvětlení, návaznosti, tipy           |
+| ✅   | 🟦 Propojení modulů | Schémata, workflow, datové toky         |
+| ✅   | 🟦 Nejčastější dotazy (FAQ) | Typické otázky a odpovědi              |
+| ✅   | 🟦 Rychlé tipy a doporučení | Tipy, odkazy na důležité akce          |
+| ✅   | 🟦 Kontakt na podporu | Kontakty, postup nahlášení chyby        |
+| ✅   | 🗒️ Poznámky, nápady a úkoly | Prostor pro další poznámky a TODO       |
 
 ---
 
-## ❓ Úvod
+## 🟦 Přehled celé aplikace
 
-Modul **Nápověda** slouží jako centrální místo pro rychlé vysvětlení funkcí aplikace i jejích jednotlivých modulů.  
-Pomáhá uživatelům pochopit, k čemu slouží konkrétní sekce, jak jsou jednotlivé části systému provázané a jak z aplikace vytěžit maximum.  
-Obsahuje také obecný přehled celé aplikace, často kladené dotazy a kontakty na podporu.
-
----
-
-## 🟦 Hlavní sekce / dlaždice
-
-### 1. Přehled celé aplikace
-
-- Stručný popis, k čemu aplikace slouží a jaké má hlavní výhody
-- Seznam všech modulů s krátkým popisem
-- Vzorové scénáře použití (např. evidence plateb, vyúčtování, komunikace s nájemníky)
+### ✅ Checklist pro dokumentaci sekce/dlaždice
+- ✅ Popis k čemu aplikace slouží, hlavní výhody
+- ✅ Seznam modulů, stručný popis, scénáře použití
 
 ---
 
-### 2. Popis jednotlivých modulů
+## 🟦 Popis jednotlivých modulů
 
-- Ke každému modulu (Platby, Finance, Energie, Údržba, Komunikace, Nastavení, Dokumenty, Můj účet…) stručné vysvětlení:
-  - K čemu slouží
-  - Jaké má hlavní funkce
-  - Jak je provázán s ostatními moduly (např. Platby → Finance, Energie → Vyúčtování)
-  - Praktické tipy k použití
+### ✅ Checklist pro dokumentaci sekce/dlaždice
+- ✅ Ke každému modulu stručné vysvětlení, funkce, návaznosti
+- ✅ Praktické tipy k použití
 
 ---
 
-### 3. Propojení modulů
+## 🟦 Propojení modulů
 
-- Grafická schémata nebo seznamy, jak spolu jednotlivé moduly komunikují
-- Vysvětlení, odkud se berou data do vyúčtování, jak se přenáší informace mezi moduly (např. odečet energií → vyúčtování služeb → finance)
-- Příklady workflow napříč moduly (např. požadavek na opravu → údržba → finance → komunikace)
-
----
-
-### 4. Nejčastější dotazy (FAQ)
-
-- Jak zadat novou platbu?
-- Jak vytvořit vyúčtování?
-- Jak přidat nový kontakt nebo nájemní smlouvu?
-- Kde najdu historii oprav?
-- Jak nastavit upozornění/notifikace?
+### ✅ Checklist pro dokumentaci sekce/dlaždice
+- ✅ Schémata, seznamy propojení, workflow napříč moduly
+- ✅ Příklady přenosu dat, návaznosti
 
 ---
 
-### 5. Rychlé tipy a doporučení
+## 🟦 Nejčastější dotazy (FAQ)
 
-- Odkazy na nejdůležitější akce a nastavení
-- Základy zabezpečení (hesla, dvoufaktor, zálohy)
-- Doporučené workflow pro nové uživatele
-
----
-
-### 6. Kontakt na podporu
-
-- E-mail, telefon, případně chat nebo odkaz na web podporu
-- Postup, jak nahlásit chybu nebo podat námět
+### ✅ Checklist pro dokumentaci sekce/dlaždice
+- ✅ Výběr typických otázek, odpovědi
+- ✅ Odkazy na další části nápovědy
 
 ---
 
-## 📝 Ukázka obsahu pro jednotlivý modul (např. Platby)
+## 🟦 Rychlé tipy a doporučení
 
-### Platby
-
-> **K čemu slouží:**  
-> Modul Platby umožňuje evidovat všechny příjmy i výdaje, spojené s nájmem, službami a správou nemovitosti.  
-> **Hlavní funkce:**  
-> - Zadání nové platby (nájem, zálohy, vratky, SVJ…)  
-> - Párování plateb s konkrétními nájemníky a obdobím  
-> - Upozornění na neuhrazené platby  
-> **Propojení:**  
-> - Data z Plateb jsou základem pro modul Finance a Vyúčtování  
-> - Upomínky a potvrzení lze odeslat přes modul Komunikace  
-> **Tip:**  
-> Pro rychlé zadání opakující se platby použijte šablonu v sekci Platby.
+### ✅ Checklist pro dokumentaci sekce/dlaždice
+- ✅ Odkazy na důležité akce, základní zabezpečení, workflow pro nové uživatele
 
 ---
 
-## 📚 Reference / Odkazy
+## 🟦 Kontakt na podporu
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice
+- ✅ Kontakty (e-mail, telefon, chat), postup pro nahlášení chyby
+
+---
+
+## 🗒️ Poznámky, nápady a úkoly k modulu i dlaždicím
+
+> Zde piš vše, co je potřeba doplnit, změnit nebo vyřešit.  
+> ⏳ = rozpracováno, přeškrtni hotové.
+
+- ⏳ Přidat interaktivní průvodce (walkthrough) pro nové uživatele
+- ⏳ Videonávody a ukázky klíčových scénářů
+- ⏳ Automatické vyhledávání v nápovědě podle kontextu uživatele
+- ⏳ Zpětné odeslání dotazu/připomínky na podporu přímo z aplikace
+- ⏳ Napojení na externí znalostní bázi nebo wiki
+- ⏳ Možnost uživatelských tipů a hodnocení článků nápovědy
+
+> Otázky k doplnění:
+> - Chceme podporovat kontextovou nápovědu v každém modulu?
+> - Budeme nabízet video návody nebo pouze textové?
+> - Má být nápověda dostupná i veřejně (bez přihlášení)?
+> - Má být možnost automatického generování FAQ podle statistik dotazů uživatelů?
+> - Chceme umožnit „hodnotit“ užitečnost jednotlivých článků nápovědy?
+
+---
+
+## 🗃️ Datové modely (ukázka)
+
+```json
+{
+  "id": "faq_001",
+  "otazka": "Jak zadat novou platbu?",
+  "odpoved": "Přejděte do sekce Platby, klikněte na Přidat platbu, vyplňte potřebné údaje a uložte."
+}
+```
+```json
+{
+  "id": "kontakt_001",
+  "typ": "e-mail",
+  "kontakt": "podpora@aplikace.cz"
+}
+```
+
+---
+
+## ⚠️ Chybové stavy a výjimky
+
+| Chyba / výjimka                | Řešení systému / reakce      | Uživatelská hláška                              |
+|---------------------------------|------------------------------|-------------------------------------------------|
+| Nápověda nenalezena             | Upozornit, nabídnout kontakt | „Nápověda k tomuto tématu nebyla nalezena. Kontaktujte podporu.“ |
+| Chybný kontakt na podporu       | Upozornit, logovat           | „Kontakt na podporu není dostupný.“             |
+| Neplatný dotaz                  | Nabídnout další možnosti     | „Dotaz nebyl rozpoznán, zkuste jej přeformulovat.“ |
+
+---
+
+## 🛡️ Role a oprávnění
+
+| Funkce / Akce                | Uživatel | Admin | Support |
+|------------------------------|:--------:|:-----:|:-------:|
+| Zobrazit nápovědu            |   ✅     |  ✅   |   ✅    |
+| Přidat/změnit článek         |   ❌     |  ✅   |   ✅    |
+| Hodnotit užitečnost          |   ✅     |  ✅   |   ✅    |
+| Kontaktovat podporu          |   ✅     |  ✅   |   ✅    |
+
+---
+
+## 📑 Doporučené workflow
+
+1. Uživatel najde odpověď v nápovědě → vyřeší dotaz
+2. Nenajde odpověď → kontaktuje podporu → obdrží odpověď
+3. Nový dotaz/FAQ je přidán do znalostní báze
+4. Pravidelná aktualizace a rozšiřování FAQ podle potřeb uživatelů
+
+---
+
+## 📚 Reference
 
 - [Přehled všech modulů](./)
 - [Nastavení](./nastaveni.md)
