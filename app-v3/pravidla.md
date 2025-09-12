@@ -18,20 +18,25 @@
 ## 1. Struktura modulů a souborů
 
 - Každý modul začíná hlavním nadpisem `# Modul: Název`.
-- Hlavní sekce modulu (dlaždice) označuj jako `## 🟦 Dlaždice: NázevDlaždice`.
-- Každý formulář označuj jako `### 📝 Formulář: NázevFormuláře`.
-- Pokud se formulář opakuje v různých modulech, přidej poznámku „Tento formulář je použit také v: ...“.
-- Na začátek každého modulu vlož jen tento odkaz na pravidla:
-  > ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)
-- Další odkazy (katalog tlačítek, oprávnění atd.) budou jen zde v tomto souboru a tady se budou rozšiřovat.
+- Na začátek každého `.md` souboru modulu vlož vždy tabulku se stromovou strukturou celého modulu v tomto formátu:
+  | Stav | Sekce | Popis |
+  |------|-------|-------|
+  | ✅   | 🟦 Seznam uživatelů | Hlavní dlaždice s přehledem uživatelů |
+  |      | ├── 👁️ Přehled uživatelů |   Základní tabulka všech uživatelů |
+  |      | ├── 📝 Přidat/pozvat uživatele |   Formulář pro přidání nebo pozvání |
+  |      | └── 👁️ Detail uživatele |   Detailní pohled na uživatele |
+  | ⏳   | ... | ... |
+- Hlavní dlaždice mají stavovou ikonku, podúrovně jsou vizuálně odsazené pomocí stromových znaků a mezer.
+- Struktura musí být vždy přehledná a aktuální.
 
 ## 1.1 Pravidlo pro správu stromové struktury modulů
 
-- Každý nový modul, dlaždice, formulář nebo pohled MUSÍ být ihned po přidání zapsán do stromové struktury v dokumentaci (na začátek příslušného .md souboru  a také do hlavního přehledu struktura-app.md).
-- Pokud se sekce/část odstraní z aplikace, musí být označená jako odstraněna i ze stromu.
-- Stav položky označujte ikonou:  
+- Stromovou tabulku struktury modulu musíš aktualizovat pokaždé, když přidáš, odebereš nebo upravíš jakoukoliv sekci, dlaždici, formulář nebo pohled.
+- **Každou změnu této struktury ihned zapiš také do centrálního souboru [struktura-app.md](./struktura-app.md) – tento soubor obsahuje globální stromovou strukturu všech modulů.**
+- Pokud sekci v aplikaci odstraníš, označ ji ve stromu ikonou stavu (např. 🚫) a přeškrtni její řádek.
+- Stav položky označuj ikonou:  
   - ✅ hotovo, ⏳ rozpracováno, 🌐 hotovo v HTML, 🚫 odstraněno, …
-- Každý vývojář/tester je povinen změnu stromu zahrnout do commitu/PR s úpravou funkcionality.
+- Každý vývojář/tester je povinen změnu stromu zahrnout do commitu/PR s úpravou funkcionality, včetně aktualizace `struktura-app.md`.
 
 ---
 
