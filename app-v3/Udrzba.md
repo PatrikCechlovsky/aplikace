@@ -1,71 +1,138 @@
+> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)
+
 # Modul: Údržba
 
-> ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
-> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
+---
+
+## Stromová struktura modulu
+
+| Stav | Sekce | Popis |
+|------|-------|-------|
+| ✅   | 🟦 Hlášení závad a požadavků | Evidence požadavků na opravy, úklid, instalace |
+| ✅   | 🟦 Plánované údržby, servisy, revize | Plánování, upozornění na termíny, historie |
+| ✅   | 🟦 Provedené opravy a zásahy | Evidence všech zásahů, náklady, doklady |
+| ✅   | 🟦 Přehled zařízení a servisní historie | Katalog zařízení a jejich servisní historie |
+| ✅   | 🟦 Statistiky a reporting | Přehled počtu požadavků, nákladů, grafy |
+| ✅   | 🗒️ Poznámky, nápady a úkoly | Prostor pro další poznámky a TODO |
 
 ---
 
-## 🛠️ Úvod
+## 🟦 Hlášení závad a požadavků
 
-Modul **Údržba** slouží k evidenci, plánování a správě všech servisních, opravárenských, revizních a údržbových činností spojených s nemovitostí, jednotkami a společnými prostorami.  
-Umožňuje evidovat požadavky nájemníků, hlášení závad, plánované i provedené servisy, výměny zařízení a povinné revize.  
-Podporuje workflow od zadání požadavku, přes realizaci až po archivaci a reporting.
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Účel sekce/dlaždice (proč existuje, kdo ji používá)
+- ✅ Kdo má přístup/viditelnost podle oprávnění/rolí
+- ✅ Zařazení v hlavní stromové struktuře
+- ✅ Výčet a popis všech polí (přehled i formulář)
+- ✅ Filtrování, řazení, akce v řádku
+- ✅ Hromadné akce, ukázka tabulky
+- ✅ Validace, tlačítka, workflow
+- ✅ Chybové stavy
+- ✅ Oprávnění a viditelnost
+- ✅ Vazby na další moduly a reference
+- ✅ Specifika, rozšíření
+
+#### 1️⃣ Popis a účel  
+Evidence závad, požadavků na opravy, úklid, instalace od nájemníků, správců, vlastníků.
+
+#### 2️⃣ Přístup/viditelnost  
+Nájemník (zadat požadavek na svoji jednotku), správce, pronajímatel (vše).
+
+#### 3️⃣ Pole a validace  
+| Pole              | Povinné | Typ          | Poznámka                          |
+|-------------------|:-------:|--------------|-----------------------------------|
+| Typ požadavku     |   Ano   | výběr        | oprava, úklid, instalace, jiné    |
+| Popis             |   Ano   | text         |                                   |
+| Foto              |   Ne    | soubor       |                                   |
+| Termín            |   Ne    | datum        | Požadovaný termín řešení          |
+| Priorita          |   Ne    | výběr        | nízká, střední, vysoká            |
+| Kontaktní osoba   |   Ano   | text         |                                   |
+| Jednotka          |   Ano   | výběr        |                                   |
+| Stav požadavku    |   Ano   | systémový    | nové, řeší se, vyřešeno, zamítnuto|
+| Přílohy           |   Ne    | soubor       |                                   |
+
+#### 4️⃣ Filtrování, hromadné akce, ukázka tabulky  
+Filtrování: stav, priorita, stáří, jednotka, zařízení  
+Hromadné akce: změna stavu, export, přiřazení realizátora
+
+| Požadavek ID | Typ     | Popis     | Stav     | Priorita | Termín    | Akce       |
+|--------------|---------|-----------|----------|----------|-----------|------------|
+| 001          | oprava  | Netěsnící kohoutek | nové | střední | 2025-09-20 | 👁️ ✏️ 🗑️ |
+
+#### 5️⃣ Validace a workflow  
+- Povinná pole, validace typu a příloh
+- Po zadání požadavku automatická notifikace správci
+- Možnost editace/změny stavu pouze správce/pronajímatel
+
+#### 6️⃣ Chybové stavy a oprávnění  
+- Nelze zadat požadavek na cizí jednotku (nájemník)
+- Chybí povinné pole (zvýraznit, zamezit uložení)
+- Duplicitní požadavek (upozornit, nabídnout sloučení)
+- Oprávnění viz tabulka na konci
+
+#### 7️⃣ Vazby  
+- Přehled zařízení (možnost přiřazení zařízení)
+- Statistiky (počty, typy)
 
 ---
 
-## 🟦 Hlavní sekce / dlaždice
+## 🟦 Plánované údržby, servisy a revize
 
-### 1. Hlášení závad a požadavků
-
-- Evidence nových požadavků (od nájemníka, správce, vlastníka)
-- Druh požadavku: oprava, úklid, instalace, jiná služba
-- Možnost přiložit popis, foto, termín, prioritu, kontaktní osobu
-- Stav požadavku: nové, řeší se, vyřešeno, zamítnuto
-- Přehled otevřených požadavků podle závažnosti, stáří, jednotky, zařízení
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Účel, uživatelé, pole, workflow, validace, akce, chybové stavy
+- ✅ Notifikace na blížící se termín, historie
 
 ---
 
-### 2. Plánované údržby, servisy a revize
+## 🟦 Provedené opravy a zásahy
 
-- Plánování pravidelných činností (revize kotlů, komínů, výtahů, elektro, hasicích přístrojů aj.)
-- Evidence termínu, rozsahu, odpovědné osoby/firmy, ceny
-- Upozornění na blížící se termín (notifikace)
-- Historie provedených/plánovaných servisů a revizí
-- Možnost přiložit protokol, certifikát, fakturu
-
----
-
-### 3. Provedené opravy a zásahy
-
-- Evidence všech realizovaných zásahů (opravy, servisní výjezdy, výměny zařízení)
-- Datum, popis, náklady, kdo provedl, přiložené dokumenty (faktury, fotky)
-- Napojení na konkrétní požadavek nebo plánovanou údržbu
-- Hodnocení spokojenosti nájemníka (volitelné)
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Účel, uživatelé, pole, workflow, validace, akce, chybové stavy
+- ✅ Možnost navázání na požadavek/plán
+- ✅ Evidence nákladů, příloh, hodnocení
 
 ---
 
-### 4. Přehled zařízení a servisní historie
+## 🟦 Přehled zařízení a servisní historie
 
-- Katalog zařízení v nemovitosti/jednotce (kotle, výtahy, okna, elektroměry…)
-- Historie oprav, výměn, revizí pro každé zařízení
-- Upozornění na potřebu výměny, konec životnosti, povinnou revizi
-- Možnost archivace vyřazených zařízení
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Katalog zařízení, historie oprav, výměn, revizí
+- ✅ Upozornění na výměnu, konec životnosti, revize, archivace zařízení
 
 ---
 
-### 5. Statistiky a reporting
+## 🟦 Statistiky a reporting
 
-- Přehled počtu a typů požadavků za období
-- Náklady na údržbu podle nemovitosti, jednotky, zařízení, typu zásahu
-- Grafy (např. průměrná doba vyřízení, počet oprav podle typu, rozložení nákladů)
-- Export přehledů a statistik
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Přehled počtu a typů požadavků, nákladů
+- ✅ Grafy, export, reporting
+
+---
+
+## 🗒️ Poznámky, nápady a úkoly k modulu i dlaždicím
+
+> Sem piš nápady a úkoly, co je potřeba doplnit, změnit nebo vyřešit.  
+> ⏳ = rozpracováno, přeškrtni hotové.
+
+- ⏳ Rozšířit katalog zařízení o typy, životnost, revizní intervaly
+- ⏳ Možnost hodnotit spokojenost po zásahu (nájemník)
+- ⏳ Automatické generování termínů revizí podle typu zařízení
+- ⏳ Workflow pro schvalování zásahu (správce → pronajímatel → realizace)
+- ⏳ Export statistiky nákladů podle typu zásahu a zařízení
+- ⏳ Notifikace na nevyřešený požadavek po X dnech
+- ⏳ Napojení na externí servisní firmy (API, e-mail)
+- ⏳ Možnost importu servisní historie z jiných systémů
+
+> Otázky k doplnění:
+> - Potřebujeme detailní evidenci nákladů a faktur na každé zařízení?
+> - Budeme umožňovat nájemníkovi hodnotit zásah?
+> - Má být možné vytvářet vlastní typy požadavků a kategorií servisů?
+> - Chceme automaticky generovat požadavky na základě plánu revizí?
+> - Má být možné navázat požadavek na více zařízení najednou?
 
 ---
 
 ## 🗃️ Datové modely (ukázka)
-
-### 1. Požadavek na opravu
-
 ```json
 {
   "id": "pozadavek_2025_101_01",
@@ -79,9 +146,6 @@ Podporuje workflow od zadání požadavku, přes realizaci až po archivaci a re
   "prilohy": ["foto_kohoutek.jpg"]
 }
 ```
-
-### 2. Plánovaná revize
-
 ```json
 {
   "id": "revize_kotel_2025",
@@ -94,9 +158,6 @@ Podporuje workflow od zadání požadavku, přes realizaci až po archivaci a re
   "prilohy": []
 }
 ```
-
-### 3. Provedený servisní zásah
-
 ```json
 {
   "id": "zasah_2025_09_101",
@@ -139,23 +200,10 @@ Podporuje workflow od zadání požadavku, přes realizaci až po archivaci a re
 
 ## 📑 Doporučené workflow
 
-1. **Zadání požadavku:**
-   - Nájemník/správce/pronajímatel zadá nový požadavek, popíše problém, případně přiloží foto.
-   - Systém zařadí požadavek do fronty a přiřadí prioritu.
-
-2. **Řešení požadavku:**
-   - Správce/pronajímatel přiřadí realizátora (servis, firma), doplní termín, upraví stav.
-   - Po vyřízení označí požadavek jako vyřešený, případně nahraje doklad/fotky.
-
-3. **Plánování údržby a revizí:**
-   - Správce/pronajímatel zadá plánované úkony (revize, pravidelný servis).
-   - Systém upozorňuje na blížící se termín.
-
-4. **Evidence zásahu:**
-   - Po provedení servisního zásahu zadá správce detailní zápis, cenu, přílohy, spojí s požadavkem/zařízením.
-
-5. **Statistiky:**
-   - Pravidelný přehled počtu požadavků, zásahů, nákladů; export pro další zpracování.
+1. Zadání požadavku → schválení správce → přiřazení realizátora → vyřešení → archivace.
+2. Plánování údržby a revizí → upozornění na termín → evidence provedení → archivace.
+3. Evidence zásahu → navázání na požadavek/plán → zadání nákladů → nahrání příloh → hodnocení nájemníkem.
+4. Statistiky a reporting → export a analýza nákladů, četnosti, typů zásahů.
 
 ---
 
