@@ -1,9 +1,37 @@
-# Modul: Nemovitost
-
+> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)  
 > ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
 > ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
 
+# Modul: Nemovitost
+
 ---
+
+## Stromová struktura modulu
+
+| Stav | Sekce | Popis |
+|------|-------|-------|
+| ✅   | 🟦 Přehled nemovitostí | Hlavní dlaždice s přehledem všech nemovitostí |
+|      | ├── 👁️ Přehled nemovitostí | Tabulka, filtrace, vyhledávání |
+|      | ├── 📝 Přidat nemovitost | Formulář pro přidání nové nemovitosti |
+|      | ├── 📝 Editace nemovitosti | Formulář pro editaci nemovitosti |
+|      | └── 👁️ Detail nemovitosti | Detailní pohled na nemovitost |
+| ✅   | 🟦 Přehled jednotek | Dlaždice/seznam všech jednotek v nemovitostech |
+|      | ├── 👁️ Přehled jednotek | Tabulka všech jednotek/bytu |
+|      | ├── 📝 Přidat jednotku | Formulář pro přidání jednotky |
+|      | ├── 📝 Editace jednotky | Formulář pro editaci jednotky |
+|      | └── 👁️ Detail jednotky | Detailní pohled na jednotku |
+| ✅   | 🟦 Import/Export | Import/export nemovitostí a jednotek |
+| ✅   | 🟦 Auditní log / historie změn | Auditní záznamy a historie změn |
+| ✅   | 🟦 Statistiky a reporting | Statistiky využití, obsazenost, rozloha |
+| ✅   | 🟦 Přehled dokumentů | Správa a přehled dokumentů/příloh |
+| ✅   | 🟦 Nastavení modulu | Nastavení a konfigurace modulu |
+| ✅   | 🟦 Notifikace a upozornění | Přehled a správa notifikací |
+| ✅   | 🟦 Průvodce založením | Průvodce pro založení nemovitosti/jednotky |
+| ⏳   | 🟦 Vazby na další entity | Přehled vazeb na pronajímatele, nájemníky, platby, služby |
+| 🚫   | ~~Staré sekce nebo neaktuální~~ | ~~Případné původní struktury, pokud existovaly~~ |
+
+---
+
 ## 🏢 Co je modul Nemovitost a kdy ho použít
 
 **Modul Nemovitost** slouží k evidenci a správě všech spravovaných nemovitostí (domů, areálů, budov) a jejich jednotlivých jednotek (bytů, kanceláří, garáží apod.).  
@@ -357,6 +385,7 @@ Pro komplexní pochopení workflow doporučujeme prostudovat také:
 - [ ] **Automatizace reportingu a dashboardy**
 
 ---
+
 ## 🗂️ Ukázka uloženého JSON objektu (nemovitost a jednotka)
 
 ### Nemovitost (včetně všech možných polí)
