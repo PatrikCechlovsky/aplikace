@@ -1,82 +1,91 @@
+> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)
+
 # Modul: Komunikace
 
-> ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
-> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
+---
+
+## Stromová struktura modulu
+
+| Stav | Sekce | Popis |
+|------|-------|-------|
+| ✅   | 🟦 Přehled komunikace | Historie odeslaných a přijatých zpráv |
+| ✅   | 🟦 Detail zprávy | Náhled, odpověď, archivace             |
+| ✅   | 🟦 Šablony a automatizace zpráv | Správa šablon, automatické notifikace  |
+| ✅   | 🟦 Odesílání zpráv | Ruční i hromadné odesílání, přílohy    |
+| ✅   | 🟦 Nastavení a integrace | SMTP, SMS brána, notifikační preference|
+| ✅   | 🗒️ Poznámky, nápady a úkoly | Prostor pro další poznámky a TODO       |
 
 ---
 
-## 📬 Úvod
+## 🟦 Přehled komunikace
 
-Modul **Komunikace** slouží k evidenci, správě a automatizaci veškeré komunikace mezi pronajímatelem, nájemníky, správci, účetními a dalšími subjekty.  
-Umožňuje uchovávat historii odeslaných a přijatých zpráv (e-mail, SMS, interní zprávy), vytvářet šablony pro automatické notifikace a plánovat hromadnou komunikaci.
-
----
-
-## 🟦 Hlavní sekce / dlaždice
-
-### 1. Přehled komunikace
-
-- Zobrazení historie všech odeslaných a přijatých zpráv (e-mail, SMS, interní oznámení)
-- Možnost filtrování podle typu komunikace, adresáta/příjemce, tématu, období a modulů (např. finance, údržba)
-- Rychlé vyhledávání podle klíčových slov nebo subjektu
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Účel, uživatelé, pole, filtrování, vyhledávání
+- ✅ Historie komunikace s konkrétním subjektem
+- ✅ Filtrování podle typu, adresáta, období, modulu
+- ✅ Export, archivace zpráv
 
 ---
 
-### 2. Detail zprávy
+## 🟦 Detail zprávy
 
-- Náhled konkrétní zprávy (obsah, přílohy, čas odeslání/přijetí, stav doručení/čtení)
-- Možnost odpovědi, přeposlání, archivace, označení
-- Historie komunikace s konkrétním nájemníkem/jednotkou
-
----
-
-### 3. Šablony a automatizace zpráv
-
-- Správa šablon pro automatické notifikace (např. výzva k platbě, upomínka, potvrzení přijetí platby, oznámení o revizi, vyúčtování)
-- Možnost vytvářet vlastní šablony s proměnnými (jméno, adresa, částka, termín…)
-- Přiřazení šablony k určitému workflow v systému (např. upomínka při neuhrazené platbě)
-- Přehled odeslaných automatických zpráv
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Náhled, obsah, přílohy, stav doručení/čtení
+- ✅ Možnost odpovědi, přeposlání, archivace
+- ✅ Historie komunikace s jednotkou/nájemníkem
 
 ---
 
-### 4. Odesílání zpráv
+## 🟦 Šablony a automatizace zpráv
 
-- Možnost ručního odeslání zprávy (e-mail, SMS, interní zpráva) z aplikace
-- Výběr příjemce z kontaktů (nájemníci, správce, účetní…)
-- Přidání příloh (smlouvy, faktury…)
-- Možnost hromadného rozesílání (např. oznámení všem nájemníkům v domě)
-
----
-
-### 5. Nastavení a integrace
-
-- Nastavení e-mailového serveru (SMTP, IMAP) – pokud je podporováno, umožňuje párování s e-mailovou schránkou a přijímání zpráv do systému
-- Nastavení SMS brány (např. Twilio, GoSMS, SMS gateway) – pokud bude podporováno, umožňuje odesílání SMS přímo z aplikace
-- Správa notifikačních preferencí pro uživatele (e-mail/SMS/interní zpráva)
-- Nastavení práv a omezení pro odesílání zpráv
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Správa šablon pro různé scénáře, proměnné
+- ✅ Automatické notifikace, přiřazení workflow
+- ✅ Historie odeslaných automatických zpráv
 
 ---
 
-## 🛠️ Poznámky k integraci
+## 🟦 Odesílání zpráv
 
-- **E-mailová integrace**:  
-  - Odesílání e-mailů z aplikace je běžně možné přes SMTP server (Google, Seznam, vlastní doména…).  
-  - Pro párování a příjem e-mailů je třeba podporovat IMAP, což je technicky složitější (nutná konfigurace, bezpečnost).
-  - Doporučení: začít pouze s odesíláním a historii odeslaných zpráv, příjem řešit až podle potřeb a možností.
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Ruční i hromadné odesílání (e-mail, SMS, interní zpráva)
+- ✅ Výběr příjemce, přidání příloh, výběr šablony
+- ✅ Ověření příjemce, chybové stavy
 
-- **Odesílání SMS**:  
-  - Technicky možné přes externí SMS brány (Twilio, GoSMS, ...), ale bývá zpoplatněné.
-  - Vyžaduje registraci a napojení na API dané služby.
-  - Doporučení: nabídnout jako volitelnou funkcionalitu, s možností vlastního napojení a platby za SMS.
+---
 
-- **Interní zprávy/notifikace**:  
-  - Alternativně lze posílat oznámení jen v rámci aplikace (pop-up, e-mailová notifikace uživatelům systému).
+## 🟦 Nastavení a integrace
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Nastavení SMTP, IMAP, SMS brány
+- ✅ Správa notifikačních preferencí, práv pro odesílání
+
+---
+
+## 🗒️ Poznámky, nápady a úkoly k modulu i dlaždicím
+
+> Sem piš vše, co je potřeba doplnit, změnit nebo vyřešit.  
+> ⏳ = rozpracováno, přeškrtni hotové.
+
+- ⏳ Plná integrace příjmu e-mailů (IMAP synchronizace)
+- ⏳ Automatické párování příchozí komunikace s entitami v systému
+- ⏳ Odesílání SMS přes více poskytovatelů (fallback)
+- ⏳ Nastavení skupinových notifikací (např. pouze vybraným správcům)
+- ⏳ Možnost plánovaného odesílání (např. rozeslat v budoucím termínu)
+- ⏳ Export a archivace celé historie komunikace pro audit
+- ⏳ Automatizované šablony pro všechny události v systému
+- ⏳ Možnost napojení na externí helpdesk/ticketing systém
+
+> Otázky k doplnění:
+> - Budeme podporovat příjem odpovědí z e-mailu a jejich automatické zpracování?
+> - Chceme umožnit nastavení šablon pro každou událost v systému individuálně?
+> - Má být možné dohledat komunikaci napříč všemi moduly jedním hledáním?
+> - Umožníme uživatelskou správu podpisu a hlavičky zprávy?
+> - Chceme podporovat šifrování/PGP pro e-maily?
 
 ---
 
 ## 🗃️ Datové modely (ukázka)
-
-### 1. Zpráva
 
 ```json
 {
@@ -92,9 +101,6 @@ Umožňuje uchovávat historii odeslaných a přijatých zpráv (e-mail, SMS, in
   "modul": "platby"
 }
 ```
-
-### 2. Šablona zprávy
-
 ```json
 {
   "id": "template_upominka",
@@ -131,21 +137,11 @@ Umožňuje uchovávat historii odeslaných a přijatých zpráv (e-mail, SMS, in
 
 ## 📑 Doporučené workflow
 
-1. **Odeslání automatizované zprávy:**  
-   - Modul (např. Platby) vygeneruje událost (např. upomínka), systém použije šablonu a odešle zprávu.
-   - Zpráva se uloží do historie komunikace.
-
-2. **Manuální odeslání zprávy:**  
-   - Správce/pronajímatel vybere příjemce, šablonu nebo vlastní text, zprávu odešle a ta se zaeviduje.
-
-3. **Přijetí odpovědi (pokud je podporováno):**  
-   - Příchozí zprávy se ukládají, lze na ně reagovat nebo je přiřadit k modulu (např. odpověď na výzvu k platbě).
-
-4. **Správa šablon:**  
-   - Úprava a tvorba šablon pro různé scénáře (platby, údržba, revize…).
-
-5. **Reporting komunikace:**  
-   - Přehled odeslaných zpráv, úspěšnosti doručení, historie podle nájemníka/jednotky.
+1. Odeslání automatizované zprávy → modul (např. Platby) vygeneruje událost → použije šablonu → odešle zprávu → uloží do historie.
+2. Manuální odeslání zprávy → výběr příjemce/šablony → odeslání → evidence v historii.
+3. Přijetí odpovědi (pokud je podporováno) → přiřazení k modulu → možnost reakce.
+4. Správa šablon → tvorba/úprava scénářů pro automatizaci.
+5. Reporting komunikace → přehled odeslaných zpráv, úspěšnosti doručení, historie podle subjektu.
 
 ---
 
