@@ -1,191 +1,158 @@
-# Modul: Finance
+> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)
 
-> ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
-> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
-
----
-
-## 🏦 Úvod
-
-Modul **Finance** poskytuje komplexní pohled na finanční zdraví pronajímatele, nemovitostí i jednotlivých jednotek. Integruje všechny příjmy, náklady, výdaje, daně, poplatky a umožňuje jejich analýzu, plánování, srovnání v čase i grafické zobrazení.  
-Umožňuje sledovat rentabilitu každé nemovitosti a jednotky, plánovat cashflow, porovnávat období a rychle identifikovat slabá místa nebo příležitosti ke zlepšení.
+# Modul: Energie
 
 ---
 
-## 🟦 Hlavní sekce / dlaždice
+## Stromová struktura modulu
 
-### 1. Přehled financí (dashboard)
-
-- Grafické zobrazení klíčových ukazatelů (příjmy, náklady, zisk/ztráta, rentabilita)
-- Výběr úrovně: všechno / konkrétní pronajímatel / nemovitost / jednotka
-- Porovnání měsíců/roků (meziroční, meziměsíční změny)
-- Vývoj zůstatků, cashflow
-
----
-
-### 2. Příjmy
-
-- Příjmy z nájmů (za jednotku, nemovitost, pronajímatele)
-- Příjmy za služby (energie, internet, parkování…)
-- Ostatní příjmy (např. mimořádné platby, vratky přeplatků od SVJ, pojistné plnění)
-- Filtrování podle období, jednotky, typu
-- Historie a predikce (plánované příjmy, očekávané platby)
+| Stav | Sekce | Popis |
+|------|-------|-------|
+| ✅   | 🟦 Přehled energií | Souhrnný pohled na všechny typy energií |
+| ✅   | 🟦 Odečty měřidel | Evidence měřidel a historie odečtů      |
+| ✅   | 🟦 Grafy a analýzy spotřeby | Grafy, analýzy, detekce anomálií        |
+| ✅   | 🟦 Podklady pro vyúčtování | Výpočet spotřeb, export podkladů        |
+| ✅   | 🟦 Nastavení a správa měřidel | Správa, archivace, kalibrace měřidel    |
+| ✅   | 🗒️ Poznámky, nápady a úkoly | Prostor pro další poznámky a TODO        |
 
 ---
 
-### 3. Náklady a výdaje
+## 🟦 Přehled energií
 
-- Náklady na energie (teplo, plyn, voda, elektřina) – včetně rozpočítání na jednotky/M2
-- Výdaje na údržbu, opravy, revize (např. komín, kotel, výtah…)
-- Pravidelné platby (SVJ, správa, služby)
-- Daně (daň z nemovitosti, z příjmu, pojistné)
-- Ostatní náklady (pojištění, právní služby, poplatky)
-- Možnost evidovat mimořádné náklady (havárie, investice)
-- Poměr rozpočítaných vs. skutečných nákladů
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Účel sekce/dlaždice (proč existuje, kdo ji používá)
+- ✅ Kdo má přístup/viditelnost podle oprávnění/rolí
+- ✅ Zařazení v hlavní stromové struktuře
+- ✅ Výčet a popis všech polí (přehled i formulář)
+- ✅ Filtrování, řazení, akce v řádku
+- ✅ Hromadné akce
+- ✅ Ukázka tabulky/přehledu
+- ✅ Validace, tlačítka, workflow
+- ✅ Chybové stavy
+- ✅ Oprávnění a viditelnost
+- ✅ Vazby na další moduly a reference
+- ✅ Specifika, rozšíření
 
----
+#### 1️⃣ Popis a účel  
+Souhrnný pohled na všechny typy energií: elektřina, plyn, teplo, voda, jiné média.
 
-### 4. Daně a poplatky
+#### 2️⃣ Přístup/viditelnost  
+Pronajímatel, správce, účetní – filtrace podle oprávnění (svoje, vše, konkrétní jednotka/nemovitost).
 
-- Přehled povinných daní a poplatků (za nemovitost, z příjmu, odpad, poplatky státu)
-- Upozornění na blížící se splatnost
-- Možnost evidence zaplacení, historie, export pro účetní
+#### 3️⃣ Pole a validace  
+| Pole        | Povinné | Typ       | Poznámka         |
+|-------------|:-------:|-----------|------------------|
+| Typ energie |   Ano   | výběr     | elektřina, plyn… |
+| Období      |   Ano   | datum     |                  |
+| Spotřeba    |   Ano   | číslo     | součet z odečtů  |
+| Náklady     |   Ano   | číslo     |                  |
+| Jednotka    |   Ano   | výběr     |                  |
+| Anomálie    |   Ne    | systém    | zvýraznění       |
 
----
+Filtrování: období, typ energie, jednotka, nemovitost, stav.
 
-### 5. Porovnání období a analytika
-
-- Porovnání příjmů a nákladů mezi roky/měsíci
-- Vývoj rentability jednotky/nemovitosti (ziskovost na jednotku, na M2)
-- Identifikace trendů: růst nákladů, pokles příjmů, výkyvy
-- Grafy: cashflow, struktura nákladů, top položky, rentabilita
-- Export do PDF/XLSX pro reporting
-
----
-
-### 6. Přehled za jednotku / nemovitost
-
-- Výběr konkrétní jednotky nebo nemovitosti
-- Detailní rozpad příjmů, nákladů, zisku
-- Rozpočítání sdílených nákladů (teplo na m2, komín, výtah…)
-- Srovnání více jednotek v rámci nemovitosti
-- Historie a prognóza
-
----
-
-### 7. Statistika a vizualizace
-
-- Grafy a tabulky: příjmy, náklady, zisk/ztráta, saldo účtů
-- Poměrové grafy (např. podíl energií na nákladech, rentabilita po měsících)
-- Možnost exportu grafů a statistik
+#### 4️⃣ Akce  
+- Export, filtrování, graf spotřeby, detail jednotky/energie
 
 ---
 
-### 8. Plánování (forecasting)
+## 🟦 Odečty měřidel
 
-- Možnost zadávat plánované (odhadované) příjmy i výdaje na období (měsíčně, ročně i ad hoc)
-- Plánování cashflow – zobrazení očekávaných zůstatků v čase
-- Porovnání skutečnosti vs. plánu (sledování odchylek, upozornění na překročení/nesplnění cíle)
-- Možnost nastavit rozpočet pro nemovitost, jednotku, konkrétní typ nákladu/příjmu
-- Export a tisk rozpočtových plánů
-
----
-
-### 9. Investice a mimořádné výdaje
-
-- Evidence větších investičních akcí (rekonstrukce, nákup vybavení, modernizace) odděleně od běžných provozních nákladů
-- Možnost evidovat plánované i skutečné náklady na investice
-- Přiřazení investic k nemovitosti/jednotce, možnost rozpočítání na více období
-- Vyhodnocení návratnosti investic (ROI) – propojení s příjmy z nájmu
-- Export přehledu investic
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Evidence všech měřidel, historie odečtů
+- ✅ Zadání nového odečtu (ručně, import, API)
+- ✅ Filtrování podle typu, jednotky, období
+- ✅ Automatické propojení s vyúčtováním
+- ✅ Validace, chybové stavy
 
 ---
 
-### 10. Automatizace a pravidla
+## 🟦 Grafy a analýzy spotřeby
 
-- Pravidla pro automatické rozpočítání nákladů (např. energie podle m2, služeb podle počtu osob)
-- Automatizované reporty (měsíční/roční souhrn na e-mail, upozornění na překročení rozpočtu, blížící se splatnost daně apod.)
-- Možnost nastavit schvalovací workflow pro určité typy výdajů nebo investic
-- Plánované importy dat z banky/účetnictví
-
----
-
-### 11. Saldo účtů
-
-- Evidence zůstatků na bankovních účtech pronajímatele/správce
-- Možnost zadávat více účtů (např. pro každou nemovitost zvlášť)
-- Historie pohybů na účtu, párování s příjmy a výdaji
-- Upozornění na nízký/záporný zůstatek
-- Přehled cashflow včetně bankovních pohybů
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Grafické zobrazení spotřeby v čase, srovnání období
+- ✅ Export grafu/tabulky
+- ✅ Upozornění na anomálie a výkyvy
 
 ---
 
-### 12. Přístupová práva pro více pronajímatelů
+## 🟦 Podklady pro vyúčtování
 
-- Více vlastníků může sdílet systém – každý vidí jen své finance (příjmy, výdaje, rozpočty, investice)
-- Sdílení reportů s účetním, spoluvlastníky, správci (možnost nastavit granularitu přístupu)
-- Jasná pravidla a auditní log kdo co vidí/mění
-- Možnost centralizovaného přehledu pro správce portfolia více majitelů
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Výpočet spotřeb, nákladů, jednotkové ceny
+- ✅ Generování podkladů pro vyúčtování služeb
+- ✅ Export, historie vyúčtování, přeplatky/nedoplatky
+
+---
+
+## 🟦 Nastavení a správa měřidel
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Přidání, editace, archivace měřidel
+- ✅ Nastavení intervalů odečtů
+- ✅ Upozornění na kalibraci/životnost
+
+---
+
+## 🗒️ Poznámky, nápady a úkoly k modulu i dlaždicím
+
+> Zde piš vše, co je potřeba doplnit, změnit nebo vyřešit.  
+> ⏳ = rozpracováno, přeškrtni hotové.
+
+- ⏳ Automatický import odečtů z API dodavatele
+- ⏳ Notifikace na blížící se kalibraci/expiraci měřidla
+- ⏳ Export souhrnné zprávy o spotřebě všem nájemníkům
+- ⏳ Možnost importu dat z chytrých měřidel (IoT)
+- ⏳ Sledování spotřeby na osobu/M2
+- ⏳ Umožnit zpětné zadání odečtu s auditní stopou
+- ⏳ Zobrazit grafy i pro porovnání více jednotek
+- ⏳ Upozornění na neobvyklou spotřebu s doporučením řešení
+
+> Otázky k doplnění:
+> - Chceme podporovat pravidelný automatický import z externího systému?
+> - Má být možné nastavit různé intervaly odečtů pro různé typy energií?
+> - Potřebujeme detailní historii změn u každého měřidla?
+> - Budeme rozlišovat více typů měřidel na jednu jednotku (podružná, hlavní)?
+> - Chceme podporovat anonymizovaná data pro porovnání s průměrem v domě?
 
 ---
 
 ## 🗃️ Datové modely (ukázka)
 
-### 1. Plánovaný příjem/výdaj (rozpočet)
-
 ```json
 {
-  "id": "plan2026_01",
-  "typ": "prijem_najem",
+  "id": "elektro_101",
+  "typ": "elektřina",
+  "umisteni": "Jednotka 101",
+  "vyrobni_cislo": "E123456789",
+  "jednotka": "kWh",
+  "datum_posledni_kalibrace": "2024-05-01",
+  "stav_kalibrace": "platná"
+}
+```
+```json
+{
+  "id": "odect_2025_09_101",
+  "meridlo_id": "elektro_101",
+  "datum": "2025-09-01",
+  "stav": 17235,
+  "provedl": "PatrikCechlovsky",
+  "fotodokumentace": "foto_odectu_2025-09-01.jpg"
+}
+```
+```json
+{
+  "id": "vyuctovani_energie_101_2025_09",
+  "meridlo_id": "elektro_101",
   "jednotka_id": "101",
-  "nemovitost_id": "1",
-  "castka_plan": 13500,
-  "obdobi": "2026-01",
-  "castka_skutecnost": 13200,
-  "odchylka": -300,
-  "poznamka": "Menší příjem kvůli opravě bytu"
-}
-```
-
-### 2. Investice
-
-```json
-{
-  "id": "investice2025_modernizace",
-  "typ": "rekonstrukce_koupelny",
-  "nemovitost_id": "1",
-  "castka_plan": 90000,
-  "castka_skutecnost": 87500,
-  "datum_zahajeni": "2025-03-15",
-  "datum_ukonceni": "2025-05-20",
-  "stav": "dokončeno",
-  "poznámka": "Modernizace koupelny v jednotce 101"
-}
-```
-
-### 3. Pravidlo pro rozpočítání nákladů
-
-```json
-{
-  "id": "pravidlo_teplo_m2",
-  "typ_nakladu": "teplo",
-  "zpusob_rozuctovani": "podle_m2",
-  "od": "2025-01-01",
-  "do": null,
-  "poznámka": "Teplo rozpočítáno podle plochy jednotek"
-}
-```
-
-### 4. Saldo účtu
-
-```json
-{
-  "id": "ucet_123456789",
-  "typ": "bankovni_ucet",
-  "popis": "Hlavní účet pro nemovitost 1",
-  "zustatek": 53250,
-  "mena": "CZK",
-  "stav_k": "2025-09-09"
+  "obdobi_od": "2025-08-01",
+  "obdobi_do": "2025-09-01",
+  "stav_pocatek": 16945,
+  "stav_konec": 17235,
+  "spotreba": 290,
+  "cena_za_jednotku": 6.2,
+  "naklad_celkem": 1798,
+  "vyuctovani_id": "vyuctovani_101_2025"
 }
 ```
 
@@ -195,57 +162,40 @@ Umožňuje sledovat rentabilitu každé nemovitosti a jednotky, plánovat cashfl
 
 | Chyba / výjimka                | Řešení systému / reakce      | Uživatelská hláška                              |
 |---------------------------------|------------------------------|-------------------------------------------------|
-| Nezadaný plán příjmu/nákladu    | Upozornit, zvýraznit v přehledu | „Chybí plán pro období XY.“                    |
-| Odchylka skutečnost vs. plán    | Zvýraznit, upozornit         | „Skutečné náklady překročily plán o X Kč.“      |
-| Nezadaný účet/saldo             | Upozornit, nutnost doplnit   | „Není evidován bankovní účet pro tuto nemovitost.“|
-| Nedostatečné právo k náhledu    | Omezit zobrazení, logovat    | „Nemáte oprávnění vidět tuto část financí.“     |
+| Chybějící odečet                | Upozornit, zvýraznit v přehledu | „Chybí odečet měřidla pro období XY.“         |
+| Neobvyklá spotřeba              | Upozornit, možnost komentáře | „Spotřeba je výrazně vyšší/nižší než obvykle.“ |
+| Neplatná kalibrace měřidla      | Upozornit, blokovat zadání odečtu | „Měřidlo má neplatnou kalibraci, kontaktujte správce.“ |
+| Duplicita odečtu                | Upozornit, zamezit zadání    | „Odečet pro toto období již existuje.“          |
 
 ---
 
 ## 🛡️ Role a oprávnění
 
-| Funkce / Akce                | Pronajímatel | Účetní      | Správce portfolia | Pouze čtení |
-|------------------------------|:------------:|:-----------:|:-----------------:|:-----------:|
-| Přehled financí              |      ✅      |     ✅      |        ✅         |     ✅      |
-| Zadání/úprava příjmu/nákladu |      ✅      |     ✅      |        ✅         |     ❌      |
-| Zadání/editace investice     |      ✅      |     ✅      |        ✅         |     ❌      |
-| Správa účtů/salda            |      ✅      |     ✅      |        ✅         |     ❌      |
-| Nastavení pravidel           |      ✅      |     ✅      |        ✅         |     ❌      |
-| Export reportu/grafu         |      ✅      |     ✅      |        ✅         |     ❌      |
-| Správa přístupů              |      ✅      |     ✅      |        ✅         |     ❌      |
+| Funkce / Akce                | Pronajímatel | Správce | Účetní | Pouze čtení |
+|------------------------------|:------------:|:-------:|:------:|:-----------:|
+| Přehled spotřeby             |      ✅      |   ✅    |   ✅   |     ✅      |
+| Zadání/editace odečtu        |      ✅      |   ✅    |   ✅   |     ❌      |
+| Přidání měřidla              |      ✅      |   ✅    |   ✅   |     ❌      |
+| Export grafu/podkladu        |      ✅      |   ✅    |   ✅   |     ❌      |
 
 ---
 
 ## 📑 Doporučené workflow
 
-1. **Plánování příjmů a výdajů:**  
-   - Zadání předpokládaných částek do rozpočtu (měsíčně, ročně, pro investice atd.)
-   - Systém automaticky porovnává skutečnost vs. plán, zvýrazní odchylky
-
-2. **Evidence investic:**  
-   - Vložení nové investiční akce (plán, skutečnost, termíny)
-   - Automatické propojení s náklady, možnost vyhodnocení návratnosti (ROI)
-
-3. **Automatizace a pravidla:**  
-   - Nastavení pravidel pro rozpočítání nákladů (podle m2, osob, atd.)
-   - Nastavení automatických reportů, upozornění a schvalovacích workflow
-
-4. **Saldo účtů:**  
-   - Evidence bankovních účtů a zůstatků, párování finančních pohybů s příjmy/výdaji
-   - Upozornění na nízký/záporný zůstatek
-
-5. **Více pronajímatelů:**  
-   - Každý má přístup jen ke svým datům, možnost sdílení reportů dle pravomocí
+1. Zadání nového odečtu (ručně/import) → propojení s obdobím → upozornění na nutnost odečtu
+2. Analýza spotřeby → grafy, tabulky, detekce odchylek
+3. Generování podkladů pro vyúčtování → export do modulu Služby/Vyúčtování
+4. Správa měřidel → kontrola kalibrace, archivace
 
 ---
 
 ## 📚 Reference
 
-- [Modul Platby](./platby.md)
 - [Modul Služby](./sluzby.md)
 - [Modul Vyúčtování](./vyuctovani.md)
+- [Modul Finance](./finance.md)
 - [Modul Jednotka](./jednotka.md)
 
 ---
 
-> Modul Finance je klíčový pro strategické plánování, transparentní správu a dlouhodobou rentabilitu tvého portfolia nemovitostí. Nově umožňuje také rozpočtování, plánování investic, automatizaci a správu více vlastníků.
+> Modul Energie zajišťuje přesnou evidenci spotřeby, správné rozúčtování nákladů a podporuje úsporné chování díky analýze a včasné detekci anomálií.
