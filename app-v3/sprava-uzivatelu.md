@@ -3,44 +3,74 @@
 # Modul: Správa uživatelů
 
 ---
-# Struktura modulu Správa uživatelů
 
-📁 sprava-uzivatelu.md
- 🟦 Seznam uživatelů
-  👁️ Přehled uživatelů
-  📝 Přidat/pozvat uživatele
-  📝 Editace uživatele
-  👁️ Detail uživatele
- 🟦 Správa rolí a oprávnění
-  👁️ Přehled rolí a oprávnění
-  📝 Přidat/editovat roli
-  📝 Přidat/editovat funkci
-  - Přehled rolí
-  - Přehled stavů
-  - Práva k jednotce
-  - Funkce (oprávnění)
- 🟦 Přehled pozvánek
-  👁️ Seznam pozvánek a ověřovacích kódů
- 🟦 Správa licencí
-  👁️ Přehled licencí
- 🟦 Import/Export uživatelů
- 🟦 Auditní log / historie změn
+## Stromová struktura modulu
 
-# Struktura modulu Správa uživatelů
+| Stav | Sekce | Popis |
+|------|-------|-------|
+| ✅   | 🟦 Seznam uživatelů | Hlavní dlaždice s přehledem uživatelů |
+|      | ├── 👁️ Přehled uživatelů |   Základní tabulka všech uživatelů |
+|      | ├── 📝 Přidat/pozvat uživatele |   Formulář pro přidání nebo pozvání uživatele |
+|      | ├── 📝 Editace uživatele |   Formulář pro editaci uživatele |
+|      | └── 👁️ Detail uživatele |   Detailní pohled na uživatele |
+| ✅   | 🟦 Správa rolí a oprávnění | Správa uživatelských rolí a práv |
+|      | ├── 👁️ Přehled rolí a oprávnění |   Seznam všech rolí a práv |
+|      | ├── 📝 Přidat/editovat roli |   Formulář pro správu rolí |
+|      | ├── 📝 Přidat/editovat funkci |   Formulář pro správu funkcí/oprávnění |
+|      | ├── – Přehled rolí |   Seznam dostupných rolí |
+|      | ├── – Přehled stavů |   Seznam možných stavů uživatele |
+|      | ├── – Práva k jednotce |   Přehled práv k jednotce |
+|      | └── – Funkce (oprávnění) |   Seznam funkcí/oprávnění |
+| ✅   | 🟦 Přehled pozvánek | Přehled a správa pozvánek |
+|      | └── 👁️ Seznam pozvánek a ověřovacích kódů |   Tabulka pozvánek a kódů |
+| ✅   | 🟦 Správa licencí | Správa a přehled licencí |
+|      | └── 👁️ Přehled licencí |   Tabulka licencí |
+| ✅   | 🟦 Import/Export uživatelů | Import a export uživatelů |
+| ✅   | 🟦 Auditní log / historie změn | Auditní záznamy a historie změn |
+| ✅   | 🟦 Statistiky a využití | Statistiky používání modulu |
+| 🚫   | ~~Staré struktury (textová a tabulková)~~ | ~~Původní strom a tabulka struktury – nahrazeno výše~~ |
 
-|  |  |  |  |  |
-|---|---|---|---|---|
-| 📁 **sprava-uzivatelu.md** | 🟦 **Seznam uživatelů** | 👁️ Přehled uživatelů | 📝 Přidat/pozvat uživatele | 📝 Editace uživatele |
-|  |  | 👁️ Detail uživatele |  |  |
-|  | 🟦 **Správa rolí a oprávnění** | 👁️ Přehled rolí a oprávnění | 📝 Přidat/editovat roli | 📝 Přidat/editovat funkci |
-|  |  | – Přehled rolí | – Přehled stavů | – Práva k jednotce |
-|  |  | – Funkce (oprávnění) |  |  |
-|  | 🟦 **Přehled pozvánek** | 👁️ Seznam pozvánek a ověřovacích kódů |  |  |
-|  | 🟦 **Správa licencí** | 👁️ Přehled licencí |  |  |
-|  | 🟦 **Import/Export uživatelů** |  |  |  |
-|  | 🟦 **Auditní log / historie změn** |  |  |  |
+---
 
-> Při každé změně obsahu tohoto modulu **aktualizuj tuto strukturu** zde i v souboru struktura-app.md!
+🚫  
+~~# Struktura modulu Správa uživatelů~~
+
+~~📁 sprava-uzivatelu.md~~  
+~~ 🟦 Seznam uživatelů~~  
+~~  👁️ Přehled uživatelů~~  
+~~  📝 Přidat/pozvat uživatele~~  
+~~  📝 Editace uživatele~~  
+~~  👁️ Detail uživatele~~  
+~~ 🟦 Správa rolí a oprávnění~~  
+~~  👁️ Přehled rolí a oprávnění~~  
+~~  📝 Přidat/editovat roli~~  
+~~  📝 Přidat/editovat funkci~~  
+~~  - Přehled rolí~~  
+~~  - Přehled stavů~~  
+~~  - Práva k jednotce~~  
+~~  - Funkce (oprávnění)~~  
+~~ 🟦 Přehled pozvánek~~  
+~~  👁️ Seznam pozvánek a ověřovacích kódů~~  
+~~ 🟦 Správa licencí~~  
+~~  👁️ Přehled licencí~~  
+~~ 🟦 Import/Export uživatelů~~  
+~~ 🟦 Auditní log / historie změn~~  
+
+~~# Struktura modulu Správa uživatelů (tabulka)~~
+
+~~|  |  |  |  |  |~~  
+~~|---|---|---|---|---|~~  
+~~| 📁 **sprava-uzivatelu.md** | 🟦 **Seznam uživatelů** | 👁️ Přehled uživatelů | 📝 Přidat/pozvat uživatele | 📝 Editace uživatele |~~  
+~~|  |  | 👁️ Detail uživatele |  |  |~~  
+~~|  | 🟦 **Správa rolí a oprávnění** | 👁️ Přehled rolí a oprávnění | 📝 Přidat/editovat roli | 📝 Přidat/editovat funkci |~~  
+~~|  |  | – Přehled rolí | – Přehled stavů | – Práva k jednotce |~~  
+~~|  |  | – Funkce (oprávnění) |  |  |~~  
+~~|  | 🟦 **Přehled pozvánek** | 👁️ Seznam pozvánek a ověřovacích kódů |  |  |~~  
+~~|  | 🟦 **Správa licencí** | 👁️ Přehled licencí |  |  |~~  
+~~|  | 🟦 **Import/Export uživatelů** |  |  |  |~~  
+~~|  | 🟦 **Auditní log / historie změn** |  |  |  |~~  
+
+~~> Při každé změně obsahu tohoto modulu **aktualizuj tuto strukturu** zde i v souboru struktura-app.md!~~
 ---
 
 ## 🟦 Dlaždice: Seznam uživatelů
