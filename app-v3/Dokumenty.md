@@ -1,71 +1,89 @@
+> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)
+
 # Modul: Dokumenty
 
-> ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
-> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
+---
+
+## Stromová struktura modulu
+
+| Stav | Sekce | Popis |
+|------|-------|-------|
+| ✅   | 🟦 Knihovna šablon a vzorů | Předdefinované a uživatelské šablony dokumentů |
+| ✅   | 🟦 Tvorba a editace dokumentu | Vytvoření dokumentu ze šablony nebo prázdného |
+| ✅   | 🟦 Personalizace a individuální úpravy | Individuální kopie a historie změn |
+| ✅   | 🟦 Podepisování a ověřování | Elektronické podpisy, razítka, BankID |
+| ✅   | 🟦 Sdílení, export, archivace | Sdílení dokumentů, export, archivace, expirace |
+| ✅   | 🗒️ Poznámky, nápady a úkoly | Prostor pro další poznámky a TODO |
 
 ---
 
-## 📄 Úvod
+## 🟦 Knihovna šablon a vzorů
 
-Modul **Dokumenty** slouží k tvorbě, správě, úpravám a bezpečnému uchovávání všech důležitých dokumentů v rámci správy nemovitostí.  
-Obsahuje vzory a šablony (např. smlouvy, potvrzení, dohody), umožňuje jejich editaci, přizpůsobení konkrétním uživatelům/jednotkám a nabízí možnost digitálního podepisování – včetně přidání razítka, vlastního podpisu nebo elektronického ověření (např. BankID).
-
----
-
-## 🟦 Hlavní sekce / dlaždice
-
-### 1. Knihovna šablon a vzorů
-
-- Předdefinované šablony: nájemní smlouva, potvrzení o platbě, dohoda o splátkách, předávací protokol, výpověď, oznámení, atd.
-- Možnost editace šablon (globálně i individuálně)
-- Přidání nové vlastní šablony (uživatelské vzory)
-- Parametrizace šablon (proměnné: jméno, částka, datum, jednotka, apod.)
-- Vyhledávání a filtrování šablon dle typu, modulu, autora
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Účel, uživatelé, pole, workflow, validace, akce, chybové stavy
+- ✅ Filtrování, vyhledávání, parametrizace proměnných
 
 ---
 
-### 2. Tvorba a editace dokumentu
+## 🟦 Tvorba a editace dokumentu
 
-- Vytvoření dokumentu na základě šablony nebo „na zelené louce“
-- Možnost předvyplnění údajů z jiných modulů (nájemce, platby, jednotka…)
-- Editace obsahu, přidání vlastních polí, obrázků, tabulek
-- Možnost uložení rozpracovaného konceptu („draft“)
-- Náhled před tiskem/odesláním
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Účel, uživatelé, pole, možnost předvyplnění z jiných modulů
+- ✅ Uložení konceptu, náhled, editace obsahu
 
 ---
 
-### 3. Personalizace a individuální úpravy
+## 🟦 Personalizace a individuální úpravy
 
-- Každý uživatel může upravit šablonu jen pro sebe (lokální kopie)
-- Možnost verzování a historie změn dokumentu/šablony
-- Propojení dokumentů s konkrétními jednotkami, nemovitostmi, nájemci
-- Přehled naposledy použitých a oblíbených dokumentů
-
----
-
-### 4. Podepisování a ověřování
-
-- Vložení razítka (obrázek, generované z dat firmy)
-- Možnost vložení vlastního podpisu (obrázek, nakreslení, digitální podpis)
-- Elektronický podpis dokumentu (např. BankID, MojeID, kvalifikovaný certifikát)
-- Uložení informací o způsobu podepsání, datu a uživateli
-- Možnost více podpisů na dokument (např. pronajímatel + nájemce)
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Úprava šablony jen pro sebe (lokální kopie)
+- ✅ Historie změn dokumentu, verzování
 
 ---
 
-### 5. Sdílení, export, archivace
+## 🟦 Podepisování a ověřování
 
-- Odeslání dokumentu e-mailem přímo z aplikace (viz modul Komunikace)
-- Sdílení dokumentu s konkrétními uživateli/skupinami (nájemník, účetní…)
-- Export do PDF, DOCX, případně prostý text
-- Možnost archivace a nastavení expirace dokumentu (skartační lhůta)
-- Přehled všech vygenerovaných a podepsaných dokumentů
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Vložení razítka, podpisu, elektronického podpisu
+- ✅ Více podpisů na dokument
+- ✅ Uložení informací o způsobu podepsání
+
+---
+
+## 🟦 Sdílení, export, archivace
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Odeslání dokumentu e-mailem, sdílení s uživateli
+- ✅ Export do PDF, DOCX, text
+- ✅ Archivace, nastavení expirace
+
+---
+
+## 🗒️ Poznámky, nápady a úkoly k modulu i dlaždicím
+
+> Sem piš vše, co tě napadne, co je potřeba doplnit, změnit nebo vyřešit.  
+> ⏳ = rozpracováno, přeškrtni hotové.
+
+- ⏳ Možnost schvalovacího workflow před podpisem (např. více úrovní)
+- ⏳ Integrace s DMS (Document Management System) třetích stran
+- ⏳ Možnost napojení na externí podpisové služby (BankID, MojeID)
+- ⏳ Automatizace verzování dokumentů při každé změně
+- ⏳ Hromadné podepisování více dokumentů najednou
+- ⏳ Notifikace o expiraci dokumentu
+- ⏳ Nastavit různou viditelnost dokumentu pro různé role/skupiny
+- ⏳ Export historie všech změn dokumentu (auditní log)
+- ⏳ Šablony pro automatizované generování dokumentů (např. při uzavření smlouvy)
+
+> Otázky k doplnění:
+> - Potřebujeme možnost schvalování dokumentu více osobami?
+> - Má být možné podepsat dokument mimo systém (ručně nahrát podepsaný dokument)?
+> - Chceme umožnit automatizované generování dokumentů na základě událostí v systému?
+> - Má být možné nastavit expiraci každého dokumentu individuálně?
+> - Budeme umožňovat verzování i u rozpracovaných konceptů?
 
 ---
 
 ## 🗃️ Datové modely (ukázka)
-
-### 1. Šablona dokumentu
 
 ```json
 {
@@ -78,9 +96,6 @@ Obsahuje vzory a šablony (např. smlouvy, potvrzení, dohody), umožňuje jejic
   "verze": "1.0"
 }
 ```
-
-### 2. Vytvořený/podepsaný dokument
-
 ```json
 {
   "id": "dokument_2025_09_101_01",
@@ -137,17 +152,11 @@ Obsahuje vzory a šablony (např. smlouvy, potvrzení, dohody), umožňuje jejic
 
 ## 📑 Doporučené workflow
 
-1. **Výběr nebo úprava šablony:**  
-   - Uživatel zvolí přednastavenou šablonu, případně ji upraví podle potřeby nebo vytvoří novou.
-2. **Vygenerování dokumentu:**  
-   - Systém předvyplní proměnné z ostatních modulů (např. nájemce, částka, termíny).
-   - Uživatel může provést další editace a uložit dokument.
-3. **Podepsání dokumentu:**  
-   - Uživatel zvolí způsob podepsání (razítko, vlastnoruční podpis, elektronicky, BankID).
-   - Systém uloží podpis a případně odešle dokument protistraně.
-4. **Sdílení/archivace:**  
-   - Dokument je možné zaslat e-mailem, sdílet s nájemníkem nebo archivovat.
-   - Je možné nastavit expiraci nebo archivaci dokumentu po uplynutí lhůty.
+1. Výběr/uprava šablony → vygenerování dokumentu → editace → podpis → sdílení/archivace.
+2. Individuální úprava šablony → použití pouze pro konkrétního uživatele/situaci.
+3. Podepisování (elektronicky/razítko) → archivace podpisového záznamu.
+4. Sdílení dokumentu (e-mailem, interně), nastavení expirace, archivace.
+5. Hromadný export a reporting dokumentů (např. pro audit).
 
 ---
 
