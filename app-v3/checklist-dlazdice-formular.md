@@ -1,5 +1,11 @@
 ## ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
 
+> **⚠️ PŘIPOMÍNKA PRAVIDEL:**  
+> - 🚫 **NIKDY nemaž** - pouze přeškrtávej `~~text~~`  
+> - ➕ **Nové ikony** zapisuj do [common-actions.md](./common-actions.md)  
+> - 📊 **Změny struktury** aktualizuj ve stromové tabulce + [struktura-app.md](./struktura-app.md)  
+> - 📋 **Rychlý přehled** pravidel: [pravidla-rychly-prehled.md](./pravidla-rychly-prehled.md)
+
 ### 1️⃣ Popis a účel
 - [ ] Účel sekce/dlaždice (proč existuje, kdo ji používá)
 - [ ] Kdo má přístup/viditelnost podle oprávnění/rolí
@@ -60,3 +66,4 @@
 > - Vždy zkopíruj tento checklist na začátek každé sekce/dlaždice/formuláře.
 > - Postupně si odškrtávej (nebo zvýrazni), co máš zpracováno.
 > - Pokud něco chybí, doplň do dokumentace, nebo napiš, a já ti pomohu konkrétní část rozpracovat.
+> - **🤖 Pro Copilot:** Před zahájením práce si přečti [pravidla-pro-copilot.md](./pravidla-pro-copilot.md)

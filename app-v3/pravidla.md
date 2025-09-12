@@ -1,5 +1,11 @@
 # Pravidla psaní dokumentace a centrální katalogy
 
+> **🚀 RYCHLÝ START:**  
+> - **Pro Copilot a AI asistenty:** [pravidla-pro-copilot.md](./pravidla-pro-copilot.md)  
+> - **Rychlý přehled klíčových pravidel:** [pravidla-rychly-prehled.md](./pravidla-rychly-prehled.md)  
+> - **Checklist pro každou sekci:** [checklist-dlazdice-formular.md](./checklist-dlazdice-formular.md)  
+> - **ℹ️ Jak funguje řešení:** [README-reseni-pravidel.md](./README-reseni-pravidel.md)
+
 ---
 
 ## Pravidla pro úpravy a historii

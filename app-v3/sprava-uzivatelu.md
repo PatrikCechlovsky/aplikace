@@ -1,7 +1,7 @@
-> ℹ️ Pravidla viz [pravidla.md](./pravidla.md)  
-> - Nikdy nic nemaž, pouze přeškrtávej!  
-> - Každá nová ikona patří do [common-actions.md](./common-actions.md)  
-> - Na začátku každé sekce/dlaždice vlož checklist (níže) a označuj stavovou ikonou:  
+> ℹ️ **PRAVIDLA:** [pravidla-rychly-prehled.md](./pravidla-rychly-prehled.md) | [pravidla.md](./pravidla.md) | [návod pro Copilot](./pravidla-pro-copilot.md)  
+> - 🚫 **Nikdy nic nemaž**, pouze přeškrtávej `~~text~~`!  
+> - ➕ **Každá nová ikona** patří do [common-actions.md](./common-actions.md)  
+> - 📋 **Na začátku každé sekce/dlaždice** vlož [checklist](./checklist-dlazdice-formular.md) a označuj stavovou ikonou:  
 >   - ✅ hotovo  ⏳ rozpracováno  🌐 hotovo v HTML  🚫 odstraněno  …  
 
 ---
