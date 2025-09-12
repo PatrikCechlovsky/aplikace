@@ -8,274 +8,405 @@
 
 ## Stromová struktura modulu
 
-| Stav | Sekce | Popis |
-|------|-------|-------|
-| ✅   | 🟦 Přehled pronajímatelů | Hlavní dlaždice s přehledem subjektů/pronajímatelů |
-|      | ├── 👁️ Přehled pronajímatelů | Tabulka všech pronajímatelů |
-|      | ├── 📝 Přidat pronajímatele | Formulář pro přidání subjektu |
-|      | ├── 📝 Editace pronajímatele | Formulář pro editaci subjektu |
-|      | └── 👁️ Detail pronajímatele | Detailní pohled na pronajímatele |
-| ✅   | 🟦 Správa zástupců | Správa zástupců pronajímatelů |
-|      | ├── 👁️ Přehled zástupců | Seznam všech zástupců |
-|      | ├── 📝 Přidat/editovat zástupce | Formulář pro správu zástupců |
-| ✅   | 🟦 Auditní log / historie změn | Auditní záznamy a historie změn |
-| ✅   | 🟦 Statistiky a využití | Statistiky využití a přehled dat |
-| ✅   | 🟦 Import/Export pronajímatelů | Import a export subjektů |
-| ✅   | 🟦 Přehled dokumentů | Správa a přehled dokumentů/príloh |
-| ✅   | 🟦 Nastavení modulu | Nastavení a konfigurace modulu |
-| ✅   | 🟦 Notifikace a upozornění | Přehled a správa notifikací |
-| ✅   | 🟦 Průvodce založením | Průvodce pro založení subjektu |
-| ⏳   | 🟦 Vazby na další entity | Přehled vazeb na nemovitosti, jednotky, smlouvy, uživatele |
-| 🚫   | ~~Staré sekce nebo neaktuální~~ | ~~Případné původní struktury, pokud existovaly~~ |
+| Stav | Sekce                        | Popis                                              |
+|------|------------------------------|----------------------------------------------------|
+| ✅   | 🟦 Přehled pronajímatelů      | Hlavní dlaždice s přehledem všech pronajímatelů    |
+|      | ├── 👁️ Přehled pronajímatelů | Tabulka všech pronajímatelů                        |
+|      | ├── 📝 Přidat pronajímatele   | Formulář pro přidání nového pronajímatele          |
+|      | ├── 📝 Editace pronajímatele  | Formulář pro editaci pronajímatele                 |
+|      | └── 👁️ Detail pronajímatele  | Detailní pohled na pronajímatele                   |
+| ✅   | 🟦 Správa pověření a sdílení  | Evidence a správa pověřených osob                  |
+| ✅   | 🟦 Auditní log / historie změn| Auditní záznamy a historie změn                    |
+| ✅   | 🟦 Statistiky a reporting     | Statistiky a reporting aktivit                     |
+| ✅   | 🟦 Import/Export pronajímatelů| Import a export subjektů                           |
+| ✅   | 🟦 Přehled dokumentů          | Evidence a správa dokumentů/příloh                 |
+| ✅   | 🟦 Nastavení modulu           | Nastavení a konfigurace modulu                     |
+| ✅   | 🟦 Notifikace a upozornění    | Přehled a správa notifikací                        |
+| ✅   | 🟦 Vazby na další entity      | Přehled vazeb na nemovitosti, jednotky, smlouvy    |
+| 🗒️   | 🗒️ Poznámky, nápady a úkoly  | Vše ostatní, nejasné body, rozpracované úkoly      |
 
 ---
 
-## 🏢 Co je modul Pronajímatel a kdy ho použít
+## 🟦 Přehled pronajímatelů
 
-**Modul Pronajímatel** slouží k evidenci a správě všech osob, firem nebo institucí, které vlastní nebo pronajímají byty, jednotky či jiné prostory v rámci spravovaného portfolia.  
-Umožňuje přehledně sledovat pronajímatele, jejich kontaktní a identifikační údaje, vlastnické vztahy, historii změn i další související informace.
+### Účel sekce/dlaždice
+Evidence všech vlastníků nemovitostí (osoby, firmy, spolky, instituce), jejich kontaktů, historie a vazeb na nemovitosti/jednotky.
 
-### Kdy modul použít?
+### Kdo má přístup/viditelnost
+| Role                  | Přístup |
+|-----------------------|---------|
+| Administrátor         | Plný    |
+| Správce nemovitostí   | Plný    |
+| Účetní                | Čtení   |
+| Prohlížející          | Čtení   |
 
-- Pokud potřebuješ evidovat, kdo je vlastníkem nebo pronajímatelem konkrétní jednotky/bytu.
-- Pro správu kontaktů a údajů pronajímatelů (telefon, email, adresa, bankovní účet apod.).
-- Při správě a přidělování jednotek a bytů jednotlivým vlastníkům/pronajímatelům.
-- Pro řešení změn vlastnických vztahů, např. při prodeji jednotky nebo změně majitele.
-- Pokud chceš mít přehled o všech vlastnících, spoluvlastnících a jejich podílech na nemovitostech.
-- Pro kontrolu a správu příjmů z nájmů, záloh a dalších plateb ve vztahu k pronajímatelům.
-- Pro napojení na další související moduly (jednotky, platby, dokumenty, nájemníky apod.).
+### Pole (přehled i detail)
+| Pole             | Povinné | Typ           | Popis                                  |
+|------------------|:-------:|--------------|----------------------------------------|
+| Název/jméno      |   Ano   | text         |                                        |
+| Typ subjektu     |   Ano   | enum         | osoba/firma/spolek/instituce           |
+| Stav             |   Ano   | enum         | aktivní/archiv/pozváno/čeká/zablok.    |
+| IČO              |   Ne    | text         | Firmy/spolky/instituce                 |
+| DIČ              |   Ne    | text         | Firmy                                  |
+| E-mail           |   Ano   | e-mail       | Unikátní, validace duplicity           |
+| Telefon          |   Ne    | tel          |                                        |
+| Adresa           |   Ne    | text         |                                        |
+| Bankovní účet    |   Ne    | text         |                                        |
+| ...              |         |              |                                        |
+
+### Filtrování, řazení, akce
+- Filtrování: podle typu, stavu, IČO, jména, datumu
+- Řazení: jméno, stav, datum přidání
+- Hromadné akce: změna stavu, export, přiřazení správce
+
+### Ukázka tabulky
+| Název          | Typ    | Stav    | IČO     | E-mail             | Akce       |
+|----------------|--------|---------|---------|--------------------|------------|
+| Jan Novák      | osoba  | aktivní |         | jan.novak@...      | [Zobrazit] |
+
+### Validace, tlačítka, workflow
+- Validace unikátnosti e-mailu, IČO
+- Povinná pole zvýraznit, zamezit uložení
+- Tlačítka: Přidat, Upravit, Archivovat, Export, Hromadná akce
+- Workflow: Nový → Pozváno → Aktivní → (Archiv/Blokace)
+
+### Chybové stavy
+- Duplicitní e-mail, IČO
+- Neplatný formát e-mailu/telefonu
+- Chybějící povinné pole
+
+### Oprávnění a viditelnost
+Viz výše tabulka Kdo má přístup. Práva lze dále upřesnit v detailu.
+
+### Vazby na další moduly a reference
+- Nemovitost, Jednotka, Smlouva, Platby, Dokumenty, Uživatelé, Auditní log
+
+### Specifika, rozšíření
+- Možnost více vlastníků jedné nemovitosti (podíly)
+- GDPR – anonymizace, export
 
 ---
 
-## 📋 Přehled a základní workflow
+## 🟦 Přidat / Editovat pronajímatele
 
-**Účel:** Správa pronajímatelů nemovitostí (osoby, firmy, instituce) a jejich zástupců.  
-**Databázová tabulka:** `Subjekt`  
-**Stav:** 🟡 Návrh / vývoj
+### Účel sekce/dlaždice
+Formulář pro založení/editaci pronajímatele, validace, možnost uložit rozpracovaná data.
+
+### Kdo má přístup/viditelnost
+Správce, administrátor
+
+### Pole (formulář)
+Viz tabulka v sekci Přehled (včetně validací).
+
+### Validace, tlačítka, workflow
+- Povinná pole zvýraznit, validovat unikátnost
+- Tlačítka: Uložit, Pokračovat v průvodci, Zrušit
+- Workflow: Možnost uložit „rozpracováno“, pokračovat později
+
+### Chybové stavy
+- Duplicitní e-mail, IČO
+- Neplatný formát
+- Chybějící povinné pole
+
+### Oprávnění a viditelnost
+Správce, administrátor
+
+### Vazby na další moduly a reference
+- Automatické vytvoření vazby na Nemovitost, Jednotku
+
+### Specifika, rozšíření
+- Průvodce založením, možnost přiřadit pověřené osoby
 
 ---
 
-## 🏗️ Základní struktura dat a typy subjektů
+## 🟦 Detail pronajímatele
 
-- **Typy pronajímatelů:**  
-  - 👤 Fyzická osoba
-  - 🧑‍💼 OSVČ
-  - 🏢 Firma (s.r.o., a.s., apod.)
-  - 🫂 Spolek/skupina
-  - 🏛️ Státní instituce
-  - 🤝 Zastupující osoba
+### Účel sekce/dlaždice
+Zobrazení všech údajů, historie změn, napojení na nemovitosti, jednotky, auditní log.
+
+### Kdo má přístup/viditelnost
+Správce, administrátor, účetní (čtení)
+
+### Pole (přehled i detail)
+Všechny údaje včetně auditní historie, napojení na nemovitosti, jednotky, dokumenty
+
+### Akce
+- Editace, Archivace, Přidání pověřené osoby, Export dat, Připojení dokumentu
+
+### Validace, tlačítka, workflow
+- Validace pouze při editaci
+- Tlačítka: Upravit, Archivovat, Exportovat, Přidat pověřenou osobu
+
+### Chybové stavy
+- Pokus o změnu neaktivního/archivovaného subjektu
+- Neoprávněný přístup
+
+### Oprávnění a viditelnost
+Dle role, viz tabulka v Oprávnění
+
+### Vazby na další moduly a reference
+Nemovitost, Jednotka, Dokumenty
+
+### Specifika, rozšíření
+- Historie všech nemovitostí, kde byl veden
+- GDPR export, anonymizace
 
 ---
 
-## 🧑‍💼 Průvodce založením
+## 🟦 Správa pověření a sdílení
 
-V každém formuláři (např. **Jednotka**, **Nájemník**, **Smlouva**) je možné spustit  
-🌸 **„Spustit průvodce“**  
-Uživatel může:  
-- ✅ Pokračovat v průvodci a uložit rozpracovaná data.  
-- 🏁 Přeskočit kroky, které nezná nebo nechce řešit hned.  
-- 💾 Uložit stav a vrátit se později.
+### Účel sekce/dlaždice
+Správa vztahů pověřených osob k pronajímateli, možnost přidání, editace, odebrání.
+
+### Kdo má přístup/viditelnost
+Správce, administrátor
+
+### Pole
+- Název pověřené osoby, typ vztahu, kontakty
+
+### Filtrování, řazení, akce
+- Filtrování podle pronajímatele, typu pověření
+- Akce: Přidat, Editovat, Odebrat
+
+### Validace, tlačítka, workflow
+- Unikátnost pověření pro pronajímatele
+- Zápis změn do auditního logu
+
+### Chybové stavy
+- Duplicitní pověření
+- Neplatné kontakty
+
+### Oprávnění a viditelnost
+Správce, administrátor
+
+### Vazby na další moduly a reference
+- Detail pronajímatele, Auditní log
+
+### Specifika, rozšíření
+- Možnost více pověření na jednoho pronajímatele
+
+---
+
+## 🟦 Auditní log a historie změn
+
+### Účel sekce/dlaždice
+Evidence všech změn údajů pronajímatele (včetně importů, exportů, změn stavu).
+
+### Kdo má přístup/viditelnost
+Správce, administrátor, účetní (čtení)
+
+### Pole
+- Typ změny, kdo provedl, kdy, původní/nová hodnota
+
+### Filtrování, řazení, akce
+- Filtrování podle typu změny, data, subjektu
+
+### Akce
+- Export auditního logu, zobrazení detailu změny
+
+### Specifika, rozšíření
+- Možnost auditovat i hromadné operace
+
+---
+
+## 🟦 Statistiky a reporting
+
+### Účel sekce/dlaždice
+Statistika počtů pronajímatelů, typů, nemovitostí, historie změn.
+
+### Kdo má přístup/viditelnost
+Správce, administrátor
+
+### Pole
+- Počet pronajímatelů, rozpad podle typů, obsazenost nemovitostí
+
+### Akce
+- Export grafů a reportů
+
+---
+
+## 🟦 Import/Export pronajímatelů
+
+### Účel sekce/dlaždice
+Hromadný import/export subjektů (CSV, XLSX, JSON), včetně validací a kontroly duplicit.
+
+### Kdo má přístup/viditelnost
+Správce, administrátor
+
+### Akce
+- Import, Export, Report chyb, Audit importu
+
+### Validace
+- Kontrola duplicit, povinných polí, správný formát
+
+---
+
+## 🟦 Přehled dokumentů
+
+### Účel sekce/dlaždice
+Evidence a správa dokumentů/příloh k subjektu.
+
+### Kdo má přístup/viditelnost
+Správce, administrátor
+
+### Akce
+- Přidat dokument, export, historie příloh
+
+---
+
+## 🟦 Nastavení modulu
+
+### Účel sekce/dlaždice
+Nastavení povinných polí, práv, workflow, typů subjektů a šablon.
+
+### Kdo má přístup/viditelnost
+Administrátor
+
+---
+
+## 🟦 Notifikace a upozornění
+
+### Účel sekce/dlaždice
+Evidence, nastavení a správa notifikací k událostem (změna vlastnictví, nové dokumenty, blokace, atd.).
+
+### Kdo má přístup/viditelnost
+Správce, administrátor
+
+---
+
+## 🟦 Vazby na další entity
+
+### Účel sekce/dlaždice
+Přehled napojení na nemovitosti, jednotky, smlouvy, dokumenty, uživatele.
+
+---
+
+## 🗒️ Poznámky, nápady a úkoly
+
+- Ošetřit duplicity (e-mail, IČO)
+- Validace a ověřování údajů z ARES/ISZR
+- Podpora více vlastníků jedné nemovitosti (podíly)
+- Automatizace notifikací (změna stavu, nové dokumenty)
+- GDPR – anonymizace a export, auditní log
+- Hromadné operace – import/export, změna stavu
+- Workflow při změně vlastnické struktury
+- Možnost archivace vs. smazání (pravidla pro mazání)
+- Rozšířit auditní log o hromadné změny
+- Napojení na externí registry (katastr, ISZR)
+- Potřebujeme možnost sdíleného vlastnictví (více osob/firem)?
+- Umožnit pověření správce více nemovitostí najednou?
+- Chceme automatickou kontrolu insolvenčního rejstříku?
+- Jaké notifikace mají být povinné?
 
 ---
 
 ## 🗃️ Datové modely (ukázka)
-
-> Pronajímatelé se ukládají do tabulky **Subjekt**.
-
 ```json
 {
-  "id": "1",
-  "typ_subjektu": "firma",
-  "nazev": "Firma ABC s.r.o.",
-  "jmeno": "",
-  "prijmeni": "",
-  "ico": "12345678",
-  "dic": "CZ12345678",
-  "kontakty": {
-    "telefon": "+420123456789",
-    "email": "info@firma.cz"
-  },
-  "adresy": [
-    {
-      "typ": "sídlo",
-      "ulice": "Kancelářská",
-      "cislo_popisne": "10",
-      "mesto": "Praha",
-      "psc": "18600"
-    }
-  ],
-  "bankovni_ucet": "123456789/0100",
+  "id": "100",
+  "typ_subjektu": "osoba",
+  "role": "pronajimatel",
+  "jmeno": "Jan",
+  "prijmeni": "Novák",
+  "ico": "",
+  "dic": "",
+  "email": "jan.novak@email.cz",
+  "telefon": "+420777888999",
+  "adresa": "Ulice 1, Praha",
+  "bankovni_ucet": "123456789/0800",
   "stav": "aktivni",
-  "created_at": "2025-09-09T08:00:00Z",
-  "updated_at": "2025-09-09T09:10:00Z"
+  "vlastnictvi": [
+    { "nemovitost_id": "12", "podil": 1 }
+  ],
+  "povjereni": [
+    { "osoba_id": "200", "typ": "správce" }
+  ],
+  "created_at": "2025-09-10T09:00:00Z",
+  "updated_at": "2025-09-10T09:10:00Z"
+}
+```
+```json
+{
+  "id": "101",
+  "typ_subjektu": "firma",
+  "role": "pronajimatel",
+  "nazev": "Property Invest s.r.o.",
+  "ico": "88899977",
+  "dic": "CZ88899977",
+  "email": "info@propertyinvest.cz",
+  "telefon": "+420543211234",
+  "adresa": "Investiční 12, Brno",
+  "bankovni_ucet": "987654321/0300",
+  "stav": "aktivni",
+  "vlastnictvi": [
+    { "nemovitost_id": "13", "podil": 0.5 },
+    { "nemovitost_id": "14", "podil": 1 }
+  ],
+  "povjereni": [],
+  "created_at": "2025-09-10T08:00:00Z",
+  "updated_at": "2025-09-10T09:05:00Z"
 }
 ```
 
 ---
 
-## 📋 Funkce v přehledu
+## ⚠️ Chybové stavy a výjimky
 
-- 🔍 Filtrace podle typu subjektu
-- 🔄 Změna stavu (aktivní / archivovaný)
-- 📑 Zobrazení dokumentů
-- 🏢 Zobrazení připojených jednotek
-- ✳️ Správa rolí
-- 📤 Export seznamu
-- ➕ Přidat nového pronajímatele
-- 📜 Auditní log / historie změn
-- 📊 Statistiky pronajímatelů (např. počet jednotek)
-
----
-
-## 🔘 Hlavní funkce / tlačítka
-
-- 🌸 Spustit průvodce založením nebo pokračovat v dokončení
-- ➕ Přidat pronajímatele
-- ✏️ Upravit pronajímatele
-- 👁️ Zobrazit detail
-- 📁 Archivovat
-- 🗑️ Smazat (pouze bez vazeb/historie)
-- 🔁 Obnovit přístup / zneplatnit
-- ➕ Přidat zástupce
-- 📤 Exportovat seznam
-- 📥 Importovat (hromadně)
-- 🔍 Vyhledávání / filtrování
-- 📑 Zobrazit dokumenty
-- 📊 Statistiky využití
-- 🧑‍💼 Přiřadit správce / uživatele
-- ⚙️ Nastavení modulu
-- ✅ Uložit
-- 📑 Přidat dokument
-- 🏢 Připojit jednotku
-- 🔒 Přiřadit oprávnění
-- 📨 Vygenerovat přístup / pozvánku
-- ✳️ Přiřadit roli
-- 🗄️ Archivovat subjekt
-- ⛔ Zablokovat subjekt
-- 📤 Export dat subjektu
-- 📜 Zobrazit historii změn
-
----
-
-## Povinnost a viditelnost polí podle typu subjektu
-
-| Pole                    | Osoba      | OSVČ        | Firma       | Spolek/skupina | Státní organizace | Zástupce   |
-|-------------------------|------------|-------------|-------------|----------------|-------------------|------------|
-| Titul před jménem       | Nepovinné  | Nepovinné   | Nezobrazovat| Nezobrazovat   | Nezobrazovat      | Nepovinné  |
-| Jméno                   | Povinné    | Povinné     | Nezobrazovat| Nezobrazovat   | Nezobrazovat      | Povinné    |
-| Příjmení                | Povinné    | Povinné     | Nezobrazovat| Nezobrazovat   | Nezobrazovat      | Povinné    |
-| Název společnosti       | Nezobrazovat| Nezobrazovat| Povinné     | Povinné        | Povinné           | Nezobrazovat|
-| IČ                      | Povinné    | Povinné     | Povinné     | Povinné        | Povinné           | Nezobrazovat|
-| DIČ                     | Nepovinné  | Povinné     | Povinné     | Nepovinné      | Nepovinné         | Nezobrazovat|
-| Typ dokladu totožnosti  | Povinné    | Povinné     | Nezobrazovat| Nezobrazovat   | Nezobrazovat      | Povinné    |
-| ...                     | ...        | ...         | ...         | ...            | ...               | ...        |
+| Chyba / výjimka                            | Doporučené řešení / reakce systému                        | Uživatelská hláška                                          | Logování/Audit      |
+|--------------------------------------------|-----------------------------------------------------------|-------------------------------------------------------------|---------------------|
+| Duplicita e-mailu                          | Zamezit uložení, zvýraznit pole, nabídnout hledání        | „Tento e-mail je již použit u jiného pronajímatele.“        | Povinně logovat     |
+| Duplicita IČO                              | Zamezit uložení, zvýraznit pole                           | „Zadané IČO je již evidováno u jiného pronajímatele.“       | Povinně logovat     |
+| Změna bankovního účtu                      | Vyžadovat potvrzení správce nebo dvoufaktorové potvrzení   | „Změna bankovního účtu čeká na schválení správce.“          | Povinně logovat     |
+| Chybějící povinné pole                     | Zvýraznit pole, zamezit uložení                            | „Vyplňte prosím všechna povinná pole.“                      | Není nutné logovat  |
+| Neplatný formát e-mailu/telefonu           | Zvýraznit pole, zamezit uložení                            | „Zadaný e-mail/telefon není v platném formátu.“             | Není nutné logovat  |
+| Neoprávněný přístup k údajům pronajímatele | Zamezit akci, přesměrovat/odmítnout                       | „Nemáte oprávnění k této akci.“                             | Povinně logovat     |
+| Pronajímatel je stále vlastníkem nemovitosti| Zamezit odstranění/archivaci                              | „Pronajímatele nelze odstranit – je vlastníkem nemovitosti.“| Povinně logovat     |
+| Chyba při importu dat                      | Zobrazit detail chyby, umožnit částečný import             | „Import obsahuje chyby – zkontrolujte detaily.“             | Logovat výskyt      |
+| Chyba při exportu dat                      | Zobrazit chybovou hlášku, nabídnout opakování              | „Export selhal, zkuste to prosím znovu.“                    | Logovat detail      |
 
 ---
 
 ## 🛡️ Role a oprávnění
 
-| Akce / Role                | Administrátor | Správce nemovitostí | Účetní      | Pouze čtení |
-|----------------------------|:-------------:|:-------------------:|:-----------:|:-----------:|
-| Zobrazit seznam            |      ✅       |         ✅          |     ✅      |     ✅      |
-| Zobrazit detail            |      ✅       |         ✅          |     ✅      |     ✅      |
-| Přidat pronajímatele       |      ✅       |         ✅          |     ❌      |     ❌      |
-| Upravit pronajímatele      |      ✅       |         ✅          |     ❌      |     ❌      |
-| Smazat pronajímatele       |      ✅       |         ❌          |     ❌      |     ❌      |
-| Archivovat pronajímatele   |      ✅       |         ✅          |     ❌      |     ❌      |
-| Exportovat data subjektu   |      ✅       |         ✅          |     ✅      |     ❌      |
-| Importovat data            |      ✅       |         ✅          |     ❌      |     ❌      |
-| Přidat / upravit zástupce  |      ✅       |         ✅          |     ❌      |     ❌      |
-| Přiřadit správce/roli      |      ✅       |         ✅*         |     ❌      |     ❌      |
-| Změna stavu                |      ✅       |         ✅          |     ❌      |     ❌      |
-| Zobrazení historie změn    |      ✅       |         ✅          |     ✅      |     ❌      |
-| Připojit dokument          |      ✅       |         ✅          |     ❌      |     ❌      |
-| Vyhledávání, filtrování    |      ✅       |         ✅          |     ✅      |     ✅      |
-| Zobrazit napojené jednotky |      ✅       |         ✅          |     ✅      |     ✅      |
-| Statistiky využití         |      ✅       |         ✅          |     ✅      |     ❌      |
+| Funkce / Akce                | Administrátor | Správce nemovitostí | Účetní      | Pouze čtení |
+|------------------------------|:-------------:|:-------------------:|:-----------:|:-----------:|
+| Zobrazit seznam              |      ✅       |         ✅          |     ✅      |     ✅      |
+| Zobrazit detail              |      ✅       |         ✅          |     ✅      |     ✅      |
+| Přidat pronajímatele         |      ✅       |         ✅          |     ❌      |     ❌      |
+| Upravit pronajímatele        |      ✅       |         ✅          |     ❌      |     ❌      |
+| Smazat pronajímatele         |      ✅       |         ❌          |     ❌      |     ❌      |
+| Archivovat pronajímatele     |      ✅       |         ✅          |     ❌      |     ❌      |
+| Exportovat data subjektu     |      ✅       |         ✅          |     ✅      |     ❌      |
+| Importovat data (hromadně)   |      ✅       |         ✅          |     ❌      |     ❌      |
+| Přidat / upravit pověření    |      ✅       |         ✅          |     ❌      |     ❌      |
+| Přiřadit správce/roli        |      ✅       |         ✅*         |     ❌      |     ❌      |
+| Změna stavu (aktivní/archiv) |      ✅       |         ✅          |     ❌      |     ❌      |
+| Zobrazení historie změn      |      ✅       |         ✅          |     ✅      |     ❌      |
+| Připojit dokument            |      ✅       |         ✅          |     ❌      |     ❌      |
+| Vyhledávání, filtrování      |      ✅       |         ✅          |     ✅      |     ✅      |
+| Zobrazit napojené nemovitosti|      ✅       |         ✅          |     ✅      |     ✅      |
+| Statistiky a reporting       |      ✅       |         ✅          |     ✅      |     ❌      |
 
 ---
 
-## 🟢 Stavy a workflow subjektu
+## 📑 Doporučené workflow
 
-Každý pronajímatel v systému může mít jeden z následujících stavů:
-
-| Stav            | Popis                                                      | Kdo může změnit | Kdy/proč změnit                              |
-|-----------------|------------------------------------------------------------|-----------------|----------------------------------------------|
-| **Aktivní**     | Pronajímatel je běžně používán, napojen na další entity.   | Správce/Admin   | Po schválení, dokončení registrace, automaticky při založení. |
-| **Archivovaný** | Data jsou pouze ke čtení, nelze měnit ani navazovat vazby. | Správce/Admin   | Když již není využíván, ukončení spolupráce. |
-| **Zablokovaný** | Dočasně zamezeno použití, čeká na schválení nebo má problém (např. neuhrazené závazky, podezření na duplicitu). | Správce/Admin | Např. při zjištění chyby, na žádost účetního, automaticky při zjištění duplicit nebo problému. |
-| **Pozváno**     | Zatím nedokončená registrace, čeká na potvrzení údajů.     | Systém/Správce  | Po odeslání pozvánky (před aktivací).        |
-| **Čeká na doplnění** | Některé povinné údaje chybí nebo jsou nevalidní.      | Systém/Admin    | Při nedokončeném založení, nedostatečné údaje. |
-| **Neaktivní**   | Subjekt není aktuálně využíván, ale zůstává v systému.     | Správce/Admin   | Po ručním nastavení, např. po dočasné nečinnosti. |
-
-### Přechody mezi stavy (workflow)
-
-(viz detailní tabulka v původním textu - zde pouze krátce)
+1. Založení nového pronajímatele → přiřazení nemovitosti → evidence dokumentů → notifikace
+2. Přidání/odebrání pověřené osoby → notifikace správci/pronajímateli
+3. Změna vlastnické struktury → automatická změna stavu, evidence změn, notifikace
+4. Hromadné importy/exporty → validace, kontrola duplicit, audit
+5. Automatizované notifikace (změna stavu, nové dokumenty, blokace)
 
 ---
 
-## 🗄️ Podmínky mazání a archivace subjektu
+## 📚 Reference
 
-(viz detailní tabulka v původním textu)
-
----
-
-## 🕓 Historie a auditní log změn
-
-(viz příklad a postup v původním textu)
+- [Modul Nemovitost](./nemovitost.md)
+- [Modul Jednotka](./jednotka.md)
+- [Modul Nájemník](./najemnik.md)
+- [Modul Platby](./platby.md)
+- [Modul Dokumenty](./dokumenty.md)
 
 ---
 
-## 🔔 Notifikace a upozornění – Pronajímatel
-
-(viz detailní tabulka v původním textu)
-
----
-
-## 🛡️ GDPR, export a smazání dat subjektu
-
-(viz detailní popis v původním textu)
-
----
-
-## 🔑 Přístupová práva k funkcím modulu Pronajímatel
-
-(viz detailní tabulka v původním textu)
-
----
-
-## 🌐 Plánované integrace na externí služby
-
-(viz sekce v původním textu)
-
----
-
-## 🔗 Přehled závislostí na dalších modulech
-
-(viz tabulka a diagram v původním textu)
-
----
-
-## ⚠️ Chybové stavy a výjimky – Pronajímatel
-
-(viz tabulka a postupy v původním textu)
-
----
-
-## 📝 Poznámky pro vývojáře
-
-- Pronajímatelé budou uloženi v tabulce **Subjekt** (společné pro další entity)
-- Modul využívá komponenty: FormLinking, AttachmentSystem, FormGuard (viz uživatelé)
-- Pro typy subjektů používej konzistentní kódování (`osoba`, `firma`, ...)
-- Ošetři validace (IČO, DIČ, e-mail, bankovní účet)
-- V budoucnu plánována integrace s ARES a dalšími registry
-
----
-
-## 🐛 Známé problémy / TODO
-
-(viz původní text)
-
----
-
-> Tento soubor slouží jako živý dokument a bude se rozšiřovat podle potřeb projektu.
+> Modul Pronajímatel je základním kamenem správy portfolia – umožňuje správnou evidenci vlastníků, sdílení práv, auditní dohledatelnost a napojení na klíčové entity systému. Dokumentace bude rozšiřována dle vývoje a potřeb projektu.
