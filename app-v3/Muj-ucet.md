@@ -14,7 +14,8 @@
 | ✅   | 🟦 Přihlašovací údaje a zabezpečení | Heslo, 2FA, zařízení, historie přihlášení |
 |      | ├── 👁️ Přehled zabezpečení | Změna hesla, 2FA, zařízení |
 |      | ├── 📝 Formulář: Změna hesla | Formulář pro změnu hesla |
-|      | └── 📝 Formulář: Nastavení dvoufaktorové autentizace | Formulář pro 2FA |
+|      | ├── 📝 Formulář: Nastavení dvoufaktorové autentizace | Formulář pro 2FA |
+|      | └── 📝 Formulář: Bezpečnostní otázky a recovery kódy | Záloha přístupu, bezpečnostní otázky |
 | ✅   | 🟦 Notifikace a upozornění | Nastavení upozornění a jejich způsob |
 |      | ├── 👁️ Přehled notifikací | Zobrazení a úprava notifikací |
 |      | └── 📝 Formulář: Nastavení notifikací | Formulář pro notifikace |
@@ -52,17 +53,28 @@ Umožňuje uživateli spravovat své základní údaje, kontakty a profilovou fo
 Pouze daný uživatel a admin (případně správce).
 
 #### 3️⃣ Pole a validace
-| Pole            | Povinné | Typ/validace                | Poznámka                       |
-|-----------------|:-------:|-----------------------------|---------------------------------|
-| Jméno           |   Ano   | text                        |                                |
-| Příjmení        |   Ano   | text                        |                                |
-| Titul           |   Ne    | text                        |                                |
-| E-mail          |   Ano   | e-mail (unikátní, validace) |                                |
-| Telefon         |   Ne    | tel (validace)              |                                |
-| Adresa          |   Ne    | text                        |                                |
-| Profilová fotka |   Ne    | soubor (jpg/png), validace  |                                |
-| Role            |   Ano   | readonly                    | Zobrazení v profilu            |
-| Příslušnost     |   Ne    | readonly                    | Společnosti, nemovitosti, jednotky |
+| Pole                   | Povinné | Typ/validace                | Poznámka                       |
+|------------------------|:-------:|-----------------------------|---------------------------------|
+| Jméno                  |   Ano   | text                        |                                |
+| Příjmení               |   Ano   | text                        |                                |
+| Titul                  |   Ne    | text                        |                                |
+| E-mail                 |   Ano   | e-mail (unikátní, validace) |                                |
+| Alternativní e-mail    |   Ne    | e-mail (validace)           | Pro obnovení přístupu           |
+| Telefon                |   Ne    | tel (validace)              |                                |
+| Alternativní telefon   |   Ne    | tel (validace)              | Nouzový kontakt                |
+| Adresa                 |   Ne    | text                        |                                |
+| Profilová fotka        |   Ne    | soubor (jpg/png), validace  |                                |
+| Role                   |   Ano   | readonly                    | Zobrazení v profilu            |
+| Příslušnost            |   Ne    | readonly                    | Společnosti, nemovitosti, jednotky |
+| Typ účtu               |   Ano   | výběr (osobní/firemní/rodinný) |                              |
+| IČO                    |   Ne    | text, validace              | Pouze pro firemní účet         |
+| Firma                  |   Ne    | text                        | Pouze pro firemní účet         |
+| Fakturační adresa      |   Ne    | text                        | Pouze pro firemní účet         |
+| Poznámka administrátora|   Ne    | text (readonly)             | Viditelné jen adminům          |
+| Preferované kontakty   |   Ne    | multi-choice                | např. SMS, e-mail, telefon     |
+| Souhlas s podmínkami   |   Ano   | checkbox                    | Záznam souhlasu (právně nutné) |
+| Souhlas s marketingem  |   Ne    | checkbox                    | Pro newslettery                |
+| Profil viditelný       |   Ne    | checkbox                    | „Neviditelný profil“           |
 
 #### 4️⃣ Tlačítka a akce
 - 💾 Uložit změny
@@ -95,34 +107,40 @@ Pouze daný uživatel a admin (případně správce).
 - ✅ Specifika, rozšíření
 
 #### 1️⃣ Popis a účel
-Zajišťuje správu přístupových údajů, změnu hesla, nastavení 2FA, přehled přihlášených zařízení a historii přístupů.
+Zajišťuje správu přístupových údajů, změnu hesla, nastavení 2FA, bezpečnostní otázky, recovery kódy, přehled přihlášených zařízení a historii přístupů.
 
 #### 2️⃣ Přístup/viditelnost
 Pouze daný uživatel a admin.
 
 #### 3️⃣ Přehled a formuláře
-| Pole            | Povinné | Typ/validace                | Poznámka                  |
-|-----------------|:-------:|-----------------------------|---------------------------|
-| Heslo původní   |   Ano   | password                    | Změna hesla               |
-| Heslo nové      |   Ano   | password, síla hesla        |                           |
-| Potvrzení hesla |   Ano   | password                    |                           |
-| 2FA způsob      |   Ne    | výběr (SMS/aplikace)        | Aktivace/deaktivace       |
-| Kód 2FA         |   Ne    | číselný kód                 | Ověření                   |
-| Přihlášená zařízení | Ne  | readonly                    | Seznam, možnost odhlásit  |
-| Historie přihlášení | Ne  | readonly                    | Tabulka, záznam           |
+| Pole                   | Povinné | Typ/validace                | Poznámka                  |
+|------------------------|:-------:|-----------------------------|---------------------------|
+| Heslo původní          |   Ano   | password                    | Změna hesla               |
+| Heslo nové             |   Ano   | password, síla hesla        |                           |
+| Potvrzení hesla        |   Ano   | password                    |                           |
+| 2FA způsob             |   Ne    | výběr (SMS/aplikace)        | Aktivace/deaktivace       |
+| Kód 2FA                |   Ne    | číselný kód                 | Ověření                   |
+| Bezpečnostní otázka    |   Ne    | výběr/krátký text           | Pro obnovení přístupu     |
+| Odpověď na otázku      |   Ne    | text                        | Skrytá                    |
+| Recovery kódy          |   Ne    | readonly/generátor          | Záloha přístupu           |
+| Přihlášená zařízení    |   Ne    | readonly                    | Seznam, možnost odhlásit  |
+| Historie přihlášení    |   Ne    | readonly                    | Tabulka, záznam           |
 
 #### 4️⃣ Tlačítka a akce
 - 💾 Uložit změnu hesla
 - ❌ Zrušit
 - 🔑 Aktivovat 2FA
 - 🔓 Deaktivovat 2FA
+- 🧩 Nastavit bezpečnostní otázky / recovery kódy
 - 🚪 Odhlásit zařízení
 
 #### 5️⃣ Chybové stavy
 - Neplatné/neshodující se heslo
+- Slabé heslo (síla hesla)
 - Chyba při aktivaci 2FA
 - Neoprávněný pokus o změnu údajů
 - Chyba při odhlášení zařízení
+- Neúspěšné ověření bezpečnostní otázky
 
 #### 6️⃣ Oprávnění a vazby
 - Pouze uživatel sám, admin pouze v případě resetu
@@ -151,15 +169,19 @@ Nastavení způsobu a typu notifikací, které chce uživatel dostávat.
 Pouze daný uživatel.
 
 #### 3️⃣ Přehled a formuláře
-| Pole          | Povinné | Typ/validace     | Poznámka                      |
-|---------------|:-------:|------------------|-------------------------------|
-| Způsob zasílání | Ano    | vícevýběr        | e-mail, SMS, push, interní    |
-| Události      | Ano     | vícevýběr        | např. platby, údržba, zprávy  |
-| Dočasné vypnutí | Ne     | checkbox         |                               |
+| Pole                 | Povinné | Typ/validace     | Poznámka                      |
+|----------------------|:-------:|------------------|-------------------------------|
+| Způsob zasílání      | Ano     | vícevýběr        | e-mail, SMS, push, interní    |
+| Události             | Ano     | vícevýběr        | např. platby, údržba, zprávy  |
+| Dočasné vypnutí      | Ne      | checkbox         |                               |
+| Časové okno          | Ne      | časový rozsah    | Kdy doručovat notifikace      |
+| Kanály preferované   | Ne      | multi-choice     | Upřednostňuji SMS apod.       |
+| Export historie      | Ne      | tlačítko         | Exportovat historii notifikací |
 
 #### 4️⃣ Tlačítka a akce
 - 💾 Uložit nastavení
 - ❌ Zrušit
+- 📤 Exportovat historii notifikací
 
 #### 5️⃣ Chybové stavy
 - Chyba při ukládání nastavení
@@ -188,14 +210,16 @@ Personalizace vzhledu, jazyka a dalších preferencí.
 Pouze daný uživatel.
 
 #### 3️⃣ Přehled a formuláře
-| Pole                | Povinné | Typ/validace | Poznámka        |
-|---------------------|:-------:|--------------|-----------------|
-| Vzhled (theme)      | Ne      | výběr        | světlý/tmavý    |
-| Jazyk rozhraní      | Ano     | výběr        |                 |
-| Domovská sekce      | Ne      | výběr        | modul/sekce     |
-| Oblíbené moduly     | Ne      | vícevýběr    |                  |
-| Časové pásmo        | Ne      | výběr        |                 |
-| Formát data/času    | Ne      | výběr        |                 |
+| Pole                  | Povinné | Typ/validace | Poznámka        |
+|-----------------------|:-------:|--------------|-----------------|
+| Vzhled (theme)        | Ne      | výběr        | světlý/tmavý    |
+| Jazyk rozhraní        | Ano     | výběr        |                 |
+| Domovská sekce        | Ne      | výběr        | modul/sekce     |
+| Oblíbené moduly       | Ne      | vícevýběr    |                 |
+| Časové pásmo          | Ne      | výběr        |                 |
+| Formát data/času      | Ne      | výběr        |                 |
+| Zobrazovat tipy       | Ne      | checkbox     | Onboarding, nápověda  |
+| Aktivovat beta funkce | Ne      | checkbox     | Přístup k novinkám   |
 
 #### 4️⃣ Tlačítka a akce
 - 💾 Uložit preference
@@ -225,12 +249,13 @@ Přehled posledních akcí, změn, přístupů a notifikací.
 Pouze daný uživatel a admin.
 
 #### 3️⃣ Přehled polí
-| Pole      | Povinné | Typ/validace | Poznámka           |
-|-----------|:-------:|--------------|--------------------|
-| Typ akce  | Ano     | text         | přihlášení, změna  |
-| Čas       | Ano     | datetime     |                    |
-| IP adresa | Ne      | text         |                    |
-| Detail    | Ne      | text         | popis akce         |
+| Pole        | Povinné | Typ/validace | Poznámka           |
+|-------------|:-------:|--------------|--------------------|
+| Typ akce    | Ano     | text         | přihlášení, změna  |
+| Čas         | Ano     | datetime     |                    |
+| IP adresa   | Ne      | text         |                    |
+| Zařízení    | Ne      | text         | např. mobil/web    |
+| Detail      | Ne      | text         | popis akce         |
 
 #### 4️⃣ Akce
 - 👁️ Zobrazit detail, filtrovat podle typu, export
@@ -252,7 +277,7 @@ Pouze daný uživatel a admin.
 - ✅ Specifika, rozšíření
 
 #### 1️⃣ Popis a účel
-Umožňuje uživateli požádat o zrušení účtu, stáhnout si data, být upozorněn na nevratnost kroku.
+Umožňuje uživateli požádat o zrušení účtu, stáhnout si data, být upozorněn na nevratnost kroku, případně účet dočasně deaktivovat.
 
 #### 2️⃣ Přístup/viditelnost
 Pouze daný uživatel a admin.
@@ -264,11 +289,14 @@ Pouze daný uživatel a admin.
 | Důvod zrušení         | Ne      | text         | volitelné                      |
 | Export osobních dat   | Ne      | tlačítko     | možnost stáhnout před zrušením |
 | Podmínky GDPR         | Ano     | readonly     | nutno odsouhlasit              |
+| Dočasná deaktivace    | Ne      | checkbox     | deaktivace bez výmazu          |
+| Historie žádostí      | Ne      | readonly     | přehled žádostí o zrušení/deaktivaci |
 
 #### 4️⃣ Tlačítka a akce
 - 📝 Odeslat žádost o zrušení
 - ❌ Zrušit
 - 📥 Exportovat osobní data
+- 💤 Dočasně deaktivovat účet
 
 #### 5️⃣ Chybové stavy
 - Chyba při zpracování žádosti
@@ -294,6 +322,11 @@ Pouze daný uživatel a admin.
 - ⏳ Přidat pole pro preferované komunikační kanály (např. upřednostňuji SMS).
 - ⏳ Umožnit změnu e-mailu pouze po ověření nového e-mailu (double opt-in).
 - ⏳ Přidat historii schválení/zamítnutí žádostí o zrušení účtu.
+- ⏳ Rozlišit typ účtu (osobní/firemní/rodinný), přidat potřebná pole pro firemní účty.
+- ⏳ Povolit poznámky admina k účtu (pouze pro adminy).
+- ⏳ Nastavení časového okna pro notifikace.
+- ⏳ Export historie notifikací.
+- ⏳ Nastavit možnost dočasné deaktivace účtu.
 
 > Otázky k doplnění:
 > - Potřebujeme podporu pro více typů účtů (firemní/osobní/rodinný)?
@@ -301,6 +334,8 @@ Pouze daný uživatel a admin.
 > - Chceme implementovat automatickou blokaci účtu při podezřelé aktivitě?
 > - Má být možné dočasně deaktivovat účet (bez výmazu)?
 > - Máme definovány všechny GDPR procesy pro tento modul? (výmaz, export, souhlasy)
+> - Chceme povinný double opt-in při změně e-mailu?
+> - Jaké další informace by měl admin vidět u účtu?
 
 ---
 
@@ -312,14 +347,27 @@ Pouze daný uživatel a admin.
   "prijmeni": "Cechlovsky",
   "role": "pronajímatel",
   "email": "patrik@email.cz",
+  "alternativni_email": "patrik.alt@email.cz",
   "telefon": "+420123456789",
+  "alternativni_telefon": "+420987654321",
   "foto": "profil.jpg",
+  "typ_uctu": "firemní",
+  "ico": "12345678",
+  "firma": "Cechlovsky s.r.o.",
+  "fakturacni_adresa": "Brno, Ulice 1",
+  "preferovane_kontakty": ["email", "sms"],
+  "souhlas_podminky": true,
+  "souhlas_marketing": false,
+  "profil_viditelny": false,
   "nastaveni": {
     "jazyk": "cs",
     "vzhled": "tmavý",
     "notifikace": ["email", "sms"],
-    "domovska_sekce": "finance"
-  }
+    "domovska_sekce": "finance",
+    "casove_pasma": "Europe/Prague",
+    "beta": true
+  },
+  "poznamka_admina": "VIP klient"
 }
 ```
 
@@ -330,7 +378,8 @@ Pouze daný uživatel a admin.
     {
       "typ": "prihlaseni",
       "cas": "2025-09-09T07:13:00",
-      "ip": "89.102.5.8"
+      "ip": "89.102.5.8",
+      "zarizeni": "mobile"
     },
     {
       "typ": "zmena_hesla",
@@ -351,12 +400,16 @@ Pouze daný uživatel a admin.
 | Chyba / výjimka                | Řešení systému / reakce      | Uživatelská hláška                              |
 |---------------------------------|------------------------------|-------------------------------------------------|
 | Neplatné heslo                  | Chyba, nabídnout reset       | „Zadané heslo je nesprávné. Chcete obnovit heslo?“|
+| Slabé heslo                     | Nutit silnější heslo         | „Vaše heslo je příliš slabé. Zvolte silnější.“  |
 | Nepovolená změna údajů          | Omezit, logovat pokus        | „Tuto změnu nemáte oprávnění provést.“          |
 | Chyba při změně notifikace      | Upozornit, logovat           | „Nepodařilo se uložit nastavení notifikace.“    |
 | Nezdařená 2FA autentizace       | Upozornit, nabídnout opakování | „Ověření dvoufaktorem selhalo.“                |
 | Chyba při exportu dat           | Zobrazit informaci, logovat  | „Export osobních dat se nezdařil.“              |
 | Povinné pole není vyplněno      | Zvýraznit pole, upozornit    | „Vyplňte prosím všechna povinná pole.“          |
 | Chyba při uploadu fotografie    | Upozornit, logovat           | „Soubor nelze nahrát. Zkuste jiný formát.“      |
+| Neúspěšné ověření bezpečnostní otázky | Upozornit, nabídnout novou volbu | „Odpověď nesouhlasí.“               |
+| Chyba při deaktivaci účtu       | Zobrazit chybovou hlášku     | „Účet se nepodařilo deaktivovat.“               |
+| Chyba při změně typu účtu       | Omezit změnu, logovat        | „Změna typu účtu není povolena.“                |
 
 ---
 
@@ -368,9 +421,11 @@ Pouze daný uživatel a admin.
 | Změna hesla/2FA              |   ✅     |  ✅   |
 | Nastavení notifikací         |   ✅     |  ✅   |
 | Správa oblíbených            |   ✅     |  ✅   |
-| Zrušení účtu                 |   ✅\*   |  ✅   |
+| Zrušení/deaktivace účtu      |   ✅\*   |  ✅   |
 | Export dat                   |   ✅     |  ✅   |
 | Historie aktivity            |   ✅     |  ✅   |
+| Přístup k poznámce admina    |         |  ✅   |
+| Úprava typu účtu             |   ✅\*   |  ✅   |
 
 \* podle nastavení systému
 
@@ -379,17 +434,17 @@ Pouze daný uživatel a admin.
 ## 📑 Doporučené workflow
 
 1. **Změna hesla/zabezpečení:**  
-   - Uživatel zadá nové heslo, případně aktivuje dvoufaktorovou autentizaci.
+   - Uživatel zadá nové heslo, případně aktivuje dvoufaktorovou autentizaci, nastaví bezpečnostní otázku a recovery kódy.
 2. **Nastavení notifikací:**  
-   - Uživatel zvolí, jak a pro jaké události chce být informován (e-mail, SMS, push).
+   - Uživatel zvolí, jak, kdy a pro jaké události chce být informován (e-mail, SMS, push), nastaví časové okno.
 3. **Úprava kontaktů a osobních údajů:**  
-   - Změna e-mailu, telefonu, nahrání fotky, úprava adresy.
+   - Změna e-mailu, telefonu, nahrání fotky, úprava adresy, doplnění firemních údajů.
 4. **Správa oblíbených modulů a vzhledu:**  
-   - Nastavení domovské sekce, barevného schématu, případně jazyka.
+   - Nastavení domovské sekce, barevného schématu, případně jazyka, aktivace beta funkcí.
 5. **Zobrazení aktivity:**  
-   - Kontrola historie akcí a přístupů, možnost odhlásit se ze všech zařízení.
-6. **Zrušení účtu:**  
-   - Postupné potvrzení, export osobních dat, deaktivace účtu.
+   - Kontrola historie akcí a přístupů, možnost odhlásit se ze všech zařízení, export historie.
+6. **Zrušení/deaktivace účtu:**  
+   - Postupné potvrzení, export osobních dat, deaktivace účtu, možnost opětovné aktivace.
 7. **Export dat:**  
    - Uživatel požádá o export, systém připraví a nabídne ke stažení.
 
