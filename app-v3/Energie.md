@@ -2,116 +2,124 @@
 > ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
 > ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
 
-# Modul: Energie
+# Modul: Údržba
 
 ---
 
 ## 🌲 Stromová struktura modulu
 
-| Stav | Sekce                           | Popis                                         |
-|------|---------------------------------|-----------------------------------------------|
-| ✅   | 🟦 Přehled energií               | Souhrnný pohled na všechny typy energií       |
-| ✅   | 🟦 Odečty měřidel                | Evidence měřidel a historie odečtů            |
-| ✅   | 🟦 Grafy a analýzy spotřeby      | Grafy, analýzy, detekce anomálií              |
-| ✅   | 🟦 Podklady pro vyúčtování        | Výpočet spotřeb, export podkladů              |
-| ✅   | 🟦 Nastavení a správa měřidel    | Správa, archivace, kalibrace měřidel          |
-| ✅   | 📝 Poznámky, nápady a úkoly      | Prostor pro další poznámky a TODO             |
+| Stav | Sekce                                   | Popis                                               |
+|------|-----------------------------------------|-----------------------------------------------------|
+| ✅   | 🟦 Hlášení závad a požadavků            | Evidence požadavků na opravy, úklid, instalace      |
+| ✅   | 🟦 Plánované údržby, servisy, revize    | Plánování, upozornění na termíny, historie          |
+| ✅   | 🟦 Provedené opravy a zásahy            | Evidence všech zásahů, náklady, doklady             |
+| ✅   | 🟦 Přehled zařízení a servisní historie | Katalog zařízení a jejich servisní historie         |
+| ✅   | 🟦 Statistiky a reporting               | Přehled počtu požadavků, nákladů, grafy             |
+| ✅   | 📝 Poznámky, nápady a úkoly             | Prostor pro další poznámky a TODO                   |
 
 ---
 
-## 🟦 Přehled energií
+## 🟦 Hlášení závad a požadavků
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- [x] Účel sekce/dlaždice (souhrnný pohled na typy energií - elektřina, plyn, teplo, voda, jiné média)
-- [x] Kdo má přístup/viditelnost podle oprávnění/rolí (pronajímatel, správce, účetní – filtrace podle oprávnění)
+- [x] Účel sekce/dlaždice (evidence závad, požadavků na opravy, úklid, instalace od nájemníků, správců, vlastníků)
+- [x] Kdo má přístup/viditelnost podle oprávnění/rolí (nájemník – jen svoji jednotku, správce, pronajímatel – vše)
 - [x] Zařazení v hlavní stromové struktuře
-- [x] Výčet a popis všech polí (typ energie, období, spotřeba, náklady, jednotka, anomálie)
-- [x] Filtrování, řazení, akce v řádku, hromadné akce (export, graf spotřeby, detail)
+- [x] Výčet a popis všech polí (typ požadavku, popis, foto, termín, priorita, kontaktní osoba, jednotka, stav, přílohy)
+- [x] Filtrování, řazení, akce v řádku, hromadné akce (změna stavu, export, přiřazení realizátora)
 - [x] Ukázka tabulky/přehledu
-- [x] Validace, tlačítka, workflow, chybové stavy, oprávnění, vazby na další moduly a reference
+- [x] Validace, tlačítka, workflow, chybové stavy, oprávnění
+- [x] Vazby na další moduly a reference
 - [x] Specifika, rozšíření
 
-#### Popis a účel
-Souhrnný pohled na všechny typy energií: elektřina, plyn, teplo, voda, jiné média.
-
-#### Přístup/viditelnost
-Pronajímatel, správce, účetní – filtrace podle oprávnění (svoje, vše, konkrétní jednotka/nemovitost).
-
 #### Pole a validace
-| Pole        | Povinné | Typ       | Poznámka         |
-|-------------|:-------:|-----------|------------------|
-| Typ energie |   Ano   | výběr     | elektřina, plyn… |
-| Období      |   Ano   | datum     |                  |
-| Spotřeba    |   Ano   | číslo     | součet z odečtů  |
-| Náklady     |   Ano   | číslo     |                  |
-| Jednotka    |   Ano   | výběr     |                  |
-| Anomálie    |   Ne    | systém    | zvýraznění       |
+| Pole              | Povinné | Typ          | Poznámka                          |
+|-------------------|:-------:|--------------|-----------------------------------|
+| Typ požadavku     |   Ano   | výběr        | oprava, úklid, instalace, jiné    |
+| Popis             |   Ano   | text         |                                   |
+| Foto              |   Ne    | soubor       |                                   |
+| Termín            |   Ne    | datum        | Požadovaný termín řešení          |
+| Priorita          |   Ne    | výběr        | nízká, střední, vysoká            |
+| Kontaktní osoba   |   Ano   | text         |                                   |
+| Jednotka          |   Ano   | výběr        |                                   |
+| Stav požadavku    |   Ano   | systémový    | nové, řeší se, vyřešeno, zamítnuto|
+| Přílohy           |   Ne    | soubor       |                                   |
 
-Filtrování: období, typ energie, jednotka, nemovitost, stav.
+Filtrování: stav, priorita, stáří, jednotka, zařízení  
+Hromadné akce: změna stavu, export, přiřazení realizátora
 
-#### Akce
-- Export, filtrování, graf spotřeby, detail jednotky/energie
+| Požadavek ID | Typ     | Popis               | Stav   | Priorita | Termín    | Akce         |
+|--------------|---------|---------------------|--------|----------|-----------|--------------|
+| 001          | oprava  | Netěsnící kohoutek  | nové   | střední  | 2025-09-20| 👁️ ✏️ 🗑️       |
 
----
+Validace a workflow:
+- Povinná pole, validace typu a příloh
+- Po zadání požadavku automatická notifikace správci
+- Možnost editace/změny stavu pouze správce/pronajímatel
 
-## 🟦 Odečty měřidel
+Chybové stavy:
+- Nelze zadat požadavek na cizí jednotku (nájemník)
+- Chybí povinné pole (zvýraznit, zamezit uložení)
+- Duplicitní požadavek (upozornit, nabídnout sloučení)
+- Oprávnění viz tabulka na konci
 
-### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- [x] Evidence všech měřidel, historie odečtů
-- [x] Zadání nového odečtu (ručně, import, API)
-- [x] Filtrování podle typu, jednotky, období
-- [x] Automatické propojení s vyúčtováním
-- [x] Validace, chybové stavy
-
----
-
-## 🟦 Grafy a analýzy spotřeby
-
-### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- [x] Grafické zobrazení spotřeby v čase, srovnání období
-- [x] Export grafu/tabulky
-- [x] Upozornění na anomálie a výkyvy
+Vazby: přehled zařízení (možnost přiřazení zařízení), statistiky (počty, typy)
 
 ---
 
-## 🟦 Podklady pro vyúčtování
+## 🟦 Plánované údržby, servisy a revize
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- [x] Výpočet spotřeb, nákladů, jednotkové ceny
-- [x] Generování podkladů pro vyúčtování služeb
-- [x] Export, historie vyúčtování, přeplatky/nedoplatky
+- [x] Účel, uživatelé, pole, workflow, validace, akce, chybové stavy
+- [x] Notifikace na blížící se termín, historie
 
 ---
 
-## 🟦 Nastavení a správa měřidel
+## 🟦 Provedené opravy a zásahy
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- [x] Přidání, editace, archivace měřidel
-- [x] Nastavení intervalů odečtů
-- [x] Upozornění na kalibraci/životnost
+- [x] Účel, uživatelé, pole, workflow, validace, akce, chybové stavy
+- [x] Možnost navázání na požadavek/plán
+- [x] Evidence nákladů, příloh, hodnocení
+
+---
+
+## 🟦 Přehled zařízení a servisní historie
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- [x] Katalog zařízení, historie oprav, výměn, revizí
+- [x] Upozornění na výměnu, konec životnosti, revize, archivace zařízení
+
+---
+
+## 🟦 Statistiky a reporting
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- [x] Přehled počtu a typů požadavků, nákladů
+- [x] Grafy, export, reporting
 
 ---
 
 ## 📝 Poznámky, nápady a úkoly k modulu i dlaždicím
 
-> Zde piš vše, co je potřeba doplnit, změnit nebo vyřešit.  
+> Sem piš nápady a úkoly, co je potřeba doplnit, změnit nebo vyřešit.  
 > ⏳ = rozpracováno, přeškrtni hotové.
 
-- ⏳ Automatický import odečtů z API dodavatele
-- ⏳ Notifikace na blížící se kalibraci/expiraci měřidla
-- ⏳ Export souhrnné zprávy o spotřebě všem nájemníkům
-- ⏳ Možnost importu dat z chytrých měřidel (IoT)
-- ⏳ Sledování spotřeby na osobu/M2
-- ⏳ Umožnit zpětné zadání odečtu s auditní stopou
-- ⏳ Zobrazit grafy i pro porovnání více jednotek
-- ⏳ Upozornění na neobvyklou spotřebu s doporučením řešení
+- ⏳ Rozšířit katalog zařízení o typy, životnost, revizní intervaly
+- ⏳ Možnost hodnotit spokojenost po zásahu (nájemník)
+- ⏳ Automatické generování termínů revizí podle typu zařízení
+- ⏳ Workflow pro schvalování zásahu (správce → pronajímatel → realizace)
+- ⏳ Export statistiky nákladů podle typu zásahu a zařízení
+- ⏳ Notifikace na nevyřešený požadavek po X dnech
+- ⏳ Napojení na externí servisní firmy (API, e-mail)
+- ⏳ Možnost importu servisní historie z jiných systémů
 
-> Otázky k doplnění:
-> - Chceme podporovat pravidelný automatický import z externího systému?
-> - Má být možné nastavit různé intervaly odečtů pro různé typy energií?
-> - Potřebujeme detailní historii změn u každého měřidla?
-> - Budeme rozlišovat více typů měřidel na jednu jednotku (podružná, hlavní)?
-> - Chceme podporovat anonymizovaná data pro porovnání s průměrem v domě?
+Otázky k doplnění:
+- Potřebujeme detailní evidenci nákladů a faktur na každé zařízení?
+- Budeme umožňovat nájemníkovi hodnotit zásah?
+- Má být možné vytvářet vlastní typy požadavků a kategorií servisů?
+- Chceme automaticky generovat požadavky na základě plánu revizí?
+- Má být možné navázat požadavek na více zařízení najednou?
 
 ---
 
@@ -119,38 +127,40 @@ Filtrování: období, typ energie, jednotka, nemovitost, stav.
 
 ```json
 {
-  "id": "elektro_101",
-  "typ": "elektřina",
-  "umisteni": "Jednotka 101",
-  "vyrobni_cislo": "E123456789",
-  "jednotka": "kWh",
-  "datum_posledni_kalibrace": "2024-05-01",
-  "stav_kalibrace": "platná"
-}
-```
-```json
-{
-  "id": "odect_2025_09_101",
-  "meridlo_id": "elektro_101",
-  "datum": "2025-09-01",
-  "stav": 17235,
-  "provedl": "PatrikCechlovsky",
-  "fotodokumentace": "foto_odectu_2025-09-01.jpg"
-}
-```
-```json
-{
-  "id": "vyuctovani_energie_101_2025_09",
-  "meridlo_id": "elektro_101",
+  "id": "pozadavek_2025_101_01",
+  "typ": "oprava",
+  "stav": "nove",
+  "popis": "Netěsnící kohoutek v kuchyni",
+  "datum_zadani": "2025-09-09",
+  "zadavatel": "najemnik_101",
+  "priorita": "stredni",
   "jednotka_id": "101",
-  "obdobi_od": "2025-08-01",
-  "obdobi_do": "2025-09-01",
-  "stav_pocatek": 16945,
-  "stav_konec": 17235,
-  "spotreba": 290,
-  "cena_za_jednotku": 6.2,
-  "naklad_celkem": 1798,
-  "vyuctovani_id": "vyuctovani_101_2025"
+  "prilohy": ["foto_kohoutek.jpg"]
+}
+```
+```json
+{
+  "id": "revize_kotel_2025",
+  "typ": "revize",
+  "zarizeni_id": "kotel_101",
+  "termin": "2025-11-15",
+  "firma": "ServisKotle.cz",
+  "stav": "naplanovano",
+  "cena_predpoklad": 2000,
+  "prilohy": []
+}
+```
+```json
+{
+  "id": "zasah_2025_09_101",
+  "typ": "oprava",
+  "zarizeni_id": "kotel_101",
+  "datum": "2025-09-09",
+  "provedl": "ServisKotle.cz",
+  "popis": "Výměna pojistného ventilu",
+  "cena": 1800,
+  "navazano_na": "pozadavek_2025_101_01",
+  "prilohy": ["faktura_ventil.pdf", "foto_pred.jpg", "foto_po.jpg"]
 }
 ```
 
@@ -160,40 +170,42 @@ Filtrování: období, typ energie, jednotka, nemovitost, stav.
 
 | Chyba / výjimka                | Řešení systému / reakce      | Uživatelská hláška                              |
 |---------------------------------|------------------------------|-------------------------------------------------|
-| Chybějící odečet                | Upozornit, zvýraznit v přehledu | „Chybí odečet měřidla pro období XY.“         |
-| Neobvyklá spotřeba              | Upozornit, možnost komentáře | „Spotřeba je výrazně vyšší/nižší než obvykle.“ |
-| Neplatná kalibrace měřidla      | Upozornit, blokovat zadání odečtu | „Měřidlo má neplatnou kalibraci, kontaktujte správce.“ |
-| Duplicita odečtu                | Upozornit, zamezit zadání    | „Odečet pro toto období již existuje.“          |
+| Nevyřešený požadavek po termínu | Upozornit, zvýraznit         | „Požadavek je nevyřešený déle než X dní.“       |
+| Blížící se revize               | Notifikace, zvýraznění       | „Blíží se povinná revize zařízení XY.“          |
+| Duplicita požadavku             | Upozornit, sloučit           | „Podobný požadavek již existuje.“               |
+| Nevyplněné povinné pole         | Zabránit uložení             | „Musíte vyplnit všechny povinné údaje.“         |
 
 ---
 
 ## 🛡️ Role a oprávnění
 
-| Funkce / Akce                | Pronajímatel | Správce | Účetní | Pouze čtení |
-|------------------------------|:------------:|:-------:|:------:|:-----------:|
-| Přehled spotřeby             |      ✅      |   ✅    |   ✅   |     ✅      |
-| Zadání/editace odečtu        |      ✅      |   ✅    |   ✅   |     ❌      |
-| Přidání měřidla              |      ✅      |   ✅    |   ✅   |     ❌      |
-| Export grafu/podkladu        |      ✅      |   ✅    |   ✅   |     ❌      |
+| Funkce / Akce                | Pronajímatel | Správce | Nájemník | Účetní | Pouze čtení |
+|------------------------------|:------------:|:-------:|:--------:|:------:|:-----------:|
+| Zadání požadavku             |      ✅      |   ✅    |   ✅     |   ❌   |     ❌      |
+| Editace/uzavření požadavku   |      ✅      |   ✅    |   ❌     |   ❌   |     ❌      |
+| Zadání plánované údržby      |      ✅      |   ✅    |   ❌     |   ❌   |     ❌      |
+| Evidence zásahu/servisu      |      ✅      |   ✅    |   ❌     |   ❌   |     ❌      |
+| Přehled zařízení             |      ✅      |   ✅    |   ❌     |   ❌   |     ✅      |
+| Statistiky/reporting         |      ✅      |   ✅    |   ❌     |   ✅   |     ✅      |
 
 ---
 
 ## 📋 Doporučené workflow
 
-1. Zadání nového odečtu (ručně/import) → propojení s obdobím → upozornění na nutnost odečtu
-2. Analýza spotřeby → grafy, tabulky, detekce odchylek
-3. Generování podkladů pro vyúčtování → export do modulu Služby/Vyúčtování
-4. Správa měřidel → kontrola kalibrace, archivace
+1. Zadání požadavku → schválení správce → přiřazení realizátora → vyřešení → archivace.
+2. Plánování údržby a revizí → upozornění na termín → evidence provedení → archivace.
+3. Evidence zásahu → navázání na požadavek/plán → zadání nákladů → nahrání příloh → hodnocení nájemníkem.
+4. Statistiky a reporting → export a analýza nákladů, četnosti, typů zásahů.
 
 ---
 
 ## 📚 Reference
 
-- [Modul Služby](./sluzby.md)
-- [Modul Vyúčtování](./vyuctovani.md)
-- [Modul Finance](./finance.md)
 - [Modul Jednotka](./jednotka.md)
+- [Modul Energie](./energie.md)
+- [Modul Finance](./finance.md)
+- [Modul Služby](./sluzby.md)
 
 ---
 
-> Modul Energie zajišťuje přesnou evidenci spotřeby, správné rozúčtování nákladů a podporuje úsporné chování díky analýze a včasné detekci anomálií.
+> Modul Údržba zajišťuje pořádek v evidenci požadavků nájemníků, revizí, oprav a minimalizuje riziko opomenutí povinných servisních zásahů.
