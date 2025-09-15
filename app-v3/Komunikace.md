@@ -1,68 +1,70 @@
-> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)
+> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)  
+> ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
+> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
 
 # Modul: Komunikace
 
 ---
 
-## Stromová struktura modulu
+## 🌲 Stromová struktura modulu
 
-| Stav | Sekce | Popis |
-|------|-------|-------|
-| ✅   | 🟦 Přehled komunikace | Historie odeslaných a přijatých zpráv |
-| ✅   | 🟦 Detail zprávy | Náhled, odpověď, archivace             |
-| ✅   | 🟦 Šablony a automatizace zpráv | Správa šablon, automatické notifikace  |
-| ✅   | 🟦 Odesílání zpráv | Ruční i hromadné odesílání, přílohy    |
-| ✅   | 🟦 Nastavení a integrace | SMTP, SMS brána, notifikační preference|
-| ✅   | 🗒️ Poznámky, nápady a úkoly | Prostor pro další poznámky a TODO       |
+| Stav | Sekce                           | Popis                                                |
+|------|---------------------------------|------------------------------------------------------|
+| ✅   | 🟦 Přehled komunikace            | Historie odeslaných a přijatých zpráv                |
+| ✅   | 🟦 Detail zprávy                 | Náhled, odpověď, archivace                           |
+| ✅   | 🟦 Šablony a automatizace zpráv  | Správa šablon, automatické notifikace                |
+| ✅   | 🟦 Odesílání zpráv               | Ruční i hromadné odesílání, přílohy                  |
+| ✅   | 🟦 Nastavení a integrace         | SMTP, SMS brána, notifikační preference              |
+| ✅   | 📝 Poznámky, nápady a úkoly      | Prostor pro další poznámky a TODO                    |
 
 ---
 
 ## 🟦 Přehled komunikace
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Účel, uživatelé, pole, filtrování, vyhledávání
-- ✅ Historie komunikace s konkrétním subjektem
-- ✅ Filtrování podle typu, adresáta, období, modulu
-- ✅ Export, archivace zpráv
+- [x] Účel, uživatelé, pole, filtrování, vyhledávání
+- [x] Historie komunikace s konkrétním subjektem
+- [x] Filtrování podle typu, adresáta, období, modulu
+- [x] Export, archivace zpráv
 
 ---
 
 ## 🟦 Detail zprávy
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Náhled, obsah, přílohy, stav doručení/čtení
-- ✅ Možnost odpovědi, přeposlání, archivace
-- ✅ Historie komunikace s jednotkou/nájemníkem
+- [x] Náhled, obsah, přílohy, stav doručení/čtení
+- [x] Možnost odpovědi, přeposlání, archivace
+- [x] Historie komunikace s jednotkou/nájemníkem
 
 ---
 
 ## 🟦 Šablony a automatizace zpráv
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Správa šablon pro různé scénáře, proměnné
-- ✅ Automatické notifikace, přiřazení workflow
-- ✅ Historie odeslaných automatických zpráv
+- [x] Správa šablon pro různé scénáře, proměnné
+- [x] Automatické notifikace, přiřazení workflow
+- [x] Historie odeslaných automatických zpráv
 
 ---
 
 ## 🟦 Odesílání zpráv
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Ruční i hromadné odesílání (e-mail, SMS, interní zpráva)
-- ✅ Výběr příjemce, přidání příloh, výběr šablony
-- ✅ Ověření příjemce, chybové stavy
+- [x] Ruční i hromadné odesílání (e-mail, SMS, interní zpráva)
+- [x] Výběr příjemce, přidání příloh, výběr šablony
+- [x] Ověření příjemce, chybové stavy
 
 ---
 
 ## 🟦 Nastavení a integrace
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Nastavení SMTP, IMAP, SMS brány
-- ✅ Správa notifikačních preferencí, práv pro odesílání
+- [x] Nastavení SMTP, IMAP, SMS brány
+- [x] Správa notifikačních preferencí, práv pro odesílání
 
 ---
 
-## 🗒️ Poznámky, nápady a úkoly k modulu i dlaždicím
+## 📝 Poznámky, nápady a úkoly k modulu i dlaždicím
 
 > Sem piš vše, co je potřeba doplnit, změnit nebo vyřešit.  
 > ⏳ = rozpracováno, přeškrtni hotové.
@@ -76,16 +78,16 @@
 - ⏳ Automatizované šablony pro všechny události v systému
 - ⏳ Možnost napojení na externí helpdesk/ticketing systém
 
-> Otázky k doplnění:
-> - Budeme podporovat příjem odpovědí z e-mailu a jejich automatické zpracování?
-> - Chceme umožnit nastavení šablon pro každou událost v systému individuálně?
-> - Má být možné dohledat komunikaci napříč všemi moduly jedním hledáním?
-> - Umožníme uživatelskou správu podpisu a hlavičky zprávy?
-> - Chceme podporovat šifrování/PGP pro e-maily?
+Otázky k doplnění:
+- Budeme podporovat příjem odpovědí z e-mailu a jejich automatické zpracování?
+- Chceme umožnit nastavení šablon pro každou událost v systému individuálně?
+- Má být možné dohledat komunikaci napříč všemi moduly jedním hledáním?
+- Umožníme uživatelskou správu podpisu a hlavičky zprávy?
+- Chceme podporovat šifrování/PGP pro e-maily?
 
 ---
 
-## 🗃️ Datové modely (ukázka)
+## 🗄️ Datové modely (ukázka)
 
 ```json
 {
@@ -135,7 +137,7 @@
 
 ---
 
-## 📑 Doporučené workflow
+## 📋 Doporučené workflow
 
 1. Odeslání automatizované zprávy → modul (např. Platby) vygeneruje událost → použije šablonu → odešle zprávu → uloží do historie.
 2. Manuální odeslání zprávy → výběr příjemce/šablony → odeslání → evidence v historii.
