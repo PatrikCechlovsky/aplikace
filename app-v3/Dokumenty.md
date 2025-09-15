@@ -1,65 +1,67 @@
-> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)
+> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)  
+> ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
+> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
 
 # Modul: Dokumenty
 
 ---
 
-## Stromová struktura modulu
+## 🌲 Stromová struktura modulu
 
-| Stav | Sekce | Popis |
-|------|-------|-------|
-| ✅   | 🟦 Knihovna šablon a vzorů | Předdefinované a uživatelské šablony dokumentů |
-| ✅   | 🟦 Tvorba a editace dokumentu | Vytvoření dokumentu ze šablony nebo prázdného |
-| ✅   | 🟦 Personalizace a individuální úpravy | Individuální kopie a historie změn |
-| ✅   | 🟦 Podepisování a ověřování | Elektronické podpisy, razítka, BankID |
-| ✅   | 🟦 Sdílení, export, archivace | Sdílení dokumentů, export, archivace, expirace |
-| ✅   | 🗒️ Poznámky, nápady a úkoly | Prostor pro další poznámky a TODO |
+| Stav | Sekce                                 | Popis                                                |
+|------|---------------------------------------|------------------------------------------------------|
+| ✅   | 🟦 Knihovna šablon a vzorů            | Předdefinované a uživatelské šablony dokumentů       |
+| ✅   | 🟦 Tvorba a editace dokumentu         | Vytvoření dokumentu ze šablony nebo prázdného        |
+| ✅   | 🟦 Personalizace a individuální úpravy| Individuální kopie a historie změn                   |
+| ✅   | 🟦 Podepisování a ověřování           | Elektronické podpisy, razítka, BankID                |
+| ✅   | 🟦 Sdílení, export, archivace         | Sdílení dokumentů, export, archivace, expirace       |
+| ✅   | 📝 Poznámky, nápady a úkoly           | Prostor pro další poznámky a TODO                    |
 
 ---
 
 ## 🟦 Knihovna šablon a vzorů
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Účel, uživatelé, pole, workflow, validace, akce, chybové stavy
-- ✅ Filtrování, vyhledávání, parametrizace proměnných
+- [x] Účel, uživatelé, pole, workflow, validace, akce, chybové stavy
+- [x] Filtrování, vyhledávání, parametrizace proměnných
 
 ---
 
 ## 🟦 Tvorba a editace dokumentu
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Účel, uživatelé, pole, možnost předvyplnění z jiných modulů
-- ✅ Uložení konceptu, náhled, editace obsahu
+- [x] Účel, uživatelé, pole, možnost předvyplnění z jiných modulů
+- [x] Uložení konceptu, náhled, editace obsahu
 
 ---
 
 ## 🟦 Personalizace a individuální úpravy
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Úprava šablony jen pro sebe (lokální kopie)
-- ✅ Historie změn dokumentu, verzování
+- [x] Úprava šablony jen pro sebe (lokální kopie)
+- [x] Historie změn dokumentu, verzování
 
 ---
 
 ## 🟦 Podepisování a ověřování
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Vložení razítka, podpisu, elektronického podpisu
-- ✅ Více podpisů na dokument
-- ✅ Uložení informací o způsobu podepsání
+- [x] Vložení razítka, podpisu, elektronického podpisu
+- [x] Více podpisů na dokument
+- [x] Uložení informací o způsobu podepsání
 
 ---
 
 ## 🟦 Sdílení, export, archivace
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Odeslání dokumentu e-mailem, sdílení s uživateli
-- ✅ Export do PDF, DOCX, text
-- ✅ Archivace, nastavení expirace
+- [x] Odeslání dokumentu e-mailem, sdílení s uživateli
+- [x] Export do PDF, DOCX, text
+- [x] Archivace, nastavení expirace
 
 ---
 
-## 🗒️ Poznámky, nápady a úkoly k modulu i dlaždicím
+## 📝 Poznámky, nápady a úkoly k modulu i dlaždicím
 
 > Sem piš vše, co tě napadne, co je potřeba doplnit, změnit nebo vyřešit.  
 > ⏳ = rozpracováno, přeškrtni hotové.
@@ -74,16 +76,16 @@
 - ⏳ Export historie všech změn dokumentu (auditní log)
 - ⏳ Šablony pro automatizované generování dokumentů (např. při uzavření smlouvy)
 
-> Otázky k doplnění:
-> - Potřebujeme možnost schvalování dokumentu více osobami?
-> - Má být možné podepsat dokument mimo systém (ručně nahrát podepsaný dokument)?
-> - Chceme umožnit automatizované generování dokumentů na základě událostí v systému?
-> - Má být možné nastavit expiraci každého dokumentu individuálně?
-> - Budeme umožňovat verzování i u rozpracovaných konceptů?
+Otázky k doplnění:
+- Potřebujeme možnost schvalování dokumentu více osobami?
+- Má být možné podepsat dokument mimo systém (ručně nahrát podepsaný dokument)?
+- Chceme umožnit automatizované generování dokumentů na základě událostí v systému?
+- Má být možné nastavit expiraci každého dokumentu individuálně?
+- Budeme umožňovat verzování i u rozpracovaných konceptů?
 
 ---
 
-## 🗃️ Datové modely (ukázka)
+## 🗄️ Datové modely (ukázka)
 
 ```json
 {
@@ -131,7 +133,7 @@
 
 | Chyba / výjimka                | Řešení systému / reakce      | Uživatelská hláška                              |
 |---------------------------------|------------------------------|-------------------------------------------------|
-| Šablona nelze upravit (globální) | Umožnit kopii pro úpravu     | „Globální šablonu nelze editovat, vytvořte vlastní kopii.“ |
+| Šablona nelze upravit (globální)| Umožnit kopii pro úpravu     | „Globální šablonu nelze editovat, vytvořte vlastní kopii.“ |
 | Chyba při generování dokumentu  | Upozornit, logovat           | „Nepodařilo se vygenerovat dokument, zkuste znovu.“ |
 | Neúplné proměnné v šabloně      | Zabránit pokračování         | „Je nutné vyplnit všechny povinné údaje.“      |
 | Chyba při podepisování          | Upozornit, nabídnout opakování | „Podpis se nezdařil, zkuste znovu nebo zvolte jiný způsob.“ |
@@ -150,7 +152,7 @@
 
 ---
 
-## 📑 Doporučené workflow
+## 📋 Doporučené workflow
 
 1. Výběr/uprava šablony → vygenerování dokumentu → editace → podpis → sdílení/archivace.
 2. Individuální úprava šablony → použití pouze pro konkrétního uživatele/situaci.
@@ -169,4 +171,4 @@
 
 ---
 
-> Modul Dokumenty poskytuje správci i nájemníkům bezpečné a pohodlné generování, editaci, podepisování a archivaci všech důležitých dokumentů, včetně podpory elektronických podpisů a razítek.
+> Modul Dokumenty poskytuje správci i nájemníkům bezpečné a pohodlné generování, editaci, podepisování a archivaci všech důležitých dokumentů, včetně podpory elektronických podpisů a automatizace workflow.
