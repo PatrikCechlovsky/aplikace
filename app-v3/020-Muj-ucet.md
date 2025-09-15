@@ -1,4 +1,12 @@
-> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)
+> ℹ️ Viz [pravidla.md](./pravidla.md)  
+> ℹ️ Viz [common-actions.md](./common-actions.md)  
+> ℹ️ Viz [permissions-catalog.md](./permissions-catalog.md)  
+> - Nikdy nic nemaž, pouze přeškrtávej!  
+> - Každá nová ikona patří do [common-actions.md](./common-actions.md)  
+> - Na začátku každé sekce/dlaždice vlož checklist (níže) a označuj stavovou ikonou:  
+>   - ✅ hotovo  ⏳ rozpracováno  🌐 hotovo v HTML  🚫 odstraněno  …  
+
+---
 
 # Modul: Můj účet
 
@@ -47,7 +55,8 @@
 - ✅ Specifika, rozšíření
 
 #### 1️⃣ Popis a účel
-Umožňuje uživateli spravovat své základní údaje, kontakty a profilovou fotografii.
+Umožňuje uživateli spravovat své základní údaje, kontakty a profilovou fotografii.  
+Pokud je účet firemní, lze zadat IČO, název firmy, DIČ – a ověřit v ARES.
 
 #### 2️⃣ Přístup/viditelnost
 Pouze daný uživatel a admin (případně správce).
@@ -58,7 +67,7 @@ Pouze daný uživatel a admin (případně správce).
 | Jméno                  |   Ano   | text                        |                                |
 | Příjmení               |   Ano   | text                        |                                |
 | Titul                  |   Ne    | text                        |                                |
-| E-mail                 |   Ano   | e-mail (unikátní, validace) |                                |
+| E-mail                 |   Ano   | e-mail (unikátní, validace) | double opt-in při změně         |
 | Alternativní e-mail    |   Ne    | e-mail (validace)           | Pro obnovení přístupu           |
 | Telefon                |   Ne    | tel (validace)              |                                |
 | Alternativní telefon   |   Ne    | tel (validace)              | Nouzový kontakt                |
@@ -67,8 +76,9 @@ Pouze daný uživatel a admin (případně správce).
 | Role                   |   Ano   | readonly                    | Zobrazení v profilu            |
 | Příslušnost            |   Ne    | readonly                    | Společnosti, nemovitosti, jednotky |
 | Typ účtu               |   Ano   | výběr (osobní/firemní/rodinný) |                              |
-| IČO                    |   Ne    | text, validace              | Pouze pro firemní účet         |
-| Firma                  |   Ne    | text                        | Pouze pro firemní účet         |
+| IČO                    |   Ne    | text, validace + ARES       | Pouze pro firemní účet         |
+| DIČ                    |   Ne    | text, validace              | Pouze pro firemní účet         |
+| Firma                  |   Ne    | text                        | Pouze pro firemní účet, načítáno z ARES |
 | Fakturační adresa      |   Ne    | text                        | Pouze pro firemní účet         |
 | Poznámka administrátora|   Ne    | text (readonly)             | Viditelné jen adminům          |
 | Preferované kontakty   |   Ne    | multi-choice                | např. SMS, e-mail, telefon     |
@@ -80,15 +90,19 @@ Pouze daný uživatel a admin (případně správce).
 - 💾 Uložit změny
 - ❌ Zrušit
 - 🗑️ Smazat foto (volitelné)
+- 🔍 Ověřit IČO v ARES (firemní účet)
+- 🔄 Načíst údaje z ARES (firemní účet)
 
 #### 5️⃣ Chybové stavy
 - Neplatný formát e-mailu/telefonu
 - Povinné pole není vyplněno
 - Chyba při uploadu fotografie
+- Neplatné IČO, IČO nenalezeno v ARES
+- DIČ není validní
 
 #### 6️⃣ Oprávnění a vazby
 - Úprava pouze vlastních údajů, admin může upravit vše
-- Vazba na modul Nastavení, případně uživatelské preference
+- Vazba na modul Nastavení (preference), Komunikace (notifikace), Správa uživatelů (role)
 
 ---
 
@@ -107,7 +121,7 @@ Pouze daný uživatel a admin (případně správce).
 - ✅ Specifika, rozšíření
 
 #### 1️⃣ Popis a účel
-Zajišťuje správu přístupových údajů, změnu hesla, nastavení 2FA, bezpečnostní otázky, recovery kódy, přehled přihlášených zařízení a historii přístupů.
+Správa přístupových údajů, změna hesla, nastavení 2FA, bezpečnostní otázky, recovery kódy, přehled přihlášených zařízení a historie přístupů.
 
 #### 2️⃣ Přístup/viditelnost
 Pouze daný uživatel a admin.
@@ -116,9 +130,9 @@ Pouze daný uživatel a admin.
 | Pole                   | Povinné | Typ/validace                | Poznámka                  |
 |------------------------|:-------:|-----------------------------|---------------------------|
 | Heslo původní          |   Ano   | password                    | Změna hesla               |
-| Heslo nové             |   Ano   | password, síla hesla        |                           |
+| Heslo nové             |   Ano   | password, síla hesla        | blokace po X pokusech     |
 | Potvrzení hesla        |   Ano   | password                    |                           |
-| 2FA způsob             |   Ne    | výběr (SMS/aplikace)        | Aktivace/deaktivace       |
+| 2FA způsob             |   Ne    | výběr (SMS/aplikace/email)  | Aktivace/deaktivace       |
 | Kód 2FA                |   Ne    | číselný kód                 | Ověření                   |
 | Bezpečnostní otázka    |   Ne    | výběr/krátký text           | Pro obnovení přístupu     |
 | Odpověď na otázku      |   Ne    | text                        | Skrytá                    |
@@ -144,7 +158,7 @@ Pouze daný uživatel a admin.
 
 #### 6️⃣ Oprávnění a vazby
 - Pouze uživatel sám, admin pouze v případě resetu
-- Vazba na auditní log změn
+- Vazba na auditní log změn, Správa uživatelů
 
 ---
 
@@ -186,6 +200,9 @@ Pouze daný uživatel.
 #### 5️⃣ Chybové stavy
 - Chyba při ukládání nastavení
 - Neplatná volba notifikace
+
+#### 6️⃣ Oprávnění a vazby
+- Vazba na modul Komunikace (šablony, historie), Správa uživatelů
 
 ---
 
@@ -277,7 +294,8 @@ Pouze daný uživatel a admin.
 - ✅ Specifika, rozšíření
 
 #### 1️⃣ Popis a účel
-Umožňuje uživateli požádat o zrušení účtu, stáhnout si data, být upozorněn na nevratnost kroku, případně účet dočasně deaktivovat.
+Umožňuje uživateli požádat o zrušení účtu, stáhnout si data, být upozorněn na nevratnost kroku, případně účet dočasně deaktivovat.  
+Notifikace správcům, možnost oboustranného potvrzení.
 
 #### 2️⃣ Přístup/viditelnost
 Pouze daný uživatel a admin.
@@ -306,7 +324,7 @@ Pouze daný uživatel a admin.
 
 ## 🗒️ Poznámky, nápady a úkoly k modulu i dlaždicím
 
-> Sem si piš vše, co tě napadne, co je potřeba doplnit, změnit nebo vyřešit.
+> Sem si piš vše, co tě napadne, co je potřeba doplnit, změnit nebo vyřešit.  
 > Pokud je úkol hotový, přeškrtni ho a označ stavovou ikonou.  
 > Pokud je rozpracovaný, přidej ⏳, pokud čeká na rozhodnutí, přidej > TODO: …
 
@@ -327,15 +345,11 @@ Pouze daný uživatel a admin.
 - ⏳ Nastavení časového okna pro notifikace.
 - ⏳ Export historie notifikací.
 - ⏳ Nastavit možnost dočasné deaktivace účtu.
-
-> Otázky k doplnění:
-> - Potřebujeme podporu pro více typů účtů (firemní/osobní/rodinný)?
-> - Je třeba uživateli umožnit export úplné historie notifikací a akcí?
-> - Chceme implementovat automatickou blokaci účtu při podezřelé aktivitě?
-> - Má být možné dočasně deaktivovat účet (bez výmazu)?
-> - Máme definovány všechny GDPR procesy pro tento modul? (výmaz, export, souhlasy)
-> - Chceme povinný double opt-in při změně e-mailu?
-> - Jaké další informace by měl admin vidět u účtu?
+- ⏳ Ověření IČO/firma v ARES, DIČ validace pro firmy.
+- ⏳ Double opt-in workflow při změně e-mailu.
+- > TODO: Propojení na modul Komunikace pro správu šablon notifikací.
+- > TODO: Důsledně škrtat hotové úkoly a označovat stav.
+- > TODO: Odkazy na common-actions.md a permissions-catalog.md u každé sekce.
 
 ---
 
@@ -353,6 +367,7 @@ Pouze daný uživatel a admin.
   "foto": "profil.jpg",
   "typ_uctu": "firemní",
   "ico": "12345678",
+  "dic": "CZ12345678",
   "firma": "Cechlovsky s.r.o.",
   "fakturacni_adresa": "Brno, Ulice 1",
   "preferovane_kontakty": ["email", "sms"],
@@ -392,6 +407,7 @@ Pouze daný uživatel a admin.
   ]
 }
 ```
+
 ---
 
 ## ⚠️ Chybové stavy a výjimky
@@ -409,6 +425,9 @@ Pouze daný uživatel a admin.
 | Neúspěšné ověření bezpečnostní otázky | Upozornit, nabídnout novou volbu | „Odpověď nesouhlasí.“               |
 | Chyba při deaktivaci účtu       | Zobrazit chybovou hlášku     | „Účet se nepodařilo deaktivovat.“               |
 | Chyba při změně typu účtu       | Omezit změnu, logovat        | „Změna typu účtu není povolena.“                |
+| Neplatné IČO/DIČ                | Ověřit, nabídnout opravu     | „IČO/DIČ není platné nebo nebylo nalezeno.“     |
+| Chyba při ověření v ARES        | Zobrazit informaci           | „Chyba při komunikaci s registrem ARES.“        |
+| Chyba při změně e-mailu         | Ověřit double opt-in         | „Pro potvrzení změny e-mailu ověřte novou adresu.“ |
 
 ---
 
@@ -437,13 +456,13 @@ Pouze daný uživatel a admin.
 2. **Nastavení notifikací:**  
    - Uživatel zvolí, jak, kdy a pro jaké události chce být informován (e-mail, SMS, push), nastaví časové okno.
 3. **Úprava kontaktů a osobních údajů:**  
-   - Změna e-mailu, telefonu, nahrání fotky, úprava adresy, doplnění firemních údajů.
+   - Změna e-mailu (double opt-in), telefonu, nahrání fotky, úprava adresy, ověření firmy v ARES, doplnění firemních údajů.
 4. **Správa oblíbených modulů a vzhledu:**  
    - Nastavení domovské sekce, barevného schématu, případně jazyka, aktivace beta funkcí.
 5. **Zobrazení aktivity:**  
    - Kontrola historie akcí a přístupů, možnost odhlásit se ze všech zařízení, export historie.
 6. **Zrušení/deaktivace účtu:**  
-   - Postupné potvrzení, export osobních dat, deaktivace účtu, možnost opětovné aktivace.
+   - Postupné potvrzení, export osobních dat, upozornění správce, možnost opětovné aktivace.
 7. **Export dat:**  
    - Uživatel požádá o export, systém připraví a nabídne ke stažení.
 
@@ -451,10 +470,13 @@ Pouze daný uživatel a admin.
 
 ## 📚 Reference
 
-- [Modul Nastavení](./nastaveni.md)
-- [Modul Komunikace](./komunikace.md)
-- [Modul Platby](./platby.md)
-- [Pravidla dokumentace a centrální katalogy](./pravidla.md)
+- [common-actions.md](./common-actions.md)
+- [permissions-catalog.md](./permissions-catalog.md)
+- [pravidla.md](./pravidla.md)
+- [Modul Nastavení](./130-Nastaveni.md)
+- [Modul Komunikace](./110-Komunikace.md)
+- [Modul Platby](./080-Finance.md)
+- [Modul Správa uživatelů](./010-Sprava-uzivatelu.md)
 
 ---
 
