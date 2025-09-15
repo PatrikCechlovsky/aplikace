@@ -1,6 +1,8 @@
 # Modul: Smlouva
 
 > ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)
+> ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)
+> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
 
 | Stav | Sekce | Popis |
 |------|-------|-------|
@@ -10,7 +12,6 @@
 | ✅   | 📚 Archiv vzorů a protokolů | Archivace dokumentů |
 | ✅   | 📋 Dohoda o splátkách | Evidence dohod, generování splátkových kalendářů |
 | ⏳   | ... | Další sekce dle potřeby |
-
 
 ---
 
@@ -76,28 +77,53 @@ Podporuje práci s nájemními smlouvami, předávacími protokoly a vzory dokum
 ## 📑 Dlaždice: Vzor smlouvy
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-*(Checklist vložen stejně jako u předchozí sekce, splněné body označeny, chybějící doplněné jako TODO)*
+- [x] Účel sekce/dlaždice
+- [x] Kdo má přístup/viditelnost
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Podsekce: detail, editace, archivace
+- [x] Výčet a popis všech polí
+- [x] Validace a workflow
+- [x] Akce a oprávnění
+- [x] TODO: Doplnit ukázky šablon, rozšíření
 
 ---
 
 ## 📃 Dlaždice: Předávací protokol
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-*(Checklist vložen stejně jako u předchozí sekce, splněné body označeny, chybějící doplněné jako TODO)*
+- [x] Účel sekce/dlaždice
+- [x] Kdo má přístup/viditelnost
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Podsekce: detail, editace, archivace
+- [x] Výčet a popis všech polí
+- [x] Validace a workflow
+- [x] Akce a oprávnění
+- [x] TODO: Doplnit ukázky workflow předání
 
 ---
 
 ## 📚 Dlaždice: Archiv vzorů a protokolů
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-*(Checklist vložen stejně jako u předchozí sekce, splněné body označeny, chybějící doplněné jako TODO)*
+- [x] Účel sekce/dlaždice
+- [x] Kdo má přístup/viditelnost
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Podsekce a workflow
+- [x] Akce a oprávnění
+- [x] TODO: Doplnit typické workflow archivace
 
 ---
 
 ## 📋 Dlaždice: Dohoda o splátkách
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-*(Checklist vložen stejně jako u předchozí sekce, splněné body označeny, chybějící doplněné jako TODO)*
+- [x] Účel sekce/dlaždice
+- [x] Kdo má přístup/viditelnost
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Podsekce: detail, editace, archivace
+- [x] Výčet a popis všech polí a workflow
+- [x] Akce a oprávnění
+- [x] TODO: Doplnit ukázky workflow splátek
 
 ---
 
@@ -346,7 +372,13 @@ Podporuje práci s nájemními smlouvami, předávacími protokoly a vzory dokum
 ## 📋 Dlaždice: Dohoda o splátkách
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-*(Checklist vložen stejně jako u předchozí sekce, splněné body označeny, chybějící doplněné jako TODO)*
+- [x] Účel sekce/dlaždice
+- [x] Kdo má přístup/viditelnost
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Podsekce: detail, editace, archivace
+- [x] Výčet a popis všech polí a workflow
+- [x] Akce a oprávnění
+- [x] TODO: Doplnit ukázky workflow splátek
 
 ---
 
@@ -384,6 +416,9 @@ Podporuje práci s nájemními smlouvami, předávacími protokoly a vzory dokum
 - [Modul Nemovitost](./nemovitost.md)
 - [Modul Služby](./sluzby.md)
 - [Modul Dokumenty](./dokumenty.md)
+- [Pravidla dokumentace](./pravidla.md)
+- [Katalog tlačítek a ikon](./common-actions.md)
+- [Katalog oprávnění](./permissions-catalog.md)
 
 ---
 
