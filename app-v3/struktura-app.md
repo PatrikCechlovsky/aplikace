@@ -16,7 +16,7 @@
 
 ## Stromová struktura modulů a sekcí
 
-📁 sprava-uzivatelu.md ✅  
+📁 010-Sprava-uzivatelu.md ✅  
  🟦 Seznam uživatelů  
   👁️ Přehled uživatelů  
   📝 Přidat/pozvat uživatele  
@@ -39,7 +39,7 @@
  🟦 Statistiky a využití  
  - Poznámky, nápady a úkoly 
 
-📁 Muj-ucet.md ✅  
+📁 020-Muj-ucet.md ✅  
  🟦 Osobní údaje a kontakty  
   👁️ Přehled osobních údajů  
   📝 Úprava osobních údajů  
@@ -66,11 +66,11 @@
  📑 Doporučené workflow  
  📚 Reference 
 
-📁 Pronajimatel.md ✅  
+📁 030-Pronajimatel.md ✅  
  🟦 Přehled (typy pronajímatelů, průvodce založením)  
  🟦 Datový model  
 
-📁 Nemovitost.md ✅  
+📁 040-Nemovitost.md ✅  
  🟦 Co je modul Nemovitost  
  🟦 Základní struktura modulu  
  🟦 Průvodce založením  
@@ -93,11 +93,11 @@
  🟦 Známé problémy / TODO  
  🟦 Ukázka uloženého JSON objektu  
 
-📁 Nájemník.md ✅  
+📁 050-Nájemník.md ✅  
  🟦 Přehled (typy nájemníků, průvodce založením)  
  🟦 Datový model  
 
-📁 Smlouva.md ✅  
+📁 060-Smlouva.md ✅  
  🟦 Krátký úvod  
  🟦 Základní struktura modulu  
   🟦 Dlaždice: Nájemní smlouvy  
@@ -106,7 +106,7 @@
   🟦 Dlaždice: Archiv vzorů a protokolů  
  🟦 Vazby na jiné moduly  
 
-📁 Sluzby.md ✅  
+📁 070-Sluzby.md ✅  
  🟦 Krátký úvod  
  🟦 Základní struktura modulu  
   🟦 Dlaždice: Zálohy  
@@ -128,7 +128,7 @@
  🟦 Podrobný popis částí  
  🟦 Workflow a životní cyklus  
 
-📁 Finance.md ✅  
+📁 080-Finance.md ✅  
  🟦 Úvod  
  🟦 Hlavní sekce / dlaždice  
   🟦 Přehled financí (dashboard)  
@@ -149,7 +149,7 @@
  🟦 Doporučené workflow  
  🟦 Reference  
 
-📁 Energie.md ✅  
+📁 090-Energie.md ✅  
  🟦 Úvod  
  🟦 Hlavní sekce / dlaždice  
   🟦 Přehled energií  
@@ -163,7 +163,7 @@
  🟦 Doporučené workflow  
  🟦 Reference  
 
-📁 Udrzba.md ✅  
+📁 100-Udrzba.md ✅  
  🟦 Úvod  
  🟦 Hlavní sekce / dlaždice  
   🟦 Hlášení závad a požadavků  
@@ -171,7 +171,7 @@
   🟦 Provedené opravy a zásahy  
   🟦 Přehled zařízení a servisní historie  
 
-📁 Komunikace.md ✅  
+📁 110-Komunikace.md ✅  
  🟦 Úvod  
  🟦 Hlavní sekce / dlaždice  
   🟦 Přehled komunikace  
@@ -179,7 +179,7 @@
   🟦 Šablony a automatizace zpráv  
   🟦 Odesílání zpráv  
 
-📁 Dokumenty.md ✅  
+📁 120-Dokumenty.md ✅  
  🟦 Úvod  
  🟦 Hlavní sekce / dlaždice  
   🟦 Knihovna šablon a vzorů  
@@ -193,7 +193,7 @@
  🟦 Doporučené workflow  
  🟦 Reference  
 
-📁 Nastaveni.md ✅  
+📁 130-Nastaveni.md ✅  
  🟦 Úvod  
  🟦 Hlavní sekce / dlaždice  
   🟦 Číselníky a číslování dokumentů  
@@ -201,7 +201,7 @@
   🟦 Zobrazení a vzhled aplikace  
   🟦 Nastavení oblíbených (strom menu)  
 
-📁 Help.md ✅  
+📁 140-Help.md ✅  
  🟦 Úvod  
  🟦 Hlavní sekce / dlaždice  
   🟦 Přehled celé aplikace  
