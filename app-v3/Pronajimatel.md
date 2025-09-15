@@ -29,6 +29,19 @@
 
 ## 🟦 Přehled pronajímatelů
 
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Účel sekce/dlaždice (proč existuje, kdo ji používá)
+- ✅ Kdo má přístup/viditelnost podle oprávnění/rolí
+- ✅ Zařazení v hlavní stromové struktuře
+- ✅ Podsekce a vazby na další části
+- ✅ Výčet a popis všech polí (přehled i formulář)
+- ✅ Validace, tlačítka, workflow
+- ✅ Akce dostupné v detailu
+- ✅ Chybové stavy
+- ✅ Oprávnění a viditelnost
+- ✅ Vazby na další moduly a reference
+- ✅ Specifika, rozšíření
+
 ### Účel sekce/dlaždice
 Evidence všech vlastníků nemovitostí (osoby, firmy, spolky, instituce), jejich kontaktů, historie a vazeb na nemovitosti/jednotky.
 
@@ -89,6 +102,19 @@ Viz výše tabulka Kdo má přístup. Práva lze dále upřesnit v detailu.
 
 ## 🟦 Přidat / Editovat pronajímatele
 
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Účel sekce/dlaždice (proč existuje, kdo ji používá)
+- ✅ Kdo má přístup/viditelnost podle oprávnění/rolí
+- ✅ Zařazení v hlavní stromové struktuře
+- ✅ Podsekce a vazby na další části
+- ✅ Výčet a popis všech polí (přehled i formulář)
+- ✅ Validace, tlačítka, workflow
+- ✅ Akce dostupné v detailu
+- ✅ Chybové stavy
+- ✅ Oprávnění a viditelnost
+- ✅ Vazby na další moduly a reference
+- ✅ Specifika, rozšíření
+
 ### Účel sekce/dlaždice
 Formulář pro založení/editaci pronajímatele, validace, možnost uložit rozpracovaná data.
 
@@ -120,6 +146,19 @@ Správce, administrátor
 ---
 
 ## 🟦 Detail pronajímatele
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Účel sekce/dlaždice (proč existuje, kdo ji používá)
+- ✅ Kdo má přístup/viditelnost podle oprávnění/rolí
+- ✅ Zařazení v hlavní stromové struktuře
+- ✅ Podsekce a vazby na další části
+- ✅ Výčet a popis všech polí (přehled i formulář)
+- ✅ Validace, tlačítka, workflow
+- ✅ Akce dostupné v detailu
+- ✅ Chybové stavy
+- ✅ Oprávnění a viditelnost
+- ✅ Vazby na další moduly a reference
+- ✅ Specifika, rozšíření
 
 ### Účel sekce/dlaždice
 Zobrazení všech údajů, historie změn, napojení na nemovitosti, jednotky, auditní log.
@@ -155,6 +194,19 @@ Nemovitost, Jednotka, Dokumenty
 
 ## 🟦 Správa pověření a sdílení
 
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Účel sekce/dlaždice (proč existuje, kdo ji používá)
+- ✅ Kdo má přístup/viditelnost podle oprávnění/rolí
+- ✅ Zařazení v hlavní stromové struktuře
+- ✅ Podsekce a vazby na další části
+- ✅ Výčet a popis všech polí (přehled i formulář)
+- ✅ Validace, tlačítka, workflow
+- ✅ Akce dostupné v detailu
+- ✅ Chybové stavy
+- ✅ Oprávnění a viditelnost
+- ✅ Vazby na další moduly a reference
+- ✅ Specifika, rozšíření
+
 ### Účel sekce/dlaždice
 Správa vztahů pověřených osob k pronajímateli, možnost přidání, editace, odebrání.
 
@@ -189,6 +241,19 @@ Správce, administrátor
 
 ## 🟦 Auditní log a historie změn
 
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Účel sekce/dlaždice (proč existuje, kdo ji používá)
+- ✅ Kdo má přístup/viditelnost podle oprávnění/rolí
+- ✅ Zařazení v hlavní stromové struktuře
+- ✅ Podsekce a vazby na další části
+- ✅ Výčet a popis všech polí (přehled i formulář)
+- ✅ Validace, tlačítka, workflow
+- ✅ Akce dostupné v detailu
+- ✅ Chybové stavy
+- ✅ Oprávnění a viditelnost
+- ✅ Vazby na další moduly a reference
+- ✅ Specifika, rozšíření
+
 ### Účel sekce/dlaždice
 Evidence všech změn údajů pronajímatele (včetně importů, exportů, změn stavu).
 
@@ -211,6 +276,19 @@ Správce, administrátor, účetní (čtení)
 
 ## 🟦 Statistiky a reporting
 
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Účel sekce/dlaždice (proč existuje, kdo ji používá)
+- ✅ Kdo má přístup/viditelnost podle oprávnění/rolí
+- ✅ Zařazení v hlavní stromové struktuře
+- ✅ Podsekce a vazby na další části
+- ✅ Výčet a popis všech polí (přehled i formulář)
+- ✅ Validace, tlačítka, workflow
+- ✅ Akce dostupné v detailu
+- ✅ Chybové stavy
+- ✅ Oprávnění a viditelnost
+- ✅ Vazby na další moduly a reference
+- ✅ Specifika, rozšíření
+
 ### Účel sekce/dlaždice
 Statistika počtů pronajímatelů, typů, nemovitostí, historie změn.
 
@@ -226,6 +304,19 @@ Správce, administrátor
 ---
 
 ## 🟦 Import/Export pronajímatelů
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Účel sekce/dlaždice (proč existuje, kdo ji používá)
+- ✅ Kdo má přístup/viditelnost podle oprávnění/rolí
+- ✅ Zařazení v hlavní stromové struktuře
+- ✅ Podsekce a vazby na další části
+- ✅ Výčet a popis všech polí (přehled i formulář)
+- ✅ Validace, tlačítka, workflow
+- ✅ Akce dostupné v detailu
+- ✅ Chybové stavy
+- ✅ Oprávnění a viditelnost
+- ✅ Vazby na další moduly a reference
+- ✅ Specifika, rozšíření
 
 ### Účel sekce/dlaždice
 Hromadný import/export subjektů (CSV, XLSX, JSON), včetně validací a kontroly duplicit.
@@ -243,6 +334,19 @@ Správce, administrátor
 
 ## 🟦 Přehled dokumentů
 
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Účel sekce/dlaždice (proč existuje, kdo ji používá)
+- ✅ Kdo má přístup/viditelnost podle oprávnění/rolí
+- ✅ Zařazení v hlavní stromové struktuře
+- ✅ Podsekce a vazby na další části
+- ✅ Výčet a popis všech polí (přehled i formulář)
+- ✅ Validace, tlačítka, workflow
+- ✅ Akce dostupné v detailu
+- ✅ Chybové stavy
+- ✅ Oprávnění a viditelnost
+- ✅ Vazby na další moduly a reference
+- ✅ Specifika, rozšíření
+
 ### Účel sekce/dlaždice
 Evidence a správa dokumentů/příloh k subjektu.
 
@@ -256,6 +360,19 @@ Správce, administrátor
 
 ## 🟦 Nastavení modulu
 
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Účel sekce/dlaždice (proč existuje, kdo ji používá)
+- ✅ Kdo má přístup/viditelnost podle oprávnění/rolí
+- ✅ Zařazení v hlavní stromové struktuře
+- ✅ Podsekce a vazby na další části
+- ✅ Výčet a popis všech polí (přehled i formulář)
+- ✅ Validace, tlačítka, workflow
+- ✅ Akce dostupné v detailu
+- ✅ Chybové stavy
+- ✅ Oprávnění a viditelnost
+- ✅ Vazby na další moduly a reference
+- ✅ Specifika, rozšíření
+
 ### Účel sekce/dlaždice
 Nastavení povinných polí, práv, workflow, typů subjektů a šablon.
 
@@ -265,6 +382,19 @@ Administrátor
 ---
 
 ## 🟦 Notifikace a upozornění
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Účel sekce/dlaždice (proč existuje, kdo ji používá)
+- ✅ Kdo má přístup/viditelnost podle oprávnění/rolí
+- ✅ Zařazení v hlavní stromové struktuře
+- ✅ Podsekce a vazby na další části
+- ✅ Výčet a popis všech polí (přehled i formulář)
+- ✅ Validace, tlačítka, workflow
+- ✅ Akce dostupné v detailu
+- ✅ Chybové stavy
+- ✅ Oprávnění a viditelnost
+- ✅ Vazby na další moduly a reference
+- ✅ Specifika, rozšíření
 
 ### Účel sekce/dlaždice
 Evidence, nastavení a správa notifikací k událostem (změna vlastnictví, nové dokumenty, blokace, atd.).
@@ -276,6 +406,19 @@ Správce, administrátor
 
 ## 🟦 Vazby na další entity
 
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- ✅ Účel sekce/dlaždice (proč existuje, kdo ji používá)
+- ✅ Kdo má přístup/viditelnost podle oprávnění/rolí
+- ✅ Zařazení v hlavní stromové struktuře
+- ✅ Podsekce a vazby na další části
+- ✅ Výčet a popis všech polí (přehled i formulář)
+- ✅ Validace, tlačítka, workflow
+- ✅ Akce dostupné v detailu
+- ✅ Chybové stavy
+- ✅ Oprávnění a viditelnost
+- ✅ Vazby na další moduly a reference
+- ✅ Specifika, rozšíření
+
 ### Účel sekce/dlaždice
 Přehled napojení na nemovitosti, jednotky, smlouvy, dokumenty, uživatele.
 
@@ -283,20 +426,24 @@ Přehled napojení na nemovitosti, jednotky, smlouvy, dokumenty, uživatele.
 
 ## 🗒️ Poznámky, nápady a úkoly
 
-- Ošetřit duplicity (e-mail, IČO)
-- Validace a ověřování údajů z ARES/ISZR
-- Podpora více vlastníků jedné nemovitosti (podíly)
-- Automatizace notifikací (změna stavu, nové dokumenty)
-- GDPR – anonymizace a export, auditní log
-- Hromadné operace – import/export, změna stavu
-- Workflow při změně vlastnické struktury
-- Možnost archivace vs. smazání (pravidla pro mazání)
-- Rozšířit auditní log o hromadné změny
-- Napojení na externí registry (katastr, ISZR)
-- Potřebujeme možnost sdíleného vlastnictví (více osob/firem)?
-- Umožnit pověření správce více nemovitostí najednou?
-- Chceme automatickou kontrolu insolvenčního rejstříku?
-- Jaké notifikace mají být povinné?
+> Sem si piš vše, co tě napadne, co je potřeba doplnit, změnit nebo vyřešit.
+> Pokud je úkol hotový, přeškrtni ho a označ stavovou ikonou.  
+> Pokud je rozpracovaný, přidej ⏳, pokud čeká na rozhodnutí, přidej > TODO: …
+
+- ⏳ Ošetřit duplicity (e-mail, IČO)
+- ⏳ Validace a ověřování údajů z ARES/ISZR
+- ⏳ Podpora více vlastníků jedné nemovitosti (podíly)
+- ⏳ Automatizace notifikací (změna stavu, nové dokumenty)
+- ⏳ GDPR – anonymizace a export, auditní log
+- ⏳ Hromadné operace – import/export, změna stavu
+- ⏳ Workflow při změně vlastnické struktury
+- ⏳ Možnost archivace vs. smazání (pravidla pro mazání)
+- ⏳ Rozšířit auditní log o hromadné změny
+- ⏳ Napojení na externí registry (katastr, ISZR)
+- ⏳ Potřebujeme možnost sdíleného vlastnictví (více osob/firem)?
+- ⏳ Umožnit pověření správce více nemovitostí najednou?
+- ⏳ Chceme automatickou kontrolu insolvenčního rejstříku?
+- ⏳ Jaké notifikace mají být povinné?
 
 ---
 
@@ -352,17 +499,17 @@ Přehled napojení na nemovitosti, jednotky, smlouvy, dokumenty, uživatele.
 
 ## ⚠️ Chybové stavy a výjimky
 
-| Chyba / výjimka                            | Doporučené řešení / reakce systému                        | Uživatelská hláška                                          | Logování/Audit      |
-|--------------------------------------------|-----------------------------------------------------------|-------------------------------------------------------------|---------------------|
-| Duplicita e-mailu                          | Zamezit uložení, zvýraznit pole, nabídnout hledání        | „Tento e-mail je již použit u jiného pronajímatele.“        | Povinně logovat     |
-| Duplicita IČO                              | Zamezit uložení, zvýraznit pole                           | „Zadané IČO je již evidováno u jiného pronajímatele.“       | Povinně logovat     |
-| Změna bankovního účtu                      | Vyžadovat potvrzení správce nebo dvoufaktorové potvrzení   | „Změna bankovního účtu čeká na schválení správce.“          | Povinně logovat     |
-| Chybějící povinné pole                     | Zvýraznit pole, zamezit uložení                            | „Vyplňte prosím všechna povinná pole.“                      | Není nutné logovat  |
-| Neplatný formát e-mailu/telefonu           | Zvýraznit pole, zamezit uložení                            | „Zadaný e-mail/telefon není v platném formátu.“             | Není nutné logovat  |
-| Neoprávněný přístup k údajům pronajímatele | Zamezit akci, přesměrovat/odmítnout                       | „Nemáte oprávnění k této akci.“                             | Povinně logovat     |
-| Pronajímatel je stále vlastníkem nemovitosti| Zamezit odstranění/archivaci                              | „Pronajímatele nelze odstranit – je vlastníkem nemovitosti.“| Povinně logovat     |
-| Chyba při importu dat                      | Zobrazit detail chyby, umožnit částečný import             | „Import obsahuje chyby – zkontrolujte detaily.“             | Logovat výskyt      |
-| Chyba při exportu dat                      | Zobrazit chybovou hlášku, nabídnout opakování              | „Export selhal, zkuste to prosím znovu.“                    | Logovat detail      |
+| Chyba / výjimka                            | Doporučené řešení / reakce systému                        | Uživatelská hláška                                          | Logování/Audit |
+|--------------------------------------------|-----------------------------------------------------------|-------------------------------------------------------------|----------------|
+| Duplicita e-mailu                          | Zamezit uložení, zvýraznit pole, nabídnout hledání        | „Tento e-mail je již použit u jiného pronajímatele.“        | Povinně logovat|
+| Duplicita IČO                              | Zamezit uložení, zvýraznit pole                           | „Zadané IČO je již evidováno u jiného pronajímatele.“       | Povinně logovat|
+| Změna bankovního účtu                      | Vyžadovat potvrzení správce nebo dvoufaktorové potvrzení   | „Změna bankovního účtu čeká na schválení správce.“          | Povinně logovat|
+| Chybějící povinné pole                     | Zvýraznit pole, zamezit uložení                            | „Vyplňte prosím všechna povinná pole.“                      | Není nutné     |
+| Neplatný formát e-mailu/telefonu           | Zvýraznit pole, zamezit uložení                            | „Zadaný e-mail/telefon není v platném formátu.“             | Není nutné     |
+| Neoprávněný přístup k údajům pronajímatele | Zamezit akci, přesměrovat/odmítnout                       | „Nemáte oprávnění k této akci.“                             | Povinně logovat|
+| Pronajímatel je stále vlastníkem nemovitosti| Zamezit odstranění/archivaci                              | „Pronajímatele nelze odstranit – je vlastníkem nemovitosti.“| Povinně logovat|
+| Chyba při importu dat                      | Zobrazit detail chyby, umožnit částečný import             | „Import obsahuje chyby – zkontrolujte detaily.“             | Logovat výskyt |
+| Chyba při exportu dat                      | Zobrazit chybovou hlášku, nabídnout opakování              | „Export selhal, zkuste to prosím znovu.“                    | Logovat detail |
 
 ---
 
@@ -409,4 +556,4 @@ Přehled napojení na nemovitosti, jednotky, smlouvy, dokumenty, uživatele.
 
 ---
 
-> Modul Pronajímatel je základním kamenem správy portfolia – umožňuje správnou evidenci vlastníků, sdílení práv, auditní dohledatelnost a napojení na klíčové entity systému. Dokumentace bude rozšiřována dle vývoje a potřeb projektu.
+> Modul Pronajímatel je základním kamenem správy portfolia – umožňuje správnou evidenci vlastníků, sdílení práv, auditní dohledatelnost a napojení na klíčové entity systému. Důsledná validace a workflow zajišťují správnost a bezpečnost dat.
