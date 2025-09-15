@@ -370,7 +370,6 @@ Pouze daný uživatel a admin.
   "poznamka_admina": "VIP klient"
 }
 ```
-
 ```json
 {
   "user_id": "user_123",
