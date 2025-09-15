@@ -32,185 +32,177 @@
 
 ---
 
-## 🏢 Co je modul Nemovitost a kdy ho použít
+## 🟦 Přehled nemovitostí
 
-**Modul Nemovitost** slouží k evidenci a správě všech spravovaných nemovitostí (domů, areálů, budov) a jejich jednotlivých jednotek (bytů, kanceláří, garáží apod.).  
-Umožňuje přehlednou správu jak celků, tak konkrétních jednotek a jejich vazeb na nájemníky, smlouvy, služby, platby i uživatele.
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
 
-### Kdy modul použít?
+- [x] Účel sekce/dlaždice (proč existuje, kdo ji používá)
+- [x] Kdo má přístup/viditelnost podle oprávnění/rolí
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Podsekce a vazby na další části (např. detail, editace, přidání...)
+- [x] Výčet a popis všech sloupců (název, význam, povinný/volitelný, filtr/řazení)
+- [x] Filtrování a řazení (jaké možnosti, kde jsou dostupné)
+- [x] Akce v řádku (ikony/tlačítka, popis co dělají, u jakého stavu jsou viditelné)
+- [x] Hromadné akce nad tabulkou (výčet, kdo může spustit)
+- [x] Ukázka tabulky s příklady
+- [x] Výčet a popis všech polí (povinné x nepovinné, typ pole, validace)
+- [x] Stavové pole (aktivní, archivovaná, blokovaná, neaktivní), kdo je může měnit
+- [x] Tlačítka ve formuláři (uložit, zrušit, další speciální akce)
+- [x] Jaké validace probíhají (na úrovni pole, na úrovni formuláře)
+- [x] Co vše se zobrazuje v detailu (všechna pole, historie, audit, navazující akce)
+- [x] Akce dostupné v detailu (editace, deaktivace, atd.)
+- [x] Přehled všech možných akcí (kdy, kdo, s jakým oprávněním)
+- [x] Stavové přechody (jaké jsou povolené přechody mezi stavy, kdo je může provádět)
+- [x] Napojení na další workflow (notifikace, audit, schvalování, ...)
+- [x] Přehled rolí, které mají přístup (tabulka rolí x akce)
+- [x] Specifika pro různé role (např. admin může vždy, běžný uživatel nikdy)
+- [x] Výčet typických chybových stavů (duplicitní záznam, neplatný formát, ...)
+- [x] Uživatelské hlášky (co přesně se zobrazí)
+- [x] Možnosti exportu/importu (jaký formát, kdo může)
+- [x] Logování a audit (kdo, kdy, co změnil)
+- [x] GDPR požadavky (export osobních údajů, anonymizace, ...)
+- [x] Na jaké další moduly sekce/formulář navazuje
+- [x] Reference na související workflow, entity, dokumentaci
+- [x] Speciální workflow (SSO, API účet, 2FA, ...), bezpečnostní poznámky
+- [x] Možné rozšíření do budoucna, TODO, poznámky
 
-- Pokud potřebuješ evidovat všechny nemovitosti a rozdělit je na konkrétní jednotky/byty.
-- Pro správu informací o vlastnících, pronajímatelích, technických údajích a dokumentech nemovitosti.
-- Při správě obsazenosti a přehledném přiřazení jednotek k nájemníkům, správci či službám.
-- Pro hromadné operace (import/export, změny stavů, archivace, audit).
-- Při potřebě udržet historii změn, dokumentaci a auditní stopu k jakékoliv nemovitosti či jednotce.
+### Účel sekce/dlaždice
+Evidence a správa všech spravovaných nemovitostí (domů, areálů, budov) a jejich jednotek.
 
-### Typické využití
+### Kdo má přístup/viditelnost
+| Role                  | Přístup      |
+|-----------------------|--------------|
+| Administrátor         | Plný         |
+| Správce nemovitostí   | Plný         |
+| Účetní                | Čtení        |
+| Prohlížející          | Čtení        |
 
-- Bytová družstva, SVJ, správci nemovitostí, realitní kanceláře.
-- Správa bytových, nebytových i komerčních objektů.
-- Evidence obsazenosti a technického stavu jednotek, napojení na služby, platby, nájemníky.
-- Hromadné operace (importy/exporty, statistiky, audit, reporting).
+### Pole (přehled i detail)
+| Pole             | Povinné | Typ           | Popis                                  |
+|------------------|:-------:|--------------|----------------------------------------|
+| Název            |   Ano   | text         |                                        |
+| Typ nemovitosti  |   Ano   | enum         | bytový dům, areál, komerční objekt, ...|
+| Adresa           |   Ano   | objekt       | Ulice, číslo popisné, město, PSČ       |
+| Rozloha          |   Ano   | číslo        | Rozloha celé nemovitosti               |
+| Počet jednotek   |   Ano   | číslo        |                                        |
+| Vlastník         |   Ano   | vazba        | Vazba na pronajímatele                 |
+| Stav             |   Ano   | enum         | aktivní, archivovaná, blokovaná, neaktivní |
+| Popis            |   Ne    | text         |                                        |
+| Přílohy          |   Ne    | seznam       | Dokumenty, přílohy                     |
 
-> Modul Nemovitost je základním stavebním kamenem systému – doporučujeme začít správou nemovitostí a jednotek, teprve poté navazovat další workflow (nájemníci, smlouvy atd.).
+### Filtrování, řazení, akce
+- Filtrování: podle typu, adresy, vlastníka, stavu
+- Řazení: podle názvu, typu, rozlohy, počtu jednotek, stavu
+- Hromadné akce: změna stavu, export, hromadné přiřazení správce/uživatele, generování dokumentů
 
----
+### Ukázka tabulky
+| Název          | Typ         | Adresa        | Vlastník   | Počet jednotek | Rozloha | Stav     | Akce |
+|----------------|-------------|---------------|------------|----------------|---------|----------|------|
+| Dům Křižíkova  | bytový dům  | Křižíkova 10  | Novák      | 30             | 1500    | aktivní  | [Zobrazit] [Edit] [Archivovat] [Export] |
 
-## 🏗️ Základní struktura modulu
+### Validace, tlačítka, workflow
+- Validace unikátnosti adresy, povinného vlastníka, formát PSČ/rozlohy
+- Povinná pole zvýraznit, zamezit uložení
+- Tlačítka: Přidat, Upravit, Archivovat, Export, Hromadná akce
+- Workflow: Aktivní → Archivovaná → (Blokovaná/Neaktivní)
 
-- **Typy nemovitostí:**  
-  - 🏢 Bytový dům
-  - 🏭 Areál / blok
-  - 🏬 Komerční objekt
-  - 🏠 Rodinný dům
-  - 🏗️ Jiný objekt
+### Chybové stavy
+- Duplicitní adresa
+- Chybějící vlastník
+- Neplatný formát PSČ, rozlohy
+- Smazání při existujících jednotkách/platbách/smlouvách
 
-- **Jednotky:**  
-  - Byt, nebytový prostor, garáž, sklep, kancelář, komerční prostor, atd.
+### Oprávnění a viditelnost
+Viz tabulka Role a oprávnění níže.
 
-- **Vazby na jiné moduly:**
-  - **Pronajímatel:** Vlastník nemovitosti/jednotky
-  - **Jednotka:** Prostor v rámci nemovitosti
-  - **Nájemník:** Obsazenost jednotky, smlouva, platby, služby
-  - **Smlouva, Platby, Služby, Uživatelé, Dokumenty**
+### Vazby na další moduly a reference
+- Pronajímatel, Jednotka, Nájemník, Smlouva, Platby, Služby, Dokumenty, Uživatelé, Auditní log
 
----
-
-## 🧑‍💼 Průvodce založením
-
-V každém formuláři (Nemovitost, Jednotka, Smlouva) je možné spustit  
-🌸 **„Průvodce“**  
-Uživatel může:
-- ✅ Pokračovat v průvodci a uložit rozpracovaná data.
-- 🏁 Přeskočit kroky, které nezná nebo nechce řešit hned.
-- 💾 Uložit stav a vrátit se později.
-
-### Průvodce typicky vede přes kroky:
-1. Založení nemovitosti
-2. Přidání jednotek
-3. Přiřazení vlastníka, nájemníka
-4. Vytvoření smluv, nastavení služeb, plateb
-5. Přidání příloh
-6. Nastavení správců, rolí a přístupových práv
-
----
-
-## 🗃️ Datový model
-
-### Základní pole – Nemovitost
-
-```json
-{
-  "id": "12",
-  "typ_nemovitosti": "bytovy_dum",
-  "nazev": "Dům Křižíkova 10",
-  "adresa": {
-    "ulice": "Křižíkova",
-    "cislo_popisne": "10",
-    "mesto": "Praha",
-    "psc": "18600"
-  },
-  "vlastnik_id": "4",
-  "rozloha_celkem": 1500,
-  "pocet_jednotek": 30,
-  "stav": "aktivni",
-  "popis": "Bytový dům s garážemi a sklepy",
-  "prilohy": [
-    {
-      "nazev": "Výpis z KN",
-      "typ": "pdf",
-      "url": "prilohy/vypis_kn_krizikova10.pdf"
-    }
-  ],
-  "created_at": "2025-09-09T08:00:00Z",
-  "updated_at": "2025-09-09T09:10:00Z"
-}
-```
-
-### Základní pole – Jednotka
-
-```json
-{
-  "id": "101",
-  "typ_jednotky": "byt",
-  "cislo_jednotky": "A101",
-  "patro": 1,
-  "rozloha": 55,
-  "nemovitost_id": "12",
-  "stav": "obsazena",
-  "popis": "2+kk s balkonem",
-  "prilohy": [],
-  "najemnik_id": "6",
-  "smlouva_id": "201",
-  "created_at": "2025-09-09T08:10:00Z",
-  "updated_at": "2025-09-09T09:15:00Z"
-}
-```
+### Specifika, rozšíření
+- Podpora pro různé typy nemovitostí
+- GDPR – anonymizace, export všech údajů včetně příloh
+- Hromadné operace (import/export, změny stavů, audit)
 
 ---
 
-## Povinnost a viditelnost polí podle typu nemovitosti/jednotky
+## 🟦 Přehled jednotek
 
-| Pole             | Bytový dům | Komerční objekt | Garáž | Sklep | Kancelář | Jiný |
-|------------------|:----------:|:---------------:|:-----:|:-----:|:--------:|:----:|
-| Název            |   Povinné  |    Povinné      |  Ano  |  Ano  |   Ano    | Ano  |
-| Typ nemovitosti  |   Povinné  |    Povinné      |  Ano  |  Ano  |   Ano    | Ano  |
-| Adresa           |   Povinné  |    Povinné      |  Ano  |  Ano  |   Ano    | Ano  |
-| Rozloha          |   Povinné  |    Povinné      |  Ano  |  Ano  |   Ano    | Ano  |
-| Počet jednotek   |   Povinné  |    Nepovinné    |  Ne   |  Ne   |   Ne     | Ne   |
-| Vlastník         |   Povinné  |    Povinné      |  Ano  |  Ano  |   Ano    | Ano  |
-| Popis            |   Nepovin. |    Nepovin.     |  Ne   |  Ne   |   Ne     | Ne   |
-| Přílohy          |   Nepovin. |    Nepovin.     |  Ne   |  Ne   |   Ne     | Ne   |
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+
+- [x] Účel sekce/dlaždice
+- [x] Kdo má přístup/viditelnost
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Výčet všech polí, filtrů, akcí, chybových stavů, vazeb atd.
+
+### Účel sekce/dlaždice
+Správa a evidence všech jednotek/bytu v rámci nemovitostí.
+
+### Kdo má přístup/viditelnost
+Stejné role jako přehled nemovitostí.
+
+### Pole (přehled i detail)
+| Pole             | Povinné | Typ           | Popis                        |
+|------------------|:-------:|--------------|------------------------------|
+| Typ jednotky     |   Ano   | enum         | byt, nebytový prostor, ...   |
+| Číslo jednotky   |   Ano   | text         | Unikátní v rámci nemovitosti |
+| Patro            |   Ne    | číslo        |                              |
+| Rozloha          |   Ano   | číslo        |                              |
+| Nemovitost       |   Ano   | vazba        |                              |
+| Stav             |   Ano   | enum         | volná, obsazena, opravovaná, archivovaná |
+| Popis            |   Ne    | text         |                              |
+| Nájemník         |   Ne    | vazba        |                              |
+| Smlouva          |   Ne    | vazba        |                              |
+| Přílohy          |   Ne    | seznam       |                              |
+
+### Filtrování, řazení, akce
+- Filtrování podle typu jednotky, stavu, nájemníka, vlastníka, patra
+- Hromadné akce: změna stavu, export, přiřazení nájemníka/správce, generování dokumentů
+
+### Chybové stavy
+- Duplicita čísla jednotky v nemovitosti
+- Pokus o přesun jednotky s aktivní smlouvou
+- Chybějící povinná příloha (např. kolaudace)
 
 ---
 
-## 📋 Funkce v přehledu
+## 📝 Přidat / editovat nemovitost a jednotku (formuláře)
 
-Každý přehled (Nemovitosti, Jednotky) obsahuje základní funkce a možnost filtrovat, exportovat, upravovat i archivovat záznamy.
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
 
-### 🏢 Dlaždice: Nemovitosti
+- [x] Účel
+- [x] Výčet polí
+- [x] Tlačítka, validace, workflow
+- [x] Chybové stavy
+- [x] Oprávnění
 
-- 📋 Přehled všech nemovitostí  
-- 🔍 Filtrace podle typu nemovitosti, adresy, vlastníka, stavu
-- 🔄 Změna stavu (aktivní / archivovaný)
-- 📑 Zobrazení a správa dokumentů a příloh
-- 🏢 Zobrazení připojených jednotek  
-- ✳️ Správa rolí a oprávnění
-- 📤 Export seznamu (XLSX/CSV/JSON)
-- ➕ Přidat novou nemovitost
-- 📜 Auditní log / historie změn
-- 📊 Statistiky nemovitostí (počet jednotek, obsazenost, rozloha)
-- 🔘 Spustit průvodce pro založení nebo pokračovat v dokončení průvodce
-- ✏️ Upravit nemovitost
-- 👁️ Zobrazit detail
-- 📁 Archivovat
-- 🗑️ Smazat (pouze pokud nemá vazby/historii)
-- 🧑‍💼 Přiřadit správce / uživatele
-- 📑 Přidat dokument (příloha)
-- ⚙️ Nastavení modulu
+### Účel
+Formuláře slouží pro zadání/editaci údajů o nemovitosti i jednotce včetně validací a povinných polí.
 
-### 🏠 Dlaždice: Jednotky a byty
+### Pole
+Viz tabulky výše.
 
-- 📋 Přehled všech jednotek/bytu  
-- 🔍 Filtrace podle typu jednotky, stavu, nájemníka, vlastníka, patra
-- 🔄 Změna stavu (volná, obsazená, opravovaná, archivovaná)
-- 📑 Zobrazení a správa dokumentů a příloh
-- 🏢 Zobrazení mateřské nemovitosti
-- 🧑‍💼 Přiřazení nájemníka/správce
-- 📤 Export seznamu (XLSX/CSV/JSON)
-- ➕ Přidat novou jednotku
-- 📜 Auditní log / historie změn
-- 📊 Statistiky jednotek (obsazenost, rozloha, počet nájemníků)
-- 🔘 Spustit průvodce pro založení nebo pokračovat v dokončení průvodce
-- ✏️ Upravit jednotku
-- 👁️ Zobrazit detail
-- 📁 Archivovat
-- 🗑️ Smazat (pouze pokud nemá vazby/historii)
-- 📑 Přidat dokument (příloha)
-- 🏢 Připojit jednotku k nemovitosti
-- 🔒 Přiřadit oprávnění
-- 📤 Export dat jednotky
-- 📜 Zobrazit historii změn
+### Tlačítka
+- Uložit
+- Pokračovat v průvodci
+- Zrušit
+
+### Validace
+- Unikátní adresa/číslo jednotky v rámci nemovitosti
+- Povinná pole
+- Formát adresy, rozlohy, PSČ
+
+### Chybové stavy
+Viz sekce Chybové stavy.
+
+---
+
+## 👁️ Detail nemovitosti a jednotky
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+
+- [x] Účel
+- [x] Zobrazení všech údajů, historie změn, audit, připojené jednotky, smlouvy, platby
+- [x] Akce: editace, archivace, přidání přílohy, export, audit log
 
 ---
 
@@ -236,7 +228,7 @@ Každý přehled (Nemovitosti, Jednotky) obsahuje základní funkce a možnost f
 
 ---
 
-## 🟢 Stavy a workflow nemovitosti/jednotky
+## 🟡 Stavy a workflow nemovitosti/jednotky
 
 | Stav            | Popis                                                      | Kdo může změnit | Kdy/proč změnit                              |
 |-----------------|------------------------------------------------------------|-----------------|----------------------------------------------|
@@ -244,8 +236,6 @@ Každý přehled (Nemovitosti, Jednotky) obsahuje základní funkce a možnost f
 | **Archivovaná** | Data pouze ke čtení, nelze měnit ani navazovat vazby       | Správce/Admin   | Když již není využívána, po prodeji, demolici apod. |
 | **Blokovaná**   | Dočasně zamezeno použití, čeká na schválení nebo má problém| Správce/Admin   | Např. při sporu, nevyjasněném vlastnictví   |
 | **Neaktivní**   | Není aktuálně využívána, ale zůstává v systému             | Správce/Admin   | Po ručním nastavení, např. dočasná nečinnost|
-
-### Přechody mezi stavy viz workflow v Nájemník/Pronajímatel.
 
 ---
 
@@ -338,55 +328,15 @@ Každá významná změna údajů je zaznamenána do auditního logu – kdo, kd
 | **Chyba při importu dat**                   | Zobrazit detail chyby, umožnit částečný import      | „Import obsahuje chyby – zkontrolujte detaily.“   | Povinné  |
 | **Chyba při exportu dat**                   | Zobrazit chybovou hlášku, nabídnout opakování       | „Export selhal, zkuste to prosím znovu.“          | Povinné  |
 | **Neoprávněný přístup**                     | Zamezit akci, přesměrovat/odmítnout                 | „Nemáte oprávnění k této akci.“                   | Povinné  |
+| **Duplicita čísla jednotky v nemovitosti**  | Zamezit uložení                                     | „Toto číslo jednotky je již použito v této nemovitosti.“ | Povinné  |
+| **Pokus o přesun jednotky s aktivní smlouvou** | Zamezit akci, informovat správce                  | „Jednotku nelze přesunout, má aktivní smlouvu.“    | Povinné  |
+| **Pokus o sloučení jednotek s různými nájemníky** | Vyžádat rozhodnutí správce, nabídnout archivaci   | „Jednotky mají různé nájemníky – sloučení není možné.“ | Povinné  |
+| **Chyba při napojení na neexistující nemovitost** | Upozornit na neplatný odkaz, nabídnout opravu     | „Zadaná nemovitost neexistuje.“                    | Povinné  |
+| **Chybějící povinná příloha (např. kolaudace)** | Zvýraznit pole, zamezit uložení                   | „Přidejte prosím povinný dokument (kolaudace).“    | Povinné  |
 
 ---
 
-## 📦 Hromadné operace s nemovitostmi a jednotkami
-
-- **Hromadný import/export nemovitostí a jednotek** (CSV, XLSX, JSON)
-- **Hromadná změna stavu** (archivace, aktivace, blokace)
-- **Hromadné přiřazení správce/uživatele**
-- **Hromadné generování dokumentů nebo výzev** (např. revizní zprávy, výzvy k úhradě)
-- **Hromadné přiřazení jednotek do nemovitosti či změna vlastníka**
-
-> Každá hromadná akce je auditována a dostupná pouze dle oprávnění.
-
----
-
-## 📚 Reference na související dokumentaci
-
-Pro komplexní pochopení workflow doporučujeme prostudovat také:
-
-- [Modul Pronajímatel](./pronajimatel.md)  
-- [Modul Nájemník](./najemnik.md)  
-- [Modul Smlouva](./smlouva.md)  
-- [Modul Platby](./platby.md)  
-- [Modul Služby](./sluzby.md)  
-- [Modul Dokumenty](./dokumenty.md)  
-
----
-
-## 🐛 Známé problémy / TODO
-
-- [ ] **Rozšířit validace údajů** (adresy, čísla jednotek, duplicitní zápisy)
-- [ ] **Hromadné operace** – zdokonalit importy, validace a chybové hlášky
-- [ ] **Detailní auditní log** – rozšířit o všechny změny a hromadné akce
-- [ ] **Napojení na externí registry** (KN, RÚIAN apod.)
-- [ ] **Automatizace notifikací** (např. expirace revizí, změny stavu)
-- [ ] **Přehled vazeb na ostatní entity v detailu nemovitosti/jednotky**
-- [ ] **Statistiky a reporting** – rozšířená analytika obsazenosti, výnosů apod.
-- [ ] **Rozšířená správa příloh** – verzování, sdílení, viditelnost podle rolí
-- [ ] **Podpora pro více typů jednotek** (nebytové, komerční prostory…)
-- [ ] **Optimalizace UI/UX** – jednodušší workflow pro hromadné úpravy
-- [ ] **Testování workflow a chybových stavů**
-- [ ] **Přístupová práva** – detailní nastavení rolí a oprávnění
-- [ ] **GDPR – anonymizace a export**  
-- [ ] **UI/UX vylepšení**  
-- [ ] **Automatizace reportingu a dashboardy**
-
----
-
-## 🗂️ Ukázka uloženého JSON objektu (nemovitost a jednotka)
+## 🗃️ Datový model (ukázky)
 
 ### Nemovitost (včetně všech možných polí)
 ```json
@@ -428,7 +378,6 @@ Pro komplexní pochopení workflow doporučujeme prostudovat také:
   "updated_at": "2025-09-09T09:10:00Z"
 }
 ```
-
 ### Jednotka (včetně historie, více příloh)
 ```json
 {
@@ -468,59 +417,14 @@ Pro komplexní pochopení workflow doporučujeme prostudovat také:
 
 ---
 
-## 🔄 Specifika workflow pro modul Nemovitost/Jednotka
-
-### 1. Rozdělení jednotky
-- Správce v detailu jednotky zvolí „Rozdělit jednotku“.
-- Zadá nové parametry pro vzniklé jednotky (čísla, rozloha, typ).
-- Systém automaticky propojí nové jednotky s mateřskou nemovitostí a případně převede smlouvy/nájemníky.
-
-### 2. Sloučení jednotek
-- V přehledu jednotek správce vybere více jednotek a zvolí „Sloučit“.
-- Zadané údaje se agregují do nové jednotky, staré se archivují.
-- Historie je zachována.
-
-### 3. Změna vlastníka nemovitosti (převod)
-- Správce zadá nového vlastníka/pronajímatele.
-- Systém upozorní na nutnost revize stávajících smluv/jednotek.
-
-### 4. Převod jednotky mezi nemovitostmi
-- Jednotka může být přesunuta z jedné nemovitosti do jiné (například při změně parcelace).
-
----
-
-## ⚠️ Více chybových stavů (specifika pro nemovitost/jednotku)
-
-| Chyba / výjimka                        | Doporučené řešení / reakce systému                | Uživatelská hláška                                 | Logování |
-|----------------------------------------|---------------------------------------------------|----------------------------------------------------|----------|
-| **Duplicita čísla jednotky v nemovitosti** | Zamezit uložení                                   | „Toto číslo jednotky je již použito v této nemovitosti.“ | Povinné  |
-| **Pokus o přesun jednotky s aktivní smlouvou** | Zamezit akci, informovat správce                  | „Jednotku nelze přesunout, má aktivní smlouvu.“    | Povinné  |
-| **Pokus o sloučení jednotek s různými nájemníky** | Vyžádat rozhodnutí správce, nabídnout archivaci   | „Jednotky mají různé nájemníky – sloučení není možné.“ | Povinné  |
-| **Chyba při napojení na neexistující nemovitost** | Upozornit na neplatný odkaz, nabídnout opravu     | „Zadaná nemovitost neexistuje.“                    | Povinné  |
-| **Chybějící povinná příloha (např. kolaudace)** | Zvýraznit pole, zamezit uložení                   | „Přidejte prosím povinný dokument (kolaudace).“    | Povinné  |
-
----
-
 ## 📦 Hromadné operace s nemovitostmi a jednotkami
 
-- **Hromadný import/export nemovitostí a jednotek** (CSV, XLSX, JSON)
-- **Hromadná změna stavu** (archivace, aktivace, blokace)
-- **Hromadné přiřazení správce/uživatele**
-- **Hromadný přesun jednotek mezi nemovitostmi**
-- **Hromadné přidání/odebrání příloh**
-- **Hromadné generování dokumentů** (např. revizní protokoly)
-
----
-
-## 📚 Reference na další dokumentaci
-
-- [Modul Pronajímatel](./pronajimatel.md)
-- [Modul Nájemník](./najemnik.md)
-- [Modul Smlouva](./smlouva.md)
-- [Modul Platby](./platby.md)
-- [Modul Služby](./sluzby.md)
-- [Modul Dokumenty](./dokumenty.md)
-- [Modul Jednotka](./jednotka.md)
+- Hromadný import/export nemovitostí a jednotek (CSV, XLSX, JSON)
+- Hromadná změna stavu (archivace, aktivace, blokace)
+- Hromadné přiřazení správce/uživatele
+- Hromadný přesun jednotek mezi nemovitostmi
+- Hromadné přidání/odebrání příloh
+- Hromadné generování dokumentů (např. revizní protokoly)
 
 ---
 
@@ -537,5 +441,17 @@ Pro komplexní pochopení workflow doporučujeme prostudovat také:
 
 ---
 
-> Pokud budeš chtít rozpracovat některý scénář ještě detailněji (včetně pseudokódu, workflow, uživatelských hlášek nebo návrhu UI), napiš konkrétní požadavek!
+## 📚 Reference na další dokumentaci
+
+- [Modul Pronajímatel](./pronajimatel.md)
+- [Modul Nájemník](./najemnik.md)
+- [Modul Smlouva](./smlouva.md)
+- [Modul Platby](./platby.md)
+- [Modul Služby](./sluzby.md)
+- [Modul Dokumenty](./dokumenty.md)
+- [Modul Jednotka](./jednotka.md)
+
+---
+
+> Pokud budeš chtít rozpracovat některý scénář ještě detailněji (včetně pseudokódu, workflow, uživatelských hlášek nebo návrhu UI), napiš konkrétní požadavek!  
 > Tento dokument bude průběžně aktualizován podle vývoje a potřeb projektu.
