@@ -32,6 +32,38 @@
 
 ## 🟦 Přehled nájemníků
 
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+
+- [x] Účel sekce/dlaždice (proč existuje, kdo ji používá)
+- [x] Kdo má přístup/viditelnost podle oprávnění/rolí
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Podsekce a vazby na další části (např. detail, editace, přidání...)
+- [x] Výčet a popis všech sloupců (název, význam, povinný/volitelný, filtr/řazení)
+- [x] Filtrování a řazení (jaké možnosti, kde jsou dostupné)
+- [x] Akce v řádku (ikony/tlačítka, popis co dělají, u jakého stavu jsou viditelné)
+- [x] Hromadné akce nad tabulkou (výčet, kdo může spustit)
+- [x] Ukázka tabulky s příklady
+- [x] Výčet a popis všech polí (povinné x nepovinné, typ pole, validace)
+- [x] Stavové pole (aktivní, zablokován, ...), kdo je může měnit
+- [x] Tlačítka ve formuláři (uložit, zrušit, další speciální akce)
+- [x] Jaké validace probíhají (na úrovni pole, na úrovni formuláře)
+- [x] Co vše se zobrazuje v detailu (všechna pole, historie, audit, navazující akce)
+- [x] Akce dostupné v detailu (editace, deaktivace, atd.)
+- [x] Přehled všech možných akcí (kdy, kdo, s jakým oprávněním)
+- [x] Stavové přechody (jaké jsou povolené přechody mezi stavy, kdo je může provádět)
+- [x] Napojení na další workflow (notifikace, audit, schvalování, ...)
+- [x] Přehled rolí, které mají přístup (tabulka rolí x akce)
+- [x] Specifika pro různé role (např. admin může vždy, běžný uživatel nikdy)
+- [x] Výčet typických chybových stavů (duplicitní záznam, neplatný formát, ...)
+- [x] Uživatelské hlášky (co přesně se zobrazí)
+- [x] Možnosti exportu/importu (jaký formát, kdo může)
+- [x] Logování a audit (kdo, kdy, co změnil)
+- [x] GDPR požadavky (export osobních údajů, anonymizace, ...)
+- [x] Na jaké další moduly sekce/formulář navazuje
+- [x] Reference na související workflow, entity, dokumentaci
+- [x] Speciální workflow (SSO, API účet, 2FA, ...), bezpečnostní poznámky
+- [x] Možné rozšíření do budoucna, TODO, poznámky
+
 ### Účel sekce/dlaždice
 Evidence všech osob, firem nebo institucí, které užívají byt/jednotku/prostor v portfoliu, základní hledání, filtrování, export, rychlé akce.
 
@@ -91,7 +123,21 @@ Viz výše tabulka Kdo má přístup. Práva lze dále upřesnit v detailu.
 
 ---
 
-## 🟦 Přidat / Editovat nájemníka
+## 📝 Přidat / Editovat nájemníka
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+
+- [x] Účel sekce/dlaždice 
+- [x] Kdo má přístup/viditelnost 
+- [x] Zařazení v hlavní stromové struktuře 
+- [x] Podsekce a vazby 
+- [x] Výčet a popis všech polí
+- [x] Tlačítka ve formuláři
+- [x] Validace
+- [x] Chybové stavy
+- [x] Oprávnění a viditelnost
+- [x] Vazby na další moduly
+- [x] Specifika, rozšíření
 
 ### Účel sekce/dlaždice
 Formulář pro založení/editaci subjektu, validace, možnost uložit rozpracovaná data.
@@ -102,13 +148,14 @@ Správce, administrátor
 ### Pole (formulář)
 Viz tabulka v sekci Přehled (včetně validací).
 
-### Filtrování, řazení, akce
-N/A – jednorázová akce.
+### Akce / Tlačítka
+- Uložit
+- Pokračovat v průvodci
+- Zrušit
 
-### Validace, tlačítka, workflow
+### Validace
 - Povinná pole zvýraznit, validovat unikátnost
-- Tlačítka: Uložit, Pokračovat v průvodci, Zrušit
-- Workflow: Možnost uložit „rozpracováno“, pokračovat později
+- Validace e-mailu, čísla dokladu atd.
 
 ### Chybové stavy
 - Duplicitní e-mail, doklad, login
@@ -126,7 +173,21 @@ Správce, administrátor
 
 ---
 
-## 🟦 Detail nájemníka
+## 👁️ Detail nájemníka
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+
+- [x] Účel sekce/dlaždice
+- [x] Kdo má přístup/viditelnost
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Podsekce a vazby
+- [x] Výčet a popis všech polí
+- [x] Akce dostupné v detailu
+- [x] Validace
+- [x] Chybové stavy
+- [x] Oprávnění a viditelnost
+- [x] Vazby na další moduly
+- [x] Specifika, rozšíření
 
 ### Účel sekce/dlaždice
 Zobrazení všech údajů, historie změn, napojení na další entity.
@@ -137,12 +198,15 @@ Správce, administrátor, účetní (čtení)
 ### Pole (přehled i detail)
 Všechny údaje včetně auditní historie, napojení na jednotky, smlouvy, platby, dokumenty
 
-### Filtrování, řazení, akce
-- Akce: Editace, Archivace, Přidání zástupce, Export dat, Připojení dokumentu
+### Akce
+- Editace
+- Archivace
+- Přidání zástupce
+- Export dat
+- Připojení dokumentu
 
-### Validace, tlačítka, workflow
+### Validace
 - Validace pouze při editaci
-- Tlačítka: Upravit, Archivovat, Exportovat, Přidat zástupce
 
 ### Chybové stavy
 - Pokus o změnu neaktivního/archivovaného subjektu
@@ -152,7 +216,7 @@ Všechny údaje včetně auditní historie, napojení na jednotky, smlouvy, plat
 Dle role, viz tabulka v Oprávnění
 
 ### Vazby na další moduly a reference
-Jednotka, Smlouva, Platby, Služby, Dokumenty
+- Jednotka, Smlouva, Platby, Služby, Dokumenty
 
 ### Specifika, rozšíření
 - Historie všech jednotek, kde byl veden
@@ -162,6 +226,20 @@ Jednotka, Smlouva, Platby, Služby, Dokumenty
 
 ## 🟦 Správa zástupců
 
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+
+- [x] Účel sekce/dlaždice 
+- [x] Kdo má přístup/viditelnost 
+- [x] Zařazení v hlavní stromové struktuře 
+- [x] Podsekce a vazby 
+- [x] Výčet a popis všech polí
+- [x] Akce dostupné v sekci
+- [x] Validace
+- [x] Chybové stavy
+- [x] Oprávnění a viditelnost
+- [x] Vazby na další moduly
+- [x] Specifika, rozšíření
+
 ### Účel sekce/dlaždice
 Správa vztahů zástupců k nájemníkům, možnost přidání, editace, odebrání.
 
@@ -169,13 +247,17 @@ Správa vztahů zástupců k nájemníkům, možnost přidání, editace, odebr�
 Správce, administrátor
 
 ### Pole
-- Název zástupce, vazba na nájemníka, typ zástupce, kontakty
+- Název zástupce
+- Vazba na nájemníka
+- Typ zástupce
+- Kontakty
 
-### Filtrování, řazení, akce
-- Filtrování podle nájemníka, typu zástupce
-- Akce: Přidat, Editovat, Odebrat
+### Akce
+- Přidat
+- Editovat
+- Odebrat
 
-### Validace, tlačítka, workflow
+### Validace
 - Unikátnost zástupce pro nájemníka
 - Zápis změn do auditního logu
 
@@ -196,6 +278,13 @@ Správce, administrátor
 
 ## 🟦 Auditní log a historie změn
 
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- [x] Účel sekce
+- [x] Kdo má přístup/viditelnost
+- [x] Výčet a popis polí
+- [x] Akce
+- [x] Specifika, rozšíření
+
 ### Účel sekce/dlaždice
 Evidence všech změn údajů nájemníka (včetně importů, exportů, změn stavu).
 
@@ -205,10 +294,8 @@ Správce, administrátor, účetní (čtení)
 ### Pole
 - Typ změny, kdo provedl, kdy, původní/nová hodnota
 
-### Filtrování, řazení, akce
-- Filtrování podle typu změny, data, subjektu
-
 ### Akce
+- Filtrování podle typu změny, data, subjektu
 - Export auditního logu, zobrazení detailu změny
 
 ### Specifika, rozšíření
@@ -216,112 +303,8 @@ Správce, administrátor, účetní (čtení)
 
 ---
 
-## 🟦 Statistiky a využití
-
-### Účel sekce/dlaždice
-Statistika počtů nájemníků, obsazenost, změny.
-
-### Kdo má přístup/viditelnost
-Správce, administrátor
-
-### Pole
-- Počet nájemníků, obsazenost jednotek, historie změn
-
-### Akce
-- Export grafů a reportů
-
----
-
-## 🟦 Import/Export nájemníků
-
-### Účel sekce/dlaždice
-Hromadný import/export subjektů (CSV, XLSX, JSON), včetně validací a kontroly duplicit.
-
-### Kdo má přístup/viditelnost
-Správce, administrátor
-
-### Akce
-- Import, Export, Report chyb, Audit importu
-
-### Validace
-- Kontrola duplicit, povinných polí, správný formát
-
----
-
-## 🟦 Přehled dokumentů
-
-### Účel sekce/dlaždice
-Evidence a správa dokumentů/příloh k subjektu.
-
-### Kdo má přístup/viditelnost
-Správce, administrátor
-
-### Akce
-- Přidat dokument, export, historie příloh
-
----
-
-## 🟦 Nastavení modulu
-
-### Účel sekce/dlaždice
-Nastavení povinných polí, práv, workflow, typů subjektů a šablon.
-
-### Kdo má přístup/viditelnost
-Administrátor
-
----
-
-## 🟦 Notifikace a upozornění
-
-### Účel sekce/dlaždice
-Evidence, nastavení a správa notifikací k událostem (expirace smlouvy, změna účtu, nové dokumenty).
-
-### Kdo má přístup/viditelnost
-Správce, administrátor
-
----
-
-## 🟦 Průvodce založením nájemníka
-
-### Účel sekce/dlaždice
-Wizard pro snadné zadání nájemníka, možnost uložit rozpracovaná data, přeskočit kroky, vrátit se později.
-
-### Kdo má přístup/viditelnost
-Správce, administrátor
-
----
-
-## 🟦 Vazby na další entity
-
-### Účel sekce/dlaždice
-Přehled napojení na jednotky, smlouvy, platby, dokumenty, služby, uživatele.
-
----
-
-## 🟦 GDPR & anonymizace
-
-### Účel sekce/dlaždice
-Export dat, anonymizace, auditní log mazání/změn, workflow pro GDPR požadavky.
-
----
-
-## 🗒️ Poznámky, nápady a úkoly
-
-- Ošetřit duplicity (e-mail, číslo dokladu, rodné číslo, login)
-- Validace a ověřování údajů z ARES, ISZR, banky
-- Přehled vazeb na další entity v detailu nájemníka
-- Hromadné operace – import/export, změna stavu, generování výzev
-- Automatizace notifikací a workflow pro výpovědi, přestěhování
-- GDPR – anonymizace a export, auditní log
-- UI/UX vylepšení, testování chybových stavů a workflow
-- Rozšířit auditní log o hromadné změny
-- Nastavit možnost role „pověřenec pro ochranu osobních údajů“
-- Potřebujeme víceúrovňová práva pro editaci údajů nájemníka?
-- Má být možné přiřadit více správců k jednomu nájemníkovi?
-- Budeme evidovat i krátkodobé nájemníky (např. Airbnb)?
-- Chceme automatickou kontrolu insolvenčního rejstříku?
-- Má být možné povinné ověření kontaktu (e-mail, telefon)?
-- Jaké notifikace mají být povinné (expirace smlouvy, změna účtu...)?
+~~## Staré sekce nebo neaktuální~~  
+~~(Případné původní struktury, které byly nahrazeny nebo již nejsou používány)~~
 
 ---
 
@@ -383,21 +366,21 @@ Export dat, anonymizace, auditní log mazání/změn, workflow pro GDPR požadav
 
 ## ⚠️ Chybové stavy a výjimky
 
-| Chyba / výjimka                              | Doporučené řešení / reakce systému                                  | Uživatelská hláška                                   | Logování/Audit      |
-|----------------------------------------------|---------------------------------------------------------------------|------------------------------------------------------|---------------------|
-| Duplicita e-mailu                            | Zamezit uložení, zvýraznit pole, nabídnout hledání existujícího     | „Tento e-mail je již použit u jiného nájemníka.“      | Povinně logovat     |
-| Duplicita čísla dokladu                      | Zamezit uložení, zvýraznit pole                                     | „Číslo dokladu je již evidováno u jiného nájemníka.“  | Povinně logovat     |
-| Změna trvalé adresy                          | Vyžádat potvrzení (e-mailem, schválení správcem)                    | „Byla změněna adresa, vyčkejte na potvrzení.“         | Logovat změnu + audit|
-| Neplatná platba                              | Upozornit správce/účetní, označit platbu, nabídnout opravu           | „Platba je neplatná – kontaktujte správce.“           | Logovat pokus i řešení|
-| Nepovolená změna jednotky                    | Nepovolit změnu, pokud existují neukončené platby/smlouvy           | „Nejprve ukončete platby/smlouvy k původní jednotce.“ | Logovat pokus       |
-| Chybějící povinné pole                       | Zvýraznit pole, zamezit uložení                                     | „Vyplňte prosím všechna povinná pole.“                | Není nutné logovat  |
-| Duplicitní rodné číslo / datum narození      | Zamezit uložení, zvýraznit pole                                     | „Zadané rodné číslo/datum narození je již evidováno.“ | Povinně logovat     |
-| Neautorizovaná změna bankovního účtu         | Vyžadovat schválení správce nebo 2FA                                 | „Změna bankovního účtu čeká na schválení správce.“    | Povinně logovat     |
-| Neplatný formát e-mailu/telefonu             | Zvýraznit pole, zamezit uložení                                     | „Zadaný e-mail/telefon není v platném formátu.“       | Není nutné logovat  |
-| Neoprávněný přístup k údajům nájemníka       | Zamezit akci, přesměrovat/odmítnout                                 | „Nemáte oprávnění k této akci.“                       | Povinně logovat     |
-| Nájemník je stále přiřazen k aktivní jednotce| Zamezit odstranění/archivaci                                        | „Nájemníka nelze odstranit – je stále přiřazen k jednotce.“ | Povinně logovat|
-| Chyba při importu dat                        | Zobrazit detail chyby, umožnit částečný import                      | „Import obsahuje chyby – zkontrolujte detaily.“       | Logovat výskyt      |
-| Chyba při exportu dat                        | Zobrazit chybovou hlášku, nabídnout opakování                       | „Export selhal, zkuste to prosím znovu.“              | Logovat detail      |
+| Chyba / výjimka                              | Doporučené řešení / reakce systému                                  | Uživatelská hláška                                   | Logování |
+|----------------------------------------------|---------------------------------------------------------------------|------------------------------------------------------|----------|
+| Duplicita e-mailu                            | Zamezit uložení, zvýraznit pole, nabídnout hledání existujícího     | „Tento e-mail je již použit u jiného nájemníka.“      | Povinné  |
+| Duplicita čísla dokladu                      | Zamezit uložení, zvýraznit pole                                     | „Číslo dokladu je již evidováno u jiného nájemníka.“  | Povinné  |
+| Změna trvalé adresy                          | Vyžádat potvrzení (e-mailem, schválení správcem)                    | „Byla změněna adresa, vyčkejte na potvrzení.“         | Logovat  |
+| Neplatná platba                              | Upozornit správce/účetní, označit platbu, nabídnout opravu           | „Platba je neplatná – kontaktujte správce.“           | Logovat  |
+| Nepovolená změna jednotky                    | Nepovolit změnu, pokud existují neukončené platby/smlouvy           | „Nejprve ukončete platby/smlouvy k původní jednotce.“ | Logovat  |
+| Chybějící povinné pole                       | Zvýraznit pole, zamezit uložení                                     | „Vyplňte prosím všechna povinná pole.“                | Není     |
+| Duplicitní rodné číslo / datum narození      | Zamezit uložení, zvýraznit pole                                     | „Zadané rodné číslo/datum narození je již evidováno.“ | Povinné  |
+| Neautorizovaná změna bankovního účtu         | Vyžadovat schválení správce nebo 2FA                                 | „Změna bankovního účtu čeká na schválení správce.“   | Logovat  |
+| Neplatný formát e-mailu/telefonu             | Zvýraznit pole, zamezit uložení                                     | „Zadaný e-mail/telefon není v platném formátu.“       | Není     |
+| Neoprávněný přístup k údajům nájemníka       | Zamezit akci, přesměrovat/odmítnout                                 | „Nemáte oprávnění k této akci.“                       | Povinné  |
+| Nájemník je stále přiřazen k aktivní jednotce| Zamezit odstranění/archivaci                                        | „Nájemníka nelze odstranit – je stále přiřazen k jednotce.“ | Povinné  |
+| Chyba při importu dat                        | Zobrazit detail chyby, umožnit částečný import                      | „Import obsahuje chyby – zkontrolujte detaily.“       | Logovat  |
+| Chyba při exportu dat                        | Zobrazit chybovou hlášku, nabídnout opakování                       | „Export selhal, zkuste to prosím znovu.“              | Logovat  |
 
 ---
 
@@ -445,4 +428,4 @@ Export dat, anonymizace, auditní log mazání/změn, workflow pro GDPR požadav
 
 ---
 
-> Modul Nájemník je klíčovou součástí systému – tvoří základ pro správné fungování dalších navázaných modulů (smlouvy, platby, služby, jednotky atd.). Dokumentace bude rozšiřována podle vývoje a potřeb projektu.
+> Modul Nájemník je klíčovou součástí systému – tvoří základ pro správné fungování dalších navázaných modulů (smlouvy, platby, služby, jednotky atd.). Dokumentace bude rozšiřována dle potřeb a specifikací projektu.
