@@ -1,92 +1,115 @@
-# Modul: Nastavení
-
+> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)  
 > ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
 > ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
 
----
-
-## ⚙️ Úvod
-
-Modul **Nastavení** slouží k obecné správě parametrů aplikace. Umožňuje administrátorům a uživatelům upravovat systémové číselníky, spravovat vzhled a chování aplikace, provádět zálohování/import/export dat a nastavovat uživatelská i globální preference.  
-Důraz je kladen na jednoduchost, bezpečnost a přehlednost – včetně optimalizace pro mobilní zařízení.
+# Modul: Nastavení
 
 ---
 
-## 🟦 Hlavní sekce / dlaždice
+## 🌲 Stromová struktura modulu
 
-### 1. Číselníky a číslování dokumentů
-
-- Nastavení číselných řad pro doklady (smlouvy, faktury, požadavky, vyúčtování…)
-- Správa předpon, přípon, formátu číselné řady, počátečních čísel
-- Možnost automatického generování čísel při vytváření nového záznamu
-- Obecné číselníky (typy služeb, zařízení, kategorií, stavů…)
-
----
-
-### 2. Zálohování, import a export
-
-- Manuální a automatické zálohování databáze a dokumentů (volba kam zálohovat)
-- Obnova dat ze zálohy (s potvrzením a zálohou před obnovením)
-- Import dat (CSV, XLSX, XML, …) s mapováním polí na strukturu systému
-- Export dat (výběr modulů, období, formát)
-- Historie záloh a možnost stažení
+| Stav | Sekce                                | Popis                                                      |
+|------|--------------------------------------|------------------------------------------------------------|
+| ✅   | 🟦 Číselníky a číslování dokumentů    | Nastavení číselných řad dokladů, obecné číselníky          |
+| ✅   | 🟦 Zálohování, import a export        | Zálohy databáze a dokumentů, import/export dat             |
+| ✅   | 🟦 Zobrazení a vzhled aplikace        | Barevná schémata, velikost písma, rozložení, hlavní panel  |
+| ✅   | 🟦 Nastavení oblíbených (strom menu)  | Uživatelé si volí oblíbené sekce a pořadí                  |
+| ✅   | 🟦 Mobilní zobrazení a optimalizace   | Mobilní režim, zjednodušené ovládání, FAB, omezení funkcí  |
+| ✅   | 📝 Poznámky, nápady a úkoly           | Prostor pro další poznámky a TODO                          |
 
 ---
 
-### 3. Zobrazení a vzhled aplikace
+## 🟦 Číselníky a číslování dokumentů
 
-- Výběr barevného schématu (světlý/tmavý režim, firemní barvy…)
-- Nastavení velikosti písma, kontrastu, rozložení panelů
-- Výběr zobrazených dlaždic, sekcí a informací na hlavní stránce
-- Přizpůsobení hlavního panelu – stromová struktura oblíbených modulů („Rychlý přístup“)
-- Možnost individuálního nastavení pro uživatele/skupinu
-
----
-
-### 4. Nastavení oblíbených (strom menu)
-
-- Uživatel si může vybrat, které sekce/moduly/dlaždice chce vidět jako první (oblíbené)
-- Drag&drop pořadí, možnost skrývání nevyužívaných částí
-- Uložení preferencí na účet uživatele (cloudově nebo lokálně)
-- Nastavení pro všechny uživatele (admin) nebo individuálně
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- [x] Účel sekce/dlaždice (nastavení číselných řad a číselníků pro doklady, typy služeb, zařízení, kategorií, stavů…)
+- [x] Kdo má přístup/viditelnost podle oprávnění/rolí (admin, pronajímatel, správce)
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Podsekce: správa předpon/přípon, formát, počáteční čísla, automatické generování
+- [x] Výčet polí: prefix, přípona, formát číselné řady, číslo od/do, aktuální číslo
+- [x] Validace unikátnosti, povinných polí
+- [x] Akce: vytvořit, editovat, deaktivovat číselník
+- [x] Chybové stavy: konflikt v číselné řadě, neuložené změny
 
 ---
 
-### 5. Mobilní zobrazení a optimalizace
+## 🟦 Zálohování, import a export
 
-- Automatické přizpůsobení rozložení (responsivní design, hamburger menu, zjednodušená horní lišta)
-- Možnost přepnout na „mobilní režim“ i v desktopu (pro testování)
-- Zvýraznění klíčových funkcí (obecně: méně dlaždic, důležité věci nahoře, větší ovládací prvky)
-- Možnost skrýt/ukázat sekce pro mobil (např. pouze Platby, Údržba, Komunikace, Energie)
-- Upozornění na omezenou funkcionalitu v mobilu (např. hromadné importy/exporty pouze na desktopu)
-- Rychlé akce (FAB – floating action button) pro často používané funkce (přidat platbu, hlášení závady…)
-
----
-
-## 🔗 Doporučení pro mobilní zobrazení
-
-- **Jednoduché menu:**  
-  Použít hamburger menu, rychlý panel pro oblíbené, zmenšit počet viditelných dlaždic.
-- **Jedna akce na obrazovce:**  
-  Preferovat zobrazení jednoho hlavního obsahu, ostatní v záložkách nebo skrytých sekcích.
-- **Velká tlačítka a ovládací prvky:**  
-  Minimalizovat chyby při ovládání prsty.
-- **Možnost rychlého návratu na hlavní panel.**
-- **Responzivní grafy a tabulky:**  
-  Kompaktní zobrazení, možnost horizontálního posunu, skrytí méně důležitých sloupců.
-- **Offline režim (volitelně):**  
-  Pokud je požadavek, umožnit základní práci bez připojení a synchronizaci po návratu online.
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- [x] Účel sekce (zálohování systému a dat, import/export uživatelských dat)
+- [x] Kdo má přístup (admin, pronajímatel, správce)
+- [x] Podsekce: manuální/automatické zálohy, obnova, historie záloh
+- [x] Formulář: volba typu zálohy, umístění, interval, poslední záloha
+- [x] Akce: stáhnout zálohu, obnovit, importovat (CSV, XLSX, XML)
+- [x] Validace formátu dat, povinných polí
+- [x] Chybové stavy: chyba importu/exportu, neuložené nastavení
 
 ---
 
-## 🗃️ Datové modely (ukázka)
+## 🟦 Zobrazení a vzhled aplikace
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- [x] Účel sekce (personalizace vzhledu, rozložení, velikost písma, kontrast)
+- [x] Kdo má přístup (všichni uživatelé)
+- [x] Formulář: volba barev, velikosti písma, panelů, zobrazených sekcí
+- [x] Podsekce: nastavení pro jednotlivce/skupinu/globálně
+- [x] Akce: uložit, resetovat
+- [x] Validace: povinná pole, kompatibilita nastavení
+- [x] Chybové stavy: neuložené nastavení
+
+---
+
+## 🟦 Nastavení oblíbených (strom menu)
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- [x] Účel sekce (rychlý přístup k oblíbeným sekcím, drag&drop pořadí)
+- [x] Kdo má přístup (všichni uživatelé, admin může nastavit globálně)
+- [x] Podsekce: skrývání nevyužívaných částí, ukládání preferencí
+- [x] Formulář: výběr modulů/dlaždic, pořadí, zobrazení/skrytí
+- [x] Akce: uložit, reset, nastavit pro všechny
+- [x] Validace: povinná pole
+- [x] Chybové stavy: neuložené změny
+
+---
+
+## 🟦 Mobilní zobrazení a optimalizace
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- [x] Účel sekce (optimalizace pro mobilní zařízení, omezení funkcí, zjednodušení)
+- [x] Kdo má přístup (všichni uživatelé)
+- [x] Podsekce: mobilní režim, velikost ovládacích prvků, FAB akce
+- [x] Formulář: volba mobilního režimu, zobrazené sekce, upozornění na omezení
+- [x] Akce: přepnout režim, skrýt/ukázat sekci, rychlé akce (FAB)
+- [x] Validace: povinná pole, kompatibilita
+- [x] Chybové stavy: upozornění na omezenou funkcionalitu v mobilu
+
+---
+
+## 📝 Poznámky, nápady a úkoly k modulu i dlaždicím
+
+> Sem piš vše, co je potřeba doplnit, změnit nebo vyřešit.  
+> ⏳ = rozpracováno, přeškrtni hotové.
+
+- ⏳ Přidat možnost hromadného nastavení pro skupiny uživatelů (role, typ účtu)
+- ⏳ Implementovat logování změn v nastavení (audit trail)
+- ⏳ Umožnit nastavení notifikací na změny v systému
+- ⏳ Integrace s externími správci identit (SSO, OAuth)
+- ⏳ Možnost nastavení automatických kontrol konzistence dat
+- ⏳ Přidat možnost exportu všech nastavení včetně uživatelských preferencí
+- ⏳ Vytvořit detailní historii změn pro každé nastavení (audit log)
+- ⏳ Upozornění na konflikty při hromadných změnách
+- ⏳ Přidat náhled změn před uložením
+
+---
+
+## 🗄️ Datové modely (ukázka)
 
 ### 1. Uživatelské preference
 
 ```json
 {
   "user_id": "uzivatel123",
-  "oblíbené_moduly": ["platby", "údržba", "energie"],
+  "oblibene_moduly": ["platby", "údržba", "energie"],
   "menu_pozice": ["platby", "energie", "údržba", "komunikace"],
   "barva": "tmavý",
   "velikost_pisma": "střední",
@@ -143,7 +166,7 @@ Důraz je kladen na jednoduchost, bezpečnost a přehlednost – včetně optima
 
 ---
 
-## 📑 Doporučené workflow
+## 📋 Doporučené workflow
 
 1. **Nastavení číselníků a řad:**  
    - Admin/pronajímatel nastaví číselné řady pro všechny druhy dokumentů.
@@ -170,13 +193,16 @@ Důraz je kladen na jednoduchost, bezpečnost a přehlednost – včetně optima
 - [Modul Energie](./energie.md)
 
 ---
-📱 Rady k nastavení pro telefony:
-Omezit počet „viditelných“ modulů na hlavní obrazovce:
-V mobilní verzi nabídněte pouze nejčastěji používané (Platby, Údržba, Komunikace). Ostatní skryjte do menu.
-Použít tzv. „bottom navigation“ (spodní lišta s 3–5 nejdůležitějšími ikonami), zbytek v hamburger menu.
-Zajistit „sticky“ (vždy viditelnou) možnost návratu na hlavní panel nebo rychlou akci (např. + pro nový požadavek/platbu).
-Důležité akce (např. nahlásit závadu, odeslat platbu) umístit na jedno kliknutí z hlavní obrazovky.
-Možnost rychle přepnout mezi účty, jednotkami, nemovitostmi.
+
+📱 Rady k nastavení pro telefony:  
+Omezit počet „viditelných“ modulů na hlavní obrazovce:  
+V mobilní verzi nabídněte pouze nejčastěji používané (Platby, Údržba, Komunikace). Ostatní skryjte do menu.  
+Použít tzv. „bottom navigation“ (spodní lišta s 3–5 nejdůležitějšími ikonami), zbytek v hamburger menu.  
+Zajistit „sticky“ (vždy viditelnou) možnost návratu na hlavní panel nebo rychlou akci (např. + pro nový požadavek/platbu).  
+Důležité akce (např. nahlásit závadu, odeslat platbu) umístit na jedno kliknutí z hlavní obrazovky.  
+Možnost rychle přepnout mezi účty, jednotkami, nemovitostmi.  
 Testovat na různých zařízeních (iOS, Android, různé rozlišení) – kritické je, aby se nic neztrácelo a menu bylo intuitivní.
+
+---
 
 > Modul Nastavení zajišťuje správu systémových parametrů, usnadňuje práci uživatelům a umožňuje personalizovat aplikaci na míru, včetně optimalizace pro telefony a tablety.
