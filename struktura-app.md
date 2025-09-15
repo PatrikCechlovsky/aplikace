@@ -93,7 +93,7 @@
  🟦 Známé problémy / TODO  
  🟦 Ukázka uloženého JSON objektu  
 
-📁 050-Nájemník.md ✅  
+📁 050-Najemnik.md ✅  
  🟦 Přehled (typy nájemníků, průvodce založením)  
  🟦 Datový model  
 
@@ -127,6 +127,19 @@
  🟦 Známé problémy / TODO  
  🟦 Podrobný popis částí  
  🟦 Workflow a životní cyklus  
+
+📁 075-Platby ✅  
+ 🟦 Přehled plateb  
+ 🟦 Zadání a evidence plateb  
+ 🟦 Párování plateb  
+ 🟦 Import/export bankovních výpisů  
+ 🟦 Nastavení bankovních účtů  
+ 🟦 Statistiky a reporty  
+ 🟦 Chybové stavy  
+ 🟦 Role a oprávnění  
+ 🟦 Datový model  
+ 🟦 Reference  
+ 🟦 Známé problémy / TODO  
 
 📁 080-Finance.md ✅  
  🟦 Úvod  
