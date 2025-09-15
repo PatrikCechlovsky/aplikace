@@ -1,45 +1,43 @@
-> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)
+> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)  
+> ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
+> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
 
 # Modul: Energie
 
 ---
 
-## Stromová struktura modulu
+## 🌲 Stromová struktura modulu
 
-| Stav | Sekce | Popis |
-|------|-------|-------|
-| ✅   | 🟦 Přehled energií | Souhrnný pohled na všechny typy energií |
-| ✅   | 🟦 Odečty měřidel | Evidence měřidel a historie odečtů      |
-| ✅   | 🟦 Grafy a analýzy spotřeby | Grafy, analýzy, detekce anomálií        |
-| ✅   | 🟦 Podklady pro vyúčtování | Výpočet spotřeb, export podkladů        |
-| ✅   | 🟦 Nastavení a správa měřidel | Správa, archivace, kalibrace měřidel    |
-| ✅   | 🗒️ Poznámky, nápady a úkoly | Prostor pro další poznámky a TODO        |
+| Stav | Sekce                           | Popis                                         |
+|------|---------------------------------|-----------------------------------------------|
+| ✅   | 🟦 Přehled energií               | Souhrnný pohled na všechny typy energií       |
+| ✅   | 🟦 Odečty měřidel                | Evidence měřidel a historie odečtů            |
+| ✅   | 🟦 Grafy a analýzy spotřeby      | Grafy, analýzy, detekce anomálií              |
+| ✅   | 🟦 Podklady pro vyúčtování        | Výpočet spotřeb, export podkladů              |
+| ✅   | 🟦 Nastavení a správa měřidel    | Správa, archivace, kalibrace měřidel          |
+| ✅   | 📝 Poznámky, nápady a úkoly      | Prostor pro další poznámky a TODO             |
 
 ---
 
 ## 🟦 Přehled energií
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Účel sekce/dlaždice (proč existuje, kdo ji používá)
-- ✅ Kdo má přístup/viditelnost podle oprávnění/rolí
-- ✅ Zařazení v hlavní stromové struktuře
-- ✅ Výčet a popis všech polí (přehled i formulář)
-- ✅ Filtrování, řazení, akce v řádku
-- ✅ Hromadné akce
-- ✅ Ukázka tabulky/přehledu
-- ✅ Validace, tlačítka, workflow
-- ✅ Chybové stavy
-- ✅ Oprávnění a viditelnost
-- ✅ Vazby na další moduly a reference
-- ✅ Specifika, rozšíření
+- [x] Účel sekce/dlaždice (souhrnný pohled na typy energií - elektřina, plyn, teplo, voda, jiné média)
+- [x] Kdo má přístup/viditelnost podle oprávnění/rolí (pronajímatel, správce, účetní – filtrace podle oprávnění)
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Výčet a popis všech polí (typ energie, období, spotřeba, náklady, jednotka, anomálie)
+- [x] Filtrování, řazení, akce v řádku, hromadné akce (export, graf spotřeby, detail)
+- [x] Ukázka tabulky/přehledu
+- [x] Validace, tlačítka, workflow, chybové stavy, oprávnění, vazby na další moduly a reference
+- [x] Specifika, rozšíření
 
-#### 1️⃣ Popis a účel  
+#### Popis a účel
 Souhrnný pohled na všechny typy energií: elektřina, plyn, teplo, voda, jiné média.
 
-#### 2️⃣ Přístup/viditelnost  
+#### Přístup/viditelnost
 Pronajímatel, správce, účetní – filtrace podle oprávnění (svoje, vše, konkrétní jednotka/nemovitost).
 
-#### 3️⃣ Pole a validace  
+#### Pole a validace
 | Pole        | Povinné | Typ       | Poznámka         |
 |-------------|:-------:|-----------|------------------|
 | Typ energie |   Ano   | výběr     | elektřina, plyn… |
@@ -51,7 +49,7 @@ Pronajímatel, správce, účetní – filtrace podle oprávnění (svoje, vše,
 
 Filtrování: období, typ energie, jednotka, nemovitost, stav.
 
-#### 4️⃣ Akce  
+#### Akce
 - Export, filtrování, graf spotřeby, detail jednotky/energie
 
 ---
@@ -59,42 +57,42 @@ Filtrování: období, typ energie, jednotka, nemovitost, stav.
 ## 🟦 Odečty měřidel
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Evidence všech měřidel, historie odečtů
-- ✅ Zadání nového odečtu (ručně, import, API)
-- ✅ Filtrování podle typu, jednotky, období
-- ✅ Automatické propojení s vyúčtováním
-- ✅ Validace, chybové stavy
+- [x] Evidence všech měřidel, historie odečtů
+- [x] Zadání nového odečtu (ručně, import, API)
+- [x] Filtrování podle typu, jednotky, období
+- [x] Automatické propojení s vyúčtováním
+- [x] Validace, chybové stavy
 
 ---
 
 ## 🟦 Grafy a analýzy spotřeby
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Grafické zobrazení spotřeby v čase, srovnání období
-- ✅ Export grafu/tabulky
-- ✅ Upozornění na anomálie a výkyvy
+- [x] Grafické zobrazení spotřeby v čase, srovnání období
+- [x] Export grafu/tabulky
+- [x] Upozornění na anomálie a výkyvy
 
 ---
 
 ## 🟦 Podklady pro vyúčtování
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Výpočet spotřeb, nákladů, jednotkové ceny
-- ✅ Generování podkladů pro vyúčtování služeb
-- ✅ Export, historie vyúčtování, přeplatky/nedoplatky
+- [x] Výpočet spotřeb, nákladů, jednotkové ceny
+- [x] Generování podkladů pro vyúčtování služeb
+- [x] Export, historie vyúčtování, přeplatky/nedoplatky
 
 ---
 
 ## 🟦 Nastavení a správa měřidel
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Přidání, editace, archivace měřidel
-- ✅ Nastavení intervalů odečtů
-- ✅ Upozornění na kalibraci/životnost
+- [x] Přidání, editace, archivace měřidel
+- [x] Nastavení intervalů odečtů
+- [x] Upozornění na kalibraci/životnost
 
 ---
 
-## 🗒️ Poznámky, nápady a úkoly k modulu i dlaždicím
+## 📝 Poznámky, nápady a úkoly k modulu i dlaždicím
 
 > Zde piš vše, co je potřeba doplnit, změnit nebo vyřešit.  
 > ⏳ = rozpracováno, přeškrtni hotové.
@@ -117,7 +115,7 @@ Filtrování: období, typ energie, jednotka, nemovitost, stav.
 
 ---
 
-## 🗃️ Datové modely (ukázka)
+## 🗄️ Datové modely (ukázka)
 
 ```json
 {
@@ -180,7 +178,7 @@ Filtrování: období, typ energie, jednotka, nemovitost, stav.
 
 ---
 
-## 📑 Doporučené workflow
+## 📋 Doporučené workflow
 
 1. Zadání nového odečtu (ručně/import) → propojení s obdobím → upozornění na nutnost odečtu
 2. Analýza spotřeby → grafy, tabulky, detekce odchylek
