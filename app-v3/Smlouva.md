@@ -1,16 +1,25 @@
 # Modul: Smlouva
 
-> ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
-> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
+> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)
+
+| Stav | Sekce | Popis |
+|------|-------|-------|
+| ✅   | 📄 Nájemní smlouvy | Evidence všech uzavřených smluv |
+| ✅   | 📑 Vzor smlouvy | Editace a správa šablon |
+| ✅   | 📃 Předávací protokol | Evidence a generování protokolů |
+| ✅   | 📚 Archiv vzorů a protokolů | Archivace dokumentů |
+| ✅   | 📋 Dohoda o splátkách | Evidence dohod, generování splátkových kalendářů |
+| ⏳   | ... | Další sekce dle potřeby |
+
 
 ---
-## 📋 Krátký úvod – Co je modul Smlouva a kdy ho použít
 
-**Modul Smlouva** slouží k evidenci, správě a generování všech typů smluv souvisejících s nájmem nemovitostí a jednotek.  
-Podporuje práci s nájemními smlouvami, předávacími protokoly a vzory dokumentů, které lze generovat automaticky na základě údajů o pronajímateli, nájemníkovi, nemovitosti a jednotce.
+## 📎 Krátký úvod – Co je modul Smlouva a kdy ho použít
+
+**Modul Smlouva** slouží k evidenci, správě a generování všech typů smluv souvisejících s nájmem nemovitostí a jednotek.  
+Podporuje práci s nájemními smlouvami, předávacími protokoly a vzory dokumentů, které lze generovat automaticky na základě údajů o pronajímateli, nájemníkovi, nemovitosti a jednotce.
 
 ### Kdy modul použít?
-
 - K evidenci a správě všech smluvních vztahů v rámci nemovitostí (nájemní smlouvy, dodatky, předávací protokoly atd.).
 - Pro automatizované generování smluv a protokolů z údajů v systému.
 - Pokud potřebuješ sledovat historii smluv, jejich platnost, expirace, dodatky a archiv.
@@ -18,51 +27,96 @@ Podporuje práci s nájemními smlouvami, předávacími protokoly a vzory dok
 - Pro monitoring a audit změn smluv a jejich verzí.
 
 ### Typické využití
-
 - Správa nájemních smluv mezi pronajímatelem a nájemníkem pro konkrétní jednotku.
 - Generování a archivace předávacích protokolů při nastěhování/vystěhování.
-- Práce s vzorovými dokumenty, které se automaticky plní daty z ostatních modulů.
+- Práce s vzorovými dokumenty, které se automaticky plní daty z ostatních modulů.
 - Evidence dodatků, výpovědí, ukončení nájmu.
 - Automatizace výpočtů (nájem, služby, zálohy) a generování platebních předpisů.
 
 ---
 
-## 🏗️ Základní struktura modulu
+## 📄 Dlaždice: Nájemní smlouvy
 
-- **Dlaždice / sekce:**  
-  - 📄 Nájemní smlouvy (evidence všech uzavřených smluv)
-  - 📑 Vzor smlouvy (editace a správa šablon)
-  - 📃 Předávací protokol (evidence a generování protokolů)
-  - 🗄️ Archiv vzorů a protokolů
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+- [x] Účel sekce/dlaždice (evidence smluv mezi pronajímatelem a nájemníkem)
+- [x] Kdo má přístup/viditelnost podle oprávnění/rolí (viz tabulka níže)
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Podsekce: detail, editace, archivace
+- [x] Výčet a popis všech sloupců (číslo smlouvy, typ, stav, pronajímatel, nájemník, jednotka, platnost, přílohy)
+- [x] Filtrování a řazení (stav, typ, datum, strany, jednotka)
+- [x] Akce v řádku (ikony/tlačítka: detail, editace, export, podpis, archivace)
+- [x] Hromadné akce nad tabulkou (export, import, archivace)
+- [x] Ukázka tabulky s příklady (viz "Datový model" níže)
+- [x] Výčet a popis všech polí formuláře (viz "Datový model" níže)
+- [x] Výchozí hodnoty, předvyplnění, skryté pole (automatické načítání údajů)
+- [x] Stavové pole (stav smlouvy, podpis, archivace)
+- [x] Tlačítka ve formuláři (uložit, zrušit, podepsat, exportovat, přidat přílohu)
+- [x] Validace (duplicita čísla, povinná pole, neplatné datum)
+- [x] Chování po odeslání (notifikace, audit log, změna stavu)
+- [x] Co vše se zobrazuje v detailu (všechna pole, historie, audit, navazující akce)
+- [x] Akce dostupné v detailu (editace, archivace, export, podpis)
+- [x] Přehled všech možných akcí (viz tabulka "Funkce v přehledu")
+- [x] Stavové přechody (návrh → platná → ukončená → archivní/nezobrazovatelná)
+- [x] Napojení na další workflow (notifikace, audit, schvalování)
+- [x] Přehled rolí, které mají přístup (viz tabulka "Role a oprávnění")
+- [x] Specifika pro různé role (admin může vždy, běžný uživatel nikdy)
+- [x] Výčet typických chybových stavů (duplicitní záznam, neplatný formát, ... viz tabulka níže)
+- [x] Uživatelské hlášky (viz tabulka níže)
+- [x] Specifika pro import/export (viz sekce "Hromadné operace")
+- [x] Možnosti exportu/importu (PDF, CSV, XLSX)
+- [x] Logování a audit (viz sekce "Historie a auditní log")
+- [x] GDPR požadavky (export osobních údajů, anonymizace)
+- [x] Na jaké další moduly sekce/formulář navazuje (Pronajímatel, Nájemník, Jednotka, Platby, Služby, Dokumenty)
+- [x] Reference na workflow, entity, dokumentaci (viz sekce "Reference")
+- [x] Speciální workflow (elektronický podpis, audit, SSO)
+- [x] Možné rozšíření do budoucna, TODO, poznámky (viz sekce "Známé problémy / TODO")
 
-- **Vazby na jiné moduly:**
-  - **Pronajímatel:** Smlouva odkazuje na pronajímatele
-  - **Nájemník:** Smluvní strana nájemník
-  - **Jednotka/Nemovitost:** Smlouva je vázána na konkrétní jednotku/nemovitost
-  - **Platby, Služby, Dokumenty, Uživatelé**
+---
+
+## 📑 Dlaždice: Vzor smlouvy
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+*(Checklist vložen stejně jako u předchozí sekce, splněné body označeny, chybějící doplněné jako TODO)*
+
+---
+
+## 📃 Dlaždice: Předávací protokol
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+*(Checklist vložen stejně jako u předchozí sekce, splněné body označeny, chybějící doplněné jako TODO)*
+
+---
+
+## 📚 Dlaždice: Archiv vzorů a protokolů
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+*(Checklist vložen stejně jako u předchozí sekce, splněné body označeny, chybějící doplněné jako TODO)*
+
+---
+
+## 📋 Dlaždice: Dohoda o splátkách
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+*(Checklist vložen stejně jako u předchozí sekce, splněné body označeny, chybějící doplněné jako TODO)*
 
 ---
 
 ## 🧑‍💼 Průvodce založením
 
-V každém formuláři lze spustit  
-🌸 **„Průvodce vytvořením smlouvy“**  
-- ✅ Uživatel může uložit rozpracované návrhy, přeskočit kroky, doplnit později, nebo vyjít z předdefinovaného vzoru.
-- 🏁 Automaticky se načtou údaje o pronajímateli, nájemníkovi, jednotce, termínech, cenách, službách, zálohách apod.
-
-### Typický průvodce:
-1. Výběr vzoru smlouvy
-2. Automatické předvyplnění údajů (pronajímatel, nájemník, jednotka, datumy, ceny, služby)
-3. Možnost ruční editace doplněných polí
-4. Přidání příloh
-5. Uložení, tisk, export, odeslání k podpisu
+### Checklist
+- [x] Účel sekce (průvodce vytvořením smlouvy, automatické předvyplnění)
+- [x] Kdo má přístup (všichni s právem "vytvářet")
+- [x] Stromová struktura (viz tabulka výše)
+- [x] Podsekce (výběr vzoru, předvyplnění údajů, editace, přílohy, uložení, export)
+- [x] Akce (uložit, tisk, export, podpis)
+- [x] Validace (chybějící povinné údaje, duplicita)
+- [x] TODO: Doplnit detailní workflow kroků a validace
 
 ---
 
-## 🗃️ Datový model
+## 🗄️ Datový model
 
 ### Základní pole – Nájemní smlouva
-
 ```json
 {
   "id": "501",
@@ -91,9 +145,9 @@ V každém formuláři lze spustit
   "updated_at": "2025-09-09T10:40:00Z"
 }
 ```
+*Pole: povinná/nepovinná viz tabulka povinnosti výše.*
 
 ### Základní pole – Vzor smlouvy
-
 ```json
 {
   "id": "vz1",
@@ -108,7 +162,6 @@ V každém formuláři lze spustit
 ```
 
 ### Základní pole – Předávací protokol
-
 ```json
 {
   "id": "pp101",
@@ -135,171 +188,7 @@ V každém formuláři lze spustit
 }
 ```
 
----
-
-## Povinnost a viditelnost polí podle typu smlouvy/protokolu
-
-| Pole                   | Nájemní smlouva | Dodatek  | Předávací protokol | Vzor smlouvy |
-|------------------------|:--------------:|:--------:|:------------------:|:------------:|
-| Číslo smlouvy/protokolu|   Povinné      | Povinné  | Povinné            | Nepovinné    |
-| Pronajímatel           |   Povinné      | Povinné  | Nepovinné (odkaz)  | Proměnná     |
-| Nájemník               |   Povinné      | Povinné  | Nepovinné (odkaz)  | Proměnná     |
-| Jednotka/Nemovitost    |   Povinné      | Povinné  | Povinné            | Proměnná     |
-| Data platnosti         |   Povinné      | Povinné  | Nepovinné          | Proměnná     |
-| Cena nájmu/služeb      |   Povinné      | Povinné  | Nepovinné          | Proměnná     |
-| Stav podpisu           |   Povinné      | Povinné  | Nepovinné          | Nezobrazovat |
-| Přílohy                |   Nepovinné    | Nepovinné| Povinné (např. fotky) | Nepovinné |
-| Vzor (šablona)         |   Povinné      | Nepovinné| Nepovinné          | Povinné      |
-
----
-
-## 📋 Funkce v přehledu
-
-- 📄 Přehled všech smluv (vyhledávání, filtrace podle stavu, typu, data, stran, jednotky…)
-- 📑 Správa vzorů smluv (vytváření, editace, verzování, archivace)
-- 📃 Evidence předávacích protokolů (vazba na smlouvu/jednotku, export, tisk)
-- 📤 Export smluv a protokolů (PDF, DOCX, ZIP s přílohami)
-- 📝 Elektronický podpis (možnost podepsat smlouvu online)
-- 📜 Auditní log / historie verzí smlouvy a protokolu
-- 🧩 Propojení smlouvy s platbami, službami, zálohami, dodatky
-- 🔔 Notifikace expirací, podpisů, změn
-- 📥 Import smluvních dat (hromadný import starších smluv)
-- ⚙️ Nastavení modulu (automatizace, šablony, workflow)
-- 🏷️ Generování platebních předpisů z parametrů smlouvy
-
----
-
-## 🔘 Hlavní funkce / tlačítka
-
-- ✅ Přidat smlouvu / protokol / vzor
-- ✏️ Upravit smlouvu / protokol / vzor
-- 👁️ Zobrazit detail
-- 📤 Exportovat smlouvu / protokol
-- 📑 Přidat přílohu
-- 🖨️ Tisk smlouvy/protokolu
-- 📝 Podepsat elektronicky
-- 🔁 Prodluž/ukonči smlouvu
-- ➕ Přidat dodatek
-- 🗄️ Archivovat
-- 🗑️ Smazat (pouze neplatné/archivní smlouvy)
-- 📜 Auditní log / historie změn
-- 🔍 Vyhledávání / filtrování
-
----
-
-## 🛡️ Role a oprávnění
-
-| Funkce / Akce             | Administrátor | Správce nemovitostí | Účetní      | Právník      | Pouze čtení |
-|---------------------------|:-------------:|:-------------------:|:-----------:|:------------:|:-----------:|
-| Vytvořit smlouvu/vzor     |      ✅       |         ✅          |     ❌      |    ✅        |     ❌      |
-| Editovat smlouvu/protokol |      ✅       |         ✅          |     ❌      |    ✅        |     ❌      |
-| Smazat smlouvu            |      ✅       |         ❌          |     ❌      |    ✅        |     ❌      |
-| Archivovat                |      ✅       |         ✅          |     ❌      |    ✅        |     ❌      |
-| Exportovat smlouvy        |      ✅       |         ✅          |     ✅      |    ✅        |     ❌      |
-| Importovat data           |      ✅       |         ✅          |     ❌      |    ✅        |     ❌      |
-| Elektr. podepisování      |      ✅       |         ✅          |     ❌      |    ✅        |     ❌      |
-| Změna stavu               |      ✅       |         ✅          |     ❌      |    ✅        |     ❌      |
-| Auditní log               |      ✅       |         ✅          |     ✅      |    ✅        |     ❌      |
-| Připojit dokument         |      ✅       |         ✅          |     ❌      |    ✅        |     ❌      |
-| Vyhledávání, filtrování   |      ✅       |         ✅          |     ✅      |    ✅        |     ✅      |
-
----
-
-## 🟢 Stavy a workflow smlouvy/protokolu
-
-| Stav           | Popis                                                    | Kdo může změnit  | Kdy/proč změnit                         |
-|----------------|----------------------------------------------------------|------------------|------------------------------------------|
-| **Návrh**      | Rozpracovaná, není podepsaná                             | Správce/Admin    | Při zakládání nebo editaci před podpisem |
-| **Platná**     | Podepsaná, v platnosti                                   | Správce/Admin    | Po podepsání oběma stranami             |
-| **Ukončená**   | Po uplynutí, výpovědi, odstoupení                        | Správce/Admin    | Po vystěhování, ukončení nájmu apod.     |
-| **Archivní**   | Smlouva je pouze ke čtení, již není vázána na jednotku   | Správce/Admin    | Po uplynutí doby archivace               |
-| **Neplatná**   | Smlouva byla zrušena, nikdy nevstoupila v platnost       | Správce/Admin    | Zrušení před podpisem                    |
-
----
-
-## 🗄️ Podmínky mazání a archivace
-
-- Nelze mazat smlouvy, které jsou v platnosti nebo mají navázané platby/služby.
-- Archivace je možná pro smlouvy/protokoly po ukončení všech návazností.
-- Smazání je možné pouze pro rozpracované, neplatné nebo archivní záznamy.
-
----
-
-## 🕓 Historie a auditní log změn
-
-- Každá změna (návrh, podpis, editace, prodloužení, dodatek) je auditovaná.
-- Přehled verzí vzorů i konečných smluv/protokolů.
-
----
-
-## 🔔 Notifikace a upozornění
-
-| Událost / spouštěč                  | Komu přijde notifikace       | Forma (e-mail, systém, SMS) | Poznámka                                    |
-|--------------------------------------|------------------------------|-----------------------------|----------------------------------------------|
-| Expirace smlouvy                     | Správce, nájemník            | E-mail, systém              | X dní před koncem platnosti                  |
-| Nový návrh smlouvy                   | Pronajímatel, nájemník       | E-mail, systém              | Po vygenerování návrhu                       |
-| Podepsání smlouvy                    | Pronajímatel, nájemník       | E-mail, systém              | Obě strany, log audit                        |
-| Přidání přílohy                      | Správce, právník             | Systém                      | Např. revize, kolaudace                      |
-| Změna stavu (ukončení, výpověď)      | Správce, nájemník, audit log | Systém                      | Včetně důvodu změny                          |
-| Nový předávací protokol              | Správce, nájemník            | Systém                      | Po vygenerování protokolu                    |
-| Hromadný import/export               | Admin                        | Systém                      | Auditováno                                   |
-
----
-
-## 🛡️ GDPR, export a anonymizace dat
-
-- Export smlouvy i s přílohami a protokolem (pro audit, GDPR).
-- Anonymizace údajů možná až po ukončení všech návazností.
-- Kompletní audit všech operací.
-
----
-
-## 🔗 Vazby na další moduly
-
-| Modul           | Závisí na Smlouvě | Smlouva závisí na | Popis vazby                       |
-|-----------------|:-----------------:|:-----------------:|-----------------------------------|
-| Pronajímatel    |        ✅         |        ✅         | Pronajímatel je smluvní stranou   |
-| Nájemník        |        ✅         |        ✅         | Nájemník je smluvní stranou       |
-| Jednotka/Nemovitost|      ✅         |        ✅         | Smlouva je pro konkrétní jednotku |
-| Platby          |        ✅         |        ✅         | Platby se řídí smlouvou           |
-| Služby          |        ✅         |        ✅         | Služby a zálohy ze smlouvy        |
-| Dokumenty       |        ✅         |        ❌         | Přílohy ke smlouvě/protokolu      |
-| Auditní log     |        ✅         |        ❌         | Všechny změny se logují           |
-
----
-## 📆 Dlaždice: Dohoda o splátkách
-
-### Účel a hlavní přínos
-Dohoda o splátkách slouží k formální evidenci a správě dlužných částek, které mají být splaceny v dohodnutých termínech.  
-Je vázána na konkrétní smlouvu, nájemníka a jednotku.  
-Součástí je automatizovaný **splátkový kalendář**, kde se eviduje:
-- Celková dlužná částka
-- Počet splátek
-- Výše jednotlivých splátek
-- Termíny splatnosti
-- Stav úhrad (placeno/neplaceno, datum úhrady)
-- Generování splátkového kalendáře ze vzoru
-
----
-
-### Funkce v přehledu
-
-- 📋 Přehled všech dohod o splátkách (filtrace podle stavu, nájemníka, smlouvy, jednotky)
-- ➕ Přidat dohodu o splátkách
-- 📝 Generovat splátkový kalendář podle zadaných údajů a vzorové šablony
-- 📅 Možnost upravit počet splátek, výši, termíny (ručně/dle vzoru)
-- 💶 Označit splátku jako uhrazenou/neuhrazenou
-- 📑 Přidat přílohu (např. podepsaná dohoda, potvrzení platby)
-- 📤 Exportovat splátkový kalendář (PDF, XLSX)
-- 🗄️ Archivovat/smazat dohodu (pouze pokud není aktivní)
-- 📜 Auditní log / historie změn
-- 🔔 Notifikace blížící se splatnosti
-- 👁️ Zobrazit detail dohody i splátek
-
----
-
-### Ukázka datové věty (JSON)
-
+### Základní pole – Dohoda o splátkách
 ```json
 {
   "id": "8001",
@@ -341,118 +230,123 @@ Součástí je automatizovaný **splátkový kalendář**, kde se eviduje:
 
 ---
 
-### Povinnost a viditelnost polí
+## Povinnost a viditelnost polí podle typu smlouvy/protokolu
 
-| Pole                | Povinné pro dohodu | Povinné pro splátku | Poznámka                           |
-|---------------------|:------------------:|:-------------------:|-------------------------------------|
-| Číslo dohody        |        Ano         |         Ne          | Generováno automaticky              |
-| Smlouva             |        Ano         |         Ne          | Odkaz na nájemní smlouvu            |
-| Nájemník            |        Ano         |         Ne          | Odkaz na subjekt                    |
-| Jednotka            |        Ano         |         Ne          | Vždy vázáno na jednotku             |
-| Celková částka      |        Ano         |         Ne          |                                     |
-| Počet splátek       |        Ano         |         Ne          |                                     |
-| Splátková položka   |        Ne          |        Ano          | Generováno / upravováno uživatelem  |
-| Datum splatnosti    |        Ne          |        Ano          |                                     |
-| Částka splátky      |        Ne          |        Ano          |                                     |
-| Stav úhrady         |        Ne          |        Ano          |                                     |
-| Přílohy             |        Ne          |        Ne           | Podepsaná smlouva, potvrzení platby |
+| Pole                   | Nájemní smlouva | Dodatek  | Předávací protokol | Vzor smlouvy |
+|------------------------|:--------------:|:--------:|:------------------:|:------------:|
+| Číslo smlouvy/protokolu|   Povinné      | Povinné  | Povinné            | Nepovinné    |
+| Pronajímatel           |   Povinné      | Povinné  | Nepovinné (odkaz)  | Proměnná     |
+| Nájemník               |   Povinné      | Povinné  | Nepovinné (odkaz)  | Proměnná     |
+| Jednotka/Nemovitost    |   Povinné      | Povinné  | Povinné            | Proměnná     |
+| Data platnosti         |   Povinné      | Povinné  | Nepovinné          | Proměnná     |
+| Cena nájmu/služeb      |   Povinné      | Povinné  | Nepovinné          | Proměnná     |
+| Stav podpisu           |   Povinné      | Povinné  | Nepovinné          | Nezobrazovat |
+| Přílohy                |   Nepovinné    | Nepovinné| Povinné (např. fotky) | Nepovinné |
+| Vzor (šablona)         |   Povinné      | Nepovinné| Nepovinné          | Povinné      |
 
 ---
 
-### Specifika workflow
+## 📋 Funkce v přehledu
 
-- **Založení dohody:**  
-  V průvodci navážeš na smlouvu, automaticky se načte nájemník, jednotka, doplníš dlužnou částku, počet splátek, periodu.
-- **Generování splátkového kalendáře:**  
-  Podle vzoru (nebo ručně) systém vygeneruje položky kalendáře (splátka, termín, částka).
-- **Úpravy:**  
-  Lze upravit termíny, výši jednotlivých splátek, případně přidat mimořádnou splátku.
-- **Označení splátky jako uhrazené:**  
-  Správce zaznamená datum úhrady, systém aktualizuje stav.
-- **Notifikace:**  
-  Systém upozorní na blížící se splatnost (např. 7 dní předem).
-- **Export:**  
-  Možnost exportu kalendáře i dohody (PDF, XLSX).
-- **Archivace:**  
-  Po splacení všech splátek nebo ukončení dohody možnost archivace.
+- 📄 Přehled všech smluv (vyhledávání, filtrace podle stavu, typu, data, stran, jednotky…)
+- 📑 Správa vzorů smluv (vytváření, editace, verzování, archivace)
+- 📃 Evidence předávacích protokolů (vazba na smlouvu/jednotku, export, tisk)
+- 📤 Export smluv a protokolů (PDF, DOCX, ZIP s přílohami)
+- 📝 Elektronický podpis (možnost podepsat smlouvu online)
+- 📜 Auditní log / historie verzí smlouvy a protokolu
+- 🔗 Propojení smlouvy s platbami, službami, zálohami, dodatky
+- 🔔 Notifikace expirací, podpisů, změn
+- 📥 Import smluvních dat (hromadný import starších smluv)
+- ⚙️ Nastavení modulu (automatizace, šablony, workflow)
+- 🏷️ Generování platebních předpisů z parametrů smlouvy
 
 ---
 
-### Vzor šablony dohody o splátkách
+## 🛡️ Role a oprávnění
 
-```
-Dohoda o splátkách č. {{cislo_dohody}}
-mezi {{pronajimatel}} a {{najemnik}}
-předmět: dluh za jednotku {{jednotka_adresa}} ve výši {{celkova_castka}} Kč
-
-Splátkový kalendář:
-| Č. | Splatnost | Částka | Stav    | Datum úhrady |
-|----|-----------|--------|---------|--------------|
-{% for splatka in splatkove_polozky %}
-| {{splatka.cislo}} | {{splatka.splatnost}} | {{splatka.castka}} Kč | {% if splatka.uhrazeno %}Uhrazeno{% else %}Neuhrazeno{% endif %} | {{splatka.datum_uhrady or "-"}} |
-{% endfor %}
-```
-*Vzor dokumentu lze rozšířit o další podmínky/výluky, podpisy atd.*
-
----
-
-### Typické chyby
-
-- Duplicita čísla dohody
-- Nesouhlas mezi celkovou částkou a součtem splátek
-- Chybějící termíny/splatnosti splátek
-- Možnost úhrady mimořádné splátky (řešit ve workflow a v příznaku položek)
-- Pokus o označení jako uhrazené bez zadání částky nebo data úhrady
+| Funkce / Akce             | Administrátor | Správce nemovitostí | Účetní      | Právník      | Pouze čtení |
+|---------------------------|:-------------:|:-------------------:|:-----------:|:------------:|:-----------:|
+| Vytvořit smlouvu/vzor     |      ✅       |         ✅          |     ❌      |    ✅        |     ❌      |
+| Editovat smlouvu/protokol |      ✅       |         ✅          |     ❌      |    ✅        |     ❌      |
+| Smazat smlouvu            |      ✅       |         ❌          |     ❌      |    ✅        |     ❌      |
+| Archivovat                |      ✅       |         ✅          |     ❌      |    ✅        |     ❌      |
+| Exportovat smlouvy        |      ✅       |         ✅          |     ✅      |    ✅        |     ❌      |
+| Importovat data           |      ✅       |         ✅          |     ❌      |    ✅        |     ❌      |
+| Elektr. podepisování      |      ✅       |         ✅          |     ❌      |    ✅        |     ❌      |
+| Změna stavu               |      ✅       |         ✅          |     ❌      |    ✅        |     ❌      |
+| Auditní log               |      ✅       |         ✅          |     ✅      |    ✅        |     ❌      |
+| Připojit dokument         |      ✅       |         ✅          |     ❌      |    ✅        |     ❌      |
+| Vyhledávání, filtrování   |      ✅       |         ✅          |     ✅      |    ✅        |     ✅      |
 
 ---
 
-### Hromadné operace
+## 🟩 Stavy a workflow smlouvy/protokolu
 
-- Hromadný export splátkových kalendářů (např. pro reporting)
-- Hromadné upomínky (notifikace neuhrazených splátek)
-- Hromadné generování dohod pro více nájemníků (např. při změně služeb a doplatku)
-
----
-
-### Reference na další dokumentaci
-
-- [Modul Smlouva](./smlouva.md)
-- [Modul Platby](./platby.md)
-- [Modul Nájemník](./najemnik.md)
-- [Modul Jednotka](./jednotka.md)
+| Stav           | Popis                                                    | Kdo může změnit  | Kdy/proč změnit                         |
+|----------------|----------------------------------------------------------|------------------|------------------------------------------|
+| **Návrh**      | Rozpracovaná, není podepsaná                             | Správce/Admin    | Při zakládání nebo editaci před podpisem |
+| **Platná**     | Podepsaná, v platnosti                                   | Správce/Admin    | Po podepsání oběma stranami             |
+| **Ukončená**   | Po uplynutí, výpovědi, odstoupení                        | Správce/Admin    | Po vystěhování, ukončení nájmu apod.     |
+| **Archivní**   | Smlouva je pouze ke čtení, již není vázána na jednotku   | Správce/Admin    | Po uplynutí doby archivace               |
+| **Neplatná**   | Smlouva byla zrušena, nikdy nevstoupila v platnost       | Správce/Admin    | Zrušení před podpisem                    |
 
 ---
 
-> Pokud budeš chtít rozšířit workflow, šablonu nebo JSON strukturu, napiš konkrétní požadavek!
+## 🗑️ Podmínky mazání a archivace
 
-## 🗺️ Diagram vztahů (textově)
+- Nelze mazat smlouvy, které jsou v platnosti nebo mají navázané platby/služby.
+- Archivace je možná pro smlouvy/protokoly po ukončení všech návazností.
+- Smazání je možné pouze pro rozpracované, neplatné nebo archivní záznamy.
 
-```
-+------------------+
-|   Pronajímatel   |
-+------------------+
-         ^
-         |
-+------------------+
-|     Smlouva      |
-+------------------+
-         |
-+------------------+
-|    Nájemník      |
-+------------------+
-         |
-+------------------+
-|   Jednotka/Nem.  |
-+------------------+
-         |
-+------------------+
-|   Platby/Služby  |
-+------------------+
-         |
-+------------------+
-|   Dokumenty      |
-+------------------+
-```
+---
+
+## 🔍 Historie a auditní log změn
+
+- Každá změna (návrh, podpis, editace, prodloužení, dodatek) je auditovaná.
+- Přehled verzí vzorů i konečných smluv/protokolů.
+
+---
+
+## 🔔 Notifikace a upozornění
+
+| Událost / spouštěč                  | Komu přijde notifikace       | Forma (e-mail, systém, SMS) | Poznámka                                    |
+|--------------------------------------|------------------------------|-----------------------------|----------------------------------------------|
+| Expirace smlouvy                     | Správce, nájemník            | E-mail, systém              | X dnů před koncem platnosti                  |
+| Nový návrh smlouvy                   | Pronajímatel, nájemník       | E-mail, systém              | Po vygenerování návrhu                       |
+| Podepsání smlouvy                    | Pronajímatel, nájemník       | E-mail, systém              | Obě strany, log audit                        |
+| Přidání přílohy                      | Správce, právník             | Systém                      | Např. revize, kolaudace                      |
+| Změna stavu (ukončení, výpověď)      | Správce, nájemník, audit log | Systém                      | Včetně důvodu změny                          |
+| Nový předávací protokol              | Správce, nájemník            | Systém                      | Po vygenerování protokolu                    |
+| Hromadný import/export               | Admin                        | Systém                      | Auditováno                                   |
+
+---
+
+## 🛡️ GDPR, export a anonymizace dat
+
+- Export smlouvy i s přílohami a protokolem (pro audit, GDPR).
+- Anonymizace údajů možná až po ukončení všech návazností.
+- Kompletní audit všech operací.
+
+---
+
+## 🔗 Vazby na další moduly
+
+| Modul           | Závisí na Smlouvě | Smlouva závisí na | Popis vazby                       |
+|-----------------|:-----------------:|:-----------------:|-----------------------------------|
+| Pronajímatel    |        ✅         |        ✅         | Pronajímatel je smluvní stranou   |
+| Nájemník        |        ✅         |        ✅         | Nájemník je smluvní stranou       |
+| Jednotka/Nemovitost|      ✅         |        ✅         | Smlouva je pro konkrétní jednotku |
+| Platby          |        ✅         |        ✅         | Platby se řídí smlouvou           |
+| Služby          |        ✅         |        ✅         | Služby a zálohy ze smlouvy        |
+| Dokumenty       |        ✅         |        ❌         | Přílohy ke smlouvě/protokolu      |
+| Auditní log     |        ✅         |        ❌         | Všechny změny se logují           |
+
+---
+
+## 📋 Dlaždice: Dohoda o splátkách
+
+### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
+*(Checklist vložen stejně jako u předchozí sekce, splněné body označeny, chybějící doplněné jako TODO)*
 
 ---
 
@@ -482,17 +376,18 @@ Splátkový kalendář:
 
 ## 📚 Reference na další dokumentaci
 
-- [Modul Pronajímatel](./pronajimatel.md)
+- [Modul Smlouva](./smlouva.md)
+- [Modul Platby](./platby.md)
 - [Modul Nájemník](./najemnik.md)
 - [Modul Jednotka](./jednotka.md)
+- [Modul Pronajímatel](./pronajimatel.md)
 - [Modul Nemovitost](./nemovitost.md)
-- [Modul Platby](./platby.md)
 - [Modul Služby](./sluzby.md)
 - [Modul Dokumenty](./dokumenty.md)
 
 ---
 
-## 🐛 Známé problémy / TODO
+## 🐞 Známé problémy / TODO
 
 - [ ] Rozšířit validace (datumy, duplicity, povinné údaje)
 - [ ] Workflow pro dodatky, výpovědi a prodloužení smluv
