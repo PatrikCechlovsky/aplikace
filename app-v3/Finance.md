@@ -1,101 +1,175 @@
-> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)
+> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)  
+> ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
+> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
 
 # Modul: Finance
 
 ---
 
-## Stromová struktura modulu
+## 🌲 Stromová struktura modulu
 
 | Stav | Sekce | Popis |
 |------|-------|-------|
 | ✅   | 🟦 Přehled financí (dashboard) | Grafické ukazatele, výběr úrovně, cashflow |
 | ✅   | 🟦 Příjmy | Příjmy z nájmů, služeb, ostatní, historie, predikce |
 | ✅   | 🟦 Náklady a výdaje | Náklady na energie, údržbu, daně, investice |
-| ✅   | 🟦 Daně a poplatky | Přehled, upozornění, export               |
-| ✅   | 🟦 Porovnání období a analytika | Vývoj rentability, grafy, export          |
-| ✅   | 🟦 Přehled za jednotku/nemovitost | Detailní rozpad příjmů, nákladů, zisku   |
-| ✅   | 🟦 Statistika a vizualizace | Grafy, tabulky, poměrové grafy           |
+| ✅   | 🟦 Daně a poplatky | Přehled, upozornění, export |
+| ✅   | 🟦 Porovnání období a analytika | Vývoj rentability, grafy, export |
+| ✅   | 🟦 Přehled za jednotku/nemovitost | Detailní rozpad příjmů, nákladů, zisku |
+| ✅   | 🟦 Statistika a vizualizace | Grafy, tabulky, poměrové grafy |
 | ✅   | 🟦 Plánování (forecasting) | Plánované příjmy/výdaje, cashflow, rozpočet |
-| ✅   | 🟦 Investice a mimořádné výdaje | Evidence investic, návratnost, rozpad    |
+| ✅   | 🟦 Investice a mimořádné výdaje | Evidence investic, návratnost, rozpad |
 | ✅   | 🟦 Automatizace a pravidla | Pravidla pro rozpočítání, automatické reporty |
-| ✅   | 🟦 Saldo účtů | Evidence účtů, zůstatky, párování pohybů   |
+| ✅   | 🟦 Saldo účtů | Evidence účtů, zůstatky, párování pohybů |
 | ✅   | 🟦 Přístupová práva pro více pronajímatelů | Sdílení reportů, granularita přístupu |
-| ✅   | 🗒️ Poznámky, nápady a úkoly | Prostor pro další poznámky a TODO         |
+| ✅   | 📝 Poznámky, nápady a úkoly | Prostor pro další poznámky a TODO |
 
 ---
 
 ## 🟦 Přehled financí (dashboard)
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Účel, uživatelé, pole, workflow, validace, akce, chybové stavy
-- ✅ Grafické ukazatele, výběr úrovně, cashflow
+- [x] Účel sekce/dlaždice (grafické ukazatele, výběr úrovně, cashflow)
+- [x] Kdo má přístup/viditelnost podle oprávnění/rolí
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Podsekce: detail, editace, statistiky
+- [x] Výčet a popis všech sloupců/poloh (ukazatel, období, jednotka, cashflow)
+- [x] Filtrování a řazení (období, jednotka, typ příjmu/výdaje)
+- [x] Akce v řádku (detail, export, audit)
+- [x] Hromadné akce nad tabulkou
+- [x] Ukázka tabulky/přehledu
+- [x] Výčet a popis všech polí formuláře
+- [x] Výchozí hodnoty, předvyplnění
+- [x] Stavové pole (aktivní, archivní)
+- [x] Tlačítka ve formuláři (uložit, zrušit, exportovat)
+- [x] Validace (neplatné hodnoty, povinná pole)
+- [x] Chování po odeslání (notifikace, audit log)
+- [x] Co vše se zobrazuje v detailu (historie, audit)
+- [x] Akce dostupné v detailu
+- [x] Stavové přechody
+- [x] Napojení na další workflow
+- [x] Přehled rolí, které mají přístup
+- [x] Specifika pro různé role
+- [x] Typické chybové stavy
+- [x] Uživatelské hlášky
+- [x] Specifika pro import/export
+- [x] Možnosti exportu/importu
+- [x] Logování a audit
+- [x] GDPR požadavky
+- [x] Reference na workflow, entity, dokumentaci
+- [x] Speciální workflow
+- [x] Možné rozšíření/TODO
 
 ---
 
 ## 🟦 Příjmy / Náklady a výdaje / Daně a poplatky
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Evidovat příjmy z nájmů, služeb, ostatní; náklady na energie, údržbu, daně; poplatky, daně, upozornění na splatnost
+- [x] Evidovat příjmy z nájmů, služeb, ostatní; náklady na energie, údržbu, daně; poplatky, daně, upozornění na splatnost
+- [x] Kdo má přístup/viditelnost podle oprávnění/rolí
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Podsekce: příjmy, náklady, poplatky, editace
+- [x] Výčet a popis všech polí
+- [x] Validace, workflow, audit, GDPR, reference, TODO
 
 ---
 
 ## 🟦 Porovnání období a analytika
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Grafy, tabulky, trendové analýzy, porovnání období, export
+- [x] Grafy, tabulky, trendové analýzy, porovnání období, export
+- [x] Kdo má přístup/viditelnost podle oprávnění/rolí
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Podsekce: grafy, analytika, export
+- [x] Výčet a popis všech polí
+- [x] Validace, workflow, audit, GDPR, reference, TODO
 
 ---
 
 ## 🟦 Přehled za jednotku / nemovitost
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Rozpad příjmů, nákladů, zisku, rozpočítání sdílených nákladů
+- [x] Rozpad příjmů, nákladů, zisku, rozpočítání sdílených nákladů
+- [x] Kdo má přístup/viditelnost podle oprávnění/rolí
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Podsekce: jednotka, nemovitost, detail, historie, audit
+- [x] Výčet a popis všech polí
+- [x] Validace, workflow, audit, GDPR, reference, TODO
 
 ---
 
 ## 🟦 Statistika a vizualizace
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Grafy, tabulky, poměrové grafy, export
+- [x] Grafy, tabulky, poměrové grafy, export
+- [x] Kdo má přístup/viditelnost podle oprávnění/rolí
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Podsekce: statistiky, vizualizace, export
+- [x] Výčet a popis všech polí
+- [x] Validace, workflow, audit, GDPR, reference, TODO
 
 ---
 
 ## 🟦 Plánování (forecasting)
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Plánované příjmy/výdaje, cashflow, rozpočet, odchylky, export
+- [x] Plánované příjmy/výdaje, cashflow, rozpočet, odchylky, export
+- [x] Kdo má přístup/viditelnost podle oprávnění/rolí
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Podsekce: plánování, forecasting, rozpočet, simulace
+- [x] Výčet a popis všech polí
+- [x] Validace, workflow, audit, GDPR, reference, TODO
 
 ---
 
 ## 🟦 Investice a mimořádné výdaje
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Evidence investic, plán vs. skutečnost, návratnost, rozpad na období
+- [x] Evidence investic, plán vs. skutečnost, návratnost, rozpad na období
+- [x] Kdo má přístup/viditelnost podle oprávnění/rolí
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Podsekce: investice, výdaje, rozpad, audit
+- [x] Výčet a popis všech polí
+- [x] Validace, workflow, audit, GDPR, reference, TODO
 
 ---
 
 ## 🟦 Automatizace a pravidla
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Pravidla pro rozpočítání, automatické reporty, schvalovací workflow
+- [x] Pravidla pro rozpočítání, automatické reporty, schvalovací workflow
+- [x] Kdo má přístup/viditelnost podle oprávnění/rolí
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Podsekce: pravidla, reporting, workflow
+- [x] Výčet a popis všech polí
+- [x] Validace, audit, GDPR, reference, TODO
 
 ---
 
 ## 🟦 Saldo účtů
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Evidence bankovních účtů, zůstatky, historie, párování pohybů
+- [x] Evidence bankovních účtů, zůstatky, historie, párování pohybů
+- [x] Kdo má přístup/viditelnost podle oprávnění/rolí
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Podsekce: účty, saldo, historie, audit
+- [x] Výčet a popis všech polí
+- [x] Validace, workflow, audit, GDPR, reference, TODO
 
 ---
 
 ## 🟦 Přístupová práva pro více pronajímatelů
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-- ✅ Sdílení reportů, granularita přístupu, auditní log
+- [x] Sdílení reportů, granularita přístupu, auditní log
+- [x] Kdo má přístup/viditelnost podle oprávnění/rolí
+- [x] Zařazení v hlavní stromové struktuře
+- [x] Výčet a popis všech polí
+- [x] Validace, audit, GDPR, reference, TODO
 
 ---
 
-## 🗒️ Poznámky, nápady a úkoly k modulu i dlaždicím
+## 📝 Poznámky, nápady a úkoly k modulu i dlaždicím
 
 > Zde piš vše, co je potřeba doplnit, změnit nebo vyřešit.  
 > ⏳ = rozpracováno, přeškrtni hotové.
@@ -120,7 +194,7 @@
 
 ---
 
-## 🗃️ Datové modely (ukázka)
+## 🗄️ Datové modely (ukázka)
 
 ```json
 {
@@ -196,7 +270,7 @@
 
 ---
 
-## 📑 Doporučené workflow
+## 📋 Doporučené workflow
 
 1. Plánování příjmů a výdajů → zadání částek do rozpočtu → automatické porovnání skutečnosti vs. plán, zvýraznění odchylek
 2. Evidence investic → vložení nové akce (plán, skutečnost, termíny) → vyhodnocení návratnosti
@@ -215,4 +289,4 @@
 
 ---
 
-> Modul Finance je klíčový pro strategické plánování, transparentní správu a dlouhodobou rentabilitu portfolia nemovitostí. Umožňuje rozpočtování, plánování investic, automatizaci i správu více vlastníků.
+> Modul Finance je klíčový pro strategické plánování, transparentní správu a dlouhodobou rentabilitu portfolia nemovitostí. Umožňuje rozpočtování, plánování investic, automatizaci reportingu a granularitu přístupových práv.
