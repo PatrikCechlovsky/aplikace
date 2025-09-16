@@ -69,11 +69,44 @@
 
 ---
 
+## 6. Inspirace profi systémy a doporučení pro pokročilou implementaci
+
+### Rozšířené verzování smluv a příloh
+- Umožni nejen audit změn hodnot, ale i textové porovnání verzí (diff smlouvy, diff příloh).
+- Každá změna dokumentu nebo přílohy vytváří novou verzi, je možné revertovat na libovolnou předchozí.
+- Označuj major/minor změny, případně schvalovací workflow pro každou verzi zvlášť.
+
+### Hlavička smlouvy a neměnné podmínky
+- Každý generovaný dokument obsahuje neměnnou hlavičku s náležitostmi:
+  - číslo smlouvy, typ, účastníci, datum uzavření, unikátní hash, platnost, stav podpisu.
+- Sekce „Neměnné podmínky“:
+  - V každé šabloně je blok „všeobecné podmínky“ (readonly), případně připojená příloha (PDF).
+  - Tento blok není editovatelný běžným workflow.
+
+### Pokročilá práce s přílohami
+- Každá příloha má svůj auditní log (kdy a kým byla přidána, změněna, smazána, podepsána).
+- Přílohu lze podepisovat samostatně, nebo schvalovat odděleným workflow.
+
+### Schvalovací a podpisové workflow
+- Podpora víceúrovňového schvalování (sekvenční i paralelní workflow): např. právník → jednatel → podpis.
+- Možnost vícekanálového podpisu (BankID, SMS, klikací, biometrie).
+
+### Audit, exporty a bezpečnost
+- Detailní logování exportů a downloadů (kdo kdy stáhl/sdílel smlouvu/přílohu).
+- Export každé verze smlouvy i auditní stopy (pro případ auditu nebo GDPR požadavků).
+
+---
+
+**Shrnutí:**  
+Tato doporučení nejsou nezbytná pro základní provoz, ale jejich zapracování výrazně zvýší úroveň i auditní bezpečnost modulu.  
+Pokud chceš některé části rozvést (např. příklad hlavičky, datový model příloh, workflow schvalování), napiš přesně, co doplnit!
+
 ## Jak bych to udělal já?
 - Všechny generované dokumenty (smlouvy, protokoly, dodatky) vznikají výhradně přes modul Smlouva.
 - Všechny dokumenty, které mají být v systému uchovány, se po vytvoření automaticky zapisují i do modulu Dokumenty.
 - V modulu Dokumenty se pouze zobrazují, stahují, exportují a archivují – nikdy se zde už nová smlouva „netvoří“.
 - Formulář Smlouvy je dynamický – načítá data z ostatních modulů podle výběru uživatele a vzoru.
+---
 
 ---
 # Modul: Smlouva
