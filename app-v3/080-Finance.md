@@ -1,8 +1,8 @@
+# Modul: Finance
+
 > ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)  
 > ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
 > ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
-
-# Modul: Finance
 
 ---
 
@@ -172,7 +172,7 @@
 ## 📝 Poznámky, nápady a úkoly k modulu i dlaždicím
 
 > Zde piš vše, co je potřeba doplnit, změnit nebo vyřešit.  
-> ⏳ = rozpracováno, přeškrtni hotové.
+> ⏳ = rozpracováno, přeškrtni hotové. Nic nemažeme!
 
 - ⏳ Automatizace importu dat z banky (API, formátování)
 - ⏳ Možnost napojení na účetnictví (export/import)
@@ -184,6 +184,12 @@
 - ⏳ Hromadné importy plánovaných výdajů/příjmů
 - ⏳ Podpora pro „položky na čekání“ (zatím nespárované, nevyúčtované)
 - ⏳ Plánované a skutečné cashflow – možnost simulace změn
+- ⏳ **Možnost přidat přílohu (např. fakturu, doklad) ke každému finančnímu záznamu – doporučujeme doplnit pole „prilohy“ do všech modelů**
+- ⏳ **Explicitně doplnit pole „poznámka“ do všech záznamů a formulářů**
+- ⏳ **Zvážit možnost schvalování rozpočtových změn (workflow)**
+- ⏳ **Podpora DPH a anonymizace dat pro sdílené reporty**
+- ⏳ **Zvážit granularitu dělení sdílených nákladů (plocha, osoby, kombinace)**
+- ⏳ **Možnost vlastních kategorií příjmů/nákladů uživatelem**
 
 > Otázky k doplnění:
 > - Potřebujeme schvalovací workflow na každou změnu rozpočtu?
@@ -206,7 +212,8 @@
   "obdobi": "2026-01",
   "castka_skutecnost": 13200,
   "odchylka": -300,
-  "poznamka": "Menší příjem kvůli opravě bytu"
+  "poznamka": "Menší příjem kvůli opravě bytu",
+  "prilohy": []
 }
 ```
 ```json
@@ -219,7 +226,8 @@
   "datum_zahajeni": "2025-03-15",
   "datum_ukonceni": "2025-05-20",
   "stav": "dokončeno",
-  "poznámka": "Modernizace koupelny v jednotce 101"
+  "poznámka": "Modernizace koupelny v jednotce 101",
+  "prilohy": ["faktura_2025.pdf"]
 }
 ```
 ```json
@@ -289,4 +297,4 @@
 
 ---
 
-> Modul Finance je klíčový pro strategické plánování, transparentní správu a dlouhodobou rentabilitu portfolia nemovitostí. Umožňuje rozpočtování, plánování investic, automatizaci reportingu a granularitu přístupových práv.
+> Modul Finance je klíčový pro strategické plánování, transparentní správu a dlouhodobou rentabilitu portfolia nemovitostí. Umožňuje rozpočtování, plánování investic, automatizaci, správu více vlastníků a je připraven na rozšiřitelnost podle potřeb praxe.
