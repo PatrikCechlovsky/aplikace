@@ -1,3 +1,109 @@
+# ARCHITEKTURA A WORKFLOW MODULU DOKUMENTY (doplněno Copilotem)
+
+---
+
+## 1. Integrační logika a workflow napojení na modul Smlouva
+
+- Každý dokument (smlouva, protokol, dodatek, splátkový kalendář) **vzniká v domovském modulu** (nejčastěji Smlouva, případně Platby, Údržba apod.).
+- Po vytvoření/vygenerování je dokument **automaticky zapsán do modulu Dokumenty** – evidence, vyhledávání, filtrování, export, audit.
+- **Reference na zdrojovou entitu** je vždy povinná (`smlouva_id`, `protokol_id`, `platba_id`...).
+- Veškeré workflow související s **podpisem, schválením, úpravami** probíhá výhradně v domovském modulu, v Dokumentech pouze evidence, verzování, archivace, export, audit.
+- Modul Dokumenty **nikdy neslouží k samotné tvorbě smluv nebo protokolů** – pouze jako knihovna a auditní úložiště.
+- V případě potřeby lze dokument **anonymizovat nebo smazat** (dle pravidel a práv).
+
+---
+
+## 2. Doporučené datové modely a pole
+
+- Každý záznam dokumentu má:
+  - **id, typ, stav**
+  - **sablona_id** (pokud vznikl ze šablony)
+  - **prirazeno_k** – objekt obsahující reference na entity (`smlouva_id`, `protokol_id`, atd.)
+  - **podpisy, historie, audit_log**
+  - **archivovano, datumy vytvoření, podpisů, expirace**
+  - **stav podpisu** a detailní informace o způsobu podpisu (např. BankID, ručně, razítkem, atd.)
+
+---
+
+## 3. Typické workflow
+
+1. **Vygenerování dokumentu** (v modulu Smlouva nebo jiném) → **automatický zápis** do Dokumenty.
+2. **Editace, podpis, export, archivace** pouze přes workflow domovského modulu – zde pouze evidence, verzování, sdílení, export.
+3. **Auditní a verzovací log** – každý zásah, podpis, změna je zaznamenána.
+4. **Hromadné operace** (export, archivace, podepisování) – pouze pokud jsou umožněny příslušnými právy.
+
+---
+
+## 4. Výhody tohoto řešení
+
+- **Jedno místo pro všechna data**: Dokumenty jsou vždy dohledatelné napříč systémem, jednoduše filtrovatelné podle entity, typu, stavu, data apod.
+- **Auditní a právní jistota**: Veškeré změny, podpisy i anonymizace jsou logovány a exportovatelné.
+- **Bezpečnost a přehled**: Nikdo nemůže vytvořit dokument „bokem“, vše musí vzniknout v domovském modulu.
+
+---
+
+## 5. Další doporučení
+
+- Evidence historie všech dokumentů včetně možností verzování.
+- Export do různých formátů (PDF, DOCX, ZIP, ...).
+- Podpora automatizovaných notifikací, workflow schválení a zamítnutí, napojení na schvalovací procesy (pokud existují).
+- Vždy povinná reference na původní entitu!
+
+---
+
+## 6. Propojení s ostatními moduly
+
+- **Smlouva** – všechny smlouvy a přílohy, včetně protokolů, dodatků, splátkových kalendářů.
+- **Platby, Údržba, Komunikace...** – každý dokument vzniklý v těchto modulech je zde evidován s referencí na původní entitu.
+- **Možnost rozšíření pro další typy dokumentů bez zásahu do architektury modulu Dokumenty.**
+
+---
+
+## 7. Příklad zápisu dokumentu
+
+```json
+{
+  "id": "dokument_2025_09_101_01",
+  "sablona_id": "smlouva_najemni_vzor",
+  "vlastnik": "PatrikCechlovsky",
+  "prirazeno_k": {
+    "jednotka_id": "101",
+    "najemce_id": "najemnik_101",
+    "smlouva_id": "501"
+  },
+  "stav": "podepsano",
+  "datum_vytvoreni": "2025-09-09",
+  "datum_podpisu": "2025-09-09",
+  "podpisy": [
+    {
+      "typ": "bankid",
+      "uzivatel": "najemnik_101",
+      "cas": "2025-09-09T14:03:00"
+    },
+    {
+      "typ": "razitko",
+      "uzivatel": "PatrikCechlovsky",
+      "cas": "2025-09-09T14:04:00",
+      "obrazek": "razitko_pcechlovsky.png"
+    }
+  ],
+  "archivovano": false
+}
+```
+
+---
+
+## 8. Shrnutí
+
+- **Vždy vzniká v domovském modulu, v Dokumentech pouze evidence.**
+- **Reference na zdrojovou entitu je povinná.**
+- **Audit a historie změn je klíčová vlastnost.**
+- **Všechny hromadné a schvalovací workflow pouze přes domovský modul, nikoliv v Dokumentech.**
+
+---
+
+# (Dále pokračuje původní obsah Dokumenty.md)
+
 > ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)  
 > ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
 > ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
