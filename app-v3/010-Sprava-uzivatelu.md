@@ -1,8 +1,10 @@
-> ℹ️ Pravidla viz [pravidla.md](./pravidla.md)  
+> ℹ️ Viz [pravidla.md](./pravidla.md)  
+> ℹ️ Viz [common-actions.md](./common-actions.md)  
+> ℹ️ Viz [permissions-catalog.md](./permissions-catalog.md)  
 > - Nikdy nic nemaž, pouze přeškrtávej!  
 > - Každá nová ikona patří do [common-actions.md](./common-actions.md)  
-> - Na začátku každé sekce/dlaždice vlož checklist (níže) a označuj stavovou ikonou:  
->   - ✅ hotovo  ⏳ rozpracováno  🌐 hotovo v HTML  🚫 odstraněno  …  
+> - Na začátku každé sekce/dlaždice vlož checklist (níže) a označ stavovou ikonou:  
+>   - ✅ hotovo  ⏳ rozpracováno  🌐 hotovo v HTML  🚫 odstraněno  …
 
 ---
 
