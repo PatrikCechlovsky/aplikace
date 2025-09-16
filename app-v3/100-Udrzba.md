@@ -35,7 +35,7 @@ Podporuje workflow od zadání požadavku, přes realizaci až po archivaci a re
 - Druh požadavku: oprava, úklid, instalace, jiná služba
 - Možnost přiložit popis, foto, termín, prioritu, kontaktní osobu
 - Povinná pole: typ požadavku, popis, kontaktní osoba, jednotka, stav
-- Volitelná pole: termín, priorita, foto, přílohy
+- Volitelná pole: termín, priorita, foto, přílohy, poznámka
 - Stav požadavku: nové, řeší se, vyřešeno, zamítnuto
 - Přehled otevřených požadavků podle závažnosti, stáří, jednotky, zařízení
 - Filtrování: stav, priorita, stáří, jednotka, zařízení
@@ -77,6 +77,7 @@ Podporuje workflow od zadání požadavku, přes realizaci až po archivaci a re
 | Jednotka          |   Ano   | výběr        |                                   |
 | Stav požadavku    |   Ano   | systémový    | nové, řeší se, vyřešeno, zamítnuto|
 | Přílohy           |   Ne    | soubor       |                                   |
+| Poznámka          |   Ne    | text         | Libovolná poznámka ke záznamu     |
 
 ---
 
@@ -106,7 +107,7 @@ Podporuje workflow od zadání požadavku, přes realizaci až po archivaci a re
 ## 🟦 Přehled zařízení a servisní historie
 
 - Katalog zařízení v nemovitosti/jednotce (kotle, výtahy, okna, elektroměry…)
-- Povinná pole: typ, umístění, výrobce, výrobní číslo, datum instalace/pořízení, stav, životnost, přílohy
+- Povinná pole: typ, umístění, výrobce, výrobní číslo, datum instalace/pořízení, stav, životnost, přílohy, poznámka
 - Historie oprav, výměn, revizí pro každé zařízení
 - Upozornění na potřebu výměny, konec životnosti, povinnou revizi
 - Možnost archivace vyřazených zařízení
@@ -136,6 +137,7 @@ Podporuje workflow od zadání požadavku, přes realizaci až po archivaci a re
 - Šablony pro zadání požadavku, revize, servisního zásahu
 - Nastavení oprávnění pro role
 - Nastavení typů zařízení, servisů, požadavků
+- **Možnost nastavit typ a příjemce upozornění (notifikace) – doporučujeme doplnit detailní sekci**
 
 ---
 
@@ -155,6 +157,13 @@ Podporuje workflow od zadání požadavku, přes realizaci až po archivaci a re
 - ⏳ Možnost vytvářet vlastní typy požadavků a kategorií servisů
 - ⏳ Automaticky generovat požadavky na základě plánu revizí
 - ⏳ Možnost navázat požadavek na více zařízení najednou
+- ⏳ **Doplnit pole "poznámka" ke každému záznamu v datech a formulářích**
+- ⏳ **Doplnit možnost opakování/plánování periodických zásahů (např. servis každých X měsíců)**
+- ⏳ **Rozšířit sekci Nastavení o detailní možnosti notifikací (typ, příjemce, způsob doručení)**
+- ⏳ **Zvážit přímé napojení na plánování rozpočtu/financí (možnost přiřazení nákladu do rozpočtové kategorie, napojení na účetnictví)**
+- ⏳ **Zvážit pokročilé typy reportů, např. rozpad nákladů podle kategorií, zařízení, období**
+- ⏳ **Zvážit granularitu rozpadů nákladů v rámci jednoho zásahu (např. práce, materiál, doprava, režie)**
+- ⏳ **Zvážit možnost komentáře/poznámky u každého workflow stavu (např. zamítnutí, odložení)**
 
 ---
 
@@ -172,7 +181,8 @@ Podporuje workflow od zadání požadavku, přes realizaci až po archivaci a re
   "zadavatel": "najemnik_101",
   "priorita": "stredni",
   "jednotka_id": "101",
-  "prilohy": ["foto_kohoutek.jpg"]
+  "prilohy": ["foto_kohoutek.jpg"],
+  "poznamka": ""
 }
 ```
 
@@ -187,7 +197,8 @@ Podporuje workflow od zadání požadavku, přes realizaci až po archivaci a re
   "firma": "ServisKotle.cz",
   "stav": "naplanovano",
   "cena_predpoklad": 2000,
-  "prilohy": []
+  "prilohy": [],
+  "poznamka": ""
 }
 ```
 
@@ -203,7 +214,8 @@ Podporuje workflow od zadání požadavku, přes realizaci až po archivaci a re
   "popis": "Výměna pojistného ventilu",
   "cena": 1800,
   "navazano_na": "pozadavek_2025_101_01",
-  "prilohy": ["faktura_ventil.pdf", "foto_pred.jpg", "foto_po.jpg"]
+  "prilohy": ["faktura_ventil.pdf", "foto_pred.jpg", "foto_po.jpg"],
+  "poznamka": ""
 }
 ```
 
