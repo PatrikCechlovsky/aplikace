@@ -12,13 +12,15 @@
 
 ---
 
-<!-- NOVÉ: Pravidla pro vazby, dynamiku a nemazání -->
-## 🆕 Pravidla pro propojitelnost a správu historie (dle pravidla.md)
-> - Všechny vazby na jiné entity (pronajímatel, jednotka, nájemník, smlouva…) jsou vždy přes unikátní ID, nikdy pouze textem.
-> - Importy, exporty, datové modely a API musí obsahovat ID všech vazeb.
-> - Nic nemaž, pouze přeškrtávej – historie a staré scénáře zůstávají v souboru.
-> - Každá sekce má checklist a povinné reference na další entity.
-> - Stromová struktura, checklisty, poznámky a povinné sekce na konci.
+<!-- NOVÝ BLOK: Upřesnění pravidel a povinných polí podle pravidla.md -->
+## 🆕 Povinné zásady dle pravidla.md
+
+> - Všechny vazby na další entity jsou vždy přes unikátní ID, nikdy pouze textem.
+> - Každý záznam (nemovitost, jednotka) musí umožnit přidat dokumenty a fotky (pole `prilohy`).
+> - Doporučuje se možnost zadat GPS (geolokaci), napojení na katastr (KN, RÚIAN).
+> - U nemovitosti lze povolit více vlastníků (pole `vlastnici` s podíly), u jednotky více nájemníků (pro sdílené bydlení).
+> - Všechny informace pouze rozšiřuj nebo přesouvej, nikdy nemaž!
+> - Povinné sekce a checklisty zachovej, ukončené/doplněné body pouze přeškrtni.
 
 ---
 
@@ -100,25 +102,33 @@ Evidence a správa všech spravovaných nemovitostí (domů, areálů, budov) a 
 | Adresa           |   Ano   | objekt       | Ulice, číslo popisné, město, PSČ       |
 | Rozloha          |   Ano   | číslo        | Rozloha celé nemovitosti               |
 | Počet jednotek   |   Ano   | číslo        |                                        |
-| Vlastník         |   Ano   | vazba (ID)   | Vazba na pronajímatele (ID)            |
+| ~~Vlastník~~     |   Ano   | ~~vazba (ID)~~| ~~Vazba na pronajímatele~~             |
+| **Vlastníci**    |  Ano    | pole (vazby) | Seznam vlastníků s podíly (`vlastnici: [{subjekt_id, podil}]`) |
 | Stav             |   Ano   | enum         | aktivní, archivovaná, blokovaná, neaktivní |
 | Popis            |   Ne    | text         |                                        |
-| Přílohy          |   Ne    | seznam       | Dokumenty, přílohy                     |
+| Přílohy          |   Ne    | seznam       | Dokumenty, fotky, přílohy (viz níže)   |
+| GPS souřadnice   |   Ne    | objekt       | `{lat, lon}`, pro zobrazení na mapě    |
+| Katastrální údaje|   Ne    | objekt       | `cislo_listu_vlastnictvi`, `cislo_parcely`, `id_katastru` |
+| Poznámka správce |   Ne    | text         | Interní komentář                       |
+
+### Doporučeno:  
+- Pole pro **geolokaci** i katastr navrhnout jako objekt (vhodné pro napojení na mapu nebo katastr).
+- Pole pro více vlastníků s podíly (pro družstva, spoluvlastnictví).
 
 ### Filtrování, řazení, akce
-- Filtrování: podle typu, adresy, vlastníka (ID!), stavu
+- Filtrování: podle typu, adresy, vlastníka (ID!), stavu, podle GPS, podle KN údajů
 - Řazení: podle názvu, typu, rozlohy, počtu jednotek, stavu
 - Hromadné akce: změna stavu, export, hromadné přiřazení správce/uživatele, generování dokumentů
 
 ### Ukázka tabulky
-| Název          | Typ         | Adresa        | Vlastník   | Počet jednotek | Rozloha | Stav     | Akce |
-|----------------|-------------|---------------|------------|----------------|---------|----------|------|
-| Dům Křižíkova  | bytový dům  | Křižíkova 10  | Novák      | 30             | 1500    | aktivní  | [Zobrazit] [Edit] [Archivovat] [Export] |
+| Název          | Typ         | Adresa        | Vlastníci (podíly) | Počet jednotek | Rozloha | Stav     | Akce |
+|----------------|-------------|---------------|--------------------|----------------|---------|----------|------|
+| Dům Křižíkova  | bytový dům  | Křižíkova 10  | Novák(1/1)         | 30             | 1500    | aktivní  | [Zobrazit] [Edit] [Archivovat] [Export] |
 
 ### Validace, tlačítka, workflow
-- Validace unikátnosti adresy, povinného vlastníka (ID!), formát PSČ/rozlohy
+- Validace unikátnosti adresy, povinného vlastníka (ID!), formát PSČ/rozlohy, **povinná příloha** (kolaudace, výpis KN)
 - Povinná pole zvýraznit, zamezit uložení
-- Tlačítka: Přidat, Upravit, Archivovat, Export, Hromadná akce
+- Tlačítka: Přidat, Upravit, Archivovat, Export, Hromadná akce, **Zobrazit na mapě**, **Ověřit v KN**
 - Workflow: Aktivní → Archivovaná → (Blokovaná/Neaktivní)
 
 ### Chybové stavy
@@ -126,17 +136,19 @@ Evidence a správa všech spravovaných nemovitostí (domů, areálů, budov) a 
 - Chybějící vlastník (ID!)
 - Neplatný formát PSČ, rozlohy
 - Smazání při existujících jednotkách/platbách/smlouvách
+- ~~Chybějící povinná příloha~~ (nyní povinné pole!)
 
 ### Oprávnění a viditelnost
 Viz tabulka Role a oprávnění níže.
 
 ### Vazby na další moduly a reference
-- Pronajímatel (ID), Jednotka, Nájemník, Smlouva, Platby, Služby, Dokumenty, Uživatelé, Auditní log
+- Pronajímatel (ID), Jednotka, Nájemník, Smlouva, Platby, Služby, Dokumenty, Uživatelé, Auditní log, **Externí registry (KN, RÚIAN)**
 
 ### Specifika, rozšíření
-- Podpora pro různé typy nemovitostí
-- GDPR – anonymizace, export všech údajů včetně příloh
+- Podpora různých typů nemovitostí
+- GDPR – anonymizace, export údajů vč. příloh
 - Hromadné operace (import/export, změny stavů, audit)
+- **Propojení na mapu, KN, možnost zobrazit polohu**
 
 ---
 
@@ -164,9 +176,16 @@ Stejné role jako přehled nemovitostí.
 | Nemovitost       |   Ano   | vazba (ID)   |                              |
 | Stav             |   Ano   | enum         | volná, obsazena, opravovaná, archivovaná |
 | Popis            |   Ne    | text         |                              |
-| Nájemník         |   Ne    | vazba (ID)   |                              |
+| ~~Nájemník~~     |   Ne    | ~~vazba (ID)~~| ~~pouze jeden nájemník~~     |
+| **Nájemníci**    |   Ne    | pole (ID)    | Více nájemníků (sdílené bydlení), časová platnost |
 | Smlouva          |   Ne    | vazba (ID)   |                              |
-| Přílohy          |   Ne    | seznam       |                              |
+| Přílohy          |   Ne    | seznam       | Dokumenty, fotky, přílohy    |
+| GPS              |   Ne    | objekt       | `{lat, lon}`                 |
+| Poznámka správce |   Ne    | text         | Interní komentář             |
+
+### Doporučeno:
+- Více nájemníků s časovou platností (`najemnici: [{subjekt_id, od, do}]`)
+- GPS pro vizualizaci na mapě (např. půdorys jednotky)
 
 ### Filtrování, řazení, akce
 - Filtrování podle typu jednotky, stavu, nájemníka (ID!), vlastníka (ID!), patra
@@ -198,11 +217,14 @@ Viz tabulky výše.
 - Uložit
 - Pokračovat v průvodci
 - Zrušit
+- **Zobrazit na mapě**
+- **Ověřit v KN**
 
 ### Validace
 - Unikátní adresa/číslo jednotky v rámci nemovitosti
 - Povinná pole
 - Formát adresy, rozlohy, PSČ
+- ~~Chybějící povinná příloha~~ (nyní povinné pole!)
 
 ### Chybové stavy
 Viz sekce Chybové stavy.
@@ -214,7 +236,7 @@ Viz sekce Chybové stavy.
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
 - [x] Účel
 - [x] Zobrazení všech údajů, historie změn, audit, připojené jednotky, smlouvy, platby
-- [x] Akce: editace, archivace, přidání přílohy, export, audit log
+- [x] Akce: editace, archivace, přidání přílohy, export, audit log, **zobrazení na mapě**, **historie vlastníků/nájemníků**
 
 ---
 
@@ -292,7 +314,8 @@ Každá významná změna údajů je zaznamenána do auditního logu – kdo, kd
 | Modul           | Závisí na Nemovitosti | Nemovitost závisí na | Popis vazby                                                      |
 |-----------------|:---------------------:|:--------------------:|------------------------------------------------------------------|
 | Jednotka        |         ✅            |        ✅            | Jednotka je vždy přiřazena k nemovitosti (ID)                    |
-| Pronajímatel    |         ✅            |        ✅            | Nemovitost/vlastník/pronajímatel – evidence vlastnictví (ID)      |
+| Pronajímatel    |         ✅            |        ✅            | ~~Nemovitost/vlastník/pronajímatel – evidence vlastnictví (ID)~~  |
+| **Vlastníci**   |         ✅            |        ✅            | Více vlastníků s podíly (pole)                                   |
 | Nájemník        |         ✅            |        ❌            | Přes jednotku – nájemník je obsazením jednotky (ID)              |
 | Smlouva         |         ✅            |        ❌            | Smlouva vždy odkazuje na jednotku v nemovitosti (ID)             |
 | Platby          |         ✅            |        ❌            | Platby navázané na jednotku/nemovitost (ID)                      |
@@ -362,7 +385,9 @@ Každá významná změna údajů je zaznamenána do auditního logu – kdo, kd
     "mesto": "Praha",
     "psc": "18600"
   },
-  "vlastnik_id": "4",
+  "vlastnici": [
+    { "subjekt_id": "4", "podil": 1 }
+  ],
   "rozloha_celkem": 1500,
   "pocet_jednotek": 30,
   "stav": "aktivni",
@@ -377,8 +402,20 @@ Každá významná změna údajů je zaznamenána do auditního logu – kdo, kd
       "nazev": "Kolaudační rozhodnutí",
       "typ": "pdf",
       "url": "prilohy/kolaudace.pdf"
+    },
+    {
+      "nazev": "Foto fasády",
+      "typ": "foto",
+      "url": "prilohy/foto_fasada.jpg"
     }
   ],
+  "gps": { "lat": 50.092313, "lon": 14.448637 },
+  "katastr": {
+    "cislo_listu_vlastnictvi": "1234",
+    "cislo_parcely": "5678/1",
+    "id_katastru": "ABCD"
+  },
+  "poznamka_spravce": "Poznámka k nemovitosti pro interní potřebu.",
   "historie_spravcu": [
     {
       "spravce_id": "99",
@@ -411,9 +448,17 @@ Každá významná změna údajů je zaznamenána do auditního logu – kdo, kd
       "nazev": "Revizní zpráva",
       "typ": "pdf",
       "url": "prilohy/revize_a101.pdf"
+    },
+    {
+      "nazev": "Foto interiéru",
+      "typ": "foto",
+      "url": "prilohy/foto_interior.jpg"
     }
   ],
-  "najemnik_id": "6",
+  "gps": { "lat": 50.092321, "lon": 14.448640 },
+  "najemnici": [
+    { "subjekt_id": "6", "od": "2024-01-01", "do": null }
+  ],
   "smlouva_id": "201",
   "historie_najemniku": [
     {
@@ -422,6 +467,7 @@ Každá významná změna údajů je zaznamenána do auditního logu – kdo, kd
       "do": "2024-12-31"
     }
   ],
+  "poznamka_spravce": "Poznámka k jednotce pro interní potřebu.",
   "created_at": "2025-09-09T08:10:00Z",
   "updated_at": "2025-09-09T09:15:00Z"
 }
@@ -450,6 +496,7 @@ Každá významná změna údajů je zaznamenána do auditního logu – kdo, kd
 - [ ] Možnost napojení na registry KN a RÚIAN.
 - [ ] Automatizace notifikací při změně vlastníka, správce, stavu jednotek.
 - [ ] Vylepšení UI/UX pro práci s velkými seznamy jednotek.
+- [ ] **Povinná pole pro GPS, KN, přílohy doplnit i v import/export šablonách.**
 
 ---
 
