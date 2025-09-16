@@ -38,6 +38,7 @@ Zajišťuje přehledné vedení záloh, kaucí, individuálních poplatků, stav
 - K evidenci a správě stavů měřidel.
 - Pro generování vyúčtování podle reálných stavů/spotřeby.
 - Pro napojení na modul Platby (automatické generování požadavků na platbu, kontrolu úhrad, výpočet penále a upomínek).
+- Pro správce i nájemníka – kompletní přehled o předpisech, platbách, přeplatcích i nedoplatcích.
 
 ---
 
@@ -46,17 +47,36 @@ Zajišťuje přehledné vedení záloh, kaucí, individuálních poplatků, stav
 - **Dlaždice / sekce:**
   1. 🧾 **Zálohy** – evidence a předpis záloh (měsíční, kvartální atd.)
   2. 💰 **Kauce** – evidence jistin (kauce, vratné depozity)
-  3. 💳 **Jiné platby** – pravidelné i jednorázové poplatky (např. parkování, internet, domovní poplatky)
+  3. 💳 **Jiné platby** – pravidelné i jednorázové poplatky (např. parkování, internet, domovní poplatky, mimořádné platby)
   4. ⚡ **Stavy měřidel** – evidence a historie stavů (voda, elektřina, plyn atd.)
   5. 📊 **Vyúčtování služeb** – roční/pololetní vyúčtování a rozúčtování nákladů
 
 - **Vazby na další moduly:**
   - **Jednotka/Nemovitost** – služby jsou přiřazeny ke konkrétní jednotce nebo domu
-  - **Nájemník** – uživatel služby
+  - **Nájemník** – uživatel služby, plátce
   - **Smlouva** – podle smlouvy je stanoven předpis záloh a služeb
-  - **Platby** – předpisy generují požadavky na platbu, kontrola úhrad
-  - **Dokumenty** – přílohy (např. vyúčtování, odečty)
+  - **Platby** – předpisy generují požadavky na platbu, kontrola úhrad, penalizace, upomínky
+  - **Dokumenty** – přílohy (např. vyúčtování, odečty, faktury, fotografie)
   - **Notifikace** – upomínky, potvrzení, penalizace
+
+---
+
+## ✅ Klíčové požadavky a kontroly (Checklist)
+
+- [x] U každé jednotky je možné evidovat více služeb (voda, teplo, odpad, služby domu, elektřina, parkování apod.)
+- [x] Každý předpis je navázán na: jednotku, nájemníka, typ služby, období, smlouvu
+- [x] Každá změna výše záloh a předpisů je auditována (kdo, kdy, důvod, historie)
+- [x] U každé platby/předpisu lze evidovat stav úhrady (neuhrazeno/splaceno/po splatnosti/penalizace)
+- [x] Evidence mimořádných a jednorázových poplatků (např. pokuta, revize, ad-hoc práce)
+- [x] Propojení na platby a možnost dohledat historii úhrad, penalizace a upomínek
+- [x] Každý nájemník má přehled všech svých předpisů, záloh, plateb, nedoplatků, přeplatků
+- [x] Možnost sumarizovat a filtrovat přehledy dle nájemníka, služby, období, stavu
+- [x] Možnost exportu/importu dat pro účetnictví/audit
+- [x] Možnost přidat poznámku a přílohy ke každé položce (např. smlouva, faktura, foto)
+- [x] Možnost evidence a schválení odečtu měřidla (uživatel/správce)
+- [x] Automatizované workflow upomínek a penalizací
+- [x] Hromadné operace (zadání záloh, odečtů, vyúčtování, upomínek)
+- [x] Všechny změny a akce jsou auditovány
 
 ---
 
@@ -69,6 +89,7 @@ Zajišťuje přehledné vedení záloh, kaucí, individuálních poplatků, stav
   "jednotka_id": "101",
   "najemnik_id": "6",
   "sluzba": "teplo",
+  "kategorie": "energie",
   "castka": 1200,
   "frekvence": "mesicni",
   "splatnost_den": 15,
@@ -76,6 +97,18 @@ Zajišťuje přehledné vedení záloh, kaucí, individuálních poplatků, stav
   "datum_konce": null,
   "stav": "aktivni",
   "smlouva_id": "501",
+  "poznámka": "Zvýšení zálohy po vyúčtování",
+  "prilohy": ["zaloha_potvrzeni.pdf"],
+  "historie": [
+    {
+      "castka": 1000,
+      "frekvence": "mesicni",
+      "platnost_od": "2024-09-01",
+      "platnost_do": "2025-02-28",
+      "zadal": "spravce",
+      "datum_zmeny": "2024-08-20"
+    }
+  ],
   "created_at": "2025-09-09T12:00:00Z"
 }
 ```
@@ -91,6 +124,11 @@ Zajišťuje přehledné vedení záloh, kaucí, individuálních poplatků, stav
   "stav": "ulozena",
   "vraceno": false,
   "smlouva_id": "501",
+  "poznámka": "",
+  "prilohy": ["doklad_kauce.pdf"],
+  "historie": [
+    { "akce": "vlozeni", "castka": 24000, "datum": "2025-09-01" }
+  ],
   "created_at": "2025-09-09T12:05:00Z"
 }
 ```
@@ -102,11 +140,14 @@ Zajišťuje přehledné vedení záloh, kaucí, individuálních poplatků, stav
   "jednotka_id": "101",
   "najemnik_id": "6",
   "typ": "internet",
+  "kategorie": "sluzba",
   "castka": 400,
   "frekvence": "mesicni",
   "splatnost_den": 15,
   "smlouva_id": "501",
   "stav": "aktivni",
+  "poznámka": "Poplatek za internet",
+  "prilohy": [],
   "created_at": "2025-09-09T12:07:00Z"
 }
 ```
@@ -117,10 +158,13 @@ Zajišťuje přehledné vedení záloh, kaucí, individuálních poplatků, stav
   "id": "sm401",
   "jednotka_id": "101",
   "typ_meric": "voda_tepla",
+  "cislo_meridla": "VT101-23",
   "stav": 1200,
   "datum_odecet": "2025-09-01",
   "smlouva_id": "501",
-  "priloha": null
+  "zadal": "najemnik",
+  "priloha": "foto_2025-09-01.jpg",
+  "schvaleno": true
 }
 ```
 
@@ -133,12 +177,15 @@ Zajišťuje přehledné vedení záloh, kaucí, individuálních poplatků, stav
   "obdobi_od": "2025-01-01",
   "obdobi_do": "2025-12-31",
   "sluzby": [
-    { "typ": "teplo", "zaloha": 12000, "spotreba": 13000, "doplatek": 1000 },
-    { "typ": "voda", "zaloha": 3000, "spotreba": 2500, "preplatek": 500 }
+    { "typ": "teplo", "kategorie": "energie", "zaloha": 12000, "spotreba": 13000, "doplatek": 1000 },
+    { "typ": "voda", "kategorie": "energie", "zaloha": 3000, "spotreba": 2500, "preplatek": 500 }
   ],
   "celkem_doplatek": 500,
   "vytvoreno": "2026-01-15",
-  "priloha": "vyuctovani_101_2025.pdf"
+  "priloha": "vyuctovani_101_2025.pdf",
+  "poznámka": "",
+  "reklamace": false,
+  "stav": "odeslano"
 }
 ```
 
@@ -146,15 +193,17 @@ Zajišťuje přehledné vedení záloh, kaucí, individuálních poplatků, stav
 
 ## 📋 Funkce v přehledu
 
-- Přehled všech záloh/kaucí/jiných plateb podle jednotky, nájemníka, stavu
+- Přehled všech záloh/kaucí/jiných plateb podle jednotky, nájemníka, stavu, kategorie služby, období
 - Hromadné zadání předpisů záloh pro více jednotek
-- Nastavení a úprava splatnosti, výše, periody
+- Nastavení a úprava splatnosti, výše, periody a kategorie
 - Evidence a historie kaucí (vložení, vrácení, zápočet)
-- Evidence a úprava stavů měřidel, historie odečtů
+- Evidence a úprava stavů měřidel, historie odečtů, schválení odečtu
 - Generování a export vyúčtování (PDF, XLSX)
 - Hromadné generování předpisů plateb (napojení na modul Platby)
+- Možnost přidat poznámku nebo přílohu ke každé položce
 - Notifikace splatnosti, potvrzení o platbě, upomínky, penalizace za zpoždění
 - Auditní log / historie změn
+- Možnost sumarizace a exportu pro audit/účetnictví
 
 ---
 
@@ -162,11 +211,11 @@ Zajišťuje přehledné vedení záloh, kaucí, individuálních poplatků, stav
 
 - ✅ Přidat/editovat zálohu/kauci/jinou platbu
 - ✏️ Upravit zálohu/kauci/jinou platbu
-- 📈 Zadat nebo importovat stav měřidla
-- 📊 Vytvořit/zobrazit vyúčtování
-- 📥 Import/hromadné zadání předpisů
+- 📈 Zadat nebo importovat stav měřidla, schválit odečet
+- 📊 Vytvořit/zobrazit vyúčtování, zadat reklamaci
+- 📥 Import/hromadné zadání předpisů nebo odečtů
 - 📤 Export předpisů/vyúčtování (PDF/XLSX)
-- 🗄️ Archivovat/smazat předpis nebo vyúčtování
+- 🗄️ Archivovat/smazat předpis, vyúčtování, platbu
 - 🔔 Odeslat potvrzení nebo upomínku
 - 👁️ Zobrazit detailní historii
 - ⚙️ Nastavení pravidel a šablon
@@ -175,16 +224,19 @@ Zajišťuje přehledné vedení záloh, kaucí, individuálních poplatků, stav
 
 ## 🛡️ Role a oprávnění
 
-| Funkce / Akce                | Administrátor | Správce nemovitostí | Účetní      | Pouze čtení |
-|------------------------------|:-------------:|:-------------------:|:-----------:|:-----------:|
-| Přehled záloh/kaucí/služeb   |      ✅       |         ✅          |     ✅      |     ✅      |
-| Přidat/změnit předpis        |      ✅       |         ✅          |     ✅      |     ❌      |
-| Zadat/změnit stav měřidla    |      ✅       |         ✅          |     ✅      |     ❌      |
-| Generovat vyúčtování         |      ✅       |         ✅          |     ✅      |     ❌      |
-| Exportovat data              |      ✅       |         ✅          |     ✅      |     ❌      |
-| Import/hromadné zadání       |      ✅       |         ✅          |     ✅      |     ❌      |
-| Odeslat upomínku/potvrzení   |      ✅       |         ✅          |     ✅      |     ❌      |
-| Archivace/smazání            |      ✅       |         ✅          |     ✅      |     ❌      |
+| Funkce / Akce                | Administrátor | Správce nemovitostí | Účetní      | Pouze čtení | Nájemník |
+|------------------------------|:-------------:|:-------------------:|:-----------:|:-----------:|:--------:|
+| Přehled záloh/kaucí/služeb   |      ✅       |         ✅          |     ✅      |     ✅      |   ✅     |
+| Přidat/změnit předpis        |      ✅       |         ✅          |     ✅      |     ❌      |   ❌     |
+| Zadat/změnit stav měřidla    |      ✅       |         ✅          |     ✅      |     ❌      |   ✅*    |
+| Generovat vyúčtování         |      ✅       |         ✅          |     ✅      |     ❌      |   ❌     |
+| Exportovat data              |      ✅       |         ✅          |     ✅      |     ❌      |   ✅     |
+| Import/hromadné zadání       |      ✅       |         ✅          |     ✅      |     ❌      |   ❌     |
+| Odeslat upomínku/potvrzení   |      ✅       |         ✅          |     ✅      |     ❌      |   ❌     |
+| Archivace/smazání            |      ✅       |         ✅          |     ✅      |     ❌      |   ❌     |
+| Zadání reklamace             |      ✅       |         ✅          |     ✅      |     ❌      |   ✅     |
+
+* Nájemník může zadat samoodečet měřidla, který podléhá schválení správcem.
 
 ---
 
@@ -196,15 +248,18 @@ Zajišťuje přehledné vedení záloh, kaucí, individuálních poplatků, stav
 | **Neaktivní**      | Neúčinný, ale evidován                  | Správce/Admin    | Po změně, např. ukončení nájmu       |
 | **Splaceno**       | Plně uhrazeno                           | Automaticky      | Po spárování s platbou               |
 | **Po splatnosti**  | Neuhrazeno po splatnosti                | Automaticky      | Po datu splatnosti bez úhrady        |
+| **Penalizováno**   | Přidáno penále za zpoždění              | Automaticky      | Podle pravidel po uplynutí lhůty     |
+| **Reklamace**      | Nájemník reklamuje vyúčtování           | Nájemník/Správce | Po zadání reklamace                  |
 | **Archivováno**    | Historie, pouze ke čtení                | Správce/Admin    | Po vyúčtování, ukončení vztahu       |
 
 ---
 
 ## 🕓 Historie a auditní log změn
 
-- Každá změna předpisu zálohy/kauce/jiné platby je auditována
-- Historie stavů měřidel a odečtů
-- Historie vyúčtování a rozúčtování
+- Každá změna předpisu zálohy/kauce/jiné platby je auditována (kdo, kdy, co a proč změnil)
+- Historie stavů měřidel a odečtů včetně příloh a schválení
+- Historie vyúčtování a rozúčtování, včetně reklamací a řešení
+- Historie upomínek, penalizací a potvrzení o platbě
 
 ---
 
@@ -216,8 +271,9 @@ Zajišťuje přehledné vedení záloh, kaucí, individuálních poplatků, stav
 | Blížící se splatnost             | Nájemník, správce        | E-mail, sys. | X dní před splatností            |
 | Nezaplacená záloha/platba        | Nájemník, správce        | E-mail, sys. | Upomínka, možnost penalizace     |
 | Zadaný nový stav měřidla         | Správce, účetní          | Systém       | Potvrzení o zadání               |
-| Vytvoření vyúčtování             | Nájemník, správce        | E-mail, sys. | Po vygenerování vyúčtování       |
+| Vyúčtování a reklamace           | Nájemník, správce        | E-mail, sys. | Po vygenerování a po reklamaci   |
 | Potvrzení o platbě               | Nájemník                 | E-mail, sys. | Po spárování platby              |
+| Penalizace za zpoždění           | Nájemník, správce        | E-mail, sys. | Po aplikaci penalizace           |
 
 ---
 
@@ -227,6 +283,7 @@ Zajišťuje přehledné vedení záloh, kaucí, individuálních poplatků, stav
 - Hromadné importy stavů měřidel (například z CSV)
 - Hromadné generování vyúčtování (pro celý dům/jednotky)
 - Hromadné exporty potvrzení, přehledů a upomínek
+- Hromadné odeslání upomínek a penalizací
 
 ---
 
@@ -239,6 +296,7 @@ Zajišťuje přehledné vedení záloh, kaucí, individuálních poplatků, stav
 | Neplatný formát platby                 | Zvýraznit pole, zamezit uložení        | „Zadaná částka/splatnost není platná.“     | Povinné  |
 | Neuhrazená záloha/platba po splatnosti | Automaticky označit, upozornit správce | „Platba je po splatnosti, kontaktujte správce.“ | Povinné  |
 | Pokus o smazání předpisu s platbou     | Zamezit smazání                        | „Nelze smazat – existuje navázaná platba.“ | Povinné  |
+| Zadání reklamace po uzavření vyúčtování| Zamezit, nabídnout kontakt na správce  | „Vyúčtování již bylo uzavřeno, kontaktujte správu.“ | Povinné  |
 
 ---
 
@@ -256,11 +314,15 @@ Zajišťuje přehledné vedení záloh, kaucí, individuálních poplatků, stav
 
 - [ ] Rozšířit typy služeb (individuální, společné, rozúčtování)
 - [ ] Automatizace generování vyúčtování podle spotřeby a měřidel
-- [ ] Notifikace a penalizace za opožděné platby
+- [ ] Notifikace a penalizace za opožděné platby (workflow a šablony)
 - [ ] Hromadné importy stavů měřidel a předpisů
-- [ ] Propojení s modulem Platby (automatické párování, potvrzení)
+- [ ] Propojení s modulem Platby (automatické párování, potvrzení, penalizace)
 - [ ] Vylepšit uživatelské rozhraní pro hromadné zadání/editaci předpisů
 - [ ] Testování workflow a typických chybových stavů
+- [ ] Přidat možnost individuálních poznámek a příloh ke každé položce
+- [ ] Doplnit schvalovací workflow pro samoodečet nájemníkem
+- [ ] Přehled "Co má nájemník platit" jako samostatná sestava
+- [ ] Vylepšit sumarizaci a export pro audit a účetnictví
 
 ---
 
