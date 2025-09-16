@@ -1,8 +1,24 @@
 > ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)  
 > ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
-> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
+> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)  
+> - Nikdy nic nemaž, pouze přeškrtávej!  
+> - Každá nová ikona patří do [common-actions.md](./common-actions.md)  
+> - Na začátku každé sekce/dlaždice vlož checklist (níže) a označ stavovou ikonou:  
+>   - ✅ hotovo  ⏳ rozpracováno  🌐 hotovo v HTML  🚫 odstraněno  …
+
+---
 
 # Modul: Nemovitost
+
+---
+
+<!-- NOVÉ: Pravidla pro vazby, dynamiku a nemazání -->
+## 🆕 Pravidla pro propojitelnost a správu historie (dle pravidla.md)
+> - Všechny vazby na jiné entity (pronajímatel, jednotka, nájemník, smlouva…) jsou vždy přes unikátní ID, nikdy pouze textem.
+> - Importy, exporty, datové modely a API musí obsahovat ID všech vazeb.
+> - Nic nemaž, pouze přeškrtávej – historie a staré scénáře zůstávají v souboru.
+> - Každá sekce má checklist a povinné reference na další entity.
+> - Stromová struktura, checklisty, poznámky a povinné sekce na konci.
 
 ---
 
@@ -35,7 +51,6 @@
 ## 🟦 Přehled nemovitostí
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-
 - [x] Účel sekce/dlaždice (proč existuje, kdo ji používá)
 - [x] Kdo má přístup/viditelnost podle oprávnění/rolí
 - [x] Zařazení v hlavní stromové struktuře
@@ -85,13 +100,13 @@ Evidence a správa všech spravovaných nemovitostí (domů, areálů, budov) a 
 | Adresa           |   Ano   | objekt       | Ulice, číslo popisné, město, PSČ       |
 | Rozloha          |   Ano   | číslo        | Rozloha celé nemovitosti               |
 | Počet jednotek   |   Ano   | číslo        |                                        |
-| Vlastník         |   Ano   | vazba        | Vazba na pronajímatele                 |
+| Vlastník         |   Ano   | vazba (ID)   | Vazba na pronajímatele (ID)            |
 | Stav             |   Ano   | enum         | aktivní, archivovaná, blokovaná, neaktivní |
 | Popis            |   Ne    | text         |                                        |
 | Přílohy          |   Ne    | seznam       | Dokumenty, přílohy                     |
 
 ### Filtrování, řazení, akce
-- Filtrování: podle typu, adresy, vlastníka, stavu
+- Filtrování: podle typu, adresy, vlastníka (ID!), stavu
 - Řazení: podle názvu, typu, rozlohy, počtu jednotek, stavu
 - Hromadné akce: změna stavu, export, hromadné přiřazení správce/uživatele, generování dokumentů
 
@@ -101,14 +116,14 @@ Evidence a správa všech spravovaných nemovitostí (domů, areálů, budov) a 
 | Dům Křižíkova  | bytový dům  | Křižíkova 10  | Novák      | 30             | 1500    | aktivní  | [Zobrazit] [Edit] [Archivovat] [Export] |
 
 ### Validace, tlačítka, workflow
-- Validace unikátnosti adresy, povinného vlastníka, formát PSČ/rozlohy
+- Validace unikátnosti adresy, povinného vlastníka (ID!), formát PSČ/rozlohy
 - Povinná pole zvýraznit, zamezit uložení
 - Tlačítka: Přidat, Upravit, Archivovat, Export, Hromadná akce
 - Workflow: Aktivní → Archivovaná → (Blokovaná/Neaktivní)
 
 ### Chybové stavy
 - Duplicitní adresa
-- Chybějící vlastník
+- Chybějící vlastník (ID!)
 - Neplatný formát PSČ, rozlohy
 - Smazání při existujících jednotkách/platbách/smlouvách
 
@@ -116,7 +131,7 @@ Evidence a správa všech spravovaných nemovitostí (domů, areálů, budov) a 
 Viz tabulka Role a oprávnění níže.
 
 ### Vazby na další moduly a reference
-- Pronajímatel, Jednotka, Nájemník, Smlouva, Platby, Služby, Dokumenty, Uživatelé, Auditní log
+- Pronajímatel (ID), Jednotka, Nájemník, Smlouva, Platby, Služby, Dokumenty, Uživatelé, Auditní log
 
 ### Specifika, rozšíření
 - Podpora pro různé typy nemovitostí
@@ -128,7 +143,6 @@ Viz tabulka Role a oprávnění níže.
 ## 🟦 Přehled jednotek
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-
 - [x] Účel sekce/dlaždice
 - [x] Kdo má přístup/viditelnost
 - [x] Zařazení v hlavní stromové struktuře
@@ -147,15 +161,15 @@ Stejné role jako přehled nemovitostí.
 | Číslo jednotky   |   Ano   | text         | Unikátní v rámci nemovitosti |
 | Patro            |   Ne    | číslo        |                              |
 | Rozloha          |   Ano   | číslo        |                              |
-| Nemovitost       |   Ano   | vazba        |                              |
+| Nemovitost       |   Ano   | vazba (ID)   |                              |
 | Stav             |   Ano   | enum         | volná, obsazena, opravovaná, archivovaná |
 | Popis            |   Ne    | text         |                              |
-| Nájemník         |   Ne    | vazba        |                              |
-| Smlouva          |   Ne    | vazba        |                              |
+| Nájemník         |   Ne    | vazba (ID)   |                              |
+| Smlouva          |   Ne    | vazba (ID)   |                              |
 | Přílohy          |   Ne    | seznam       |                              |
 
 ### Filtrování, řazení, akce
-- Filtrování podle typu jednotky, stavu, nájemníka, vlastníka, patra
+- Filtrování podle typu jednotky, stavu, nájemníka (ID!), vlastníka (ID!), patra
 - Hromadné akce: změna stavu, export, přiřazení nájemníka/správce, generování dokumentů
 
 ### Chybové stavy
@@ -168,7 +182,6 @@ Stejné role jako přehled nemovitostí.
 ## 📝 Přidat / editovat nemovitost a jednotku (formuláře)
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-
 - [x] Účel
 - [x] Výčet polí
 - [x] Tlačítka, validace, workflow
@@ -199,7 +212,6 @@ Viz sekce Chybové stavy.
 ## 👁️ Detail nemovitosti a jednotky
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
-
 - [x] Účel
 - [x] Zobrazení všech údajů, historie změn, audit, připojené jednotky, smlouvy, platby
 - [x] Akce: editace, archivace, přidání přílohy, export, audit log
@@ -279,13 +291,13 @@ Každá významná změna údajů je zaznamenána do auditního logu – kdo, kd
 
 | Modul           | Závisí na Nemovitosti | Nemovitost závisí na | Popis vazby                                                      |
 |-----------------|:---------------------:|:--------------------:|------------------------------------------------------------------|
-| Jednotka        |         ✅            |        ✅            | Jednotka je vždy přiřazena k nemovitosti                         |
-| Pronajímatel    |         ✅            |        ✅            | Nemovitost/vlastník/pronajímatel – evidence vlastnictví           |
-| Nájemník        |         ✅            |        ❌            | Přes jednotku – nájemník je obsazením jednotky                    |
-| Smlouva         |         ✅            |        ❌            | Smlouva vždy odkazuje na jednotku v nemovitosti                   |
-| Platby          |         ✅            |        ❌            | Platby navázané na jednotku/nemovitost                            |
-| Služby          |         ✅            |        ❌            | Služby nastavené pro jednotky a nemovitosti                       |
-| Dokumenty       |         ✅            |        ❌            | Přílohy/dokumenty přiřazené k nemovitosti/jednotce                |
+| Jednotka        |         ✅            |        ✅            | Jednotka je vždy přiřazena k nemovitosti (ID)                    |
+| Pronajímatel    |         ✅            |        ✅            | Nemovitost/vlastník/pronajímatel – evidence vlastnictví (ID)      |
+| Nájemník        |         ✅            |        ❌            | Přes jednotku – nájemník je obsazením jednotky (ID)              |
+| Smlouva         |         ✅            |        ❌            | Smlouva vždy odkazuje na jednotku v nemovitosti (ID)             |
+| Platby          |         ✅            |        ❌            | Platby navázané na jednotku/nemovitost (ID)                      |
+| Služby          |         ✅            |        ❌            | Služby nastavené pro jednotky a nemovitosti                      |
+| Dokumenty       |         ✅            |        ❌            | Přílohy/dokumenty přiřazené k nemovitosti/jednotce               |
 | Uživatelé       |         ✅            |        ✅*           | Správci mají práva ke konkrétní nemovitosti/jednotce              |
 | Auditní log     |         ✅            |        ❌            | Všechny akce nad nemovitostí/jednotkou se logují                  |
 
