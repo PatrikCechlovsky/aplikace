@@ -92,17 +92,25 @@
 > ⏳ = rozpracováno, přeškrtni hotové. Nic nemažeme!
 
 - ⏳ Přidat možnost hromadného nastavení pro skupiny uživatelů (role, typ účtu)
-- ⏳ Implementovat logování změn v nastavení (audit trail)
-- ⏳ Umožnit nastavení notifikací na změny v systému (např. změna role, nový modul)
-- ⏳ Integrace s externími správci identit (SSO, OAuth)
-- ⏳ Možnost nastavení automatických kontrol konzistence dat
-- ⏳ Přidat možnost exportu všech nastavení včetně uživatelských preferencí
-- ⏳ Vytvořit detailní historii změn pro každé nastavení (audit log)
-- ⏳ Upozornění na konflikty při hromadných změnách
-- ⏳ Přidat náhled změn před uložením
+- ⏳ Implementovat logování změn v nastavení (audit trail) a možnost exportu auditní historie
+- ⏳ Umožnit nastavení notifikací na změny v systému (např. změna role, nový modul, podezřelé nebo citlivé změny)
+- ⏳ Integrace s externími správci identit (SSO, OAuth, Active Directory)
+- ⏳ Možnost nastavení automatických kontrol konzistence dat a upozornění na nesoulad
+- ⏳ Přidat možnost exportu/importu všech nastavení včetně uživatelských preferencí a práv (pro migrace/klonování účtu)
+- ⏳ Vytvořit detailní historii změn pro každé nastavení (audit log) a možnost filtrovat podle typu změny
+- ⏳ Upozornění na konflikty při hromadných změnách, možnost náhledu změn před uložením
 - ⏳ Možnost napojení na katalog firem (ARES) pro výběr údajů v číselnících a kontaktech
-- ⏳ Nastavení workflow schvalování změn v systému (např. změna číselníku, globálního vzhledu)
+- ⏳ Nastavení workflow schvalování změn v systému (např. změna číselníku, globálního vzhledu, práv)
 - ⏳ Možnost resetu všech nastavení na výchozí hodnoty (uživatel i admin)
+- ⏳ Inline nápověda a odkazy na FAQ nebo Help modul přímo z nastavení (tooltips, info ikonky)
+- ⏳ Podpora více jazyků (lokalizace nastavení i celé aplikace)
+- ⏳ Správa uživatelských šablon (např. filtry, vlastní dashboardy, pohledy)
+- ⏳ Správa API klíčů a webhooků pro externí integrace
+- ⏳ Správa datových limitů/kvót (pro přílohy, zálohy, objem dat)
+- ⏳ Nastavení GDPR (anonymizace, export osobních údajů, expirace dat)
+- ⏳ Nastavení intervalů pro automatické akce (nejen zálohy, také expirační časy, TTL pro notifikace)
+- ⏳ Vazby na dokumentaci a nápovědu (inline help, odkazy na FAQ, možnost vyhledávání v Help přímo z Nastavení)
+- ⏳ Možnost vlastní úpravy šablon notifikací a e-mailů přímo v nastavení
 
 ---
 
@@ -195,6 +203,10 @@
 
 6. **Integrace:**  
    - Admin nastaví propojení na externí služby (ARES, SSO), nastaví pravidla pro doplňování údajů, případně povolí uživatelům napojení svých firemních identit.
+
+7. **Nápověda a lokalizace:**  
+   - Uživatel může z nastavení spustit inline nápovědu nebo přejít do modulu Help.
+   - Možnost přepínání jazyků a úpravy některých šablon přímo v nastavení.
 
 ---
 
