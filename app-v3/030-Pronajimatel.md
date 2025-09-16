@@ -1,6 +1,12 @@
-> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)  
-> ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
-> ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
+> ℹ️ Viz [pravidla.md](./pravidla.md)  
+> ℹ️ Viz [common-actions.md](./common-actions.md)  
+> ℹ️ Viz [permissions-catalog.md](./permissions-catalog.md)  
+> - Nikdy nic nemaž, pouze přeškrtávej!  
+> - Každá nová ikona patří do [common-actions.md](./common-actions.md)  
+> - Na začátku každé sekce/dlaždice vlož checklist a označ stavovou ikonou:  
+>   - ✅ hotovo  ⏳ rozpracováno  🌐 hotovo v HTML  🚫 odstraněno  …
+
+---
 
 # Modul: Pronajímatel
 
@@ -27,6 +33,24 @@
 
 ---
 
+<!-- NOVÁ SEKCE: Typy subjektů a společná databáze -->
+## 🆕 Typy subjektů a sjednocená databáze
+
+> **Poznámka:**  
+> Modul Pronajímatel pracuje s více typy subjektů v jedné databázi (osoba, OSVČ, firma, státní organizace, spolek/skupina, zástupce).  
+> Formuláře i tabulky se dynamicky mění podle zvoleného typu subjektu.
+
+| Typ subjektu      | Povinná pole                              | Specifika/formulářová pole navíc              |
+|-------------------|-------------------------------------------|-----------------------------------------------|
+| Osoba             | Jméno, Příjmení, E-mail                   | Datum narození, OP, Telefon                   |
+| OSVČ              | Jméno, Příjmení, IČO, E-mail              | DIČ, Bankovní účet, napojení na ARES          |
+| Firma             | Název, IČO, DIČ, E-mail                   | Statutár, zápis v OR, napojení na ARES        |
+| Státní org.       | Název, IČO, E-mail                        | Typ instituce, napojení na ARES               |
+| Spolek/Skupina    | Název, IČO, E-mail                        | Zápis v rejstříku, napojení na ARES           |
+| Zástupce          | Jméno, Příjmení, E-mail, Typ pověření     | Vazba na subjekt, platnost pověření           |
+
+---
+
 ## 🟦 Přehled pronajímatelů
 
 ### ✅ Checklist pro dokumentaci sekce/dlaždice a formuláře
@@ -34,7 +58,7 @@
 - ✅ Kdo má přístup/viditelnost podle oprávnění/rolí
 - ✅ Zařazení v hlavní stromové struktuře
 - ✅ Podsekce a vazby na další části
-- ✅ Výčet a popis všech polí (přehled i formulář)
+- ✅ Výčet a popis všech polí (přehled i formulář, viz typy subjektů)
 - ✅ Validace, tlačítka, workflow
 - ✅ Akce dostupné v detailu
 - ✅ Chybové stavy
@@ -43,7 +67,7 @@
 - ✅ Specifika, rozšíření
 
 ### Účel sekce/dlaždice
-Evidence všech vlastníků nemovitostí (osoby, firmy, spolky, instituce), jejich kontaktů, historie a vazeb na nemovitosti/jednotky.
+Evidence všech vlastníků nemovitostí (všechny typy subjektů), jejich kontaktů, historie a vazeb na nemovitosti/jednotky.
 
 ### Kdo má přístup/viditelnost
 | Role                  | Přístup |
@@ -53,50 +77,52 @@ Evidence všech vlastníků nemovitostí (osoby, firmy, spolky, instituce), jeji
 | Účetní                | Čtení   |
 | Prohlížející          | Čtení   |
 
-### Pole (přehled i detail)
-| Pole             | Povinné | Typ           | Popis                                  |
-|------------------|:-------:|--------------|----------------------------------------|
-| Název/jméno      |   Ano   | text         |                                        |
-| Typ subjektu     |   Ano   | enum         | osoba/firma/spolek/instituce           |
-| Stav             |   Ano   | enum         | aktivní/archiv/pozváno/čeká/zablok.    |
-| IČO              |   Ne    | text         | Firmy/spolky/instituce                 |
-| DIČ              |   Ne    | text         | Firmy                                  |
-| E-mail           |   Ano   | e-mail       | Unikátní, validace duplicity           |
-| Telefon          |   Ne    | tel          |                                        |
-| Adresa           |   Ne    | text         |                                        |
-| Bankovní účet    |   Ne    | text         |                                        |
-| ...              |         |              |                                        |
+### Pole (přehled i detail, dynamické podle typu)
+| Pole             | Osoba | OSVČ | Firma | Org. | Spolek | Zástupce | Popis                                  |
+|------------------|:-----:|:----:|:-----:|:----:|:------:|:--------:|----------------------------------------|
+| Typ subjektu     |   x   |  x   |   x   |  x   |   x    |    x     | enum                                  |
+| Jméno            |   x   |  x   |       |      |        |    x     |                                      |
+| Příjmení         |   x   |  x   |       |      |        |    x     |                                      |
+| Název            |       |      |   x   |  x   |   x    |          |                                      |
+| IČO              |       |  x   |   x   |  x   |   x    |          | Firmy/spolky/instituce (ARES)        |
+| DIČ              |       |  x   |   x   |      |        |          | Firmy/OSVČ (ARES)                    |
+| E-mail           |   x   |  x   |   x   |  x   |   x    |    x     | Unikátní, validace duplicity         |
+| Telefon          |   x   |  x   |   x   |  x   |   x    |    x     |                                      |
+| Adresa           |   x   |  x   |   x   |  x   |   x    |    x     |                                      |
+| Bankovní účet    |   x   |  x   |   x   |      |   x    |          |                                      |
+| Statutár         |       |      |   x   |      |   x    |          | Firma, spolek/rejstřík (ARES)        |
+| Zápis v rejstříku|       |      |   x   |      |   x    |          | Firma, spolek/rejstřík (ARES)        |
+| Typ pověření     |       |      |       |      |        |    x     | (plná moc, zastoupení, správa…)      |
+| Vazba na subjekt |       |      |       |      |        |    x     | ID subjektu, ke kterému je vázán     |
+| Stav             |   x   |  x   |   x   |  x   |   x    |    x     | enum (aktivní/archiv/pozváno…)       |
+| ...              |       |      |       |      |        |          |                                      |
 
 ### Filtrování, řazení, akce
-- Filtrování: podle typu, stavu, IČO, jména, datumu
-- Řazení: jméno, stav, datum přidání
+- Filtrování: podle typu, stavu, IČO, jména/názvu, datumu
+- Řazení: jméno/název, stav, datum přidání
 - Hromadné akce: změna stavu, export, přiřazení správce
 
 ### Ukázka tabulky
-| Název          | Typ    | Stav    | IČO     | E-mail             | Akce       |
-|----------------|--------|---------|---------|--------------------|------------|
-| Jan Novák      | osoba  | aktivní |         | jan.novak@...      | [Zobrazit] |
+| Název/Jméno     | Typ subjektu | Stav    | IČO      | E-mail             | Akce       |
+|-----------------|--------------|---------|----------|--------------------|------------|
+| Jan Novák       | osoba        | aktivní |          | jan.novak@...      | [Zobrazit] |
+| Property Invest | firma        | aktivní | 88899977 | info@property...      | [Zobrazit] |
 
 ### Validace, tlačítka, workflow
 - Validace unikátnosti e-mailu, IČO
 - Povinná pole zvýraznit, zamezit uložení
-- Tlačítka: Přidat, Upravit, Archivovat, Export, Hromadná akce
+- Tlačítka: Přidat, Upravit, Archivovat, Export, Hromadná akce, **Ověřit v ARES** (pro IČO)
 - Workflow: Nový → Pozváno → Aktivní → (Archiv/Blokace)
 
-### Chybové stavy
-- Duplicitní e-mail, IČO
-- Neplatný formát e-mailu/telefonu
-- Chybějící povinné pole
+---
 
-### Oprávnění a viditelnost
-Viz výše tabulka Kdo má přístup. Práva lze dále upřesnit v detailu.
+<!-- NOVÉ: Workflow ARES -->
+## 🆕 Workflow ověření ARES
 
-### Vazby na další moduly a reference
-- Nemovitost, Jednotka, Smlouva, Platby, Dokumenty, Uživatelé, Auditní log
-
-### Specifika, rozšíření
-- Možnost více vlastníků jedné nemovitosti (podíly)
-- GDPR – anonymizace, export
+- Zadání IČO (pro OSVČ, firmy, instituce, spolky) umožní tlačítko **Ověřit v ARES**.
+- Při ověření se automaticky předvyplní název, adresa, DIČ, statutár, zápis v OR.
+- Pokud subjekt v ARES není, zobrazit chybovou hlášku a neumožnit uložení.
+- Každý zásah do údajů z ARES logovat do auditního logu.
 
 ---
 
@@ -107,7 +133,7 @@ Viz výše tabulka Kdo má přístup. Práva lze dále upřesnit v detailu.
 - ✅ Kdo má přístup/viditelnost podle oprávnění/rolí
 - ✅ Zařazení v hlavní stromové struktuře
 - ✅ Podsekce a vazby na další části
-- ✅ Výčet a popis všech polí (přehled i formulář)
+- ✅ Výčet a popis všech polí (viz rozpad podle typu subjektu výše)
 - ✅ Validace, tlačítka, workflow
 - ✅ Akce dostupné v detailu
 - ✅ Chybové stavy
@@ -122,16 +148,17 @@ Formulář pro založení/editaci pronajímatele, validace, možnost uložit roz
 Správce, administrátor
 
 ### Pole (formulář)
-Viz tabulka v sekci Přehled (včetně validací).
+Viz rozpad podle typu subjektu výše.  
+ARES workflow pouze pro typy s IČO.
 
 ### Validace, tlačítka, workflow
 - Povinná pole zvýraznit, validovat unikátnost
-- Tlačítka: Uložit, Pokračovat v průvodci, Zrušit
+- Tlačítka: Uložit, Pokračovat v průvodci, Zrušit, Ověřit v ARES (pro IČO)
 - Workflow: Možnost uložit „rozpracováno“, pokračovat později
 
 ### Chybové stavy
 - Duplicitní e-mail, IČO
-- Neplatný formát
+- Neplatný formát, ARES nedostupný
 - Chybějící povinné pole
 
 ### Oprávnění a viditelnost
@@ -141,7 +168,7 @@ Správce, administrátor
 - Automatické vytvoření vazby na Nemovitost, Jednotku
 
 ### Specifika, rozšíření
-- Průvodce založením, možnost přiřadit pověřené osoby
+- Průvodce založením, možnost přiřadit pověřené osoby, variabilita pole dle typu subjektu
 
 ---
 
@@ -152,7 +179,7 @@ Správce, administrátor
 - ✅ Kdo má přístup/viditelnost podle oprávnění/rolí
 - ✅ Zařazení v hlavní stromové struktuře
 - ✅ Podsekce a vazby na další části
-- ✅ Výčet a popis všech polí (přehled i formulář)
+- ✅ Výčet a popis všech polí (dle typu subjektu)
 - ✅ Validace, tlačítka, workflow
 - ✅ Akce dostupné v detailu
 - ✅ Chybové stavy
@@ -255,7 +282,7 @@ Správce, administrátor
 - ✅ Specifika, rozšíření
 
 ### Účel sekce/dlaždice
-Evidence všech změn údajů pronajímatele (včetně importů, exportů, změn stavu).
+Evidence všech změn údajů pronajímatele (včetně importů, exportů, změn stavu, ARES ověření).
 
 ### Kdo má přístup/viditelnost
 Správce, administrátor, účetní (čtení)
@@ -270,7 +297,7 @@ Správce, administrátor, účetní (čtení)
 - Export auditního logu, zobrazení detailu změny
 
 ### Specifika, rozšíření
-- Možnost auditovat i hromadné operace
+- Možnost auditovat i hromadné operace, ARES workflow
 
 ---
 
@@ -290,7 +317,7 @@ Správce, administrátor, účetní (čtení)
 - ✅ Specifika, rozšíření
 
 ### Účel sekce/dlaždice
-Statistika počtů pronajímatelů, typů, nemovitostí, historie změn.
+Statistika počtů pronajímatelů, rozpad podle typů subjektů, nemovitostí, historie změn.
 
 ### Kdo má přístup/viditelnost
 Správce, administrátor
@@ -319,7 +346,8 @@ Správce, administrátor
 - ✅ Specifika, rozšíření
 
 ### Účel sekce/dlaždice
-Hromadný import/export subjektů (CSV, XLSX, JSON), včetně validací a kontroly duplicit.
+Hromadný import/export subjektů (CSV, XLSX, JSON), včetně validací a kontroly duplicit.  
+**Obsahuje typ_subjektu a dynamická pole podle typu!**
 
 ### Kdo má přístup/viditelnost
 Správce, administrátor
@@ -432,7 +460,7 @@ Přehled napojení na nemovitosti, jednotky, smlouvy, dokumenty, uživatele.
 
 - ⏳ Ošetřit duplicity (e-mail, IČO)
 - ⏳ Validace a ověřování údajů z ARES/ISZR
-- ⏳ Podpora více vlastníků jedné nemovitosti (podíly)
+- ⏳ **Podpora všech typů subjektů a rozdílných formulářů (viz výše)**
 - ⏳ Automatizace notifikací (změna stavu, nové dokumenty)
 - ⏳ GDPR – anonymizace a export, auditní log
 - ⏳ Hromadné operace – import/export, změna stavu
@@ -440,10 +468,10 @@ Přehled napojení na nemovitosti, jednotky, smlouvy, dokumenty, uživatele.
 - ⏳ Možnost archivace vs. smazání (pravidla pro mazání)
 - ⏳ Rozšířit auditní log o hromadné změny
 - ⏳ Napojení na externí registry (katastr, ISZR)
-- ⏳ Potřebujeme možnost sdíleného vlastnictví (více osob/firem)?
-- ⏳ Umožnit pověření správce více nemovitostí najednou?
-- ⏳ Chceme automatickou kontrolu insolvenčního rejstříku?
-- ⏳ Jaké notifikace mají být povinné?
+- ⏳ Sdílené vlastnictví (více osob/firem)
+- ⏳ Automatická kontrola insolvenčního rejstříku
+- ⏳ Povinné notifikace – definovat které jsou nutné
+- > TODO: Důsledně škrtat hotové úkoly a označovat stav.
 
 ---
 
@@ -484,6 +512,8 @@ Přehled napojení na nemovitosti, jednotky, smlouvy, dokumenty, uživatele.
   "telefon": "+420543211234",
   "adresa": "Investiční 12, Brno",
   "bankovni_ucet": "987654321/0300",
+  "statutar": "Jan Novák",
+  "rejstrik": "KS Brno, oddíl C, vložka 12345",
   "stav": "aktivni",
   "vlastnictvi": [
     { "nemovitost_id": "13", "podil": 0.5 },
@@ -543,11 +573,16 @@ Přehled napojení na nemovitosti, jednotky, smlouvy, dokumenty, uživatele.
 3. Změna vlastnické struktury → automatická změna stavu, evidence změn, notifikace
 4. Hromadné importy/exporty → validace, kontrola duplicit, audit
 5. Automatizované notifikace (změna stavu, nové dokumenty, blokace)
+6. **Ověření v ARES – automatické doplnění údajů a audit změny** (nové)
 
 ---
 
 ## 📚 Reference
 
+- [common-actions.md](./common-actions.md)
+- [permissions-catalog.md](./permissions-catalog.md)
+- [pravidla.md](./pravidla.md)
+- [struktura-app.md](./struktura-app.md)
 - [Modul Nemovitost](./nemovitost.md)
 - [Modul Jednotka](./jednotka.md)
 - [Modul Nájemník](./najemnik.md)
