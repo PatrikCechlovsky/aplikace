@@ -1,5 +1,6 @@
 # Modul: Platby
 
+> ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)  
 > ℹ️ Viz [Centrální katalog tlačítek a ikon](./common-actions.md)  
 > ℹ️ Viz [Centrální katalog oprávnění](./permissions-catalog.md)
 
@@ -18,7 +19,7 @@ Komplexní seznam všech plateb (příchozích i odchozích), možnost filtrová
 
 **Funkce:**
 - Vyhledávání a filtrování (datum, jednotka, nájemník, služba, typ platby, stav)
-- Zobrazení detailu platby (včetně vazby na předpis/službu)
+- Zobrazení detailu platby (včetně vazby na předpis/službu, smlouvu a službu)
 - Export/Import (CSV, XLSX)
 - Možnost ručního zadání nové platby
 - Možnost opravy nebo stornování platby (s auditní stopou)
@@ -160,7 +161,7 @@ Grafické a číselné přehledy o stavu plateb, pohledávek, penalizací, splac
 
 ---
 
-## 📑 Doporučení pro workflow
+## 📑 Doporučené workflow
 
 - **Přehled plateb** a **dlužné** jsou hlavní operativní sekce pro každodenní práci správce/účetní.
 - **Upomínky** a **penalizace** by měly být propojeny s notifikačním systémem.
@@ -170,12 +171,65 @@ Grafické a číselné přehledy o stavu plateb, pohledávek, penalizací, splac
 
 ---
 
+## 🗃️ Datové modely (ukázka)
+
+### Záznam platby – doporučený model
+
+```json
+{
+  "id": "platba20250915",
+  "predpis_id": "predpis202509",
+  "smlouva_id": "501",
+  "sluzba_id": "sluzba101",
+  "jednotka_id": "101",
+  "najemnik_id": "najemnik_101",
+  "castka": 12000,
+  "datum_prijmu": "2025-09-15",
+  "datum_zauctovani": "2025-09-16",
+  "zpusob_uhrady": "prevod",
+  "vs": "2025001234",
+  "ks": "0558",
+  "ss": "2025",
+  "ucet_id": "bankovni_ucet_001",
+  "puvodni_platce": "Jan Novák",
+  "typ_platby": "najem",
+  "stav": "uhrazeno",
+  "poznámka": "Platba za září, opraveno ručně",
+  "prilohy": [
+    {
+      "nazev": "vypis_2025-09.pdf",
+      "typ": "pdf",
+      "url": "prilohy/vypis_2025-09.pdf"
+    }
+  ],
+  "audit_log": [
+    {
+      "akce": "prijato",
+      "uzivatel": "PatrikCechlovsky",
+      "cas": "2025-09-16T08:40:00"
+    },
+    {
+      "akce": "upraveno",
+      "uzivatel": "ucetni1",
+      "cas": "2025-09-16T09:10:00"
+    }
+  ]
+}
+```
+
+---
+
 ## 📚 Reference na další dokumentaci
 
 - [Modul Služby](./sluzby.md)
 - [Modul Vyúčtování](./vyuctovani.md)
 - [Modul Jednotka](./jednotka.md)
 - [Modul Nájemník](./najemnik.md)
+- [Modul Smlouva](./smlouva.md)
+- [Modul Finance](./finance.md)
+
+---
+
 # Modul: Platby pronajímatele (výdaje, SVJ, dodavatelé)
 
 ---
@@ -346,15 +400,18 @@ Umožňuje oddělit vlastní výdaje pronajímatele od příjmů od nájemníků
 ---
 
 > Tato dokumentace umožňuje přehlednou a bezpečnou správu tvých výdajů vůči SVJ a dalším partnerům odděleně od příjmů z nájmu.
+
 ---
+
 Co by šlo případně doplnit (volitelně, podle potřeb):
 
-Vzorová data (ukázkový CSV řádek, JSON objekt platby)
-Ukázky notifikačních šablon (e-mail/SMS)
-Diagram workflow (vizualizace procesu párování nebo upomínky)
-Možnosti napojení na banku/účetnictví (pokud se plánuje)
-Příklady uživatelských obrazovek/tabulek
-platby pojištěí jednou ročně
-platby třeba aplikace
-jiné výdaje roční měsíční tříleté atd
+- Vzorová data (ukázkový CSV řádek, JSON objekt platby)
+- Ukázky notifikačních šablon (e-mail/SMS)
+- Diagram workflow (vizualizace procesu párování nebo upomínky)
+- Možnosti napojení na banku/účetnictví (pokud se plánuje)
+- Příklady uživatelských obrazovek/tabulek
+- Platby pojištění jednou ročně
+- Platby třeba aplikace
+- Jiné výdaje roční/měsíční/tříleté atd.
+
 > Pokud chceš detailní workflow nebo datové struktury pro některou sekci, napiš konkrétní požadavek.
