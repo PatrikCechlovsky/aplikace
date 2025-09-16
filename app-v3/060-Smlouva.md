@@ -1,3 +1,81 @@
+# ARCHITEKTURA A WORKFLOW MODULU SMLOUVA (doplněno Copilotem)
+
+---
+
+## 1. Formulář pro tvorbu a editaci smlouvy
+
+### a) Dynamika a načítání dat z ostatních modulů
+- Výběrová pole (dropdown/autocomplete) pro:
+  - Pronajímatele (`pronajimatel_id`) – tahá se z modulu Pronajímatel (případně umožní vytvořit nového).
+  - Nájemníka (`najemnik_id`) – tahá se z modulu Nájemník.
+  - Nemovitost (`nemovitost_id`) – tahá se z modulu Nemovitost.
+  - Jednotku (`jednotka_id`) – tahá se podle nemovitosti (filtrovaný výběr).
+- Dynamické načtení: Po výběru jednotky se automaticky předvyplní rozloha, adresa, případně další technické údaje (patro, podíl, vybavení).
+- Načítání vzorů smluv – uživatel vybírá z katalogu vzorů (modul Vzor Smlouvy); každý vzor má vlastní sadu povinných polí.
+
+### b) Podpora více vzorů smluv
+- V databázi je tabulka `vzor_smlouvy`.  
+- V každém formuláři je výběrové pole „Vzor smlouvy“ a podle něj se zobrazuje/skrývá sada polí.
+- Každý vzor má definováno, které proměnné je nutno doplnit (např. pro garáž, pro byt, pro komerční prostor…).
+- Při změně vzoru se načtou výchozí hodnoty (např. z šablony nebo z údajů jednotky/nemovitosti).
+
+### c) Sekce pro přílohy a další dokumenty
+- V každém formuláři je sekce „Připojit dokument/přílohu“ (upload, výběr z šablon).
+- Povinné přílohy (např. předávací protokol, kolaudace, revizní zpráva) lze vynucovat podle typu jednotky/vzoru.
+- Podporuj možnost připojit více dokumentů (např. dodatky, foto, skeny, revizní protokoly).
+
+---
+
+## 2. Vazba na modul Dokumenty (app-v3/120-Dokumenty.md)
+
+### a) Propojení Smlouva × Dokumenty
+- Modul Smlouva slouží k tvorbě, generování a správě smluv/dokumentů.
+- Modul Dokumenty je „globální knihovna“ – evidence, vyhledávání, filtrace, správa všech dokumentů napříč systémem.
+- Každý dokument vytvořený v modulu Smlouva (smlouva, předávací protokol, dodatek, splátkový kalendář…) se zapíše také jako záznam do modulu Dokumenty, s referencí na původní entitu (`smlouva_id`, `protokol_id` atd.).
+- V modulu Dokumenty se dokument pouze zobrazuje, lze ho stáhnout, verzovat, případně exportovat, ale nevytváří se zde – tvorba probíhá v modulu Smlouva.
+
+### b) Výhody tohoto dělení
+- Jasné workflow: Smlouvy a návazné dokumenty vznikají pouze v modulu Smlouva, nejsou „rozeseté“.
+- Modul Dokumenty funguje jako auditní knihovna a centrální úložiště – možno filtrovat podle typu, entity, stavu apod.
+- Dokument lze z Dokumentů i smazat/anonymizovat (pokud to dovolí práva a pravidla).
+
+---
+
+## 3. Co nesmí chybět v modulu Smlouva
+
+- Podpora více vzorů smluv (možnost rozšiřovat vzory bez zásahu do UI).
+- Vazby na všechny klíčové entity přes ID (pronajímatel, nájemník, jednotka, nemovitost, protokol, dodatky…).
+- Možnost elektronického podpisu (i více stran).
+- Povinné přílohy podle typu smlouvy/jednotky.
+- Historie změn, audit, workflow podpisů a schvalování.
+- Automatické generování platebních předpisů (podle parametrů smlouvy).
+- Možnost hromadných operací (import, export, archivace, generování).
+- Vazba na externí registry (např. ARES pro validaci firem, KN pro validaci nemovitosti).
+
+---
+
+## 4. Konkrétní doporučení pro implementaci
+
+- **Formulář Smlouvy**:
+  - Pole pro výběr vzoru smlouvy, pronajímatele, nájemníka, nemovitosti, jednotky (vše ID).
+  - Automatické načtení údajů o jednotce/nemovitosti po výběru.
+  - Povinné přílohy dynamicky podle vzoru/typu.
+  - Pole pro podpisové strany, nutnost elektronického podpisu.
+  - Možnost přidat poznámku, označit dokument jako „přílohu“ (předsmluvní dokument).
+
+- **Propojení na Dokumenty**:
+  - Po uložení/vygenerování smlouvy/přílohy se vloží záznam do modulu Dokumenty s odkazem na zdroj (např. `typ_dokumentu: „nájemní smlouva“, entity: {smlouva_id: 501}`)
+  - V Dokumentech je možné dokument jen zobrazit či stáhnout.
+
+---
+
+## Jak bych to udělal já?
+- Všechny generované dokumenty (smlouvy, protokoly, dodatky) vznikají výhradně přes modul Smlouva.
+- Všechny dokumenty, které mají být v systému uchovány, se po vytvoření automaticky zapisují i do modulu Dokumenty.
+- V modulu Dokumenty se pouze zobrazují, stahují, exportují a archivují – nikdy se zde už nová smlouva „netvoří“.
+- Formulář Smlouvy je dynamický – načítá data z ostatních modulů podle výběru uživatele a vzoru.
+
+---
 # Modul: Smlouva
 
 > ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)
