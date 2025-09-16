@@ -24,6 +24,11 @@
 - Povinné přílohy (např. předávací protokol, kolaudace, revizní zpráva) lze vynucovat podle typu jednotky/vzoru.
 - Podporuj možnost připojit více dokumentů (např. dodatky, foto, skeny, revizní protokoly).
 
+### d) Hlavička smlouvy, neměnné podmínky a verzování
+- **Hlavička smlouvy**: Každý generovaný dokument obsahuje neměnnou hlavičku s náležitostmi: číslo smlouvy, účastníci, typ smlouvy, datum uzavření, unikátní hash, platnost, stav podpisu.
+- **Neměnné podmínky**: Každý vzor smlouvy může obsahovat sekci „Neměnné podmínky“ (typicky všeobecné podmínky), která je buď součástí šablony (readonly), nebo jako pevná příloha.
+- **Verzování**: Každý dokument i příloha má vlastní auditní log, historii změn a možnost revertu (v budoucnu i diff).
+
 ---
 
 ## 2. Vazba na modul Dokumenty (app-v3/120-Dokumenty.md)
@@ -51,6 +56,8 @@
 - Automatické generování platebních předpisů (podle parametrů smlouvy).
 - Možnost hromadných operací (import, export, archivace, generování).
 - Vazba na externí registry (např. ARES pro validaci firem, KN pro validaci nemovitosti).
+- **Hlavička dokumentu** s neměnnými údaji a blok „Neměnné podmínky“ v šabloně.
+- **Verzování** a auditní log i pro přílohy.
 
 ---
 
@@ -62,10 +69,21 @@
   - Povinné přílohy dynamicky podle vzoru/typu.
   - Pole pro podpisové strany, nutnost elektronického podpisu.
   - Možnost přidat poznámku, označit dokument jako „přílohu“ (předsmluvní dokument).
+  - Hlavička smlouvy je generována vždy stejně (readonly), neměnné podmínky jako blok nebo příloha, auditní log pro všechny změny a přílohy.
 
 - **Propojení na Dokumenty**:
   - Po uložení/vygenerování smlouvy/přílohy se vloží záznam do modulu Dokumenty s odkazem na zdroj (např. `typ_dokumentu: „nájemní smlouva“, entity: {smlouva_id: 501}`)
-  - V Dokumentech je možné dokument jen zobrazit či stáhnout.
+  - V Dokumentech je možné dokument jen zobrazit či stáhnout, verzovat, exportovat, archivovat.
+
+---
+
+## 5. Jak bych to udělal já?
+- Všechny generované dokumenty (smlouvy, protokoly, dodatky) vznikají výhradně přes modul Smlouva.
+- Všechny dokumenty, které mají být v systému uchovány, se po vytvoření automaticky zapisují i do modulu Dokumenty.
+- V modulu Dokumenty se pouze zobrazují, stahují, exportují a archivují – nikdy se zde už nová smlouva „netvoří“.
+- Formulář Smlouvy je dynamický – načítá data z ostatních modulů podle výběru uživatele a vzoru.
+- Hlavička smlouvy a blok neměnných podmínek jsou neměnné a auditované.
+- Každá příloha a změna má vlastní verzi a auditní log.
 
 ---
 
@@ -101,14 +119,8 @@
 Tato doporučení nejsou nezbytná pro základní provoz, ale jejich zapracování výrazně zvýší úroveň i auditní bezpečnost modulu.  
 Pokud chceš některé části rozvést (např. příklad hlavičky, datový model příloh, workflow schvalování), napiš přesně, co doplnit!
 
-## Jak bych to udělal já?
-- Všechny generované dokumenty (smlouvy, protokoly, dodatky) vznikají výhradně přes modul Smlouva.
-- Všechny dokumenty, které mají být v systému uchovány, se po vytvoření automaticky zapisují i do modulu Dokumenty.
-- V modulu Dokumenty se pouze zobrazují, stahují, exportují a archivují – nikdy se zde už nová smlouva „netvoří“.
-- Formulář Smlouvy je dynamický – načítá data z ostatních modulů podle výběru uživatele a vzoru.
 ---
 
----
 # Modul: Smlouva
 
 > ℹ️ Viz [Pravidla dokumentace a centrální katalogy](./pravidla.md)
