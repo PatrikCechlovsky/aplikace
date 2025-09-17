@@ -1,60 +1,78 @@
-/* Základní styly pro ukázku sidebaru a jeho accordion */
 body {
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  background: #181b21;
+  color: #e6e6e6;
   margin: 0;
-  background: #f5f6fb;
-  color: #212529;
+  padding: 0;
 }
 
 .app-layout {
   display: flex;
   min-height: 100vh;
+  background: #181b21;
 }
 
 /* Sidebar */
 .sidebar {
-  width: 270px;
-  background: #223049;
+  width: 265px;
+  background: #191c22;
   color: #fff;
   display: flex;
   flex-direction: column;
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
   min-height: 100vh;
-  box-shadow: 2px 0 10px #0001;
-  padding-bottom: 0;
 }
 
 .sidebar-title {
   display: flex;
   align-items: center;
-  font-size: 1.2em;
+  gap: 10px;
+  font-size: 1.3em;
   font-weight: 700;
-  padding: 1.1em 1em 1em 1em;
-  border-bottom: 1px solid #334166;
-  gap: 12px;
+  color: #5fbaff;
+  padding: 22px 25px 12px 22px;
+  letter-spacing: 0.01em;
+}
+
+.sidebar-icon {
+  font-size: 1.3em;
+  min-width: 1.7em;
+  text-align: center;
+}
+
+.sidebar-app-name {
+  font-size: 1.13em;
 }
 
 .sidebar-list {
   list-style: none;
   margin: 0;
   padding: 0;
+  flex: 1;
 }
 
 .sidebar-section {
-  border-bottom: 1px solid #2c3a55;
+  margin-bottom: 2px;
+  border-radius: 8px;
 }
 
 .sidebar-section-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 0.6em 1.2em;
+  gap: 9px;
+  color: #fff;
+  font-weight: 600;
+  padding: 8px 20px 8px 22px;
   cursor: pointer;
-  transition: background 0.13s;
-  font-size: 1.07em;
+  transition: background 0.15s;
+  border-radius: 8px;
+  user-select: none;
 }
 
-.sidebar-section-header:hover {
-  background: #2c3a55;
+.sidebar-section-header:hover,
+.sidebar-section.expanded > .sidebar-section-header {
+  background: #232632;
 }
 
 .sidebar-arrow {
@@ -62,9 +80,10 @@ body {
   width: 1.2em;
   text-align: center;
   transition: transform 0.2s;
-  font-size: 1.1em;
   color: #b9c1d1;
   user-select: none;
+  font-size: 1.1em;
+  margin-right: 4px;
 }
 
 .sidebar-section.expanded > .sidebar-section-header .sidebar-arrow {
@@ -72,22 +91,15 @@ body {
 }
 
 .sidebar-section-title {
-  font-weight: 500;
-}
-
-.sidebar-icon {
-  width: 1.5em;
-  text-align: center;
-  font-size: 1.18em;
-  opacity: 0.96;
+  flex: 1;
 }
 
 .sidebar-sublist {
   list-style: none;
+  padding: 0 0 0 34px;
   margin: 0;
-  padding: 0 0 0 2.7em;
+  background: #181b21;
   display: none;
-  background: #1a253a;
 }
 
 .sidebar-section.expanded > .sidebar-sublist {
@@ -95,40 +107,198 @@ body {
 }
 
 .sidebar-sublist li {
-  padding: 0.5em 1.2em 0.5em 0em;
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 0.99em;
-  color: #e1e6f5;
+  padding: 5px 0;
+  font-size: 1em;
+  color: #b7c4d2;
   cursor: pointer;
-  border-left: 2px solid transparent;
-  transition: background 0.12s, border-color 0.12s;
+  border-radius: 5px;
+  transition: background 0.15s, color 0.13s;
 }
 
 .sidebar-sublist li:hover {
-  background: #253055;
-  border-left: 2px solid #4361ee;
-  color: #f1f3fa;
+  background: #232632;
+  color: #fff;
 }
 
 .sidebar-footer {
+  font-size: 0.98em;
+  color: #6e91c7;
+  padding: 22px 0 15px 32px;
+  background: none;
+  border: none;
+  min-height: 44px;
   margin-top: auto;
-  padding: 1em 1.5em;
-  font-size: 0.97em;
-  color: #b9c1d1;
-  background: #1a253a;
-  letter-spacing: 0.06em;
-  border-top: 1px solid #334166;
 }
 
-/* Hlavní obsah */
 .main-content {
   flex: 1;
-  background: #f5f6fb;
-  padding: 0 0 0 0;
-  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #181b21;
 }
 
-/* Ostatní styly zůstávají dle potřeby původního layoutu */
-/* ... */
+/* Hlavní header */
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #232632;
+  padding: 0 35px 0 28px;
+  height: 58px;
+  border-top-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+  margin-left: 6px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.header-title {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: #5fbaff;
+  letter-spacing: 0.01em;
+}
+
+.header-separator {
+  font-size: 1.3em;
+  font-weight: 300;
+  color: #6e91c7;
+  margin: 0 8px;
+}
+
+.header-subtitle {
+  font-size: 1.13em;
+  font-weight: 600;
+  color: #fff;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.header-btn {
+  background: #2c3440;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 7px 23px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 9px;
+  transition: background 0.18s;
+}
+.header-btn:hover { background: #4d5e7b; }
+.header-ico {
+  font-size: 1.23em;
+  cursor: pointer;
+  margin-right: 8px;
+  color: #fcf7c4;
+  transition: color 0.18s;
+}
+.header-ico:hover { color: #fff; }
+
+.actions-panel {
+  padding: 17px 35px 10px 28px;
+  background: #181b21;
+  border-bottom: 1px solid #232632;
+}
+
+.primary-btn {
+  background: #1673d4;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 7px 20px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.primary-btn:hover { background: #2590ff; }
+
+.main-table {
+  flex: 1;
+  padding: 22px 35px 0 28px;
+  background: #181b21;
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #232632;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 20px #0003;
+}
+th, td {
+  text-align: left;
+  padding: 11px 13px;
+}
+th {
+  background: #232632;
+  color: #5fbaff;
+  font-size: 1.05em;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-bottom: 2px solid #181b21;
+}
+td {
+  font-size: 1.01em;
+  color: #e6e6e6;
+  border-bottom: 1px solid #232632;
+}
+tr:last-child td { border-bottom: none; }
+
+.badge {
+  display: inline-block;
+  padding: 2px 11px 2px 11px;
+  border-radius: 11px;
+  font-weight: 600;
+  font-size: 0.95em;
+  letter-spacing: 0.01em;
+  color: #fff;
+}
+.badge.osoba { background: #1673d4; }
+.badge.osvc { background: #c257e3; }
+.badge.firma { background: #14b67a; }
+.badge.spolek { background: #ff8c18; }
+.badge.stat { background: #d33d58; }
+
+.action-btn {
+  background: #232632;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 5px 9px;
+  font-size: 1.13em;
+  cursor: pointer;
+  margin-right: 1px;
+  transition: background 0.15s;
+}
+.action-btn:hover { background: #1673d4; }
+
+::-webkit-scrollbar {
+  width: 10px;
+  background: #232632;
+}
+::-webkit-scrollbar-thumb {
+  background: #232632;
+  border-radius: 6px;
+}
+
+@media (max-width: 900px) {
+  .sidebar { display: none; }
+  .app-layout { flex-direction: column; }
+  .main-content { margin: 0; padding: 0; }
+}
