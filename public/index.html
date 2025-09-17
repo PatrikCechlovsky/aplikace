@@ -10,7 +10,7 @@
 </head>
 <body>
   <div class="app-layout">
-    <!-- Sidebar -->
+    <!-- 1. Sidebar (levé menu) -->
     <aside class="sidebar">
       <div class="sidebar-title">
         <span class="sidebar-icon">🏠</span>
@@ -18,128 +18,214 @@
       </div>
       <nav>
         <ul class="sidebar-list">
+          <!-- Správa uživatelů -->
           <li class="sidebar-section expanded">
+            <div class="sidebar-section-header">
+              <span class="sidebar-icon">👥</span>
+              <span class="sidebar-section-title">Správa uživatelů</span>
+              <span class="sidebar-expand">▼</span>
+            </div>
+            <ul class="sidebar-sublist">
+              <li><span class="sidebar-icon">👥</span> Seznam uživatelů</li>
+              <li><span class="sidebar-icon">✳️</span> Správa rolí a oprávnění</li>
+              <li><span class="sidebar-icon">📨</span> Přehled pozvánek</li>
+              <li><span class="sidebar-icon">📑</span> Správa licencí</li>
+              <li><span class="sidebar-icon">🔄</span> Import/Export uživatelů</li>
+              <li><span class="sidebar-icon">🧑‍💻</span> Auditní log / historie změn</li>
+              <li><span class="sidebar-icon">📊</span> Statistiky a využití</li>
+            </ul>
+          </li>
+          <!-- Můj účet -->
+          <li class="sidebar-section">
+            <div class="sidebar-section-header">
+              <span class="sidebar-icon">👤</span>
+              <span class="sidebar-section-title">Můj účet</span>
+              <span class="sidebar-expand">▶</span>
+            </div>
+            <ul class="sidebar-sublist">
+              <li><span class="sidebar-icon">👁️</span> Osobní údaje a kontakty</li>
+              <li><span class="sidebar-icon">🔐</span> Přihlašovací údaje a zabezpečení</li>
+              <li><span class="sidebar-icon">🔔</span> Notifikace a upozornění</li>
+              <li><span class="sidebar-icon">⚙️</span> Nastavení a preference</li>
+              <li><span class="sidebar-icon">🧑‍💻</span> Aktivita uživatele</li>
+              <li><span class="sidebar-icon">❌</span> Zrušení účtu</li>
+            </ul>
+          </li>
+          <!-- Pronajímatel -->
+          <li class="sidebar-section">
             <div class="sidebar-section-header">
               <span class="sidebar-icon">🏠</span>
               <span class="sidebar-section-title">Pronajímatel</span>
+              <span class="sidebar-expand">▶</span>
             </div>
             <ul class="sidebar-sublist">
-              <li><span class="sidebar-icon">📊</span> Přehled</li>
-              <li><span class="sidebar-icon">👤</span> Osoba <span class="sidebar-hash">#osoba</span></li>
-              <li><span class="sidebar-icon">🧑‍💼</span> OSVČ <span class="sidebar-hash">#osvc</span></li>
-              <li><span class="sidebar-icon">🏢</span> Firma <span class="sidebar-hash">#firma</span></li>
-              <li><span class="sidebar-icon">🫂</span> Spolek/skupina <span class="sidebar-hash">#spolek</span></li>
-              <li><span class="sidebar-icon">🏛️</span> Státní instituce <span class="sidebar-hash">#stat</span></li>
-              <li><span class="sidebar-icon">🤝</span> Zastupující osoba <span class="sidebar-hash">#zastupce</span></li>
+              <li><span class="sidebar-icon">👁️</span> Přehled pronajímatelů</li>
+              <li><span class="sidebar-icon">🤝</span> Správa pověření a sdílení</li>
+              <li><span class="sidebar-icon">🧑‍💻</span> Auditní log / historie změn</li>
+              <li><span class="sidebar-icon">📊</span> Statistiky a reporting</li>
+              <li><span class="sidebar-icon">🔄</span> Import/Export pronajímatelů</li>
+              <li><span class="sidebar-icon">📑</span> Přehled dokumentů</li>
+              <li><span class="sidebar-icon">⚙️</span> Nastavení modulu</li>
             </ul>
           </li>
+          <!-- Nemovitosti -->
           <li class="sidebar-section">
             <div class="sidebar-section-header">
-              <span class="sidebar-icon">🏘️</span>
+              <span class="sidebar-icon">🏢</span>
               <span class="sidebar-section-title">Nemovitosti</span>
+              <span class="sidebar-expand">▶</span>
             </div>
             <ul class="sidebar-sublist">
-              <li><span class="sidebar-icon">📊</span> Přehled nemovitostí</li>
-              <li><span class="sidebar-icon">🏢</span> Přehled jednotek</li>
+              <li><span class="sidebar-icon">🏢</span> Přehled nemovitostí</li>
+              <li><span class="sidebar-icon">🏘️</span> Přehled jednotek</li>
+              <li><span class="sidebar-icon">🔄</span> Import/Export</li>
+              <li><span class="sidebar-icon">🧑‍💻</span> Auditní log / historie změn</li>
+              <li><span class="sidebar-icon">📊</span> Statistiky a reporting</li>
+              <li><span class="sidebar-icon">📑</span> Přehled dokumentů</li>
+              <li><span class="sidebar-icon">⚙️</span> Nastavení modulu</li>
             </ul>
           </li>
+          <!-- Nájemníci -->
           <li class="sidebar-section">
             <div class="sidebar-section-header">
               <span class="sidebar-icon">👥</span>
               <span class="sidebar-section-title">Nájemníci</span>
+              <span class="sidebar-expand">▶</span>
             </div>
+            <ul class="sidebar-sublist">
+              <li><span class="sidebar-icon">👥</span> Přehled nájemníků</li>
+              <li><span class="sidebar-icon">🤝</span> Správa zástupců</li>
+              <li><span class="sidebar-icon">🧑‍💻</span> Auditní log / historie změn</li>
+              <li><span class="sidebar-icon">📊</span> Statistiky a využití</li>
+              <li><span class="sidebar-icon">🔄</span> Import/Export nájemníků</li>
+              <li><span class="sidebar-icon">📑</span> Přehled dokumentů</li>
+              <li><span class="sidebar-icon">⚙️</span> Nastavení modulu</li>
+            </ul>
           </li>
+          <!-- Smlouvy -->
           <li class="sidebar-section">
             <div class="sidebar-section-header">
               <span class="sidebar-icon">📄</span>
               <span class="sidebar-section-title">Smlouvy</span>
+              <span class="sidebar-expand">▶</span>
             </div>
+            <ul class="sidebar-sublist">
+              <li><span class="sidebar-icon">📄</span> Nájemní smlouvy</li>
+              <li><span class="sidebar-icon">📑</span> Vzor smlouvy</li>
+              <li><span class="sidebar-icon">📑</span> Předávací protokol</li>
+              <li><span class="sidebar-icon">📁</span> Archiv vzorů a protokolů</li>
+              <li><span class="sidebar-icon">📝</span> Dohoda o splátkách</li>
+              <li><span class="sidebar-icon">🧑‍💻</span> Auditní log / historie změn</li>
+              <li><span class="sidebar-icon">🔔</span> Notifikace a upozornění</li>
+            </ul>
           </li>
+          <!-- Další moduly zde... -->
           <li class="sidebar-section">
             <div class="sidebar-section-header">
               <span class="sidebar-icon">💰</span>
               <span class="sidebar-section-title">Platby</span>
+              <span class="sidebar-expand">▶</span>
             </div>
           </li>
           <li class="sidebar-section">
             <div class="sidebar-section-header">
               <span class="sidebar-icon">🛠️</span>
               <span class="sidebar-section-title">Služby</span>
+              <span class="sidebar-expand">▶</span>
             </div>
           </li>
           <li class="sidebar-section">
             <div class="sidebar-section-header">
               <span class="sidebar-icon">💸</span>
               <span class="sidebar-section-title">Finance</span>
+              <span class="sidebar-expand">▶</span>
             </div>
           </li>
           <li class="sidebar-section">
             <div class="sidebar-section-header">
               <span class="sidebar-icon">⚡</span>
               <span class="sidebar-section-title">Energie</span>
+              <span class="sidebar-expand">▶</span>
             </div>
           </li>
           <li class="sidebar-section">
             <div class="sidebar-section-header">
               <span class="sidebar-icon">🔧</span>
               <span class="sidebar-section-title">Údržba</span>
+              <span class="sidebar-expand">▶</span>
             </div>
           </li>
           <li class="sidebar-section">
             <div class="sidebar-section-header">
               <span class="sidebar-icon">📧</span>
               <span class="sidebar-section-title">Komunikace</span>
+              <span class="sidebar-expand">▶</span>
             </div>
           </li>
           <li class="sidebar-section">
             <div class="sidebar-section-header">
               <span class="sidebar-icon">📁</span>
               <span class="sidebar-section-title">Dokumenty</span>
+              <span class="sidebar-expand">▶</span>
             </div>
           </li>
           <li class="sidebar-section">
             <div class="sidebar-section-header">
               <span class="sidebar-icon">⚙️</span>
               <span class="sidebar-section-title">Nastavení</span>
+              <span class="sidebar-expand">▶</span>
             </div>
           </li>
         </ul>
       </nav>
+      <!-- 7. Stavová/dolní lišta -->
       <div class="sidebar-footer">
-        v2.0 – Patrik Cechlovský
+        <span>v2.0 – Patrik Cechlovský</span>
       </div>
     </aside>
-    <!-- Main -->
+
+    <!-- 2. Hlavní oblast (pravá část) -->
     <div class="main-content">
+      <!-- 2. Header (horní lišta) -->
       <header class="main-header">
         <div class="header-left">
-          <span class="header-icon">🏠</span>
-          <span class="header-title">Pronajímatel</span>
-          <span class="header-separator">-</span>
-          <span class="header-subtitle">📊 Přehled</span>
+          <h1>
+            <span class="header-icon">👥</span>
+            Správa uživatelů
+            <span class="header-breadcrumb">– Přehled</span>
+          </h1>
         </div>
         <div class="header-actions">
-          <button class="header-btn">Zrušit filtr</button>
-          <span class="header-ico" title="Nápověda">❓</span>
-          <span class="header-ico" title="Notifikace">🔔</span>
-          <span class="header-ico" title="Zprávy">📩</span>
-          <span class="header-ico" title="Účet">👤</span>
+          <button class="header-btn" title="Hledat"><span>🔍</span></button>
+          <button class="header-btn" title="Notifikace"><span>🔔</span></button>
+          <button class="header-btn" title="Nápověda"><span>🆘</span></button>
+          <button class="header-btn" title="Uživatel"><span>👤</span></button>
+          <button class="header-btn prominent" title="Zrušit filtr">Zrušit filtr</button>
         </div>
       </header>
+
+      <!-- 3. Panel s tlačítky -->
       <div class="actions-panel">
-        <button class="primary-btn">+ Přidat pronajímatele</button>
+        <button class="primary-btn"><span>➕</span> Přidat uživatele</button>
+        <button class="secondary-btn"><span>🔽</span> Filtrovat</button>
       </div>
+
+      <!-- 4. Název sekce / breadcrumb -->
+      <div class="section-title">
+        <span class="section-icon">👥</span>
+        Seznam uživatelů
+      </div>
+
+      <!-- 5. Hlavní přehled (tabulka) -->
       <div class="main-table">
         <table>
           <thead>
             <tr>
               <th>ID</th>
-              <th>Název/Jméno</th>
-              <th>Typ</th>
-              <th>IČO</th>
-              <th>Telefon</th>
-              <th>Email</th>
-              <th>Město</th>
+              <th>Jméno</th>
+              <th>E-mail</th>
+              <th>Role</th>
+              <th>Stav</th>
               <th>Akce</th>
             </tr>
           </thead>
@@ -147,147 +233,22 @@
             <tr>
               <td>1</td>
               <td>Jan Novák</td>
-              <td><span class="badge osoba">Osoba</span></td>
-              <td>-</td>
-              <td>+420777888999</td>
               <td>jan.novak@email.cz</td>
-              <td>Praha</td>
+              <td>Admin</td>
+              <td><span class="status-pill active">Aktivní</span></td>
               <td>
-                <button class="action-btn" title="Detail"><span>👁️</span></button>
-                <button class="action-btn" title="Editovat"><span>✏️</span></button>
-                <button class="action-btn" title="Složka"><span>📁</span></button>
+                <button title="Detail"><span>👁️</span></button>
+                <button title="Editovat"><span>✏️</span></button>
+                <button title="Smazat"><span>🗑️</span></button>
               </td>
             </tr>
-            <tr>
-              <td>2</td>
-              <td>Marie Svobodová</td>
-              <td><span class="badge osoba">Osoba</span></td>
-              <td>-</td>
-              <td>+420776555444</td>
-              <td>marie.svobodova@email.cz</td>
-              <td>Brno</td>
-              <td>
-                <button class="action-btn" title="Detail"><span>👁️</span></button>
-                <button class="action-btn" title="Editovat"><span>✏️</span></button>
-                <button class="action-btn" title="Složka"><span>📁</span></button>
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Petr Dvořák</td>
-              <td><span class="badge osvc">OSVČ</span></td>
-              <td>12345678</td>
-              <td>+420602333444</td>
-              <td>petr.dvorak@firma.cz</td>
-              <td>České Budějovice</td>
-              <td>
-                <button class="action-btn" title="Detail"><span>👁️</span></button>
-                <button class="action-btn" title="Editovat"><span>✏️</span></button>
-                <button class="action-btn" title="Složka"><span>📁</span></button>
-              </td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>Alena Procházková</td>
-              <td><span class="badge osvc">OSVČ</span></td>
-              <td>87654321</td>
-              <td>+420605666777</td>
-              <td>alena.prochazkova@osvc.cz</td>
-              <td>Plzeň</td>
-              <td>
-                <button class="action-btn" title="Detail"><span>👁️</span></button>
-                <button class="action-btn" title="Editovat"><span>✏️</span></button>
-                <button class="action-btn" title="Složka"><span>📁</span></button>
-              </td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>ABC Development s.r.o.</td>
-              <td><span class="badge firma">Firma</span></td>
-              <td>11223344</td>
-              <td>+420249998888</td>
-              <td>info@abcdevelopment.cz</td>
-              <td>Praha</td>
-              <td>
-                <button class="action-btn" title="Detail"><span>👁️</span></button>
-                <button class="action-btn" title="Editovat"><span>✏️</span></button>
-                <button class="action-btn" title="Složka"><span>📁</span></button>
-              </td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>Reality Partner a.s.</td>
-              <td><span class="badge firma">Firma</span></td>
-              <td>55667788</td>
-              <td>+42051234567</td>
-              <td>kontakt@realitypartner.cz</td>
-              <td>Brno</td>
-              <td>
-                <button class="action-btn" title="Detail"><span>👁️</span></button>
-                <button class="action-btn" title="Editovat"><span>✏️</span></button>
-                <button class="action-btn" title="Složka"><span>📁</span></button>
-              </td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td>Bytové družstvo Vinohrady</td>
-              <td><span class="badge spolek">Spolek</span></td>
-              <td>99887766</td>
-              <td>+42022233444</td>
-              <td>druzstvo@bdvinohrady.cz</td>
-              <td>Praha</td>
-              <td>
-                <button class="action-btn" title="Detail"><span>👁️</span></button>
-                <button class="action-btn" title="Editovat"><span>✏️</span></button>
-                <button class="action-btn" title="Složka"><span>📁</span></button>
-              </td>
-            </tr>
-            <tr>
-              <td>8</td>
-              <td>Společenství vlastníků Zelená</td>
-              <td><span class="badge spolek">Spolek</span></td>
-              <td>-</td>
-              <td>+420596124356</td>
-              <td>svj@zelena42.cz</td>
-              <td>Ostrava</td>
-              <td>
-                <button class="action-btn" title="Detail"><span>👁️</span></button>
-                <button class="action-btn" title="Editovat"><span>✏️</span></button>
-                <button class="action-btn" title="Složka"><span>📁</span></button>
-              </td>
-            </tr>
-            <tr>
-              <td>9</td>
-              <td>Městská část Praha 1</td>
-              <td><span class="badge stat">Stát</span></td>
-              <td>00063410</td>
-              <td>+420221097111</td>
-              <td>podatelna@praha1.cz</td>
-              <td>Praha</td>
-              <td>
-                <button class="action-btn" title="Detail"><span>👁️</span></button>
-                <button class="action-btn" title="Editovat"><span>✏️</span></button>
-                <button class="action-btn" title="Složka"><span>📁</span></button>
-              </td>
-            </tr>
-            <tr>
-              <td>10</td>
-              <td>Státní pozemkový úřad</td>
-              <td><span class="badge stat">Stát</span></td>
-              <td>01312774</td>
-              <td>+420299221211</td>
-              <td>epodatelna@spucr.cz</td>
-              <td>Praha</td>
-              <td>
-                <button class="action-btn" title="Detail"><span>👁️</span></button>
-                <button class="action-btn" title="Editovat"><span>✏️</span></button>
-                <button class="action-btn" title="Složka"><span>📁</span></button>
-              </td>
-            </tr>
+            <!-- Další řádky zde -->
           </tbody>
         </table>
       </div>
+      <!-- 6. Akční sloupce jsou uvnitř tabulky v <td> Akce -->
     </div>
   </div>
+  <!-- Komentáře pro rozšiřování a další části layoutu -->
 </body>
 </html>
