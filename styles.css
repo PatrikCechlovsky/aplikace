@@ -1,0 +1,195 @@
+:root {
+  --sidebar-bg: #212636;
+  --sidebar-fg: #e1e6f7;
+  --sidebar-accent: #3887f5;
+  --main-bg: #181a23;
+  --main-fg: #f2f4fa;
+  --accent: #60a5fa;
+  --border: #31354a;
+  --card-bg: #23283a;
+  --primary: #3887f5;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--main-bg);
+  color: var(--main-fg);
+  min-height: 100vh;
+}
+
+#app-root {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background: var(--sidebar-bg);
+  color: var(--sidebar-fg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid var(--border);
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  padding: 18px 18px 8px 18px;
+  font-weight: bold;
+}
+.logo {
+  width: 32px;
+  height: 32px;
+  margin-right: 12px;
+}
+.app-title {
+  font-size: 1.1em;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.sidebar-nav li {
+  cursor: pointer;
+  padding: 11px 21px;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s;
+  border-left: 4px solid transparent;
+}
+.sidebar-nav li span {
+  margin-right: 8px;
+}
+.sidebar-nav li.active,
+.sidebar-nav li:hover {
+  background: var(--sidebar-accent);
+  color: #fff;
+  border-left: 4px solid var(--accent);
+}
+
+.sidebar-footer {
+  padding: 13px 24px;
+  font-size: 0.95em;
+  opacity: 0.6;
+  border-top: 1px solid var(--border);
+}
+
+/* Main layout */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--main-bg);
+}
+
+/* Topbar */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--card-bg);
+  padding: 10px 28px;
+  border-bottom: 1px solid var(--border);
+}
+.breadcrumbs {
+  font-size: 1.1em;
+  color: var(--accent);
+  font-weight: 500;
+}
+.topbar-actions {
+  display: flex;
+  align-items: center;
+}
+.topbar-actions .action-btn {
+  background: none;
+  border: none;
+  color: var(--main-fg);
+  font-size: 1.4em;
+  margin-left: 18px;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+}
+.topbar-actions .action-btn:hover {
+  color: var(--accent);
+}
+
+#main-content {
+  flex: 1;
+  padding: 32px;
+  background: var(--main-bg);
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Actions bar nad přehledem */
+.actions-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.action-btn {
+  border: none;
+  background: var(--card-bg);
+  color: var(--main-fg);
+  border-radius: 6px;
+  padding: 7px 13px;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: background 0.13s, color 0.13s;
+  box-shadow: 0 1px 2px #0002;
+}
+.action-btn.primary {
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+}
+.action-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Card */
+.card {
+  background: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 1px 4px #0002;
+  padding: 28px 24px;
+  margin-bottom: 26px;
+}
+
+/* Ikony (SVG inline nebo ikonfont) */
+.icon-home::before { content: "🏠"; }
+.icon-help::before { content: "❓"; }
+.icon-bell::before { content: "🔔"; }
+.icon-user::before { content: "👤"; }
+.icon-add::before { content: "➕"; }
+.icon-edit::before { content: "✏️"; }
+.icon-delete::before { content: "🗑️"; }
+.icon-export::before { content: "📤"; }
+.icon-print::before { content: "🖨️"; }
+
+@media (max-width: 800px) {
+  .sidebar {
+    width: 60px;
+  }
+  .sidebar-header .app-title,
+  .sidebar-nav li span:not(:first-child) {
+    display: none;
+  }
+  #main-content {
+    padding: 14px;
+  }
+}

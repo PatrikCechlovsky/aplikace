@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Aplikace pronajímatel</title>
+  <link rel="stylesheet" href="../src/styles.css" />
+</head>
+<body>
+  <div id="app-root">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <img src="../assets/logo.svg" alt="Logo" class="logo" />
+        <span class="app-title">Aplikace pronajímatel</span>
+      </div>
+      <nav class="sidebar-nav">
+        <!-- Ukázková základní navigace (bez konkrétních modulů) -->
+        <ul>
+          <li class="active"><span class="icon-home"></span> Přehled</li>
+        </ul>
+      </nav>
+      <footer class="sidebar-footer">
+        v3.0 – Patrik Cechlovský
+      </footer>
+    </aside>
+    <!-- Main content -->
+    <main>
+      <header class="topbar">
+        <div class="breadcrumbs">Přehled</div>
+        <div class="topbar-actions">
+          <!-- Akční ikonky vpravo nahoře -->
+          <button title="Nápověda" class="action-btn"><span class="icon-help"></span></button>
+          <button title="Notifikace" class="action-btn"><span class="icon-bell"></span></button>
+          <button title="Profil" class="action-btn"><span class="icon-user"></span></button>
+        </div>
+      </header>
+      <section id="main-content">
+        <div class="actions-bar">
+          <!-- Akční tlačítka nad přehledem/dlaždicí (common-actions.md) -->
+          <button class="action-btn primary" title="Přidat"><span class="icon-add"></span> Přidat</button>
+          <button class="action-btn" title="Editovat"><span class="icon-edit"></span></button>
+          <button class="action-btn" title="Smazat"><span class="icon-delete"></span></button>
+          <button class="action-btn" title="Exportovat"><span class="icon-export"></span></button>
+          <button class="action-btn" title="Tisk"><span class="icon-print"></span></button>
+        </div>
+        <div class="card">
+          <h2>Vítejte v aplikaci!</h2>
+          <p>Ukázkový základ layoutu – připravte moduly a obsah dle potřeby.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="../src/main.js" type="module"></script>
+</body>
+</html>
