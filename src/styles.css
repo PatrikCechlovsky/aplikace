@@ -505,3 +505,7 @@ tr:last-child td { border-bottom: none; }
   .app-layout { flex-direction: column; }
   .main-content { margin: 0; padding: 0; }
 }
+body, .main-content, .sidebar {
+  background: #181b21 !important;
+  color: #e6e6e6 !important;
+}
