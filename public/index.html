@@ -1,53 +1,79 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>Aplikace pronajímatel</title>
-  <link rel="stylesheet" href="../src/styles.css" />
+  <meta charset="UTF-8">
+  <title>Aplikace pronajímatel – wireframe layout</title>
+  <link rel="stylesheet" href="src/styles.css">
 </head>
 <body>
-  <div id="app-root">
-    <!-- Sidebar -->
+  <div class="app-layout">
     <aside class="sidebar">
-      <div class="sidebar-header">
-        <img src="../assets/logo.svg" alt="Logo" class="logo" />
-        <span class="app-title">Aplikace pronajímatel</span>
-      </div>
-      <nav class="sidebar-nav">
+      <div class="sidebar-title">Moduly aplikace</div>
+      <nav>
         <ul>
-          <li class="active"><span class="icon-home"></span> Přehled</li>
+          <li>🟦 Správa uživatelů</li>
+          <li>🟦 Můj účet</li>
+          <li>🟦 Pronajímatel</li>
+          <li>🟦 Nemovitosti</li>
+          <li>🟦 Nájemníci</li>
+          <li>🟦 Smlouvy</li>
+          <li>🟦 Služby</li>
+          <li>🟦 Platby</li>
+          <li>🟦 Finance</li>
+          <li>🟦 Energie</li>
+          <li>🟦 Údržba</li>
+          <li>🟦 Komunikace</li>
+          <li>🟦 Dokumenty</li>
+          <li>🟦 Nastavení</li>
+          <li>🟦 Help</li>
         </ul>
       </nav>
-      <footer class="sidebar-footer">
-        v3.0 – Patrik Cechlovský
-      </footer>
     </aside>
-    <!-- Main content -->
-    <main>
-      <header class="topbar">
-        <div class="breadcrumbs">Přehled</div>
-        <div class="topbar-actions">
-          <button title="Nápověda" class="action-btn"><span class="icon-help"></span></button>
-          <button title="Notifikace" class="action-btn"><span class="icon-bell"></span></button>
-          <button title="Profil" class="action-btn"><span class="icon-user"></span></button>
-        </div>
+    <main class="main-content">
+      <header class="main-header">
+        <h1>🟦 Přehled modulů a sekcí (wireframe)</h1>
       </header>
-      <section id="main-content">
-        <div class="actions-bar">
-          <button class="action-btn primary" title="Přidat"><span class="icon-add"></span> Přidat</button>
-          <button class="action-btn" title="Editovat"><span class="icon-edit"></span></button>
-          <button class="action-btn" title="Smazat"><span class="icon-delete"></span></button>
-          <button class="action-btn" title="Exportovat"><span class="icon-export"></span></button>
-          <button class="action-btn" title="Tisk"><span class="icon-print"></span></button>
+      <section class="modules-grid">
+        <!-- Ukázka hlavních dlaždic a pohledů pro několik modulů -->
+        <div class="module-block">
+          <div class="block-title">🟦 Správa uživatelů</div>
+          <ul>
+            <li>👁️‍🗨️ Přehled uživatelů</li>
+            <li>📝 Přidat/pozvat uživatele</li>
+            <li>📝 Editace uživatele</li>
+            <li>👁️‍🗨️ Detail uživatele</li>
+          </ul>
         </div>
-        <div class="card">
-          <h2>Vítejte v aplikaci!</h2>
-          <p>Ukázkový základ layoutu – připravte moduly a obsah dle potřeby.</p>
+        <div class="module-block">
+          <div class="block-title">🟦 Pronajímatel</div>
+          <ul>
+            <li>👁️‍🗨️ Přehled pronajímatelů</li>
+            <li>📝 Přidat pronajímatele</li>
+            <li>📝 Editace pronajímatele</li>
+            <li>👁️‍🗨️ Detail pronajímatele</li>
+          </ul>
         </div>
+        <div class="module-block">
+          <div class="block-title">🟦 Nemovitosti</div>
+          <ul>
+            <li>👁️‍🗨️ Přehled nemovitostí</li>
+            <li>📝 Přidat nemovitost</li>
+            <li>📝 Editace nemovitosti</li>
+            <li>👁️‍🗨️ Detail nemovitosti</li>
+          </ul>
+        </div>
+        <div class="module-block">
+          <div class="block-title">🟦 Nájemníci</div>
+          <ul>
+            <li>👁️‍🗨️ Přehled nájemníků</li>
+            <li>📝 Přidat nájemníka</li>
+            <li>📝 Editace nájemníka</li>
+            <li>👁️‍🗨️ Detail nájemníka</li>
+          </ul>
+        </div>
+        <!-- ... další bloky lze doplnit stejným způsobem ... -->
       </section>
     </main>
   </div>
-  <script src="../src/main.js" type="module"></script>
 </body>
 </html>
