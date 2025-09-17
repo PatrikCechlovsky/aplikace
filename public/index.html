@@ -18,7 +18,7 @@
       </div>
       <nav>
         <ul class="sidebar-list">
-          <!-- Správa uživatelů -->
+          <!-- Správa uživatelů (výchozí rozbalená) -->
           <li class="sidebar-section expanded">
             <div class="sidebar-section-header">
               <span class="sidebar-arrow">▶</span>
@@ -250,5 +250,18 @@
     </div>
   </div>
   <!-- Komentáře pro rozšiřování a další části layoutu -->
+
+  <script>
+    // Accordion chování sidebaru
+    document.querySelectorAll('.sidebar-section-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const li = header.closest('.sidebar-section');
+        // Pokud má sekce submenu, umožníme rozbalování
+        if(header.nextElementSibling && header.nextElementSibling.classList.contains('sidebar-sublist')) {
+          li.classList.toggle('expanded');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
