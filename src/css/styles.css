@@ -51,6 +51,7 @@ body {
   gap: 9px;
   color: #fff;
   font-weight: 600;
+  font-size: 1.1em;
   padding: 8px 20px 8px 22px;
   cursor: pointer;
   transition: background 0.15s;
@@ -141,6 +142,12 @@ body {
   align-items: center;
   gap: 13px;
 }
+.header-left h1 {
+  font-size: 1.4em;
+  font-weight: 700;
+  margin: 0;
+  color: #fff;
+}
 .header-icon {
   font-size: 1.26em;
   margin-right: 6px;
@@ -182,6 +189,35 @@ body {
   transition: color 0.18s;
 }
 .header-ico:hover { color: #fff; }
+
+/* Breadcrumb Navigation */
+.breadcrumb-nav {
+  background: #181b21;
+  padding: 8px 28px 12px 28px;
+  margin-left: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9em;
+  border-bottom: 1px solid #232632;
+}
+.breadcrumb-item {
+  color: #b7c4d2;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.breadcrumb-item:first-child {
+  color: #5fbaff;
+  cursor: pointer;
+}
+.breadcrumb-item:first-child:hover {
+  color: #7fc8ff;
+}
+.breadcrumb-separator {
+  color: #6e91c7;
+  font-size: 0.8em;
+  margin: 0 2px;
+}
 
 .actions-panel {
   padding: 17px 35px 10px 28px;

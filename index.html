@@ -249,7 +249,6 @@
         <header class="main-header">
           <div class="header-left">
             <h1>
-              <span class="header-icon">🏠</span>
               Hlavní panel
             </h1>
           </div>
@@ -259,11 +258,13 @@
             <button class="header-btn" title="Uživatel"><span>👤</span></button>
           </div>
         </header>
+        <nav class="breadcrumb-nav">
+          <span class="breadcrumb-item">Hlavní panel</span>
+        </nav>
         <div class="actions-panel">
           <button class="primary-btn"><span>➕</span> Nový modul</button>
           <!-- Další tlačítka můžeš přidat podle potřeby -->
         </div>
-        <div class="dashboard-title">Hlavní panel</div>
         <div class="dashboard-tiles">
           <div class="tile" data-module="010" tabindex="0">
             <div class="tile-header">
@@ -299,7 +300,6 @@
             <h1>
               <span class="header-icon">👥</span>
               Správa uživatelů
-              <span class="header-breadcrumb">– Přehled</span>
             </h1>
           </div>
           <div class="header-actions">
@@ -310,6 +310,11 @@
             <button class="header-btn prominent" title="Zrušit filtr">Zrušit filtr</button>
           </div>
         </header>
+        <nav class="breadcrumb-nav">
+          <span class="breadcrumb-item">Hlavní panel</span>
+          <span class="breadcrumb-separator">></span>
+          <span class="breadcrumb-item">Správa uživatelů</span>
+        </nav>
         <div class="actions-panel">
           <button class="primary-btn"><span>➕</span> Přidat uživatele</button>
           <button class="secondary-btn"><span>🔽</span> Filtrovat</button>

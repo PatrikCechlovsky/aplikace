@@ -59,3 +59,10 @@ function openModule(moduleId) {
     }
   });
 }
+
+// Breadcrumb navigation functionality
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('breadcrumb-item') && e.target.textContent.trim() === 'Hlavní panel') {
+    showDashboard();
+  }
+});
