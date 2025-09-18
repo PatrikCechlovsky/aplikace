@@ -3,10 +3,8 @@
 > ℹ️ Viz [permissions-catalog.md](./permissions-catalog.md)  
 > - Nikdy nic nemaž, pouze přeškrtávej!  
 > - Každá nová ikona patří do [common-actions.md](./common-actions.md)  
-> - Na začátku každé sekce/dlaždice vlož checklist (níže) a označ stavovou ikonou:  
->   - ✅ hotovo  ⏳ rozpracováno  🌐 hotovo v HTML  🚫 odstraněno  …
-
-
+> - Na začátku každé sekce/dlaždice vlož checklist (níže) a označuj stavovou ikonou:  
+>   - ✅ hotovo  ⏳ rozpracováno  🌐 hotovo v HTML  🚫 odstraněno  …  
 
 ---
 
@@ -19,23 +17,23 @@
 | Stav | Sekce | Popis |
 |------|-------|-------|
 | ✅   | 🟦 Osobní údaje a kontakty | Správa jména, kontaktů, fotografie |
-|      | ├── 👁️‍🗨️ Přehled osobních údajů | Přehled a úprava údajů |
+|      | ├── 👁️ Přehled osobních údajů | Přehled a úprava údajů |
 |      | └── 📝 Formulář: Úprava osobních údajů | Formulář pro editaci údajů |
 | ✅   | 🟦 Přihlašovací údaje a zabezpečení | Heslo, 2FA, zařízení, historie přihlášení |
-|      | ├── 👁️‍🗨️ Přehled zabezpečení | Změna hesla, 2FA, zařízení |
+|      | ├── 👁️ Přehled zabezpečení | Změna hesla, 2FA, zařízení |
 |      | ├── 📝 Formulář: Změna hesla | Formulář pro změnu hesla |
 |      | ├── 📝 Formulář: Nastavení dvoufaktorové autentizace | Formulář pro 2FA |
 |      | └── 📝 Formulář: Bezpečnostní otázky a recovery kódy | Záloha přístupu, bezpečnostní otázky |
 | ✅   | 🟦 Notifikace a upozornění | Nastavení upozornění a jejich způsob |
-|      | ├── 👁️‍🗨️ Přehled notifikací | Zobrazení a úprava notifikací |
+|      | ├── 👁️ Přehled notifikací | Zobrazení a úprava notifikací |
 |      | └── 📝 Formulář: Nastavení notifikací | Formulář pro notifikace |
 | ✅   | 🟦 Nastavení a preference | Personalizace vzhledu, jazyk, domovská sekce |
-|      | ├── 👁️‍🗨️ Přehled nastavení a preferencí | Zobrazení a editace preferencí |
+|      | ├── 👁️ Přehled nastavení a preferencí | Zobrazení a editace preferencí |
 |      | └── 📝 Formulář: Nastavení a preference | Formulář pro preference |
 | ✅   | 🟦 Aktivita uživatele | Historie akcí a přístupů |
-|      | └── 👁️‍🗨️ Přehled aktivity | Přehled posledních změn a akcí |
+|      | └── 👁️ Přehled aktivity | Přehled posledních změn a akcí |
 | ✅   | 🟦 Zrušení účtu | Proces zrušení účtu uživatele |
-|      | ├── 👁️‍🗨️ Přehled procesu zrušení účtu | Postup, upozornění, GDPR |
+|      | ├── 👁️ Přehled procesu zrušení účtu | Postup, upozornění, GDPR |
 |      | └── 📝 Formulář: Zrušení účtu | Formulář pro žádost o zrušení |
 | ✅   | 🟦 Přihlášení třetích stran | SSO, OAuth, napojené aplikace |
 | ✅   | 🟦 API klíče a integrace | Správa API tokenů, webhooky, napojení externích systémů |
@@ -101,10 +99,7 @@ V případě sdíleného účtu mohou mít přístup i zástupci.
 - 🗑️ Smazat foto (volitelné)
 - 🔍 Ověřit IČO v ARES (firemní účet)
 - 🔄 Načíst údaje z ARES (firemní účet)
-- 👁️‍🗨️ Nastavit soukromí u jednotlivých údajů
-
-**Workflow pro ověření firmy v ARES:**
-Uživatel zadá IČO → klikne na „Ověřit IČO v ARES“ → systém ověří existenci firmy, načte název, DIČ, adresu → předvyplní pole ve formuláři → uživatel potvrdí/uloží.
+- 👁️ Nastavit soukromí u jednotlivých údajů
 
 #### 5️⃣ Chybové stavy
 - Neplatný formát e-mailu/telefonu
@@ -156,21 +151,14 @@ Pouze daný uživatel a admin.
 | Historie přihlášení    |   Ne    | readonly                    | Tabulka, záznam           |
 | Upozornění na aktivitu |   Ne    | readonly                    | Neobvyklé přihlášení, změna hesla |
 
-**Validace hesla:**  
-Min. 10 znaků, velká a malá písmena, číslice, speciální znak. Při změně hesla povinnost zadat nové dvakrát.  
-Slabé heslo = blokace/protahování zadávání.
-
 #### 4️⃣ Tlačítka a akce
 - 💾 Uložit změnu hesla
 - ❌ Zrušit
 - 🔑 Aktivovat 2FA
 - 🔓 Deaktivovat 2FA
-- 🦩 Nastavit bezpečnostní otázky / recovery kódy
+- 🧩 Nastavit bezpečnostní otázky / recovery kódy
 - 🚪 Odhlásit zařízení
 - 🚨 Upozornit na podezřelou aktivitu
-
-**Workflow změny hesla:**  
-Uživatel zadá původní, nové, potvrzení → validuje se síla hesla → povolí změnu → zašle upozornění na e-mail.
 
 #### 5️⃣ Chybové stavy
 - Neplatné/neshodující se heslo
@@ -183,7 +171,6 @@ Uživatel zadá původní, nové, potvrzení → validuje se síla hesla → pov
 #### 6️⃣ Oprávnění a vazby
 - Pouze uživatel sám, admin pouze v případě resetu
 - Vazba na auditní log změn, Správa uživatelů
-- Propojení na modul Aktivita uživatele (GDPR/audit)
 
 ---
 
@@ -211,16 +198,13 @@ Pouze daný uživatel.
 #### 3️⃣ Přehled a formuláře
 | Pole                 | Povinné | Typ/validace     | Poznámka                      |
 |----------------------|:-------:|------------------|-------------------------------|
-| Způsob zasílání      | Ano     | výběr            | e-mail, SMS, push, interní    |
-| Události             | Ano     | výběr            | např. platby, údržba, zprávy  |
+| Způsob zasílání      | Ano     | vícevýběr        | e-mail, SMS, push, interní    |
+| Události             | Ano     | vícevýběr        | např. platby, údržba, zprávy  |
 | Dočasné vypnutí      | Ne      | checkbox         |                               |
 | Časové okno          | Ne      | časový rozsah    | Kdy doručovat notifikace      |
 | Kanály preferované   | Ne      | multi-choice     | Upřednostňuji SMS apod.       |
 | Webhooky             | Ne      | url              | Notifikace na externí systémy |
 | Export historie      | Ne      | tlačítko         | Exportovat historii notifikací |
-
-**Workflow přidání webhooku:**  
-Uživatel zadá URL → systém ověří validitu → uloží → notifikace se odesílají na webhook.
 
 #### 4️⃣ Tlačítka a akce
 - 💾 Uložit nastavení
@@ -234,7 +218,6 @@ Uživatel zadá URL → systém ověří validitu → uloží → notifikace se 
 
 #### 6️⃣ Oprávnění a vazby
 - Vazba na modul Komunikace (šablony, historie), Správa uživatelů
-- Odkaz: [common-actions.md](./common-actions.md), [permissions-catalog.md](./permissions-catalog.md)
 
 ---
 
@@ -265,7 +248,7 @@ Pouze daný uživatel.
 | Vzhled (theme)        | Ne      | výběr        | světlý/tmavý    |
 | Jazyk rozhraní        | Ano     | výběr        |                 |
 | Domovská sekce        | Ne      | výběr        | modul/sekce     |
-| Oblíbené moduly       | Ne      | výběr        |                 |
+| Oblíbené moduly       | Ne      | vícevýběr    |                 |
 | Časové pásmo          | Ne      | výběr        |                 |
 | Formát data/času      | Ne      | výběr        |                 |
 | Zobrazovat tipy       | Ne      | checkbox     | Onboarding, nápověda  |
@@ -280,10 +263,6 @@ Pouze daný uživatel.
 
 #### 5️⃣ Chybové stavy
 - Chyba při ukládání preferencí
-
-#### 6️⃣ Oprávnění a vazby
-- Propojení na modul Nastavení, personalizace dashboardu
-- Odkaz: [common-actions.md](./common-actions.md), [permissions-catalog.md](./permissions-catalog.md)
 
 ---
 
@@ -300,7 +279,7 @@ Pouze daný uživatel.
 - ✅ Specifika, rozšíření
 
 #### 1️⃣ Popis a účel
-Přehled posledních akcí, změn, přístupů, notifikací.  
+Přehled posledních akcí, změn, přístupů a notifikací.  
 Možnost exportu kompletního logu, zobrazení auditních událostí, detekce neobvyklých aktivit.
 
 #### 2️⃣ Přístup/viditelnost
@@ -317,7 +296,7 @@ Pouze daný uživatel a admin.
 | Detail      | Ne      | text         | popis akce         |
 
 #### 4️⃣ Akce
-- 👁️‍🗨️ Zobrazit detail, filtrovat podle typu, export
+- 👁️ Zobrazit detail, filtrovat podle typu, export
 
 ---
 
@@ -358,6 +337,10 @@ Pouze daný uživatel a admin.
 - 📥 Exportovat osobní data
 - 💤 Dočasně deaktivovat účet
 
+#### 5️⃣ Chybové stavy
+- Chyba při zpracování žádosti
+- Nedostupný export osobních dat
+
 ---
 
 ## 🟦 Přihlášení třetích stran (OAuth/SSO)
@@ -376,7 +359,7 @@ Pouze daný uživatel a admin.
 
 - 🔗 Propojit nový účet
 - 🔓 Odpojit účet
-- 👁️‍🗨️ Audit historie napojení
+- 👁️ Audit historie napojení
 
 ---
 
@@ -422,7 +405,7 @@ Pouze daný uživatel a admin.
 
 - ➕ Přidat zástupce / podřízený účet
 - 🔓 Odvolat práva
-- 👁️‍🗨️ Audit delegace
+- 👁️ Audit delegace
 
 ---
 
@@ -456,38 +439,37 @@ Pouze daný uživatel a admin.
 > Pokud je úkol hotový, přeškrtni ho a označ stavovou ikonou.  
 > Pokud je rozpracovaný, přidej ⏳, pokud čeká na rozhodnutí, přidej > TODO: …
 
-- ⏳ ~~Rozšíření historie aktivity o logování všech změn v osobních údajích (pro GDPR/audit).~~
-- ⏳ ~~Vylepšení zabezpečení: síla hesla, expirace, blokace po X pokusech, 2FA jako povinné pro změny údajů.~~
-- ⏳ ~~Uživatelské preference – podpora více jazyků, vlastní rozložení dashboardu.~~
-- ⏳ ~~Hierarchie účtů – možnost propojení účtů (rodič/dítě, správa za dítě/seniora).~~
-- ⏳ ~~Zrušení účtu – automatické notifikace správci, možnost oboustranného potvrzení.~~
-- ⏳ ~~GDPR – možnost anonymizace účtu, výmaz na žádost.~~
-- ⏳ ~~Export aktivity uživatele (např. pro reklamaci).~~
-- ⏳ ~~Možnost nastavit profil jako „neviditelný“ pro vyhledávání (privacy mode).~~
-- ⏳ ~~Rychlé přepínání mezi více účty (multilogin).~~
-- ⏳ ~~Přidat pole pro preferované komunikační kanály (např. upřednostňuji SMS).~~
-- ⏳ ~~Umožnit změnu e-mailu pouze po ověření nové adresy (double opt-in).~~
-- ⏳ ~~Přidat historii schválení/zamítnutí žádostí o zrušení účtu.~~
-- ⏳ ~~Rozlišit typ účtu (osobní/firemní/rodinný), přidat potřebná pole pro firemní účty.~~
-- ⏳ ~~Povolit poznámky admina k účtu (pouze pro adminy).~~
-- ⏳ ~~Nastavení časového okna pro notifikace.~~
-- ⏳ ~~Export historie notifikací.~~
-- ⏳ ~~Nastavit možnost dočasné deaktivace účtu.~~
-- ⏳ ~~Ověření IČO/firma v ARES, DIČ validace pro firmy.~~
-- ⏳ ~~Double opt-in workflow při změně e-mailu.~~
-- ⏳ ~~Propojení na modul Komunikace pro správu šablon notifikací.~~
-- ⏳ ~~Možnost připojení účtu přes SSO (OAuth, Google, Apple…)~~
-- ⏳ ~~Správa API klíčů, webhooků – audit použití, možnost revokace~~
-- ⏳ ~~Evidence napojených externích aplikací, možnost odpojit~~
-- ⏳ ~~Delegace práv, sdílení účtu, zástupci, podřízené účty~~
-- ⏳ ~~Evidence předplatného, fakturačních údajů, historie plateb~~
+- ⏳ Rozšíření historie aktivity o logování všech změn v osobních údajích (pro GDPR/audit).
+- ⏳ Vylepšení zabezpečení: síla hesla, expirace, blokace po X pokusech, 2FA jako povinné pro změny údajů.
+- ⏳ Uživatelské preference – podpora více jazyků, vlastní rozložení dashboardu.
+- ⏳ Hierarchie účtů – možnost propojení účtů (rodič/dítě, správa za dítě/seniora).
+- ⏳ Zrušení účtu – automatické notifikace správci, možnost oboustranného potvrzení.
+- ⏳ GDPR – možnost anonymizace účtu, výmaz na žádost.
+- ⏳ Export aktivity uživatele (např. pro reklamaci).
+- ⏳ Možnost nastavit profil jako „neviditelný“ pro vyhledávání (privacy mode).
+- ⏳ Rychlé přepínání mezi více účty (multilogin).
+- ⏳ Přidat pole pro preferované komunikační kanály (např. upřednostňuji SMS).
+- ⏳ Umožnit změnu e-mailu pouze po ověření nového e-mailu (double opt-in).
+- ⏳ Přidat historii schválení/zamítnutí žádostí o zrušení účtu.
+- ⏳ Rozlišit typ účtu (osobní/firemní/rodinný), přidat potřebná pole pro firemní účty.
+- ⏳ Povolit poznámky admina k účtu (pouze pro adminy).
+- ⏳ Nastavení časového okna pro notifikace.
+- ⏳ Export historie notifikací.
+- ⏳ Nastavit možnost dočasné deaktivace účtu.
+- ⏳ Ověření IČO/firma v ARES, DIČ validace pro firmy.
+- ⏳ Double opt-in workflow při změně e-mailu.
+- ⏳ Propojení na modul Komunikace pro správu šablon notifikací.
+- ⏳ Možnost připojení účtu přes SSO (OAuth, Google, Apple…)
+- ⏳ Správa API klíčů, webhooků – audit použití, možnost revokace
+- ⏳ Evidence napojených externích aplikací, možnost odpojit
+- ⏳ Delegace práv, sdílení účtu, zástupci, podřízené účty
+- ⏳ Evidence předplatného, fakturačních údajů, historie plateb
 - > TODO: Důsledně škrtat hotové úkoly a označovat stav.
 - > TODO: Odkazy na common-actions.md a permissions-catalog.md u každé sekce.
-- > TODO: Pravidelně kontrolovat návaznost stromu na struktura-app.md.
 
 ---
 
-## 📦 Datové modely (ukázka)
+## 🗃️ Datové modely (ukázka)
 ```json
 {
   "id": "user_123",
@@ -536,9 +518,33 @@ Pouze daný uživatel a admin.
   }
 }
 ```
+```json
+{
+  "user_id": "user_123",
+  "akce": [
+    {
+      "typ": "prihlaseni",
+      "cas": "2025-09-09T07:13:00",
+      "ip": "89.102.5.8",
+      "zarizeni": "mobile"
+    },
+    {
+      "typ": "zmena_hesla",
+      "cas": "2025-09-01T22:00:00"
+    },
+    {
+      "typ": "pridani_platby",
+      "cas": "2025-08-28T09:20:00",
+      "detail": "Platba SVJ září"
+    }
+  ]
+}
+```
+
 ---
 
 ## ⚠️ Chybové stavy a výjimky
+
 | Chyba / výjimka                | Řešení systému / reakce      | Uživatelská hláška                              |
 |---------------------------------|------------------------------|-------------------------------------------------|
 | Neplatné heslo                  | Chyba, nabídnout reset       | „Zadané heslo je nesprávné. Chcete obnovit heslo?“|
@@ -582,19 +588,48 @@ Pouze daný uživatel a admin.
 
 ---
 
+## 📑 Doporučené workflow
+
+1. **Změna hesla/zabezpečení:**  
+   - Uživatel zadá nové heslo, případně aktivuje dvoufaktorovou autentizaci, nastaví bezpečnostní otázku a recovery kódy.
+2. **Nastavení notifikací:**  
+   - Uživatel zvolí, jak, kdy a pro jaké události chce být informován (e-mail, SMS, push), nastaví časové okno, webhooky.
+3. **Úprava kontaktů a osobních údajů:**  
+   - Změna e-mailu (double opt-in), telefonu, nahrání fotky, úprava adresy, ověření firmy v ARES, doplnění firemních údajů, nastavení granularit soukromí.
+4. **Správa oblíbených modulů a vzhledu:**  
+   - Nastavení domovské sekce, barevného schématu, případně jazyka, aktivace beta funkcí, klávesové zkratky.
+5. **Zobrazení aktivity:**  
+   - Kontrola historie akcí a přístupů, možnost odhlásit se ze všech zařízení, export historie, detekce podezřelé aktivity.
+6. **Zrušení/deaktivace účtu:**  
+   - Postupné potvrzení, export osobních dat, upozornění správce, možnost opětovné aktivace.
+7. **Export dat:**  
+   - Uživatel požádá o export, systém připraví a nabídne ke stažení.
+8. **Propojení účtu s externími službami:**  
+   - Propojení/odpojení SSO, audit napojení.
+9. **Správa API klíčů a webhooků:**  
+   - Vygenerovat/odvolat token, nastavit webhook, kontrola historie použití.
+10. **Delegace účtu:**  
+    - Přidání zástupce/člena, nastavení oprávnění, audit změn.
+11. **Správa předplatného:**  
+    - Změna tarifu, upravit fakturační údaje, export faktur.
+
+---
+
 ## 📚 Reference
 
 - [common-actions.md](./common-actions.md)
 - [permissions-catalog.md](./permissions-catalog.md)
 - [pravidla.md](./pravidla.md)
-- [struktura-app.md](./struktura-app.md)
 - [Modul Nastavení](./130-Nastaveni.md)
 - [Modul Komunikace](./110-Komunikace.md)
 - [Modul Platby](./080-Finance.md)
 - [Modul Správa uživatelů](./010-Sprava-uzivatelu.md)
-- Inspirace: [Google Account](https://myaccount.google.com/), [Github Settings](https://github.com/settings/profile), [Notion User Settings](https://www.notion.so/my-account), [Microsoft Account](https://account.microsoft.com/account), [Slack Settings](https://my.slack.com/account/settings)
+- [Google Account – funkce](https://myaccount.google.com/)
+- [Github Settings](https://github.com/settings/profile)
+- [Notion User Settings](https://www.notion.so/my-account)
+- [Microsoft Account](https://account.microsoft.com/account)
+- [Slack Settings](https://my.slack.com/account/settings)
 
 ---
 
-> Tento modul odpovídá stromu a pravidlům dle [struktura-app.md](./struktura-app.md).  
-> Pravidelně kontroluj návaznosti a aktualizuj TODO/poznámky podle stavu vývoje aplikace.
+> Modul Můj účet zajišťuje bezpečnost a přehled pro každého uživatele, umožňuje personalizaci, správu vlastních údajů, moderní integrace a všechny procesy včetně GDPR, auditu a delegace.
