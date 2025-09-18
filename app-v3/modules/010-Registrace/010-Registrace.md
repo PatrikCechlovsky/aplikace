@@ -1,1 +1,0 @@
-<obsah souboru 010-Registrace.md>
