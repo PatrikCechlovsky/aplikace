@@ -1,1 +1,0 @@
-<content of 110-Komunikace.md>
