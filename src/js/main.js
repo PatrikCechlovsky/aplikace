@@ -17,7 +17,7 @@ document.querySelectorAll('.sidebar-section-header').forEach(header => {
   });
 });
 
-// Počáteční stav: vše zabaleno
+// Počáteční stav: vše zabaleno a zobrazí se dashboard
 window.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.sidebar-section').forEach(s => s.classList.remove('expanded'));
   showDashboard();
@@ -41,6 +41,9 @@ document.querySelectorAll('.tile').forEach(tile => {
 function showDashboard() {
   document.getElementById('dashboard').style.display = 'block';
   document.querySelectorAll('.module-content').forEach(mc => mc.style.display = 'none');
+  // Breadcrumbs na dashboardu nesmí být vidět
+  const breadcrumbs = document.querySelector('.breadcrumbs');
+  if (breadcrumbs) breadcrumbs.style.display = 'none';
 }
 
 // Funkce pro otevření modulu (skryje dashboard, ukáže obsah, rozbalí sidebar)
@@ -58,4 +61,18 @@ function openModule(moduleId) {
       section.classList.remove('expanded');
     }
   });
+
+  // Breadcrumbs na modulech zobraz a nastav správný text
+  const breadcrumbs = document.querySelector('.breadcrumbs');
+  if (breadcrumbs) {
+    const section = document.querySelector('.sidebar-section[data-module="' + moduleId + '"] .sidebar-section-title');
+    if (section) {
+      breadcrumbs.textContent = 'Hlavní panel > ' + section.textContent.trim();
+      breadcrumbs.style.display = 'block';
+    } else {
+      // Fallback: aspoň zobrazit Hlavní panel
+      breadcrumbs.textContent = 'Hlavní panel';
+      breadcrumbs.style.display = 'block';
+    }
+  }
 }
