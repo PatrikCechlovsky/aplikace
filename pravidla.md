@@ -28,6 +28,106 @@ Pokud je třeba udělat výjimku (mazání, přeskočení pravidla…), musí b�
 
 ---
 
+## 📁 Doporučená struktura repozitáře, modulů a dlaždic
+
+> **Tato struktura je závazný standard pro všechny, kdo rozvíjejí aplikaci! Dodržuj ji při zakládání nových modulů i rozšiřování existujících. Umožňuje snadné rozšiřování, audit, přehlednost a jednotný styl celého projektu.**
+
+### 1. Stromová struktura aplikace
+
+Každý modul má své vlastní číslo (tříciferné, podle stromu ve `struktura-app.md`) a adresář:
+```
+app-v3/
+  modules/
+    010-Sprava-uzivatelu/
+      README.md                    ← stručný popis,
+      010-Sprava-uzivatelu.md      ← hlavní dokumentace modulu (vždy ve tvaru XXX-Název-modulu.md)
+      checklist.md                 ← univerzální checklist pro sekce/dlaždice
+      poznámky.md                  ← poznámky, nápady, TODO, nic nemazat!
+      010-SpravaUzivatelu.tsx      ← hlavní komponenta modulu
+      tiles/                       ← dlaždice
+        UserListTile.tsx
+        AddUserTile.tsx
+        EditUserTile.tsx
+        ...
+    020-Muj-ucet/
+      README.md
+      020-Muj-ucet.md
+      checklist.md
+      poznámky.md
+      020-MujUcet.tsx
+      tiles/
+        AccountTile.tsx
+        SecurityTile.tsx
+        ...
+  common-actions.md
+  permissions-catalog.md
+  pravidla.md
+  struktura-app.md
+  ...
+```
+- Číslování a název modulu vždy podle stromu v `struktura-app.md`!
+- Každý modul má povinně: `README.md`, `XXX-Název-modulu.md`, `checklist.md`, `poznámky.md`.
+- Každá dlaždice/sekce je samostatná komponenta v `tiles/`.
+
+---
+
+### 2. Povinné soubory v každém modulu
+
+- **README.md** – stručný popis modulu, odkazy, strom sekcí/dlaždic, reference na pravidla a checklist
+- **XXX-Název-modulu.md** – hlavní dokumentace modulu (např. `010-Sprava-uzivatelu.md`), obsahuje úplnou strukturu, sekce, dlaždice, datové modely, chybové stavy, workflow, role, reference apod.
+- **checklist.md** – univerzální checklist pro všechny sekce/dlaždice (viz níže)
+- **poznámky.md** – prostor pro TODO, nápady, úkoly, nikdy nic nemazat, pouze přeškrtávat!
+- **<modul>.tsx** – hlavní komponenta modulu (React/TSX nebo jiný stack)
+- **tiles/** – adresář pro jednotlivé dlaždice/sekce jako samostatné komponenty (např. `UserListTile.tsx`)
+
+> Veškeré změny a rozšiřování modulu prováděj primárně v hlavním souboru XXX-Název-modulu.md!
+
+---
+
+### 3. Checklist pro sekci/dlaždici (v checklist.md a/nebo v komentáři v kódu dlaždice)
+
+- [ ] Účel sekce a kdo ji používá
+- [ ] Přístup/viditelnost podle rolí (odkaz na permissions-catalog.md)
+- [ ] Zařazení v hlavní stromové struktuře
+- [ ] Podsekce a vazby na další části
+- [ ] Výčet a popis všech polí (tabulka: povinné, validace, poznámka)
+- [ ] Tlačítka a workflow (odkaz na common-actions.md)
+- [ ] Chybové stavy a systémové reakce
+- [ ] Oprávnění a viditelnost (tabulka rolí)
+- [ ] Vazby na další moduly, reference
+- [ ] Specifika, rozšíření
+- [ ] Všechny změny pouze přeškrtávej, nikdy nemazat!
+- [ ] Stavové ikonky: ✅ hotovo, ⏳ rozpracováno, 🌐 hotovo v HTML, 🚫 odstraněno
+
+---
+
+### 4. Pravidla pro práci s moduly a dlaždicemi
+
+- Nový modul vždy zakládej v `app-v3/modules/XXX-Nazev-modulu/` dle číslování a názvu podle `struktura-app.md`.
+- Každá sekce/dlaždice je samostatná komponenta v `tiles/`, její dokumentace je v checklist.md a/nebo jako komentář přímo v kódu.
+- Novou akci nebo ikonu přidej nejdřív do `common-actions.md`.
+- Nikdy nic nemazat – pouze přeškrtávej nebo označ jako odstraněné.
+- Workflow, checklisty a pravidla zapisuj do pravidla.md a checklist.md.
+- Důsledně používej reference a odkazy na všechny relevantní katalogy, vzory, pravidla a související moduly.
+- Každý nový nebo rozšířený modul a dlaždici vždy napoj do stromu v `struktura-app.md`.
+
+---
+
+### 5. Vzor komentáře v komponentě dlaždice
+
+```typescript
+// Dlaždice: Seznam uživatelů
+// Dodržuj checklist a pravidla.md – žádné mazání, pouze přeškrtávej!
+// Checklist pro tuto sekci je v ../checklist.md
+```
+
+---
+
+> Tento standard je závazný pro všechny nové i rozšiřované moduly a dlaždice!
+> Pokud je potřeba výjimka, musí být výslovně schválena vlastníkem projektu a zapsána do tohoto souboru.
+
+---
+
 # Pravidla dokumentace, struktury a propojitelnosti modulů
 
 ---
