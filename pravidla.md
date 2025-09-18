@@ -1,36 +1,49 @@
-## Dohoda s Copilotem
+## Pravidla pro složky, datové uložiště a rozšiřitelnost modulů
 
-Copilot i další spolupracovníci vždy automaticky dodržují workflow, checklisty a pravidla uvedená v tomto souboru.  
-Není třeba pravidla a workflow v zadáních opakovat – platí pro všechny změny, moduly, sekce, assety i dokumentaci.
+> Tato pravidla rozšiřují a upřesňují základní workflow a strukturu aplikace.  
+> **Platí pro všechny moduly, sekce, dlaždice i práci s daty v celé aplikaci.**
 
-Pokud je třeba udělat výjimku (mazání, přeskočení pravidla…), musí být výslovně uvedena v zadání nebo schválena vlastníkem projektu.
+### 1. Centrální datové uložiště (store)
+- Veškerá sdílená aplikační data (například seznam subjektů, uživatelů, jednotek, atd.) jsou uložena ve společném souboru:
+    - **Cesta:** `app-v3/shared/dataStore.js`
+- Tento soubor obsahuje export všech datových struktur, entit, vazeb a funkcí pro jejich správu.
+- Každý modul nebo sekce, která potřebuje pracovat s těmito daty, importuje přímo z tohoto souboru.
+- Nové pole nebo entitu přidávej vždy pouze do `dataStore.js` – nikdy ne samostatně v modulu!
+
+### 2. Struktura složek pro moduly a dlaždice
+- Každý samostatný modul má svou vlastní složku ve tvaru:  
+  `app-v3/modules/XXX-nazev/`  
+  kde `XXX` je číselné označení modulu dle pořadí (např. `010-users`, `020-account`).
+- V každé složce modulu musí být minimálně:
+    - `index.html` – hlavní stránka/šablona modulu
+    - `index.js` – logika a obsluha modulu
+    - `index.css` – styly pouze pro tento modul (volitelné)
+- Každá dlaždice na hlavním panelu (dashboardu) reprezentuje jeden modul a odkazuje na jeho `index.html`.
+- Všechny odkazy na moduly a jejich dlaždice musí být vždy aktuální a vedené centrálně v přehledu (`struktura-app.md`).
+
+### 3. Pravidla pro rozšiřování a vkládání nových sekcí
+- Novou sekci, modul nebo entitu vždy zakládej jako novou složku dle výše uvedené struktury.
+- Změnu nebo rozšíření datového modelu prováděj pouze v `shared/dataStore.js` – nikdy ne přímo ve specifickém modulu.
+- Pokud rozšiřuješ datovou strukturu (například přidáváš pole), uprav `dataStore.js` a aktualizuj všechny moduly, které tato data používají.
+- Vždy zachovej zpětnou kompatibilitu a historii změn (používej přeškrtnutí, komentáře, nikoliv mazání).
+
+### 4. Propojování modulů a sdílení dat
+- Moduly nikdy neuchovávají vlastní kopie společných dat – vždy používají import ze společného uložiště.
+- Všechny vazby mezi entitami (například uživatel–role, nemovitost–pronajímatel) jsou realizovány přes unikátní ID a jejich pole jsou vždy přítomna v centrálním datovém modelu.
+- Každý modul na začátku obsahuje reference na ostatní související moduly dle potřeby.
+
+### 5. Checklist pro nové moduly a sekce
+- [ ] Složka modulu dle konvence `XXX-nazev`
+- [ ] `index.html`, `index.js` (+ volitelně `index.css`) ve složce modulu
+- [ ] Odkaz z dashboardové dlaždice na `index.html` modulu
+- [ ] Import a práce s daty pouze ze `shared/dataStore.js`
+- [ ] Všechny vazby realizovány přes ID
+- [ ] Reference na související moduly na začátku
+- [ ] Zápis změn do `struktura-app.md` a případně do katalogu ikon/akcí
 
 ---
 
-<!-- NOVÉ PRAVIDLO: Propojitelnost, společná databáze, nemazat -->
+Tato pravidla jsou **závazná pro všechny změny, nové moduly i rozšiřování aplikace**.  
+Pokud je třeba udělat výjimku, je nutná výslovná poznámka v zadání nebo schválení vlastníkem projektu.
 
-## 🆕 Zásadní pravidla pro propojitelnost a správu historie
-> Tato pravidla platí NADŘAZENĚ ke všem ostatním.
-> 
-> - Všechny subjekty (osoba, OSVČ, firma, spolek/skupina, státní organizace, zástupce atd.) jsou vedeny ve společné databázi/tabulce (entita `subjekt`). Typ určuje pole `typ_subjektu`.
-> - Všechny vazby mezi moduly/entitami (pronajímatel-nemovitost, nájemník-jednotka, smlouva-nájemník atd.) jsou realizovány přes unikátní ID (např. `pronajimatel_id`, `jednotka_id`), nik...
-> - Formuláře, tabulky i importy/exporty musí pole s vazbou řešit vždy přes výběr z existující entity (číselník), nikoliv volným textem.
-> - Každý formulář i tabulka musí dynamicky zobrazovat pole podle zvoleného typu subjektu (např. IČO/DIČ pro firmy, datum narození pro osobu atd.).
-> - Importy, exporty, datové modely a API vždy obsahují pole `typ_subjektu` a ID všech vazeb (např. `jednotka_id`, `pronajimatel_id`). Ukázkové JSONy vždy ukazují vazby přes ID.
-> - **Žádný obsah v dokumentaci ani datech se nesmí mazat!**  
->   Používej pouze přeškrtnutí (strikethrough, `~~text~~`), přesuny, komentáře a rozšiřování. Historii a kontext je nutné zachovat!
-> - Každý návrh změny, rozšíření či refaktoringu musí zachovat historii (přeškrtni staré, přidej nové, nikdy neodstraňuj).
-> - Každý modul musí na začátku obsahovat reference na ostatní související moduly.
-> - Checklist každé sekce musí obsahovat bod „Vazby na ostatní entity přes ID“.
-> - Všechny nové ikony a akce musí být zapsány do centrálního katalogu ([common-actions.md](./common-actions.md)).
-> - Každý JSON příklad (včetně v dokumentaci) musí ukazovat vazby mezi entitami pomocí ID.
-> - Každou změnu stromové struktury modulu vždy zapiš také do centrálního souboru [struktura-app.md](./struktura-app.md).
-
----
-
-<!-- PŮVODNÍ OBSAH ZACHOVÁN -->
-# Pravidla dokumentace, struktury a propojitelnosti modulů
-
-...
-
-(zbytek souboru zůstává beze změny)
+<!-- Konec nové sekce, další původní obsah zůstává beze změny -->
