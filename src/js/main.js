@@ -29,6 +29,14 @@ document.getElementById('app-title').addEventListener('click', () => {
   showDashboard();
 });
 
+// Kliknutí na "Hlavní panel" v breadcrumb navigaci
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('breadcrumb-item') && e.target.textContent === 'Hlavní panel') {
+    document.querySelectorAll('.sidebar-section').forEach(s => s.classList.remove('expanded'));
+    showDashboard();
+  }
+});
+
 // Kliknutím na dlaždici se otevře modul a rozbalí sidebar
 document.querySelectorAll('.tile').forEach(tile => {
   tile.addEventListener('click', function () {

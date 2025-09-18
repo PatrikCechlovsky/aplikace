@@ -51,6 +51,7 @@ body {
   gap: 9px;
   color: #fff;
   font-weight: 600;
+  font-size: 1.05em;
   padding: 8px 20px 8px 22px;
   cursor: pointer;
   transition: background 0.15s;
@@ -141,15 +142,15 @@ body {
   align-items: center;
   gap: 13px;
 }
+.header-left h1 {
+  font-size: 1.5em;
+  font-weight: 700;
+  margin: 0;
+  color: #fff;
+}
 .header-icon {
   font-size: 1.26em;
   margin-right: 6px;
-}
-.header-breadcrumb {
-  font-size: 1.04em;
-  font-weight: 400;
-  color: #6e91c7;
-  margin-left: 8px;
 }
 .header-actions {
   display: flex;
@@ -182,6 +183,33 @@ body {
   transition: color 0.18s;
 }
 .header-ico:hover { color: #fff; }
+
+/* Breadcrumb navigation */
+.breadcrumb-nav {
+  padding: 12px 35px 12px 28px;
+  background: #1e2029;
+  margin-left: 6px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  font-size: 0.9em;
+  color: #b7c4d2;
+}
+.breadcrumb-item {
+  color: #b7c4d2;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.breadcrumb-item:hover {
+  color: #5fbaff;
+}
+.breadcrumb-current {
+  color: #5fbaff;
+  font-weight: 600;
+}
+.breadcrumb-separator {
+  margin: 0 8px;
+  color: #6e91c7;
+}
 
 .actions-panel {
   padding: 17px 35px 10px 28px;
