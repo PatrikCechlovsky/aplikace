@@ -1,0 +1,1 @@
+<content of 050-Najemnik.md>

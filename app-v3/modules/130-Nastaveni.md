@@ -1,0 +1,1 @@
+<content of 130-Nastaveni.md>
