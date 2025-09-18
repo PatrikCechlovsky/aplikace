@@ -1,1 +1,0 @@
-<obsah souboru 030-Objednavka.md>
