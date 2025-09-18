@@ -6,6 +6,8 @@
 > - Na začátku každé sekce/dlaždice vlož checklist (níže) a označ stavovou ikonou:  
 >   - ✅ hotovo  ⏳ rozpracováno  🌐 hotovo v HTML  🚫 odstraněno  …
 
+
+
 ---
 
 # Modul: Můj účet
