@@ -8,4 +8,35 @@
   <button class="header-btn" title="Nápověda">❓</button>
   <button class="header-btn" title="Notifikace">🔔</button>
   <button class="header-btn" title="Můj účet">👤</button>
+  <!-- Později lze přidat další tlačítka, například: -->
+  <!-- <button class="header-btn" title="Hledat">🔍</button> -->
+  <!-- <button class="header-btn" title="Tisk">🖨️</button> -->
 </header>
+
+<style>
+  .header-actions {
+    display: flex;
+    gap: 0.8em;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.4em 1.1em 0.4em 0.5em;
+    background: none;
+    min-height: 2.7em;
+    z-index: 20;
+  }
+  .header-btn {
+    background: none;
+    border: none;
+    font-size: 1.37em;
+    color: #fafafa;
+    cursor: pointer;
+    padding: 0.25em 0.45em;
+    border-radius: 5px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .header-btn:hover, .header-btn:focus {
+    background: #252535;
+    color: #6cf;
+    outline: none;
+  }
+</style>
