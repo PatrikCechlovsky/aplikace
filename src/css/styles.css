@@ -1,6 +1,4 @@
-/* ---------------------- */
-/*      TÉMATA           */
-/* ---------------------- */
+/* ---- TÉMATA ---- */
 body.theme-dark {
   --bg-main: #181b21;
   --bg-panel: #232632;
@@ -42,9 +40,7 @@ body.theme-pink {
   --btn-bg-hover: #e26eb3;
 }
 
-/* ---------------------- */
-/*   ZÁKLADNÍ LAYOUT      */
-/* ---------------------- */
+/* ---- ZÁKLADNÍ LAYOUT ---- */
 body {
   background: var(--bg-main);
   color: var(--color-main);
