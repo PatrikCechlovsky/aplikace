@@ -28,6 +28,49 @@ Pokud je třeba udělat výjimku (mazání, přeskočení pravidla…), musí b�
 
 ---
 
+## 🆕 Pravidlo & workflow: Vytváření dynamického pohledu na dlaždice (tiles)
+> **Platí pro všechny moduly a dashboardy, kde se dlaždice dynamicky načítají z externích souborů.**
+
+1. **Každou dlaždici vytvoř jako samostatný soubor**
+   - Ukládej do složky `app-v3/modules/XXX-NazevModulu/tiles/`.
+   - Název souboru je jednoznačný a odpovídá identifikátoru dlaždice (např. `seznam-uzivatelu.md`, `sprava-roli.md`, ...).
+
+2. **V hlavním HTML menu (sidebaru) vytvoř odkaz na každou dlaždici**
+   - Každý `<li>` v `<ul class="sidebar-sublist">` má `<a href="#" class="tile-link" data-tile="NAZEV_SOUBORU_BEZ_MD">...</a>`.
+   - Text v menu může být libovolný a může obsahovat ikonku.
+
+3. **Dynamické načítání obsahu**
+   - V `<div id="tile-content">` se zobrazuje obsah zvoleného `.md` souboru.
+   - JavaScript na stránce (přes knihovnu `marked.js` z CDN) po kliknutí na odkaz načte příslušný `.md` soubor a vloží ho jako HTML do `#tile-content`.
+   - Ukázkový JS:
+     ```js
+     document.querySelectorAll('.tile-link[data-tile]').forEach(link => {
+       link.addEventListener('click', function(e) {
+         e.preventDefault();
+         const tile = this.getAttribute('data-tile');
+         fetch('app-v3/modules/XXX-NazevModulu/tiles/' + tile + '.md')
+           .then(resp => resp.ok ? resp.text() : Promise.reject('Soubor nenalezen!'))
+           .then(md => { document.getElementById('tile-content').innerHTML = marked.parse(md); })
+           .catch(err => { document.getElementById('tile-content').innerHTML = '<p style="color:red">Dlaždice nenalezena!</p>'; });
+       });
+     });
+     ```
+
+4. **Rozšiřování**
+   - Novou dlaždici přidáš jednoduše vytvořením nového `.md` souboru a přidáním položky do sidebaru.
+   - NIKDY neodstraňuj staré dlaždice nebo soubory – pouze přeškrtni v menu a/nebo přesuň do archivu/poznámek, pokud už nejsou aktivní.
+
+5. **Historie & audit**
+   - Při větších úpravách (např. změna JS načítání, úprava struktury tiles/ apod.) vždy okomentuj změnu v pravidla.md nebo v poznámky.md.
+   - Pokud je potřeba změnit hlavní HTML strukturu, původní kód pouze zakomentuj (nikdy nemazat), případně přidej poznámku s datem a důvodem.
+
+---
+
+> Tento postup je závazný pro všechny dynamické výpisy dlaždic.  
+> Pokud je třeba udělat výjimku (mazání, nestandardní načítání...), je nutné ji výslovně popsat a schválit.
+
+---
+
 ## 📁 Doporučená struktura repozitáře, modulů a dlaždic
 
 > **Tato struktura je závazný standard pro všechny, kdo rozvíjejí aplikaci! Dodržuj ji při zakládání nových modulů i rozšiřování existujících. Umožňuje snadné rozšiřování, audit, přehlednost a jednotný styl celého projektu.**
