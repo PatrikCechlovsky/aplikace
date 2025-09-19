@@ -7,6 +7,8 @@
   <!-- Moderní písmo (Inter) přes Google Fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:wght@400;600;700&display=swap">
   <link rel="stylesheet" href="src/css/styles.css">
+  <!-- Nové: knihovna pro převod markdownu (nic se neinstaluje) -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
   <div class="app-layout">
@@ -18,10 +20,7 @@
       </div>
       <nav>
         <ul class="sidebar-list">
-          <!-- ...sidebar sekce zůstávají stejné... -->
-          <!-- Výpis sekcí podle původního HTML -->
           <ul class="sidebar-list">
-            <!-- Všechny sekce - nic nemažu, pouze aktualizuji logiku rozbalování! -->
             <li class="sidebar-section" data-module="010">
               <div class="sidebar-section-header">
                 <span class="sidebar-arrow">▶</span>
@@ -29,6 +28,15 @@
                 <span class="sidebar-section-title">Správa uživatelů</span>
               </div>
               <ul class="sidebar-sublist">
+                <!-- Nové: položky s načítáním dlaždic (nepůvodní pouze zakomentováno níže) -->
+                <li><a href="#" class="tile-link" data-tile="seznam-uzivatelu"><span class="sidebar-icon">👥</span> Seznam uživatelů</a></li>
+                <li><a href="#" class="tile-link" data-tile="sprava-roli"><span class="sidebar-icon">✳️</span> Správa rolí a oprávnění</a></li>
+                <li><a href="#" class="tile-link" data-tile="prehled-pozvanek"><span class="sidebar-icon">📨</span> Přehled pozvánek</a></li>
+                <li><a href="#" class="tile-link" data-tile="sprava-licenci"><span class="sidebar-icon">📑</span> Správa licencí</a></li>
+                <li><a href="#" class="tile-link" data-tile="import-export"><span class="sidebar-icon">🔄</span> Import/Export uživatelů</a></li>
+                <li><a href="#" class="tile-link" data-tile="audit-log"><span class="sidebar-icon">🧑‍💻</span> Auditní log / historie změn</a></li>
+                <li><a href="#" class="tile-link" data-tile="statistiky"><span class="sidebar-icon">📊</span> Statistiky a využití</a></li>
+                <!--
                 <li><span class="sidebar-icon">👥</span> Seznam uživatelů</li>
                 <li><span class="sidebar-icon">✳️</span> Správa rolí a oprávnění</li>
                 <li><span class="sidebar-icon">📨</span> Přehled pozvánek</li>
@@ -36,8 +44,10 @@
                 <li><span class="sidebar-icon">🔄</span> Import/Export uživatelů</li>
                 <li><span class="sidebar-icon">🧑‍💻</span> Auditní log / historie změn</li>
                 <li><span class="sidebar-icon">📊</span> Statistiky a využití</li>
+                -->
               </ul>
             </li>
+            <!-- Ostatní sekce sidebaru jsou beze změny -->
             <li class="sidebar-section" data-module="020">
               <div class="sidebar-section-header">
                 <span class="sidebar-arrow">▶</span>
@@ -117,8 +127,7 @@
                 <li><span class="sidebar-icon">🔔</span> Notifikace a upozornění</li>
               </ul>
             </li>
-            <!-- Další moduly (Platby, Služby, Finance, Energie, Údržba, Komunikace, Dokumenty, Nastavení, ...) -->
-             <!-- Další sekce podle struktura-app.md -->
+            <!-- Další moduly ... -->
             <li class="sidebar-section" data-module="070">
               <div class="sidebar-section-header">
                 <span class="sidebar-arrow">▶</span>
@@ -249,7 +258,6 @@
         <header class="main-header">
           <div class="header-left">
             <h1>Hlavní panel</h1>
-            <!-- Breadcrumbs zde bude pouze pokud nejsi na hlavním panelu -->
             <nav class="breadcrumbs" style="display:none"></nav>
           </div>
           <div class="header-actions">
@@ -260,7 +268,6 @@
         </header>
         <div class="actions-panel">
           <button class="primary-btn"><span>➕</span> Nový modul</button>
-          <!-- Další tlačítka můžeš přidat podle potřeby -->
         </div>
         <div class="dashboard-tiles">
           <div class="tile" data-module="010" tabindex="0">
@@ -290,7 +297,13 @@
         </div>
       </div>
 
-      <!-- Obsah modulů dle původní struktury -->
+      <!-- NOVÉ: Dynamicky se zde zobrazí obsah vybrané dlaždice -->
+      <div id="tile-content" class="tile-content" style="padding:2rem; background:#fff; border-radius:10px; min-height:300px;">
+        <p>Vyberte dlaždici z menu vlevo.</p>
+      </div>
+
+      <!-- Původní sekce Správa uživatelů je pouze zakomentovaná, zachována pro pozdější možné využití -->
+      <!--
       <div id="module-010" class="module-content" style="display:none">
         <header class="main-header">
           <div class="header-left">
@@ -346,9 +359,29 @@
           </table>
         </div>
       </div>
+      -->
       <!-- Další moduly obdobně... -->
     </div>
   </div>
+  <!-- Nové: Dynamické načítání obsahu dlaždic z markdown souborů -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.tile-link[data-tile]').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const tile = this.getAttribute('data-tile');
+          fetch('app-v3/modules/010-Sprava-uzivatelu/tiles/' + tile + '.md')
+            .then(resp => resp.ok ? resp.text() : Promise.reject('Soubor nenalezen!'))
+            .then(md => {
+              document.getElementById('tile-content').innerHTML = marked.parse(md);
+            })
+            .catch(err => {
+              document.getElementById('tile-content').innerHTML = '<p style="color:red">Dlaždice nenalezena!</p>';
+            });
+        });
+      });
+    });
+  </script>
   <script src="src/js/main.js"></script>
 </body>
 </html>
