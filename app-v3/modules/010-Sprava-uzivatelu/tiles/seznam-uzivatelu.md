@@ -64,14 +64,13 @@ Viz výše. Dlaždice je hlavní vstup do správy uživatelů.
 Filtrování: fulltext, role, stav, jednotka, firma/IČO, SSO, delegace, datum.  
 Hromadné akce: Přidat, export, import, archivace/blokace, reset hesla, správa oprávnění, statistiky.
 
-**Ukázka tabulky (původní, textová):**
+**Ukázka tabulky (původní, textová):**  
+~~Tabulka níže je určena jen pro dokumentační popis, v dynamickém pohledu je nahrazena HTML tabulkou níže.~~
 
 | Jméno      | E-mail             | Firma     | IČO      | Role     | SSO      | Delegace | Stav     | Posl. přihlášení | Akce             |
 |------------|--------------------|-----------|----------|----------|----------|----------|----------|------------------|------------------|
 | Patrik     | patrik@abc.cz      | ABC s.r.o.| 12345678 | Admin    | G, M     | 2        | Aktivní  | 2025-09-10       | 👁️ ✏️ 📝 ⛔ 🔄   |
 | Jan Novák  | jan@xyz.cz         |           |          | Uživatel |          | 0        | Pozván   |                  | 👁️ ✏️ 📝        |
-
-~~Tato textová tabulka již není v dynamickém pohledu použita, nahrazena HTML tabulkou níže.~~
 
 ---
 
@@ -80,9 +79,64 @@ Viz sekce Přidat/Upravit uživatele (formulářová pole): jméno, příjmení,
 
 ---
 
-*(... ostatní sekce beze změny, viz tvůj původní soubor ...)*
+## 5️⃣ Detaily záznamu, akce v detailu
+- Základní údaje, historie přihlášení, role, jednotky, SSO, delegace, API, notifikace, jazyk, metadata.
+- Akce: editace, reset hesla, archivace, blokace, správa práv, odpojení SSO, odebrání delegace atd.
 
 ---
+
+## 6️⃣ Oprávnění a workflow
+
+| Akce                  | Admin | Správce | Účetní | Běžný uživatel |
+|-----------------------|:-----:|:-------:|:------:|:--------------:|
+| Zobrazit seznam       |  ✅   |   ✅    |   ✅   |       🚫       |
+| Přidat/editovat       |  ✅   |   ✅    |   🚫   |       🚫       |
+| Archivovat/blokovat   |  ✅   |   ✅    |   🚫   |       🚫       |
+| Reset hesla           |  ✅   |   ✅    |   🚫   |       🚫       |
+| Export/import         |  ✅   |   ✅    |   ✅   |       🚫       |
+| Správa oprávnění      |  ✅   |   ✅    |   🚫   |       🚫       |
+| Hromadné akce         |  ✅   |   ✅    |   🚫   |       🚫       |
+| Správa SSO účtů       |  ✅   |   ✅    |   🚫   |       🚫       |
+| Správa delegace       |  ✅   |   ✅    |   🚫   |       🚫       |
+| Správa preferencí     |  ✅   |   ✅    |   ✅   |       🚫       |
+
+---
+
+## 7️⃣ Chybové stavy, validace a uživatelské hlášky
+
+| Chyba                   | Řešení                         | Hláška                           |
+|-------------------------|-------------------------------|----------------------------------|
+| Duplicitní e-mail       | Ověřit zadání a unikátnost    | "Uživatel se stejným e-mailem již existuje." |
+| Povinné pole chybí      | Doplnit povinný údaj          | "Vyplňte prosím všechna povinná pole." |
+| Neplatný formát e-mailu | Opravit zadání                | "E-mail nemá platný formát."     |
+| Neplatné IČO            | Ověřit v ARES, opravit        | "IČO není platné nebo nebylo nalezeno." |
+| Nelze odstranit admina  | Musí zůstat min. 1 admin      | "Nelze odebrat posledního administrátora." |
+| Chyba při napojení SSO  | Upozornit                     | "Nepodařilo se propojit SSO účet."|
+| Chyba při odebrání delegace | Upozornit                  | "Delegace se nepodařilo odebrat."|
+| Chyba v metadatech      | Upozornit                     | "Metadata nejsou ve správném formátu."|
+| Chyba při změně preferencí | Upozornit                   | "Nepodařilo se uložit preference."|
+
+---
+
+## 8️⃣ Export, import, audit, GDPR
+- Export a import uživatelů (včetně IČO/Firma/SSO/Delegace/Preference/Metadata).
+- Auditní log všech změn (vč. SSO, delegací, API klíče, metadat).
+- GDPR: možnost exportu a anonymizace dat.
+
+---
+
+## 9️⃣ Vazby na další moduly, reference
+- [Katalog tlačítek a ikon](../common-actions.md)
+- [Katalog oprávnění](../permissions-catalog.md)
+- [Pravidla psaní dokumentace](../pravidla.md)
+- [Modul Můj účet](../020-Muj-ucet.md)
+- [Modul Nastavení](../130-Nastaveni.md)
+
+---
+
+## 🔖 Poznámky, specifika, rozšíření
+- Možné workflow pro schvalování, pokročilé správy skupin, granularita práv, přehled vazeb mezi uživateli.
+- Další rozšíření viz hlavní dokumentace modulu.
 
 ---
 
