@@ -5,5 +5,65 @@
   Umístění: pod breadcrumbs, nad hlavní pracovní plochou.
 -->
 <div id="section-title" class="section-title">
-  <!-- Například: <span class="section-icon">👥</span> Správa uživatelů -->
+  <!-- Například: <span class="section-icon">🏠</span> Pronajímatel – <span class="tile-icon">📊</span> Přehled -->
 </div>
+
+<style>
+  .section-title {
+    display: flex;
+    align-items: center;
+    font-size: 1.15em;
+    font-weight: 500;
+    margin: 0.5em 1em 1.2em 1em;
+    color: #f3f3f3;
+    background: none;
+    min-height: 2.2em;
+    letter-spacing: 0.01em;
+  }
+  .section-title .section-icon,
+  .section-title .tile-icon {
+    margin-right: 0.4em;
+    font-size: 1.25em;
+    vertical-align: middle;
+  }
+  .section-title .section-dash {
+    margin: 0 0.5em;
+    color: #888;
+    font-weight: 200;
+    font-size: 1.05em;
+  }
+</style>
+
+<script>
+  /**
+   * Dynamicky nastaví titulek sekce (modul a dlaždice/formulář)
+   * @param {string} moduleIcon - Emoji nebo HTML ikonka modulu
+   * @param {string} moduleName - Název modulu (např. Pronajímatel)
+   * @param {string} [tileIcon] - Emoji/ikonka dlaždice (nepovinné)
+   * @param {string} [tileName] - Název dlaždice/sekce (nepovinné)
+   */
+  function setSectionTitle(moduleIcon, moduleName, tileIcon, tileName) {
+    const el = document.getElementById('section-title');
+    if (!moduleIcon || !moduleName) {
+      el.innerHTML = ''; // Prázdné pokud není nic vybráno
+      return;
+    }
+    let html = `<span class="section-icon">${moduleIcon}</span> ${moduleName}`;
+    if (tileName) {
+      html += `<span class="section-dash">–</span>`;
+      if (tileIcon) html += `<span class="tile-icon">${tileIcon}</span> `;
+      html += `${tileName}`;
+    }
+    el.innerHTML = html;
+  }
+
+  // Výchozí stav: prázdné (po otevření aplikace)
+  setSectionTitle();
+
+  // Příklad použití:
+  // setSectionTitle('🏠', 'Pronajímatel', '📊', 'Přehled');
+  // Výsledek:  🏠 Pronajímatel – 📊 Přehled
+
+  // setSectionTitle('👥', 'Správa uživatelů');
+  // Výsledek:  👥 Správa uživatelů
+</script>
