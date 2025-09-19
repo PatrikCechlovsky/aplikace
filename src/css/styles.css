@@ -1,3 +1,29 @@
+/*
+ * APLIKACE PRONAJÍMATEL - STYLES.CSS
+ * 
+ * NOVÉ STYLY PRO MODERNÍ TABULKU UŽIVATELŮ:
+ * =========================================
+ * 
+ * 1. TMAVÝ REŽIM (výchozí):
+ *    - .user-management-view: Hlavní kontejner pro správu uživatelů
+ *    - .user-table.dark-theme: Moderní tmavá tabulka s hover efekty
+ *    - .user-actions: Kontejner pro akční tlačítka s ikonami
+ *    - .action-btn: Stylované tlačítka s hover animacemi
+ * 
+ * 2. PŘÍPRAVA PRO BUDOUCÍ REŽIMY:
+ *    - .user-table.light-theme: CSS třídy pro světlý režim (připraveno)
+ *    - .user-table.pink-theme: CSS třídy pro růžový režim (připraveno)
+ *    - Přepínání mezi režimy bude implementováno později
+ * 
+ * 3. MODERNÍ DESIGN PRVKY:
+ *    - Box-shadow a border-radius pro moderní vzhled
+ *    - Hover efekty s plynulými přechody
+ *    - Responzivní layout pro akční tlačítka
+ *    - Konzistentní barevné schéma s existujícím designem
+ * 
+ * POZNÁMKA: Všechny původní styly zůstávají beze změny
+ */
+
 body {
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   background: #181b21;
@@ -430,4 +456,156 @@ tr:last-child td { border-bottom: none; }
   margin-left: 2px;
   letter-spacing: 0.03em;
   font-weight: 400;
+}
+
+/* NOVÉ: Moderní tabulka uživatelů s tmavým stylem a přípravou na světlý/růžový mód */
+
+/* Uživatelské rozhraní pro správu uživatelů */
+.user-management-view {
+  padding: 36px 38px;
+  animation: fadein 0.3s;
+}
+
+/* Moderní akční panel */
+.actions-panel.modern-actions {
+  padding: 0 0 20px 0;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Moderní tabulka - tmavý režim (výchozí) */
+.modern-table {
+  padding: 0;
+}
+
+.user-table.dark-theme {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #232632;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
+}
+
+.user-table.dark-theme th {
+  background: #2a2d3a;
+  color: #5fbaff;
+  font-size: 1.05em;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-bottom: 2px solid #181b21;
+  padding: 14px 16px;
+}
+
+.user-table.dark-theme td {
+  font-size: 1.01em;
+  color: #e6e6e6;
+  border-bottom: 1px solid #2a2d3a;
+  padding: 12px 16px;
+  background: #232632;
+}
+
+.user-table.dark-theme tr:hover td {
+  background: #2a2d3a;
+  transition: background 0.2s ease;
+}
+
+.user-table.dark-theme tr:last-child td { 
+  border-bottom: none; 
+}
+
+/* Akční tlačítka pro uživatele */
+.user-actions {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.user-actions .action-btn {
+  background: #3a3d4a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-actions .action-btn:hover { 
+  background: #1673d4; 
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(22, 115, 212, 0.3);
+}
+
+/* Příprava CSS tříd pro budoucí světlý/růžový mód */
+
+/* Světlý režim (připraveno pro budoucí implementace) */
+.user-table.light-theme {
+  background: #ffffff;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+}
+
+.user-table.light-theme th {
+  background: #f8f9fa;
+  color: #495057;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.user-table.light-theme td {
+  color: #495057;
+  border-bottom: 1px solid #e9ecef;
+  background: #ffffff;
+}
+
+.user-table.light-theme tr:hover td {
+  background: #f8f9fa;
+}
+
+.light-theme .user-actions .action-btn {
+  background: #e9ecef;
+  color: #495057;
+}
+
+.light-theme .user-actions .action-btn:hover {
+  background: #007bff;
+  color: #ffffff;
+}
+
+/* Růžový režim (připraveno pro budoucí implementace) */
+.user-table.pink-theme {
+  background: #fdf2f8;
+  box-shadow: 0 4px 25px rgba(219, 39, 119, 0.1);
+}
+
+.user-table.pink-theme th {
+  background: #fce7f3;
+  color: #be185d;
+  border-bottom: 2px solid #f3e8ff;
+}
+
+.user-table.pink-theme td {
+  color: #831843;
+  border-bottom: 1px solid #fce7f3;
+  background: #fdf2f8;
+}
+
+.user-table.pink-theme tr:hover td {
+  background: #fce7f3;
+}
+
+.pink-theme .user-actions .action-btn {
+  background: #f3e8ff;
+  color: #be185d;
+}
+
+.pink-theme .user-actions .action-btn:hover {
+  background: #db2777;
+  color: #ffffff;
 }
