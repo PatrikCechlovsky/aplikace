@@ -1,115 +1,111 @@
-// Sidebar accordion logic
-document.querySelectorAll('.sidebar-section-header').forEach(header => {
-  header.addEventListener('click', function (e) {
-    const section = this.closest('.sidebar-section');
-    // Pokud má sekce submenu, umožníme rozbalování
-    if (header.nextElementSibling && header.nextElementSibling.classList.contains('sidebar-sublist')) {
-      // Pokud už je rozbalená, zabal ji
-      if (section.classList.contains('expanded')) {
-        section.classList.remove('expanded');
-      } else {
-        // Jinak zabal všechny ostatní a rozbal tuhle
-        document.querySelectorAll('.sidebar-section').forEach(s => s.classList.remove('expanded'));
-        section.classList.add('expanded');
-      }
-    }
-    e.stopPropagation();
-  });
-});
-
-// Počáteční stav: vše zabaleno a zobrazí se dashboard
-window.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.sidebar-section').forEach(s => s.classList.remove('expanded'));
-  showDashboard();
-});
-
-// Kliknutí na název aplikace zavře vše a zobrazí dashboard
-document.getElementById('app-title').addEventListener('click', () => {
-  document.querySelectorAll('.sidebar-section').forEach(s => s.classList.remove('expanded'));
-  showDashboard();
-});
-
-// Kliknutím na dlaždici se otevře modul a rozbalí sidebar
-document.querySelectorAll('.tile').forEach(tile => {
-  tile.addEventListener('click', function () {
-    const moduleId = this.getAttribute('data-module');
-    openModule(moduleId);
-  });
-});
-
-// Funkce pro zobrazení dashboardu (hlavního panelu)
-function showDashboard() {
-  document.getElementById('dashboard').style.display = 'block';
-  document.querySelectorAll('.module-content').forEach(mc => mc.style.display = 'none');
-  // Breadcrumbs na dashboardu nesmí být vidět
-  const breadcrumbs = document.querySelector('.breadcrumbs');
-  if (breadcrumbs) breadcrumbs.style.display = 'none';
+body {
+  background: #181b21;
+  color: #e6e6e6;
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+.app-layout {
+  display: flex;
+  min-height: 100vh;
 }
 
-// Funkce pro otevření modulu (skryje dashboard, ukáže obsah, rozbalí sidebar)
-function openModule(moduleId) {
-  document.getElementById('dashboard').style.display = 'none';
-  document.querySelectorAll('.module-content').forEach(mc => mc.style.display = 'none');
-  const curr = document.getElementById('module-' + moduleId);
-  if (curr) curr.style.display = 'block';
-
-  // Rozbal sidebar sekci pro daný modul
-  document.querySelectorAll('.sidebar-section').forEach(section => {
-    if (section.getAttribute('data-module') === moduleId) {
-      section.classList.add('expanded');
-    } else {
-      section.classList.remove('expanded');
-    }
-  });
-
-  // Breadcrumbs na modulech zobraz a nastav správný text
-  const breadcrumbs = document.querySelector('.breadcrumbs');
-  if (breadcrumbs) {
-    const section = document.querySelector('.sidebar-section[data-module="' + moduleId + '"] .sidebar-section-title');
-    if (section) {
-      breadcrumbs.textContent = 'Hlavní panel > ' + section.textContent.trim();
-      breadcrumbs.style.display = 'block';
-    } else {
-      // Fallback: aspoň zobrazit Hlavní panel
-      breadcrumbs.textContent = 'Hlavní panel';
-      breadcrumbs.style.display = 'block';
-    }
-  }
+/* 7. SIDEBAR */
+.sidebar {
+  width: 250px;
+  background: #191c22;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+  min-height: 100vh;
+}
+.sidebar-icon {
+  margin-right: 10px;
+}
+.home-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.3em;
+  font-weight: 700;
+  color: #5fbaff;
+  padding: 22px 25px 12px 22px;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  user-select: none;
+}
+.sidebar-footer {
+  font-size: 0.98em;
+  color: #6e91c7;
+  padding: 22px 0 15px 32px;
+  margin-top: auto;
 }
 
-/* ====== Přidáno podle návrhu (pro budoucí správu barevného režimu a možnost přepínání mezi dashboardem a uživatelskou tabulkou) ====== */
+/* PRAVÁ ČÁST */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #181b21;
+  padding: 0 20px;
+}
 
-// --- následující logika je již pokryta výše v openModule() a showDashboard(), ale přidávám pro budoucí rozšiřování a příklad práce s id ---
-// document.addEventListener('DOMContentLoaded', function() {
-//   // Skrýt/zobrazit sekce podle kliknutí na dlaždici
-//   const dashboard = document.getElementById('dashboard');
-//   const userTableSection = document.getElementById('user-table-section');
-//   const userManagementTile = document.getElementById('user-management-tile');
-//   const breadcrumbs = document.getElementById('breadcrumbs');
-//   
-//   if (userManagementTile && dashboard && userTableSection && breadcrumbs) {
-//     userManagementTile.addEventListener('click', function() {
-//       dashboard.style.display = 'none';
-//       userTableSection.style.display = 'block';
-//       breadcrumbs.style.display = 'block';
-//     });
-//   }
-//
-//   // Možnost návratu zpět do dashboardu přes breadcrumbs
-//   const dashboardBreadcrumb = document.getElementById('dashboard-breadcrumb');
-//   if (dashboardBreadcrumb && dashboard && userTableSection && breadcrumbs) {
-//     dashboardBreadcrumb.addEventListener('click', function() {
-//       dashboard.style.display = 'block';
-//       userTableSection.style.display = 'none';
-//       breadcrumbs.style.display = 'none';
-//     });
-//   }
-//
-//   // Při načtení stránky zobraz pouze dashboard, ostatní skryj
-//   if (dashboard) dashboard.style.display = 'block';
-//   if (userTableSection) userTableSection.style.display = 'none';
-//   if (breadcrumbs) breadcrumbs.style.display = 'none';
-// });
+/* 4. HEADER-ACTIONS */
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  background: #232632;
+  border-top-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+  margin-top: 6px;
+  min-height: 48px;
+}
+.header-btn {
+  background: #2c3440;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 7px 20px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 7px;
+  transition: background 0.18s;
+}
+.header-btn:hover { background: #4d5e7b; }
 
-// Rezervováno pro pozdější režimy uživatele (barevné preference, atd.)
-window.userColorMode = "dark"; // Zatím jen informace, v budoucnu lze použít pro per-user nastavení
+/* 2. BREADCRUMBS */
+.breadcrumbs {
+  font-size: 1em;
+  color: #6e91c7;
+  margin: 12px 0 6px 6px;
+  font-weight: 400;
+}
+
+/* 3. SECTION-TITLE */
+.section-title {
+  font-size: 1.16em;
+  color: #fff;
+  padding: 11px 0 6px 0;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+/* 5. MAIN-ACTION-BTN */
+.main-action-btn {
+  margin-bottom: 10px;
+}
+
+/* 6. CONTENT */
+.content {
+  background: #232632;
+  border-radius: 12px;
+  padding: 24px;
+  flex: 1;
+  min-height: 300px;
+}
