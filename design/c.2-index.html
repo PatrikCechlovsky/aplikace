@@ -4,6 +4,42 @@
   Styl: .breadcrumbs v CSS.
   Umístění: pod headerem, nad hlavním obsahem.
 -->
-<nav id="breadcrumbs" class="breadcrumbs">
-  Hlavní panel
+<nav id="breadcrumbs" class="breadcrumbs" aria-label="Drobečková navigace">
+  <span class="breadcrumbs-item">Hlavní panel</span>
 </nav>
+
+<style>
+  .breadcrumbs {
+    font-size: 0.92em;
+    color: #666;
+    margin: 0.5em 1em 1em 1em;
+    padding: 0;
+    background: none;
+    letter-spacing: 0.02em;
+  }
+  .breadcrumbs-item {
+    font-size: 0.92em;
+  }
+  .breadcrumbs-separator {
+    margin: 0 0.2em;
+    color: #999;
+  }
+</style>
+
+<script>
+  // Ukázka dynamického rozšiřování breadcrumbs (osnovy)
+  // Později můžeš volat tuto funkci a předat pole názvů dle aktuální cesty
+  function setBreadcrumbs(pathArr) {
+    const nav = document.getElementById('breadcrumbs');
+    nav.innerHTML = pathArr.map((part, idx) => `
+      <span class="breadcrumbs-item">${part}</span>
+      ${idx < pathArr.length - 1 ? '<span class="breadcrumbs-separator">›</span>' : ''}
+    `).join('');
+  }
+
+  // Výchozí stav – pouze Hlavní panel
+  setBreadcrumbs(['Hlavní panel']);
+
+  // Příklad pro hlubší cestu:
+  // setBreadcrumbs(['Hlavní panel', 'Správa uživatelů', 'Seznam']);
+</script>
