@@ -10,7 +10,7 @@ Výjimky musí být výslovně zapsány v zadání nebo schváleny vlastníkem p
 
 ## Struktura projektu
 
-- `public/index.html` — základní rozhraní (bude natahovat části kódu podle modulů)
+- `index.html` — základní rozhraní (bude natahovat části kódu podle modulů)
 - `src/js/` — JavaScript soubory, každý modul zvlášť (např. `users.js`, `contracts.js`)
 - `src/css/` — CSS styly, každý modul zvlášť (např. `users.css`, `contracts.css`)
 - `assets/logo.svg` — logo a další obrázky
