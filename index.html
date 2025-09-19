@@ -4,9 +4,15 @@
   <meta charset="UTF-8">
   <title>Aplikace pronajímatel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/css/styles.css">
 </head>
-<body>
+<body class="theme-dark">
+  <div class="theme-switcher">
+    <button onclick="setTheme('dark')">Tmavý</button>
+    <button onclick="setTheme('light')">Světlý</button>
+    <button onclick="setTheme('blue')">Modrý</button>
+    <button onclick="setTheme('pink')">Růžový</button>
+  </div>
   <div class="app-layout">
     <!-- 7. SIDEBAR -->
     <aside id="sidebar" class="sidebar">
@@ -44,12 +50,12 @@
       <!-- 5. MAIN-ACTION-BTN -->
       <div id="main-action-btn" class="main-action-btn"></div>
 
-      <!-- 6. CONTENT (HLAVNÍ PRACOVNÍ PLOCHA) -->
+      <!-- 6. CONTENT -->
       <div id="content" class="content">
         <!-- Zde bude seznam, graf, formulář podle výběru -->
       </div>
     </div>
   </div>
-  <script src="main.js"></script>
+  <script src="src/js/main.js"></script>
 </body>
 </html>
