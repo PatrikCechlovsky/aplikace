@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>Správa uživatelů</title>
+  <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+  <aside id="sidebar" class="sidebar">
+    <nav>
+      <ul class="sidebar-list">
+        <li class="sidebar-section" data-module="uzivatele">
+          <span class="sidebar-icon">👥</span> Správa uživatelů
+        </li>
+        <!-- ... další sekce ... -->
+      </ul>
+    </nav>
+    <div class="sidebar-footer">
+      <span>v2.0 – Patrik Cechlovský</span>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <h1>Správa uživatelů</h1>
+    <section id="tiles-section">
+      <h2>Dlaždice</h2>
+      <div id="tiles-list" class="tiles-list"></div>
+    </section>
+  </main>
+
+  <script>
+    // Dynamické načtení dlaždic pro tento modul (statický web)
+    fetch('tiles/tiles.json')
+      .then(res => res.json())
+      .then(tiles => {
+        const container = document.getElementById('tiles-list');
+        if (!container) return;
+        if (!tiles.length) {
+          container.innerHTML = '<p>Žádné dlaždice nejsou k dispozici.</p>';
+          return;
+        }
+        container.innerHTML = tiles.map(tile => `
+          <div class="tile">
+            <a href="tiles/${tile.filename.replace('.md', '.html')}">
+              <span class="tile-icon">🟦</span>
+              <span class="tile-title">${tile.title}</span>
+            </a>
+          </div>
+        `).join('');
+      });
+  </script>
+</body>
+</html>
