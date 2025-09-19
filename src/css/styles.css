@@ -431,3 +431,238 @@ tr:last-child td { border-bottom: none; }
   letter-spacing: 0.03em;
   font-weight: 400;
 }
+
+/* NOVÉ: Styly pro tile-content a moderní tabulku uživatelů */
+
+/* Tile content container */
+.tile-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #181b21;
+  animation: fadein 0.3s;
+}
+
+/* Section title styly */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 35px 15px 28px;
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #e6e6e6;
+  background: #181b21;
+}
+
+.section-icon {
+  font-size: 1.1em;
+}
+
+/* Moderní tabulka uživatelů */
+.user-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #232632;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 20px #0003;
+}
+
+.user-table th {
+  background: #232632;
+  color: #5fbaff;
+  font-size: 1.05em;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-bottom: 2px solid #181b21;
+  text-align: left;
+  padding: 14px 13px;
+}
+
+.user-table td {
+  font-size: 1.01em;
+  color: #e6e6e6;
+  border-bottom: 1px solid #2a303c;
+  text-align: left;
+  padding: 12px 13px;
+  vertical-align: middle;
+}
+
+.user-table tr:last-child td {
+  border-bottom: none;
+}
+
+.user-table tr:hover {
+  background: #252b38;
+}
+
+/* Akční tlačítka v tabulce */
+.user-actions {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.user-actions .action-btn {
+  background: #2a303c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.15s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+}
+
+.user-actions .action-btn:hover {
+  background: #1673d4;
+}
+
+.user-actions .action-btn span {
+  font-size: 0.9em;
+}
+
+/* Email odkazy */
+.user-table a {
+  color: #5fbaff;
+  text-decoration: none;
+}
+
+.user-table a:hover {
+  text-decoration: underline;
+}
+
+/* NOVÉ: Příprava pro světlý/růžový režim (zatím neaktivní) */
+
+/* Světlý motiv */
+.theme-light {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --accent-primary: #0d6efd;
+  --accent-secondary: #6f42c1;
+  --border-color: #dee2e6;
+  --table-hover: #f8f9fa;
+}
+
+.theme-light .main-content {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.theme-light .user-table {
+  background: var(--bg-secondary);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+}
+
+.theme-light .user-table th {
+  background: var(--bg-tertiary);
+  color: var(--accent-primary);
+  border-bottom: 2px solid var(--border-color);
+}
+
+.theme-light .user-table td {
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.theme-light .user-table tr:hover {
+  background: var(--table-hover);
+}
+
+.theme-light .user-actions .action-btn {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.theme-light .user-actions .action-btn:hover {
+  background: var(--accent-primary);
+  color: #ffffff;
+}
+
+.theme-light .main-header {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.theme-light .actions-panel {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.theme-light .section-title {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Růžový motiv */
+.theme-pink {
+  --bg-primary: #fdf2f8;
+  --bg-secondary: #fce7f3;
+  --bg-tertiary: #f9a8d4;
+  --text-primary: #831843;
+  --text-secondary: #be185d;
+  --accent-primary: #ec4899;
+  --accent-secondary: #f472b6;
+  --border-color: #f9a8d4;
+  --table-hover: #fce7f3;
+}
+
+.theme-pink .main-content {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.theme-pink .user-table {
+  background: var(--bg-secondary);
+  box-shadow: 0 2px 20px rgba(236,72,153,0.1);
+}
+
+.theme-pink .user-table th {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--border-color);
+}
+
+.theme-pink .user-table td {
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.theme-pink .user-table tr:hover {
+  background: var(--table-hover);
+}
+
+.theme-pink .user-actions .action-btn {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.theme-pink .user-actions .action-btn:hover {
+  background: var(--accent-primary);
+  color: #ffffff;
+}
+
+.theme-pink .main-header {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.theme-pink .actions-panel {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.theme-pink .section-title {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}

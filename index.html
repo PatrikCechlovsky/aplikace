@@ -253,7 +253,53 @@
 
     <!-- Pravá část: dashboard + hlavní obsah -->
     <div class="main-content">
-      <!-- Hlavní panel (dashboard) jako modul -->
+      <!-- PŮVODNÍ: Hlavní panel (dashboard) jako modul - ZAKOMENTOVÁNO PRO NOVOU FUNKCIONALITU -->
+      <!--
+      <div id="dashboard" class="dashboard">
+        <header class="main-header">
+          <div class="header-left">
+            <h1>Hlavní panel</h1>
+            <nav class="breadcrumbs" style="display:none"></nav>
+          </div>
+          <div class="header-actions">
+            <button class="header-btn" title="Nápověda"><span>🆘</span></button>
+            <button class="header-btn" title="Notifikace"><span>🔔</span></button>
+            <button class="header-btn" title="Uživatel"><span>👤</span></button>
+          </div>
+        </header>
+        <div class="actions-panel">
+          <button class="primary-btn"><span>➕</span> Nový modul</button>
+        </div>
+        <div class="dashboard-tiles">
+          <div class="tile" data-module="010" tabindex="0">
+            <div class="tile-header">
+              <span class="tile-icon">👥</span>
+              <span class="tile-title">Správa uživatelů</span>
+              <span class="tile-star">★</span>
+            </div>
+            <div class="tile-tags">
+              <span class="tile-tag">#uživatelé</span>
+              <span class="tile-tag">#role</span>
+            </div>
+            <div class="tile-desc">Přehled, správa a editace uživatelů systému včetně práv a pozvánek.</div>
+          </div>
+          <div class="tile" data-module="020" tabindex="0">
+            <div class="tile-header">
+              <span class="tile-icon">👤</span>
+              <span class="tile-title">Můj účet</span>
+              <span class="tile-star">★</span>
+            </div>
+            <div class="tile-tags">
+              <span class="tile-tag">#profil</span>
+            </div>
+            <div class="tile-desc">Úprava údajů, hesla, SSO, notifikací a bezpečnostních nastavení.</div>
+          </div>
+          <!-- Další dlaždice modulů -->
+        </div>
+      </div>
+      -->
+
+      <!-- NOVÉ: Dashboard panel - zobrazuje se místo zakomentovaného obsahu -->
       <div id="dashboard" class="dashboard">
         <header class="main-header">
           <div class="header-left">
@@ -297,9 +343,171 @@
         </div>
       </div>
 
-      <!-- NOVÉ: Dynamicky se zde zobrazí obsah vybrané dlaždice -->
-      <div id="tile-content" class="tile-content" style="padding:2rem; background:#fff; border-radius:10px; min-height:300px;">
-        <p>Vyberte dlaždici z menu vlevo.</p>
+      <!-- NOVÉ: Moderní obsah dlaždic - zobrazí se po kliknutí na tile-link -->
+      <div id="tile-content" class="tile-content" style="display:none;">
+        <!-- Header s breadcrumbs -->
+        <header class="main-header">
+          <div class="header-left">
+            <h1 id="tile-title">
+              <span class="header-icon">👥</span>
+              <span id="tile-title-text">Seznam uživatelů</span>
+            </h1>
+            <nav class="breadcrumbs" id="tile-breadcrumbs">Hlavní panel > Správa uživatelů > Seznam uživatelů</nav>
+          </div>
+          <div class="header-actions">
+            <button class="header-btn" title="Hledat"><span>🔍</span></button>
+            <button class="header-btn" title="Notifikace"><span>🔔</span></button>
+            <button class="header-btn" title="Nápověda"><span>🆘</span></button>
+            <button class="header-btn" title="Uživatel"><span>👤</span></button>
+            <button class="header-btn prominent" title="Zrušit filtr">Zrušit filtr</button>
+          </div>
+        </header>
+
+        <!-- Panel akcí s tlačítkem Přidat uživatele -->
+        <div class="actions-panel">
+          <button class="primary-btn"><span>➕</span> Přidat uživatele</button>
+          <button class="secondary-btn"><span>🔽</span> Filtrovat</button>
+          <button class="secondary-btn"><span>📤</span> Export</button>
+        </div>
+
+        <!-- Název sekce -->
+        <div class="section-title">
+          <span class="section-icon">👥</span>
+          Seznam uživatelů
+        </div>
+
+        <!-- NOVÉ: Moderní tabulka uživatelů -->
+        <div class="main-table">
+          <table class="user-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Jméno</th>
+                <th>E-mail</th>
+                <th>Role</th>
+                <th>Skupina</th>
+                <th>Projekty</th>
+                <th>Licence</th>
+                <th>Body</th>
+                <th>Stav</th>
+                <th>Registrace</th>
+                <th>Akce</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Jan Novák</td>
+                <td><a href="mailto:jan.novak@email.cz">jan.novak@email.cz</a></td>
+                <td><span class="badge osoba">Administrátor</span></td>
+                <td>IT</td>
+                <td>5</td>
+                <td>Pro</td>
+                <td>85</td>
+                <td><span class="status-pill active">Aktivní</span></td>
+                <td>2023-01-15</td>
+                <td>
+                  <div class="user-actions">
+                    <button title="Zobrazit detail" class="action-btn"><span>👁️</span></button>
+                    <button title="Editovat" class="action-btn"><span>✏️</span></button>
+                    <button title="Exportovat" class="action-btn"><span>📄</span></button>
+                    <button title="Blokovat" class="action-btn"><span>⛔</span></button>
+                    <button title="Smazat" class="action-btn"><span>🗑️</span></button>
+                    <button title="Avatar" class="action-btn"><span>🖼️</span></button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Marie Svobodová</td>
+                <td><a href="mailto:marie.svobodova@email.cz">marie.svobodova@email.cz</a></td>
+                <td><span class="badge osvc">Manager</span></td>
+                <td>Sales</td>
+                <td>12</td>
+                <td>Standard</td>
+                <td>125</td>
+                <td><span class="status-pill active">Aktivní</span></td>
+                <td>2023-02-20</td>
+                <td>
+                  <div class="user-actions">
+                    <button title="Zobrazit detail" class="action-btn"><span>👁️</span></button>
+                    <button title="Editovat" class="action-btn"><span>✏️</span></button>
+                    <button title="Exportovat" class="action-btn"><span>📄</span></button>
+                    <button title="Blokovat" class="action-btn"><span>⛔</span></button>
+                    <button title="Smazat" class="action-btn"><span>🗑️</span></button>
+                    <button title="Avatar" class="action-btn"><span>🖼️</span></button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Petr Dvořák</td>
+                <td><a href="mailto:petr.dvorak@email.cz">petr.dvorak@email.cz</a></td>
+                <td><span class="badge firma">Uživatel</span></td>
+                <td>Support</td>
+                <td>3</td>
+                <td>Basic</td>
+                <td>45</td>
+                <td><span class="status-pill blocked">Blokován</span></td>
+                <td>2023-03-10</td>
+                <td>
+                  <div class="user-actions">
+                    <button title="Zobrazit detail" class="action-btn"><span>👁️</span></button>
+                    <button title="Editovat" class="action-btn"><span>✏️</span></button>
+                    <button title="Exportovat" class="action-btn"><span>📄</span></button>
+                    <button title="Blokovat" class="action-btn"><span>⛔</span></button>
+                    <button title="Smazat" class="action-btn"><span>🗑️</span></button>
+                    <button title="Avatar" class="action-btn"><span>🖼️</span></button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Anna Procházková</td>
+                <td><a href="mailto:anna.prochaskova@email.cz">anna.prochaskova@email.cz</a></td>
+                <td><span class="badge spolek">Editor</span></td>
+                <td>Content</td>
+                <td>8</td>
+                <td>Pro</td>
+                <td>95</td>
+                <td><span class="status-pill invited">Pozváno</span></td>
+                <td>2023-04-05</td>
+                <td>
+                  <div class="user-actions">
+                    <button title="Zobrazit detail" class="action-btn"><span>👁️</span></button>
+                    <button title="Editovat" class="action-btn"><span>✏️</span></button>
+                    <button title="Exportovat" class="action-btn"><span>📄</span></button>
+                    <button title="Blokovat" class="action-btn"><span>⛔</span></button>
+                    <button title="Smazat" class="action-btn"><span>🗑️</span></button>
+                    <button title="Avatar" class="action-btn"><span>🖼️</span></button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Tomáš Černý</td>
+                <td><a href="mailto:tomas.cerny@email.cz">tomas.cerny@email.cz</a></td>
+                <td><span class="badge stat">Guest</span></td>
+                <td>-</td>
+                <td>1</td>
+                <td>Trial</td>
+                <td>15</td>
+                <td><span class="status-pill active">Aktivní</span></td>
+                <td>2023-05-12</td>
+                <td>
+                  <div class="user-actions">
+                    <button title="Zobrazit detail" class="action-btn"><span>👁️</span></button>
+                    <button title="Editovat" class="action-btn"><span>✏️</span></button>
+                    <button title="Exportovat" class="action-btn"><span>📄</span></button>
+                    <button title="Blokovat" class="action-btn"><span>⛔</span></button>
+                    <button title="Smazat" class="action-btn"><span>🗑️</span></button>
+                    <button title="Avatar" class="action-btn"><span>🖼️</span></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <!-- Původní sekce Správa uživatelů je pouze zakomentovaná, zachována pro pozdější možné využití -->
@@ -363,7 +571,8 @@
       <!-- Další moduly obdobně... -->
     </div>
   </div>
-  <!-- Nové: Dynamické načítání obsahu dlaždic z markdown souborů -->
+  <!-- PŮVODNÍ: Dynamické načítání obsahu dlaždic z markdown souborů - ZAKOMENTOVÁNO PRO NOVOU FUNKCIONALITET -->
+  <!--
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       document.querySelectorAll('.tile-link[data-tile]').forEach(link => {
@@ -382,6 +591,7 @@
       });
     });
   </script>
+  -->
   <script src="src/js/main.js"></script>
 </body>
 </html>
