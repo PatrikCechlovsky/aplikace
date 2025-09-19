@@ -42,7 +42,8 @@ function showDashboard() {
   document.getElementById('dashboard').style.display = 'block';
   document.querySelectorAll('.module-content').forEach(mc => mc.style.display = 'none');
   // Breadcrumbs na dashboardu nesmí být vidět
-  const breadcrumbs = document.querySelector('.breadcrumbs');
+  // ZMĚNA: Použití getElementById místo querySelector pro nový breadcrumbs element s id
+  const breadcrumbs = document.getElementById('breadcrumbs');
   if (breadcrumbs) breadcrumbs.style.display = 'none';
 }
 
@@ -63,7 +64,8 @@ function openModule(moduleId) {
   });
 
   // Breadcrumbs na modulech zobraz a nastav správný text
-  const breadcrumbs = document.querySelector('.breadcrumbs');
+  // ZMĚNA: Použití getElementById místo querySelector pro nový breadcrumbs element s id
+  const breadcrumbs = document.getElementById('breadcrumbs');
   if (breadcrumbs) {
     const section = document.querySelector('.sidebar-section[data-module="' + moduleId + '"] .sidebar-section-title');
     if (section) {
