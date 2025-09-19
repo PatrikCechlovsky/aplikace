@@ -1,6 +1,53 @@
+/* ---------------------- */
+/*      TÉMATA           */
+/* ---------------------- */
+body.theme-dark {
+  --bg-main: #181b21;
+  --bg-panel: #232632;
+  --bg-sidebar: #191c22;
+  --color-main: #e6e6e6;
+  --color-accent: #5fbaff;
+  --color-secondary: #6e91c7;
+  --btn-bg: #2c3440;
+  --btn-bg-hover: #4d5e7b;
+}
+body.theme-light {
+  --bg-main: #f1f2f9;
+  --bg-panel: #fff;
+  --bg-sidebar: #eaeaea;
+  --color-main: #232632;
+  --color-accent: #0076ff;
+  --color-secondary: #8fa2bf;
+  --btn-bg: #f4f8fd;
+  --btn-bg-hover: #d0e9ff;
+}
+body.theme-blue {
+  --bg-main: #16223a;
+  --bg-panel: #223357;
+  --bg-sidebar: #1b2a49;
+  --color-main: #e8f0ff;
+  --color-accent: #3ca6ff;
+  --color-secondary: #6ebaff;
+  --btn-bg: #29467b;
+  --btn-bg-hover: #3ca6ff;
+}
+body.theme-pink {
+  --bg-main: #261722;
+  --bg-panel: #3a2237;
+  --bg-sidebar: #4c244f;
+  --color-main: #fff0f6;
+  --color-accent: #e26eb3;
+  --color-secondary: #c961a0;
+  --btn-bg: #b54889;
+  --btn-bg-hover: #e26eb3;
+}
+
+/* ---------------------- */
+/*   ZÁKLADNÍ LAYOUT      */
+/* ---------------------- */
 body {
-  background: #181b21;
-  color: #e6e6e6;
+  background: var(--bg-main);
+  color: var(--color-main);
   margin: 0;
   font-family: 'Segoe UI', Arial, sans-serif;
 }
@@ -8,12 +55,33 @@ body {
   display: flex;
   min-height: 100vh;
 }
+.theme-switcher {
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  z-index: 99;
+  display: flex;
+  gap: 8px;
+}
+.theme-switcher button {
+  background: var(--btn-bg);
+  color: var(--color-main);
+  border: none;
+  border-radius: 8px;
+  padding: 6px 20px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background 0.18s;
+}
+.theme-switcher button:hover {
+  background: var(--btn-bg-hover);
+}
 
 /* 7. SIDEBAR */
 .sidebar {
   width: 250px;
-  background: #191c22;
-  color: #fff;
+  background: var(--bg-sidebar);
+  color: var(--color-main);
   display: flex;
   flex-direction: column;
   border-top-right-radius: 18px;
@@ -29,7 +97,7 @@ body {
   gap: 10px;
   font-size: 1.3em;
   font-weight: 700;
-  color: #5fbaff;
+  color: var(--color-accent);
   padding: 22px 25px 12px 22px;
   letter-spacing: 0.01em;
   cursor: pointer;
@@ -37,7 +105,7 @@ body {
 }
 .sidebar-footer {
   font-size: 0.98em;
-  color: #6e91c7;
+  color: var(--color-secondary);
   padding: 22px 0 15px 32px;
   margin-top: auto;
 }
@@ -47,7 +115,7 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #181b21;
+  background: var(--bg-main);
   padding: 0 20px;
 }
 
@@ -57,15 +125,15 @@ body {
   justify-content: flex-end;
   align-items: center;
   gap: 10px;
-  background: #232632;
+  background: var(--bg-panel);
   border-top-left-radius: 18px;
   border-bottom-right-radius: 18px;
   margin-top: 6px;
   min-height: 48px;
 }
 .header-btn {
-  background: #2c3440;
-  color: #fff;
+  background: var(--btn-bg);
+  color: var(--color-main);
   border: none;
   border-radius: 7px;
   padding: 7px 20px;
@@ -75,12 +143,12 @@ body {
   margin-right: 7px;
   transition: background 0.18s;
 }
-.header-btn:hover { background: #4d5e7b; }
+.header-btn:hover { background: var(--btn-bg-hover); }
 
 /* 2. BREADCRUMBS */
 .breadcrumbs {
   font-size: 1em;
-  color: #6e91c7;
+  color: var(--color-secondary);
   margin: 12px 0 6px 6px;
   font-weight: 400;
 }
@@ -88,7 +156,7 @@ body {
 /* 3. SECTION-TITLE */
 .section-title {
   font-size: 1.16em;
-  color: #fff;
+  color: var(--color-main);
   padding: 11px 0 6px 0;
   font-weight: 600;
   display: flex;
@@ -103,9 +171,43 @@ body {
 
 /* 6. CONTENT */
 .content {
-  background: #232632;
+  background: var(--bg-panel);
   border-radius: 12px;
   padding: 24px;
   flex: 1;
   min-height: 300px;
+}
+
+/* RESPONSIVITA */
+@media (max-width: 900px) {
+  .sidebar {
+    width: 60px;
+    min-width: 60px;
+  }
+  .home-button span.sidebar-app-name {
+    display: none;
+  }
+  .main-content {
+    padding: 0 4px;
+  }
+}
+
+@media (max-width: 600px) {
+  .app-layout {
+    flex-direction: column;
+  }
+  .sidebar {
+    flex-direction: row;
+    width: 100vw;
+    height: 55px;
+    border-radius: 0;
+    min-width: unset;
+    min-height: unset;
+  }
+  .main-content {
+    padding: 0 1px;
+  }
+  .content {
+    padding: 10px;
+  }
 }
