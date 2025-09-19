@@ -1,18 +1,28 @@
+/* ========== ZÁKLADNÍ NASTAVENÍ ========== */
 body {
-  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  /* font-family: 'Inter', 'Segoe UI', Arial, sans-serif; */  /* --- přeškrtlé, viz níže --- */
   background: #181b21;
   color: #e6e6e6;
   margin: 0;
   padding: 0;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
 }
 
+/* ========== LAYOUT ========== */
 .app-layout {
   display: flex;
   min-height: 100vh;
   background: #181b21;
 }
 
-/* Sidebar */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #181b21;
+}
+
+/* ========== SIDEBAR ========== */
 .sidebar {
   width: 265px;
   background: #191c22;
@@ -22,7 +32,9 @@ body {
   border-top-right-radius: 18px;
   border-bottom-right-radius: 18px;
   min-height: 100vh;
+  /* background: #1a1e26; */ /* --- přeškrtlé, viz výše --- */
 }
+
 .sidebar-title {
   display: flex;
   align-items: center;
@@ -117,14 +129,7 @@ body {
   margin-top: auto;
 }
 
-.main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background: #181b21;
-}
-
-/* Hlavní header */
+/* ========== HLAVNÍ OBSAH A HEADER ========== */
 .main-header {
   display: flex;
   justify-content: space-between;
@@ -183,6 +188,7 @@ body {
 }
 .header-ico:hover { color: #fff; }
 
+/* ========== PANELY, SEKCÍ, DASHBOARD ========== */
 .actions-panel {
   padding: 17px 35px 10px 28px;
   background: #181b21;
@@ -230,7 +236,6 @@ body {
   align-items: center;
   gap: 11px;
 }
-
 .section-icon {
   font-size: 1.25em;
   color: #5fbaff;
@@ -321,6 +326,7 @@ body {
   to { opacity: 1; }
 }
 
+/* ========== TABULKY ========== */
 .main-table {
   flex: 1;
   padding: 22px 35px 0 28px;
@@ -335,10 +341,12 @@ table {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 2px 20px #0003;
+  /* background-color: #222837; */ /* --- přeškrtlé, viz výše --- */
 }
 th, td {
   text-align: left;
   padding: 11px 13px;
+  /* padding: 12px 16px; */ /* --- přeškrtlé, viz výše --- */
 }
 th {
   background: #232632;
@@ -347,6 +355,7 @@ th {
   font-weight: 700;
   letter-spacing: 0.02em;
   border-bottom: 2px solid #181b21;
+  /* background: #273047; */ /* --- přeškrtlé, viz výše --- */
 }
 td {
   font-size: 1.01em;
@@ -389,6 +398,7 @@ tr:last-child td { border-bottom: none; }
   background: #ff8c18;
 }
 
+/* ========== AKČNÍ TLAČÍTKA ========== */
 .action-btn {
   background: #232632;
   color: #fff;
@@ -402,15 +412,32 @@ tr:last-child td { border-bottom: none; }
 }
 .action-btn:hover { background: #1673d4; }
 
+table button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.1em;
+  margin-right: 4px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+table button:hover {
+  color: #ffb6b6;
+}
+
+/* ========== SCROLLBAR ========== */
 ::-webkit-scrollbar {
   width: 10px;
   background: #232632;
+  /* background: #181c24; */ /* --- přeškrtlé, viz výše --- */
 }
 ::-webkit-scrollbar-thumb {
   background: #232632;
   border-radius: 6px;
+  /* background: #23293a; */ /* --- přeškrtlé, viz výše --- */
 }
 
+/* ========== RESPONSIVITA ========== */
 @media (max-width: 900px) {
   .sidebar { display: none; }
   .app-layout { flex-direction: column; }
@@ -422,6 +449,7 @@ tr:last-child td { border-bottom: none; }
   margin-bottom: 0.1em;
 }
 
+/* ========== BREADCRUMBS ========== */
 .breadcrumbs {
   font-size: 1rem;
   color: #aaa;
@@ -430,4 +458,58 @@ tr:last-child td { border-bottom: none; }
   margin-left: 2px;
   letter-spacing: 0.03em;
   font-weight: 400;
+}
+
+/* .breadcrumb {   background-color: #222837;   color: #bfc6da;   font-size: 0.95em;   margin-bottom: 1em;   margin-top: 0.5em; } */
+/* .breadcrumb span {   cursor: pointer;   text-decoration: underline; } */
+/* --- přeškrtlé, používáš .breadcrumbs výše --- */
+
+/* ========== PANEL ========== */
+.panel {
+  background: #23293a;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+/* ========== SEKCE HEADER ========== */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222837;
+  padding: 12px 0;
+  /* background: #232632; */ /* --- přeškrtlé, viz výše --- */
+}
+
+/* ========== INPUTY, FORMULÁŘE ========== */
+input, select, textarea {
+  background: #181b21;
+  color: #e6e6e6;
+  border: 1px solid #444a5a;
+  border-radius: 5px;
+  padding: 6px 12px;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #8fb9ff;
+}
+
+/* ========== ODKAZY ========== */
+a {
+  color: #8fb9ff;
+}
+a:hover {
+  color: #ffb6b6;
+}
+
+/* ========== UTILITY, BUDOUCÍ MODY ========== */
+.light-mode { /* pouze příprava, nyní neaktivní */ }
+.pink-mode { /* pouze příprava, nyní neaktivní */ }
+
+/* ========== HIGHLIGHT (notifikace, atd.) ========== */
+.highlight {
+  background: #2e3448;
+  color: #fff;
 }
