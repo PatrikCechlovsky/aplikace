@@ -76,3 +76,40 @@ function openModule(moduleId) {
     }
   }
 }
+
+/* ====== Přidáno podle návrhu (pro budoucí správu barevného režimu a možnost přepínání mezi dashboardem a uživatelskou tabulkou) ====== */
+
+// --- následující logika je již pokryta výše v openModule() a showDashboard(), ale přidávám pro budoucí rozšiřování a příklad práce s id ---
+// document.addEventListener('DOMContentLoaded', function() {
+//   // Skrýt/zobrazit sekce podle kliknutí na dlaždici
+//   const dashboard = document.getElementById('dashboard');
+//   const userTableSection = document.getElementById('user-table-section');
+//   const userManagementTile = document.getElementById('user-management-tile');
+//   const breadcrumbs = document.getElementById('breadcrumbs');
+//   
+//   if (userManagementTile && dashboard && userTableSection && breadcrumbs) {
+//     userManagementTile.addEventListener('click', function() {
+//       dashboard.style.display = 'none';
+//       userTableSection.style.display = 'block';
+//       breadcrumbs.style.display = 'block';
+//     });
+//   }
+//
+//   // Možnost návratu zpět do dashboardu přes breadcrumbs
+//   const dashboardBreadcrumb = document.getElementById('dashboard-breadcrumb');
+//   if (dashboardBreadcrumb && dashboard && userTableSection && breadcrumbs) {
+//     dashboardBreadcrumb.addEventListener('click', function() {
+//       dashboard.style.display = 'block';
+//       userTableSection.style.display = 'none';
+//       breadcrumbs.style.display = 'none';
+//     });
+//   }
+//
+//   // Při načtení stránky zobraz pouze dashboard, ostatní skryj
+//   if (dashboard) dashboard.style.display = 'block';
+//   if (userTableSection) userTableSection.style.display = 'none';
+//   if (breadcrumbs) breadcrumbs.style.display = 'none';
+// });
+
+// Rezervováno pro pozdější režimy uživatele (barevné preference, atd.)
+window.userColorMode = "dark"; // Zatím jen informace, v budoucnu lze použít pro per-user nastavení
